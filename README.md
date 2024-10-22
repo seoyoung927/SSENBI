@@ -7,3 +7,9 @@
 4. 폴더 구조에 맞게 작성할 것
 5. ESLint와 Prettier 같은 도구를 사용하여 코드 포맷을 자동화할 것.
 6. 팀 규칙에 맞춘 일관된 커밋 메시지 작성 (feat, fix, refactor 등 키워드 사용).
+
+# 예시 파일
+
+- 페이지 : src/app/example
+- 컴포넌트 : src/components/common/ContentCard.tsx
+  => <스타일 확인할 것!!>
