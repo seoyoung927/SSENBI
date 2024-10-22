@@ -1,0 +1,53 @@
+.content-card {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+  max-width: 100%;
+  gap: 12px;
+  margin: 12px;
+}
+
+.content-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.content-card__image-container {
+  flex-shrink: 0;
+}
+
+.content-card__image {
+  width: 60px;
+  height: 60px;
+  border-radius: 10%;
+  object-fit: cover;
+}
+
+.content-card__details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.content-card__description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 레이아웃의 유연성 */
+.content-card {
+  flex-wrap: wrap;
+}
