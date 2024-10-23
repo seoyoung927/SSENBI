@@ -5,7 +5,6 @@ export default function Example() {
   return (
     <>
       <ContentCard />
-      <ResponsiveTabBar />
     </>
   );
 }

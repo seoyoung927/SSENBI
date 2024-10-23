@@ -1,6 +1,34 @@
 :root {
+  /* Gray Scale */
+  --gray-100: #f5f5f5;
+  --gray-200: #e6e6e6;
+  --gray-300: #d9d9d9;
+  --gray-400: #b3b3b3;
+  --gray-500: #757575;
+  --gray-600: #444444;
+  --gray-700: #383838;
+  --gray-800: #2c2c2c;
+  --gray-900: #1e1e1e;
+  --gray-1000: #111111;
+
+  /* Text Colors */
+  --text-default: var(--gray-900);
+  --text-secondary: var(--gray-500);
+  --text-tertiary: var(--gray-400);
+
+  /* Background Colors */
+  --bg-default: #ffffff; /* white */
+  --bg-hover-default: var(--gray-100);
+  --bg-hover-secondary: var(--gray-200);
+  --bg-tertiary: var(--gray-300);
+  --bg-hover-tertiary: var(--gray-400);
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Border Colors */
+  --border-default: var(--gray-300);
+  --border-secondary: var(--gray-500);
+  --border-tertiary: var(--gray-700);
 }
 
 @media (prefers-color-scheme: dark) {

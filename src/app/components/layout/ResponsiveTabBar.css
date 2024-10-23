@@ -1,20 +1,22 @@
 .menu-bar {
   display: flex;
   flex-direction: column;
-  width: 40px;
+  width: 100px;
   height: 100vh;
   position: fixed;
+  gap: 40px;
   left: 0;
-  margin: 12px 0;
-  border-top: var(--sds-size-stroke-border) solid
-    var(--sds-color-border-default-default);
-  background: var(--sds-color-background-default-default);
+  margin: 0;
+  padding: 24px;
+  border-top: var(--gray-300) solid 1px;
+  background: var(--gray-100);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu-bar__menu {
   display: flex;
   flex-direction: column;
-  width: 20vw;
+  width: 100%; /* Make it fill the width of the menu bar */
   justify-content: center;
   align-items: center;
 }
@@ -30,5 +32,10 @@
     height: 80px;
     width: 100vw;
     bottom: 0;
+  }
+
+  .menu-bar__menu {
+    flex-direction: row;
+    width: auto;
   }
 }
