@@ -5,7 +5,7 @@
   border: 1px solid #f5f5f5;
   border-radius: 12px;
   padding: 16px;
-  background-color: #f5f5f5;
+  background-color: var(--gray-100);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.2s ease;
   max-width: 100%;
@@ -25,9 +25,9 @@
 .content-card__image {
   width: 6rem;
   height: 6rem;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--border-default);
   border-radius: 10%;
-  background-color: #fff;
+  background-color: var(----background);
   object-fit: cover;
 }
 
@@ -41,13 +41,13 @@
 .content-card__title {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .content-card__description {
   font-size: 1rem;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 

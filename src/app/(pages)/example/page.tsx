@@ -1,5 +1,5 @@
 import ContentCard from "@/app/components/common/ContentCard";
-import ResponsiveTabBar from "@/app/components/layout/ResponsiveTabBar";
+// import ResponsiveTabBar from "@/app/components/layout/ResponsiveTabBar";
 
 export default function Default() {
   return (
@@ -9,7 +9,7 @@ export default function Default() {
         title={"제목"}
         description={"설명"}
       />
-      <ResponsiveTabBar />
+      {/* <ResponsiveTabBar /> */}
     </>
   );
 }
