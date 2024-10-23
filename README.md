@@ -13,3 +13,5 @@
 - 페이지 : src/app/example
 - 컴포넌트 : src/components/common/ContentCard.tsx
   => <스타일 확인할 것!!>
+
+# Jira 설정
