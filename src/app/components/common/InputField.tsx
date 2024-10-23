@@ -3,7 +3,7 @@ import "./InputField.css";
 
 interface InputFielddProps {
   label: string;
-  type: string;
+  type: "text" | "email" | "password" | "number" | "tel";
 }
 
 export default function InputField({ label, type }: InputFielddProps) {

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
+import ResponsiveTabBar from "./components/layout/ResponsiveTabBar";
+
+// todo : 폰트 이쁜 걸로 컨펌!
 
 const geistSans = localFont({
   src: "./assets/fonts/GeistVF.woff",
@@ -26,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ResponsiveTabBar />
         {children}
       </body>
     </html>
