@@ -11,6 +11,29 @@
   --gray-900: #1e1e1e;
   --gray-1000: #111111;
 
+  /* Sky Blue Scale */
+  --sky-blue-100: #e0f7fa; /* Lightest Sky Blue */
+  --sky-blue-200: #b2ebf2; /* Light Sky Blue */
+  --sky-blue-300: #80deea; /* Sky Blue */
+  --sky-blue-400: #4dd0e1; /* Medium Sky Blue */
+  --sky-blue-500: #26c6da; /* Default Sky Blue */
+  --sky-blue-600: #00bcd4; /* Darker Sky Blue */
+  --sky-blue-700: #00acc1; /* Dark Sky Blue */
+  --sky-blue-800: #0097a7; /* Deeper Sky Blue */
+  --sky-blue-900: #00838f; /* Very Dark Sky Blue */
+  --sky-blue-1000: #006064; /* Deepest Sky Blue */
+
+  /* Blue Scale */
+  --blue-100: #e0f7ff; /* Lightest Blue */
+  --blue-200: #b2ebff; /* Light Blue */
+  --blue-300: #80deff; /* Sky Blue */
+  --blue-400: #4dd0ff; /* Medium Light Blue */
+  --blue-500: #00a0ff; /* Default Blue */
+  --blue-600: #0091ea; /* Darker Blue */
+  --blue-700: #0081cb; /* Dark Blue */
+  --blue-800: #0072b8; /* Deeper Blue */
+  --blue-900: #0064a1; /* Very Dark Blue */
+  --blue-1000: #005d8a; /* Deepest Blue */
   /* Text Colors */
   --text-default: var(--gray-900);
   --text-secondary: var(--gray-500);
