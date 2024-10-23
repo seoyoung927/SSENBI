@@ -1,44 +1,33 @@
+"use client";
+
 import "./ResponsiveTabBar.css";
-import Image from "next/image";
+import FileIcon from "@/app/assets/svg/File.svg";
+import StarIcon from "@/app/assets/svg/Star.svg";
+import UsersIcon from "@/app/assets/svg/Users.svg";
+import SmileIcon from "@/app/assets/svg/Smile.svg";
+
+import { useState } from "react";
 
 export default function ResponsiveTabBar() {
+  const [isSelected, setIsSelected] = useState<boolean>(true);
+
   return (
     <div className="menu-bar">
-      <div className="menu-bar__menu">
-        <Image
-          src="/assets/svg/File.svg"
-          width={20}
-          height={20}
-          alt="템플릿_icon"
-        />
+      <div className="menu-bar__menu svg-icon_seleted">
+        <FileIcon />
         <p className="menu-bar_menu-text">템플릿</p>
       </div>
 
-      <div className="menu-bar__menu">
-        <Image
-          src="/assets/svg/Star.svg"
-          width={20}
-          height={20}
-          alt="스크랩_icon"
-        />
+      <div className="menu-bar__menu svg-icon_unseleted">
+        <StarIcon />
         <p className="menu-bar_menu-text">스크랩</p>
       </div>
-      <div className="menu-bar__menu">
-        <Image
-          src="/assets/svg/Users.svg"
-          width={20}
-          height={20}
-          alt="고객_icon"
-        />
+      <div className="menu-bar__menu svg-icon_unseleted">
+        <UsersIcon />
         <p className="menu-bar_menu-text">고객</p>
       </div>
-      <div className="menu-bar__menu">
-        <Image
-          src="/assets/svg/Smile.svg"
-          width={20}
-          height={20}
-          alt="Smile_icon"
-        />
+      <div className="menu-bar__menu svg-icon_unseleted">
+        <SmileIcon />
         <p className="menu-bar_menu-text">{"마이페이지"}</p>
       </div>
     </div>
