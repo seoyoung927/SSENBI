@@ -9,8 +9,12 @@ import ContentCard from "@/app/components/common/ContentCard";
 
 export default function Example() {
   return (
-    <div className="page-container">
-      <ContentCard />
-    </div>
+    <>
+      <ContentCard
+        imgSrc={"https://via.placeholder.com/150"}
+        title={"제목"}
+        description={"설명"}
+      />
+    </>
   );
 }
