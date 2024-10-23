@@ -1,11 +1,4 @@
-server:
-  servlet:
-    context-path: /api/v1/bobi
-
-
 spring:
-#  config:
-#    import: optional:file:.env[.properties]
   application:
     name: Bobi
   datasource:

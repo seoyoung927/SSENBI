@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.global.exception.ApiException;
@@ -14,21 +15,22 @@ import com.haneolenae.bobi.global.exception.ApiType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@RequestMapping("/sample")
 @RestController
 public class SampleController {
 
-	@GetMapping("ok")
+	@GetMapping("/ok")
 	public ResponseEntity<ApiResponse<String>> test1() {
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
-	@GetMapping("created")
+	@GetMapping("/created")
 	public ResponseEntity<ApiResponse<String>> test2() {
 		return new ResponseEntity<>(ApiResponse.created(), HttpStatus.CREATED);
 	}
 
-	@GetMapping("includeobject")
+	@GetMapping("/includeobject")
 	public ResponseEntity<ApiResponse<SuccessObject>> test3() {
 
 		SuccessObject obj = new SuccessObject("cup", 1000);
@@ -43,7 +45,7 @@ public class SampleController {
 		int price;
 	}
 
-	@GetMapping("error")
+	@GetMapping("/error")
 	public ResponseEntity<ApiResponse<String>> test4() {
 
 		if (true)
@@ -53,7 +55,7 @@ public class SampleController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
-	@GetMapping("errorwithobject")
+	@GetMapping("/errorwithobject")
 	public ResponseEntity<ApiResponse<String>> test5() {
 
 		// ErrorObject must have @GetterAnnotation attached
