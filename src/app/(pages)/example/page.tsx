@@ -1,13 +1,15 @@
 import ContentCard from "@/app/components/common/ContentCard";
 
 /*
-  모든 페이지는 
-  width: "calc(100vw - 100px)" or var(--divWidth), marginLeft: 100  있어야함!!
+필수!!
+  모든 페이지는 첫 줄에
+ <div className="page-container"> 필수
+ bottom 바 스타일 조정때문!! 
 */
 
 export default function Example() {
   return (
-    <div style={{ width: "var(--divWidth)", marginLeft: 100 }}>
+    <div className="page-container">
       <ContentCard />
     </div>
   );

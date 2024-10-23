@@ -14,4 +14,11 @@
 - 컴포넌트 : src/components/common/ContentCard.tsx
   => <스타일 확인할 것!!>
 
+# 필독사항
+
+모든 페이지는 첫 줄에
+
+ <div className="page-container"> 필수
+ bottom 바 스타일 조정때문!!
+
 # Jira 설정

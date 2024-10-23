@@ -70,3 +70,15 @@ a {
     color-scheme: dark;
   }
 }
+
+.page-container {
+  width: var(--divWidth);
+  margin-left: 100px;
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    width: 100vw;
+    margin: 0;
+  }
+}
