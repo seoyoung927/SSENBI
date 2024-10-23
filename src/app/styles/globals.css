@@ -29,6 +29,8 @@
   --border-default: var(--gray-300);
   --border-secondary: var(--gray-500);
   --border-tertiary: var(--gray-700);
+
+  --divWidth: calc(100vw - 100px);
 }
 
 @media (prefers-color-scheme: dark) {
