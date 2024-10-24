@@ -8,20 +8,17 @@ import lombok.Getter;
 @JsonPropertyOrder({"status", "code", "message", "result"})
 public class ApiResponse<T> {
 
-	private final int status;
 	private final String code;
 	private final String message;
 	private final T result;
 
 	public ApiResponse(ApiType apiType, T result) {
-		this.status = apiType.getStatus().value();
 		this.code = apiType.getCode().toString();
 		this.message = apiType.getMessage();
 		this.result = result;
 	}
 
 	public ApiResponse(T result) {
-		this.status = ApiType.SUCCESS.getStatus().value();
 		this.code = ApiType.SUCCESS.getCode().toString();
 		this.message = ApiType.SUCCESS.getMessage();
 		this.result = result;
