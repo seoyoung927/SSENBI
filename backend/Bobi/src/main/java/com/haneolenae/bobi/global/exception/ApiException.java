@@ -1,5 +1,7 @@
 package com.haneolenae.bobi.global.exception;
 
+import com.haneolenae.bobi.global.dto.ApiType;
+
 import lombok.Getter;
 
 /**

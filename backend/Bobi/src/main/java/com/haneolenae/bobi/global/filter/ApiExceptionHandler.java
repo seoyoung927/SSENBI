@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.haneolenae.bobi.global.exception.ApiException;
-import com.haneolenae.bobi.global.exception.ApiResponse;
+import com.haneolenae.bobi.global.dto.ApiResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

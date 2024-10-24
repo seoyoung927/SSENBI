@@ -1,4 +1,4 @@
-package com.haneolenae.bobi.global.exception;
+package com.haneolenae.bobi.global.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 

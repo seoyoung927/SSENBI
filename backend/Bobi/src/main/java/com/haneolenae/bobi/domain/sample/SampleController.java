@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.global.exception.ApiException;
-import com.haneolenae.bobi.global.exception.ApiResponse;
-import com.haneolenae.bobi.global.exception.ApiType;
+import com.haneolenae.bobi.global.dto.ApiResponse;
+import com.haneolenae.bobi.global.dto.ApiType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
