@@ -10,7 +10,7 @@ import InputField from "@/app/components/common/InputField";
 
 export default function Example() {
   return (
-    <>
+    <div className="page-container">
       <ContentCard
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
