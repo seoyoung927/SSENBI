@@ -18,6 +18,6 @@ export default function Example() {
       />
       <InputField label="이메일" type="email" />
       <InputField label="비밀번호" type="password" />
-    </>
+    </div>
   );
 }
