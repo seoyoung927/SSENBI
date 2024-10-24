@@ -17,7 +17,6 @@ export default function Example() {
         description={"설명"}
       />
       <InputField label="이메일" type="email" />
-      <InputField label="비밀번호" type="password" />
     </div>
   );
 }
