@@ -5,30 +5,56 @@ import FileIcon from "@/app/assets/svg/File.svg";
 import StarIcon from "@/app/assets/svg/Star.svg";
 import UsersIcon from "@/app/assets/svg/Users.svg";
 import SmileIcon from "@/app/assets/svg/Smile.svg";
+import MessageIcon from "@/app/assets/svg/Message.svg";
 
-import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function ResponsiveTabBar() {
-  const [isSelected, setIsSelected] = useState<boolean>(true);
+  const router = useRouter();
+  const pathname = usePathname();
+  const getClass = (path: string) =>
+    pathname.includes(path) ? "svg-icon_selected" : "svg-icon_unselected";
 
   return (
     <div className="menu-bar">
-      <div className="menu-bar__menu svg-icon_seleted">
+      <div
+        className={`menu-bar__menu ${getClass("template")}`}
+        onClick={() => router.push("/template")}
+      >
         <FileIcon />
         <p className="menu-bar_menu-text">템플릿</p>
       </div>
 
-      <div className="menu-bar__menu svg-icon_unseleted">
+      <div
+        className={`menu-bar__menu ${getClass("customized")}`}
+        onClick={() => router.push("/customized")}
+      >
         <StarIcon />
-        <p className="menu-bar_menu-text">스크랩</p>
+        <p className="menu-bar_menu-text">Custom</p>
       </div>
-      <div className="menu-bar__menu svg-icon_unseleted">
+
+      <div
+        className={`menu-bar__menu ${getClass("customer")}`}
+        onClick={() => router.push("/customer")}
+      >
         <UsersIcon />
         <p className="menu-bar_menu-text">고객</p>
       </div>
-      <div className="menu-bar__menu svg-icon_unseleted">
+
+      <div
+        className={`menu-bar__menu ${getClass("message")}`}
+        onClick={() => router.push("/message")}
+      >
+        <MessageIcon />
+        <p className="menu-bar_menu-text">메세지</p>
+      </div>
+
+      <div
+        className={`menu-bar__menu ${getClass("mypage")}`}
+        onClick={() => router.push("/mypage")}
+      >
         <SmileIcon />
-        <p className="menu-bar_menu-text">{"마이페이지"}</p>
+        <p className="menu-bar_menu-text">마이페이지</p>
       </div>
     </div>
   );
