@@ -21,4 +21,11 @@
  <div className="page-container"> 필수
  bottom 바 스타일 조정때문!!
 
+#page 설정
+template/ - 템플릿 관련 페이지
+scrap/ - 스크랩 기능 관련 페이지
+customers/ - 고객 관리 페이지
+message/ - 메시지 관련 페이지
+mypage/ - 마이페이지
+
 # Jira 설정
