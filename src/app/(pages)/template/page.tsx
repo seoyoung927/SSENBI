@@ -1,5 +1,6 @@
 "use client";
 
+import Banner from "@/app/components/common/Banner";
 import NavigationBar from "@/app/components/common/NavigationBar";
 import { useState } from "react";
 
@@ -21,7 +22,7 @@ export default function Template() {
 
   return (
     <div className="page-container">
-      <div>배너</div>
+      <Banner />
       <NavigationBar tabs={tabs} onTabChange={handleTabChange} />
       {currentTab === 0 && <div>탭 1의 내용입니다.</div>}
       {currentTab === 1 && <div>탭 2의 내용입니다.</div>}
