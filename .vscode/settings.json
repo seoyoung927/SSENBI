@@ -7,6 +7,10 @@
     "_store": "Container",
     "_types": "Typescript",
     "_utils": "Utils",
-    "(pages)": "Routes"
+    "(pages)": "Routes",
+    "customer": "Fastlane",
+    "message": "Messages",
+    "mypage": "Layout",
+    "customized": "Review"
   }
 }
