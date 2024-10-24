@@ -1,7 +1,8 @@
 .navigation-bar {
-  background-color: var(--gray-100);
+  background-color: var(--bg-default);
   white-space: nowrap;
   overflow-x: auto;
+  border-bottom: 1px solid var(--gray-300);
 }
 
 .tab-menu {
@@ -20,23 +21,25 @@
 }
 
 .tab-item {
-  padding: 12px;
+  padding: 10px 16px;
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 1rem;
   border-bottom: 2px solid transparent;
   transition:
-    color 0.3s ease,
-    border-color 0.3s ease;
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .tab-item:hover {
-  color: var(--blue-500);
+  color: var(--blue-400);
 }
 
 .active {
   font-weight: 600;
   color: var(--blue-500);
-  border-bottom: 3px solid var(--blue-500);
+  border-bottom: 2px solid var(--blue-500);
+  background-color: var(--gray-100);
 }
