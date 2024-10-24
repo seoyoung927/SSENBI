@@ -21,7 +21,7 @@ export default function ResponsiveTabBar() {
 
       <div className="menu-bar__menu svg-icon_unselected">
         <StarIcon />
-        <p className="menu-bar_menu-text">스크랩</p>
+        <p className="menu-bar_menu-text">커스텀</p>
       </div>
       <div className="menu-bar__menu svg-icon_unselected">
         <UsersIcon />
