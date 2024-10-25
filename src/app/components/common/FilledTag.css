@@ -1,0 +1,7 @@
+.filled-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  color: var(--bg-default);
+  font-weight: 600;
+}

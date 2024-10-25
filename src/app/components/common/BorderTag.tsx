@@ -1,5 +1,5 @@
 import React from "react";
-import "./Tag.css";
+import "./BorderTag.css";
 
 type TagProps = {
   color:
@@ -74,12 +74,12 @@ export default function InputField({ color, tagName }: TagProps) {
       case "BEIGE":
         return {
           backgroundColor: "var(--beige-100)",
-          borderColor: "var(--beige-500)",
+          borderColor: "var(--beige-700)",
         };
       case "GRAY":
         return {
           backgroundColor: "var(--gray-100)",
-          borderColor: "var(--gray-400)",
+          borderColor: "var(--gray-500)",
         };
       default:
         return {
@@ -93,7 +93,7 @@ export default function InputField({ color, tagName }: TagProps) {
 
   return (
     <div
-      className="tag"
+      className="border-tag"
       style={{
         backgroundColor: backgroundColor,
         borderColor: borderColor,
