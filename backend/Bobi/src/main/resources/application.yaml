@@ -1,12 +1,12 @@
 server:
   servlet:
-    context-path: /api/v1/bobi
+    context-path: /api/v1/ssenbi
 
 spring:
   profiles:
     active: dev
-#  config:
-#    import: optional:file:.env[.properties]
+  config:
+    import: optional:file:.env[.properties]
 
 springdoc:
   packages-to-scan: com.haneolenae.bobi
