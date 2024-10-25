@@ -1,9 +1,12 @@
 package com.haneolenae.bobi.domain.general.mapper;
 
 import com.haneolenae.bobi.domain.general.dto.response.CategoryResponse;
+import com.haneolenae.bobi.domain.general.dto.response.CategoryTemplatesResponse;
 import com.haneolenae.bobi.domain.general.dto.response.GeneralTemplateResponse;
 import com.haneolenae.bobi.domain.general.entity.Category;
 import com.haneolenae.bobi.domain.general.entity.GeneralTemplate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -21,4 +24,14 @@ public interface GeneralMapper {
     @Mapping(source = "generalTemplate.count", target = "count")
     @Mapping(source = "generalTemplate.createdAt", target = "createdAt")
     GeneralTemplateResponse toGeneralTemplateResponse(GeneralTemplate generalTemplate);
-}
+
+    default CategoryTemplatesResponse toCategoryTemplates(Category category) {
+        if (category == null) {
+            throw new IllegalArgumentException("category cannot be null");
+        }
+        return new CategoryTemplatesResponse(category.getName(),
+            category.getGeneralTemplates().stream()
+                .map(this::toGeneralTemplateResponse)
+                .collect(Collectors.toList())
+        );
+    }}

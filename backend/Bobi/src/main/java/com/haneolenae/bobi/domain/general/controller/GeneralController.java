@@ -38,4 +38,8 @@ public class GeneralController {
         return ResponseEntity.ok(new ApiResponse<>(generalService.getTemplate(templateId)));
     }
 
+    @GetMapping("/template")
+    public ResponseEntity<?> searchGeneralTemplates(){
+        return ResponseEntity.ok(new ApiResponse<>(generalService.getTemplatesGroupByCategory()));
+    }
 }

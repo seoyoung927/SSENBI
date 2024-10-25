@@ -15,3 +15,4 @@ public class GeneralTemplateResponse {
     private long count;
     private LocalDateTime createdAt;
 }
+
