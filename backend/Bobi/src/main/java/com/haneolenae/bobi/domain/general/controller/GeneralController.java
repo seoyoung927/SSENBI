@@ -1,8 +1,12 @@
 package com.haneolenae.bobi.domain.general.controller;
 
+import com.haneolenae.bobi.domain.general.dto.response.CategoryResponse;
+import com.haneolenae.bobi.domain.general.dto.response.CategoryTemplatesResponse;
+import com.haneolenae.bobi.domain.general.dto.response.GeneralTemplateResponse;
 import com.haneolenae.bobi.domain.general.service.GeneralService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -23,23 +27,23 @@ public class GeneralController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<?> searchCategories(){
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> searchCategories(){
         return ResponseEntity.ok(new ApiResponse<>(generalService.getCategories()));
     }
 
 
     @GetMapping("/category/{categoryId}/template")
-    public ResponseEntity<?> searchGeneralTemplates(@PathVariable long categoryId, @PageableDefault(sort = "id", direction = Direction.ASC) Pageable pageable){
+    public ResponseEntity<ApiResponse<List<GeneralTemplateResponse>>> searchGeneralTemplates(@PathVariable long categoryId, @PageableDefault(sort = "id", direction = Direction.ASC) Pageable pageable){
         return ResponseEntity.ok(new ApiResponse<>(generalService.getTemplatesByCategoryId(categoryId, pageable)));
     }
 
     @GetMapping("/category/template/{templateId}")
-    public ResponseEntity<?> searchGeneralTemplate(@PathVariable long templateId){
+    public ResponseEntity<ApiResponse<GeneralTemplateResponse>> searchGeneralTemplate(@PathVariable long templateId){
         return ResponseEntity.ok(new ApiResponse<>(generalService.getTemplate(templateId)));
     }
 
     @GetMapping("/template")
-    public ResponseEntity<?> searchGeneralTemplates(){
+    public ResponseEntity<ApiResponse<List<CategoryTemplatesResponse>>> searchGeneralTemplates(){
         return ResponseEntity.ok(new ApiResponse<>(generalService.getTemplatesGroupByCategory()));
     }
 }
