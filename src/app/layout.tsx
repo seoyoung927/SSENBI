@@ -9,8 +9,8 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "BOBI",
-  description: "보내자 비즈니스 메시지",
+  title: "SSENBI",
+  description: "비즈니스 메시지 솔루션",
 };
 
 export default function RootLayout({
@@ -20,6 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="/assets/images/ssenbi_character.ico"
+          type="image/x-icon"
+        />
+      </head>
       <body className={`${pretendard.variable}`}>
         <ResponsiveTabBar />
         {children}
