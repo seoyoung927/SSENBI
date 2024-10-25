@@ -1,22 +1,27 @@
 "use client";
 
 import Banner from "@/app/components/common/Banner";
+import ContentCard from "@/app/components/common/ContentCard";
 import NavigationBar from "@/app/components/common/NavigationBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+interface MessageTemplatesType {
+  title: string;
+  content: string;
+}
 export default function Template() {
   const [currentTab, setCurrentTab] = useState<number>(0);
+  const [allMessageTemplates, setAllMessageTemplates] = useState<
+    MessageTemplatesType[]
+  >([]);
+  const [filteredMessageTemplates, setFilteredMessageTemplates] = useState<
+    MessageTemplatesType[]
+  >([]);
 
-  /* 상수자나
-    무조건 상수는 대문자! 내가 수정할게
-    
-    그리고 이부분은 좀 더 명확하게 용어 정리를 해줘야해<div className="
-    "></div>
-  */
+  useEffect(() => {
+    // todo : api 요청에서 정보 얻기
+  }, []);
 
-  /*
-      이 탭 배열은 여기서만 쓰이자나 그러므로 TEMPLATE_TABS 이런식! 
-    */
   const TEMPLATE_TABS = [
     "공통", // All
     "🎉 명절", // Celebration
@@ -35,10 +40,16 @@ export default function Template() {
   return (
     <div className="page-container">
       <Banner />
-      <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
-      {currentTab === 0 && <div>탭 1의 내용입니다.</div>}
-      {currentTab === 1 && <div>탭 2의 내용입니다.</div>}
-      {currentTab === 2 && <div>탭 3의 내용입니다.</div>}
+      <div>
+        <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
+      </div>
+      {filteredMessageTemplates.map((message) => (
+        <ContentCard
+          imgSrc=""
+          title={message.title}
+          content={message.content}
+        />
+      ))}
     </div>
   );
 }
