@@ -1,11 +1,11 @@
 .banner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(to right, var(--blue-400), var(--blue-800));
-    min-height: 20vh;
-    color: var(--gray-100);
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(to right, var(--blue-400), var(--blue-800));
+  min-height: 20vh;
+  color: var(--gray-100);
+  text-align: center;
 }
