@@ -3,23 +3,78 @@
 import Banner from "@/app/components/common/Banner";
 import ContentCard from "@/app/components/common/ContentCard";
 import NavigationBar from "@/app/components/common/NavigationBar";
+import { getTemplateAPI } from "@/app/api/template/templateAPI";
 import { useEffect, useState } from "react";
 
-interface MessageTemplatesType {
-  title: string;
-  content: string;
+interface MessageTemplateType {
+  templateId: number;
+  count: number;
+  createdAt: string;
+  categoryName: string;
+  templateTitle: string;
+  templateContent: string;
 }
+
 export default function Template() {
   const [currentTab, setCurrentTab] = useState<number>(0);
+  const [categoryList, setCategoryList] = useState<string[]>([]);
   const [allMessageTemplates, setAllMessageTemplates] = useState<
-    MessageTemplatesType[]
+    MessageTemplateType[]
   >([]);
   const [filteredMessageTemplates, setFilteredMessageTemplates] = useState<
-    MessageTemplatesType[]
+    MessageTemplateType[]
   >([]);
 
   useEffect(() => {
-    // todo : api 요청에서 정보 얻기
+    const fetchMessageApi = async () => {
+      try {
+        const response = await getTemplateAPI();
+        console.log("API Response:", response); // Log full response for debugging
+
+        // Extract the result array from the response
+        const messageApi = response.result;
+
+        // Check if the result is an array and has expected structure
+        if (Array.isArray(messageApi)) {
+          const categories: string[] = [];
+          const templates: MessageTemplateType[] = [];
+
+          messageApi.forEach((category: any) => {
+            // Check if category has categoryName and generalTemplates
+            if (
+              category.categoryName &&
+              Array.isArray(category.generalTemplates)
+            ) {
+              categories.push(category.categoryName);
+
+              // Map templates within this category
+              category.generalTemplates.forEach((template: any) => {
+                templates.push({
+                  templateId: template.templateId,
+                  count: template.count,
+                  createdAt: template.createdAt,
+                  categoryName: category.categoryName,
+                  templateTitle: template.templateTitle,
+                  templateContent: template.templateContent,
+                });
+              });
+            } else {
+              console.error("Unexpected category structure:", category);
+            }
+          });
+
+          setCategoryList(categories);
+          setAllMessageTemplates(templates);
+          setFilteredMessageTemplates(templates); // Show all templates by default
+        } else {
+          console.error("Unexpected API response format. Expected an array.");
+        }
+      } catch (error) {
+        console.error("Error fetching message API:", error);
+      }
+    };
+
+    fetchMessageApi();
   }, []);
 
   const TEMPLATE_TABS = [
@@ -35,6 +90,16 @@ export default function Template() {
 
   const handleTabChange = (index: number) => {
     setCurrentTab(index);
+
+    if (index === 0) {
+      setFilteredMessageTemplates(allMessageTemplates);
+    } else {
+      const selectedCategory = categoryList[index - 1];
+      const filtered = allMessageTemplates.filter(
+        (template) => template.categoryName === selectedCategory,
+      );
+      setFilteredMessageTemplates(filtered);
+    }
   };
 
   return (
@@ -43,11 +108,12 @@ export default function Template() {
       <div>
         <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
       </div>
-      {filteredMessageTemplates.map((message) => (
+      {filteredMessageTemplates.map((message, index) => (
         <ContentCard
+          key={index}
           imgSrc=""
-          title={message.title}
-          content={message.content}
+          title={message.templateTitle}
+          content={message.templateContent}
         />
       ))}
     </div>
