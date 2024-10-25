@@ -29,25 +29,21 @@ export default function Template() {
     const fetchMessageApi = async () => {
       try {
         const response = await getTemplateAPI();
-        console.log("API Response:", response); // Log full response for debugging
+        console.log("API Response:", response);
 
-        // Extract the result array from the response
         const messageApi = response.result;
 
-        // Check if the result is an array and has expected structure
         if (Array.isArray(messageApi)) {
           const categories: string[] = [];
           const templates: MessageTemplateType[] = [];
 
           messageApi.forEach((category: any) => {
-            // Check if category has categoryName and generalTemplates
             if (
               category.categoryName &&
               Array.isArray(category.generalTemplates)
             ) {
               categories.push(category.categoryName);
 
-              // Map templates within this category
               category.generalTemplates.forEach((template: any) => {
                 templates.push({
                   templateId: template.templateId,
@@ -65,7 +61,7 @@ export default function Template() {
 
           setCategoryList(categories);
           setAllMessageTemplates(templates);
-          setFilteredMessageTemplates(templates); // Show all templates by default
+          setFilteredMessageTemplates(templates);
         } else {
           console.error("Unexpected API response format. Expected an array.");
         }
