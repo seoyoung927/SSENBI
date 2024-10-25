@@ -5,13 +5,13 @@ import "./ContentCard.css";
 interface ContentCardProps {
   imgSrc: string;
   title: string;
-  description: string;
+  content: string;
 }
 
 export default function ContentCard({
   imgSrc,
   title,
-  description,
+  content,
 }: ContentCardProps) {
   return (
     <div className="content-card">
@@ -26,7 +26,7 @@ export default function ContentCard({
       </div>
       <div className="content-card__details">
         <h2 className="content-card__title">{title}</h2>
-        <p className="content-card__description">{description}</p>
+        <p className="content-card__description">{content}</p>
       </div>
     </div>
   );

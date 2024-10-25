@@ -16,7 +16,7 @@ export default function Example() {
       <ContentCard
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
-        description={"설명"}
+        content={"설명"}
       />
       <InputField label="이메일" type="email" />
       <BorderTag color="RED" tagName="빨강" />
