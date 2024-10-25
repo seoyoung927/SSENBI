@@ -39,7 +39,7 @@ export default function InputField({ color, tagName }: TagProps) {
         };
       case "LIME":
         return {
-          backgroundColor: "var(--lime-500)",
+          backgroundColor: "var(--lime-600)",
         };
       case "SKYBLUE":
         return {
@@ -85,7 +85,7 @@ export default function InputField({ color, tagName }: TagProps) {
         backgroundColor: backgroundColor,
       }}
     >
-      {tagName}
+      @{tagName}
     </div>
   );
 }

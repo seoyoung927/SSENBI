@@ -2,6 +2,9 @@
   display: inline-block;
   padding: 4px 8px;
   font-size: 0.9rem;
-  color: var(--bg-default);
+  border-radius: 4px; /* 형광펜 같은 둥근 직사각형 */
+  color: var(--bg-default); /* 형광펜 위에 검정색 글자 */
   font-weight: 600;
+  background-color: var(--blue-700);
+  position: relative;
 }

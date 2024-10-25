@@ -100,7 +100,7 @@ export default function InputField({ color, tagName }: TagProps) {
         color: borderColor,
       }}
     >
-      {tagName}
+      #{tagName}
     </div>
   );
 }
