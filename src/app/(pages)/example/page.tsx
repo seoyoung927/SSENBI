@@ -2,6 +2,7 @@ import ContentCard from "@/app/components/common/ContentCard";
 import InputField from "@/app/components/common/InputField";
 import BorderTag from "@/app/components/common/BorderTag";
 import FilledTag from "@/app/components/common/FilledTag";
+import CustomerCard from "@/app/components/common/CustomerCard";
 
 /*
 필수!!
@@ -17,6 +18,20 @@ export default function Example() {
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
         description={"설명"}
+      />
+      <CustomerCard
+        name="길동"
+        phoneNumber="010-1111-1111"
+        tags={[
+          { tagName: "VIP", tagColor: "RED" },
+          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
+          { tagName: "New Customer", tagColor: "GREEN" },
+        ]}
+        customerTags={[
+          { tagName: "VIP", tagColor: "RED" },
+          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
+          { tagName: "New Customer", tagColor: "GREEN" },
+        ]}
       />
       <InputField label="이메일" type="email" />
       <BorderTag color="RED" tagName="빨강" />
