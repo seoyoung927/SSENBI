@@ -18,13 +18,14 @@ export default function Template() {
       이 탭 배열은 여기서만 쓰이자나 그러므로 TEMPLATE_TABS 이런식! 
     */
   const TEMPLATE_TABS = [
+    "공통", // All
     "🎉 명절", // Celebration
-    "🛒 쇼핑몰", // Shopping Cart
-    "🛡️ 보험", // Shield
-    "🏫 학원", // School
-    "💊 Health", // Pill
-    "☕ 카페", // Coffee
-    "🚗 중고차", // Car
+    "🛒 쇼핑몰", // Shopping
+    "🛡️ 보험", // Insurance
+    "🏫 학원", // Academy
+    "💊 건강", // Health
+    "☕ 카페", // Café
+    "🚗 중고차", // Used Cars
   ];
 
   const handleTabChange = (index: number) => {
