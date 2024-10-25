@@ -7,13 +7,24 @@ import { useState } from "react";
 export default function Template() {
   const [currentTab, setCurrentTab] = useState<number>(0);
 
-  const tabs = [
-    "탭1제목",
-    "탭2제목",
-    "탭3제목",
-    "탭4제목",
-    "탭5제목",
-    "탭6제목",
+  /* 상수자나
+    무조건 상수는 대문자! 내가 수정할게
+    
+    그리고 이부분은 좀 더 명확하게 용어 정리를 해줘야해<div className="
+    "></div>
+  */
+
+  /*
+      이 탭 배열은 여기서만 쓰이자나 그러므로 TEMPLATE_TABS 이런식! 
+    */
+  const TEMPLATE_TABS = [
+    "🎉 명절", // Celebration
+    "🛒 쇼핑몰", // Shopping Cart
+    "🛡️ 보험", // Shield
+    "🏫 학원", // School
+    "💊 Health", // Pill
+    "☕ 카페", // Coffee
+    "🚗 중고차", // Car
   ];
 
   const handleTabChange = (index: number) => {
@@ -23,7 +34,7 @@ export default function Template() {
   return (
     <div className="page-container">
       <Banner />
-      <NavigationBar tabs={tabs} onTabChange={handleTabChange} />
+      <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
       {currentTab === 0 && <div>탭 1의 내용입니다.</div>}
       {currentTab === 1 && <div>탭 2의 내용입니다.</div>}
       {currentTab === 2 && <div>탭 3의 내용입니다.</div>}
