@@ -1,19 +1,36 @@
 "use client";
 
 import Banner from "@/app/components/common/Banner";
+import ContentCard from "@/app/components/common/ContentCard";
 import NavigationBar from "@/app/components/common/NavigationBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+interface MessageTemplatesType {
+  title: string;
+  content: string;
+}
 export default function Template() {
   const [currentTab, setCurrentTab] = useState<number>(0);
+  const [allMessageTemplates, setAllMessageTemplates] = useState<
+    MessageTemplatesType[]
+  >([]);
+  const [filteredMessageTemplates, setFilteredMessageTemplates] = useState<
+    MessageTemplatesType[]
+  >([]);
 
-  const tabs = [
-    "탭1제목",
-    "탭2제목",
-    "탭3제목",
-    "탭4제목",
-    "탭5제목",
-    "탭6제목",
+  useEffect(() => {
+    // todo : api 요청에서 정보 얻기
+  }, []);
+
+  const TEMPLATE_TABS = [
+    "공통", // All
+    "🎉 명절", // Celebration
+    "🛒 쇼핑몰", // Shopping
+    "🛡️ 보험", // Insurance
+    "🏫 학원", // Academy
+    "💊 건강", // Health
+    "☕ 카페", // Café
+    "🚗 중고차", // Used Cars
   ];
 
   const handleTabChange = (index: number) => {
@@ -23,10 +40,16 @@ export default function Template() {
   return (
     <div className="page-container">
       <Banner />
-      <NavigationBar tabs={tabs} onTabChange={handleTabChange} />
-      {currentTab === 0 && <div>탭 1의 내용입니다.</div>}
-      {currentTab === 1 && <div>탭 2의 내용입니다.</div>}
-      {currentTab === 2 && <div>탭 3의 내용입니다.</div>}
+      <div>
+        <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
+      </div>
+      {filteredMessageTemplates.map((message) => (
+        <ContentCard
+          imgSrc=""
+          title={message.title}
+          content={message.content}
+        />
+      ))}
     </div>
   );
 }

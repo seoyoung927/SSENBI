@@ -17,7 +17,7 @@ export default function Example() {
       <ContentCard
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
-        description={"설명"}
+        content={"설명"}
       />
       <CustomerCard
         name="길동"
