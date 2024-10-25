@@ -15,6 +15,17 @@ interface MessageTemplateType {
   templateContent: string;
 }
 
+const TEMPLATE_TABS = [
+  "공통", // All
+  "🎉 명절", // Celebration
+  "🛒 쇼핑몰", // Shopping
+  "🛡️ 보험", // Insurance
+  "🏫 학원", // Academy
+  "💊 건강", // Health
+  "☕ 카페", // Café
+  "🚗 중고차", // Used Cars
+];
+
 export default function Template() {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -27,75 +38,63 @@ export default function Template() {
 
   useEffect(() => {
     const fetchMessageApi = async () => {
-      try {
-        const response = await getTemplateAPI();
-        console.log("API Response:", response);
-
-        const messageApi = response.result;
-
-        if (Array.isArray(messageApi)) {
-          const categories: string[] = [];
-          const templates: MessageTemplateType[] = [];
-
-          messageApi.forEach((category: any) => {
-            if (
-              category.categoryName &&
-              Array.isArray(category.generalTemplates)
-            ) {
-              categories.push(category.categoryName);
-
-              category.generalTemplates.forEach((template: any) => {
-                templates.push({
-                  templateId: template.templateId,
-                  count: template.count,
-                  createdAt: template.createdAt,
-                  categoryName: category.categoryName,
-                  templateTitle: template.templateTitle,
-                  templateContent: template.templateContent,
-                });
-              });
-            } else {
-              console.error("Unexpected category structure:", category);
-            }
-          });
-
-          setCategoryList(categories);
-          setAllMessageTemplates(templates);
-          setFilteredMessageTemplates(templates);
-        } else {
-          console.error("Unexpected API response format. Expected an array.");
-        }
-      } catch (error) {
-        console.error("Error fetching message API:", error);
+      const messageApi = await fetchTemplates();
+      if (Array.isArray(messageApi)) {
+        const { categories, templates } = processTemplates(messageApi);
+        setCategoryList(categories);
+        setAllMessageTemplates(templates);
+        setFilteredMessageTemplates(templates);
       }
     };
 
     fetchMessageApi();
   }, []);
 
-  const TEMPLATE_TABS = [
-    "공통", // All
-    "🎉 명절", // Celebration
-    "🛒 쇼핑몰", // Shopping
-    "🛡️ 보험", // Insurance
-    "🏫 학원", // Academy
-    "💊 건강", // Health
-    "☕ 카페", // Café
-    "🚗 중고차", // Used Cars
-  ];
+  const fetchTemplates = async () => {
+    try {
+      const response = await getTemplateAPI();
+      console.log("API Response:", response);
+      return response.result || [];
+    } catch (error) {
+      console.error("Error fetching message API:", error);
+      return [];
+    }
+  };
+
+  const processTemplates = (messageApi: any[]) => {
+    const categories: string[] = [];
+    const templates: MessageTemplateType[] = [];
+
+    messageApi.forEach((category: any) => {
+      if (category.categoryName && Array.isArray(category.generalTemplates)) {
+        categories.push(category.categoryName);
+        category.generalTemplates.forEach((template: any) => {
+          templates.push({
+            templateId: template.templateId,
+            count: template.count,
+            createdAt: template.createdAt,
+            categoryName: category.categoryName,
+            templateTitle: template.templateTitle,
+            templateContent: template.templateContent,
+          });
+        });
+      } else {
+        console.error("Unexpected category structure:", category);
+      }
+    });
+
+    return { categories, templates };
+  };
 
   const handleTabChange = (index: number) => {
     setCurrentTab(index);
-
-    if (index === 0) {
-      setFilteredMessageTemplates(allMessageTemplates);
-    } else {
-      const selectedCategory = categoryList[index - 1];
-      const filtered = allMessageTemplates.filter(
-        (template) => template.categoryName === selectedCategory,
-      );
-      setFilteredMessageTemplates(filtered);
-    }
+    const filtered =
+      index === 0
+        ? allMessageTemplates
+        : allMessageTemplates.filter(
+            (template) => template.categoryName === categoryList[index - 1],
+          );
+    setFilteredMessageTemplates(filtered);
   };
 
   return (
