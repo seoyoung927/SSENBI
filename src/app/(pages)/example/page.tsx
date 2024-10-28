@@ -1,5 +1,4 @@
 import ContentCard from "@/app/components/common/card/ContentCard";
-import InputField from "@/app/components/common/input/InputField";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
