@@ -21,18 +21,34 @@ export default function MessagePage() {
           onChange={handleSearchChange}
           placeholder="검색어 (이름, 제목, 태그)"
         />
+      </div>
 
-        {/* todo : tag List */}
+      {/* todo : tag List */}
 
-        <div className="message-list">
-          <MessageCard
-            title="TEST"
-            content="asdfghjkl"
-            tags={[]}
-            customers={[]}
-            created_at="8월 12일 8시 23분"
-          />
-        </div>
+      <div className="message-list">
+        <MessageCard
+          title="TEST"
+          content="asdfghjkl"
+          tags={[]}
+          customers={[]}
+          created_at="8월 12일 8시 23분"
+        />
+
+        <MessageCard
+          title="TEST"
+          content="asdfghjkl"
+          tags={[]}
+          customers={[]}
+          created_at="8월 12일 8시 23분"
+        />
+
+        <MessageCard
+          title="TEST"
+          content="asdfghjkl"
+          tags={[]}
+          customers={[]}
+          created_at="8월 12일 8시 23분"
+        />
       </div>
     </div>
   );

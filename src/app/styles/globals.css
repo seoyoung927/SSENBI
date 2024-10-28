@@ -193,12 +193,14 @@ a {
 
 .page-container {
   width: var(--divWidth);
+  max-width: var(--divWidth);
   margin-left: 100px;
 }
 
 @media (max-width: 480px) {
   .page-container {
     width: 100vw;
+    max-width: 100vw;
     margin: 0;
   }
 }
