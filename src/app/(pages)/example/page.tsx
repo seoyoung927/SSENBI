@@ -1,7 +1,14 @@
+"use client";
+
 import ContentCard from "@/app/components/common/card/ContentCard";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
+import TagList from "@/app/components/common/tag/TagList";
+import Fab from "@/app/components/layout/FloatingActionButton";
+import MenuFab from "@/app/components/layout/FloatingMenuButton";
+import FloatingMenuButton from "@/app/components/layout/FloatingMenuButton";
+import FloatingActionButton from "@/app/components/layout/FloatingActionButton";
 
 /*
 필수!!
@@ -17,6 +24,15 @@ export default function Example() {
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
         content={"설명"}
+      />
+      <TagList
+        tags={[
+          { tagName: "VIP", tagColor: "RED" },
+          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
+          { tagName: "New Customer", tagColor: "GREEN" },
+          { tagName: "very very long long tag name", tagColor: "PURPLE" },
+        ]}
+        maxTagCount={2}
       />
       <CustomerCard
         name="길동"
@@ -57,6 +73,10 @@ export default function Example() {
       <FilledTag color="PURPLE" tagName="보라" />
       <FilledTag color="BEIGE" tagName="베이지" />
       <FilledTag color="GRAY" tagName="회색" />
+      <FloatingMenuButton text="메뉴 열기">
+        <div>menu1</div>
+        <div>메뉴2</div>
+      </FloatingMenuButton>
     </div>
   );
 }
