@@ -171,6 +171,11 @@ body {
   overflow-x: hidden;
 }
 
+ul,
+ol {
+  border: none;
+  list-style: none;
+}
 body {
   color: var(--foreground);
   background: var(--background);

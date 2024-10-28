@@ -4,6 +4,7 @@ import SearchBar from "@/app/components/common/input/SearchBar";
 import MessageCard from "@/app/components/common/card/MessageCard";
 import { useState } from "react";
 import "./page.css";
+import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 
 export default function MessagePage() {
   const [searchValue, setSearchValue] = useState("");
@@ -49,6 +50,15 @@ export default function MessagePage() {
           customers={[]}
           created_at="8월 12일 8시 23분"
         />
+
+        <FloatingActionButton>
+          <div>
+            <ul>
+              <li>메세지 작성하기</li>
+              <li>AI 도움 받아 작성하기</li>
+            </ul>
+          </div>
+        </FloatingActionButton>
       </div>
     </div>
   );

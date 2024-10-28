@@ -17,6 +17,7 @@ export default function FloatingActionButton({
 }: FloatingActionButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const expandedClassName = isExpanded && children ? "fab-expanded" : "";
+
   const handleClick = useCallback(() => {
     setIsExpanded((prev) => !prev);
     if (onClick) {
