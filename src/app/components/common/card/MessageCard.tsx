@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import "./MessageCard.css";
+import BorderTag from "../tag/BorderTag";
+import { TagColorTypes } from "@/types/tag/tagTypes";
 interface Tag {
   tagId: number;
   tagName: string;
-  tagColor: string;
+  tagColor: TagColorTypes;
 }
 
 interface Customer {
@@ -47,11 +49,12 @@ export default function MessageCard({
 
       <div className="message-card__details">
         {/* todo : tagList */}
-        <div className="messate-tag-container">
+        <div className="message-tag-container">
           {/* created_at width 제외하고 100% overflow hidden */}
-          {/* {tags.map((tag) => (
-          <BorderTag>{tag.tagName}</BorderTag>
+          {tags.map((tag) => (
+            <BorderTag color={tag.tagColor} tagName={tag.tagName} />
           ))}
+          {/*
           {customers.map((customer) => (
             <Fileld>{customer.customerName}</Fileld>
             ))} */}

@@ -5,6 +5,7 @@ import MessageCard from "@/app/components/common/card/MessageCard";
 import { useState } from "react";
 import "./page.css";
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
+import FloatingMenuButton from "@/app/components/layout/FloatingMenuButton";
 
 export default function MessagePage() {
   const [searchValue, setSearchValue] = useState("");
@@ -38,7 +39,10 @@ export default function MessagePage() {
         <MessageCard
           title="TEST"
           content="asdfghjkl"
-          tags={[]}
+          tags={[
+            { tagId: 2, tagName: "test", tagColor: "RED" },
+            { tagId: 3, tagName: "test", tagColor: "RED" },
+          ]}
           customers={[]}
           created_at="8월 12일 8시 23분"
         />
@@ -51,14 +55,14 @@ export default function MessagePage() {
           created_at="8월 12일 8시 23분"
         />
 
-        <FloatingActionButton>
+        <FloatingMenuButton>
           <div>
             <ul>
               <li>메세지 작성하기</li>
               <li>AI 도움 받아 작성하기</li>
             </ul>
           </div>
-        </FloatingActionButton>
+        </FloatingMenuButton>
       </div>
     </div>
   );
