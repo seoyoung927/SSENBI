@@ -165,13 +165,6 @@
   --divWidth: calc(100vw - 100px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 html,
 body {
   max-width: 100vw;
@@ -198,12 +191,6 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 .page-container {
   width: var(--divWidth);
   margin-left: 100px;
@@ -214,4 +201,64 @@ a {
     width: 100vw;
     margin: 0;
   }
+}
+
+.large-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.small-title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.subheading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.body-medium {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.body-strong {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.body-small {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.body-small-strong {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.caption {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.6;
 }
