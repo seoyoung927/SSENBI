@@ -33,7 +33,6 @@ export default function Example() {
           { tagName: "New Customer", tagColor: "GREEN" },
         ]}
       />
-      <InputField label="이메일" type="email" />
       <BorderTag color="RED" tagName="빨강" />
       <BorderTag color="PINK" tagName="핑크" />
       <BorderTag color="SALMON" tagName="살몬" />

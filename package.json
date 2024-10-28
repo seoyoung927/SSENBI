@@ -10,13 +10,16 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "js-cookie": "^3.0.5",
     "next": "14.2.15",
     "next-images": "^1.8.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
