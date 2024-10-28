@@ -1,0 +1,69 @@
+@keyframes appear {
+  0% {
+    scale: 0;
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 8px;
+  position: fixed;
+  bottom: 76px;
+  right: 24px;
+  color: #f5f5f5;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+}
+
+.fab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  background-color: #00a0ff;
+  border-radius: 16px;
+  z-index: 99;
+  cursor: pointer;
+  border: 0;
+  box-shadow:
+    0px 16px 16px -8px rgba(12, 12, 13, 0.1),
+    0px 4px 4px -4px rgba(12, 12, 13, 0.05);
+  transition: background-color 0.2s;
+  user-select: none;
+  & svg {
+    transition: rotate 0.2s;
+  }
+}
+
+.expanded {
+  background-color: var(--gray-500);
+
+  & svg {
+    rotate: 45deg;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #00a0ff;
+  border-radius: 16px;
+  padding: 12px 16px;
+  animation: appear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.125);
+  transform-origin: bottom right;
+  box-shadow:
+    0px 16px 16px -8px rgba(12, 12, 13, 0.1),
+    0px 4px 4px -4px rgba(12, 12, 13, 0.05);
+  z-index: 98;
+}
