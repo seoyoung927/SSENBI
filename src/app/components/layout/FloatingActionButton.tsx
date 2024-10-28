@@ -2,12 +2,12 @@ import { useCallback, useState } from "react";
 import "./FloatingActionButton.css";
 import PlusIcon from "@/app/assets/svg/Plus.svg";
 
-type FloatingActionButtonProps = {
+interface FloatingActionButtonProps {
   children?: React.ReactNode;
   onClick?: () => void;
   showIcon?: boolean;
   text?: string;
-};
+}
 
 export default function FloatingActionButton({
   children,
