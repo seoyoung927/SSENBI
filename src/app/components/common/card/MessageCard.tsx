@@ -43,7 +43,7 @@ export default function MessageCard({
 }: MessageCardProps) {
   return (
     <div className="message-card">
-      <p className="message-card__content">{content}</p>
+      <p className="message-card__content body">{content}</p>
 
       <div className="message-card__details">
         {/* todo : tagList */}
@@ -56,7 +56,7 @@ export default function MessageCard({
             <Fileld>{customer.customerName}</Fileld>
             ))} */}
         </div>
-        <p className="message-card__description">{created_at}</p>
+        <p className="message-card__description body-small">{created_at}</p>
       </div>
     </div>
   );
