@@ -1,8 +1,8 @@
 "use client";
 
-import Banner from "@/app/components/common/Banner";
-import ContentCard from "@/app/components/common/ContentCard";
-import NavigationBar from "@/app/components/common/NavigationBar";
+import Banner from "@/app/components/common/banner/Banner";
+import ContentCard from "@/app/components/common/card/ContentCard";
+import NavigationBar from "@/app/components/layout/NavigationBar";
 import { getTemplateAPI } from "@/app/api/template/templateAPI";
 import { useEffect, useState } from "react";
 
