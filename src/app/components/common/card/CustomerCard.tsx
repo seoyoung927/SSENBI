@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import "./CustomerCard.css";
 import BorderTag from "../tag/BorderTag";
 import FilledTag from "../tag/FilledTag";

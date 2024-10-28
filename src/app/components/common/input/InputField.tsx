@@ -6,6 +6,7 @@ interface InputFieldProps {
   type: "text" | "email" | "password" | "number" | "tel";
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean; // 선택적 disabled 속성 추가
 }
 
 export default function InputField({
@@ -13,6 +14,7 @@ export default function InputField({
   type,
   value,
   onChange,
+  disabled = false, // 기본값 false 설정
 }: InputFieldProps) {
   return (
     <div className="input-field">
@@ -22,6 +24,7 @@ export default function InputField({
         type={type}
         value={value}
         onChange={onChange}
+        disabled={disabled} // disabled 속성 추가
       />
     </div>
   );
