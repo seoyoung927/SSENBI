@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import InputField from "@/app/components/common/InputField";
+import InputField from "@/app/components/common/input/InputField";
 import { useRouter } from "next/navigation";
 import { postSignupAPI } from "@/app/api/signup/signupAPI";
 
