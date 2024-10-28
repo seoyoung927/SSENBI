@@ -6,12 +6,15 @@ import com.haneolenae.bobi.domain.auth.service.AuthService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +29,10 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest loginRequest,
+		HttpServletRequest request,
 		HttpServletResponse response) {
-		TokenResponse tokens = authService.login(loginRequest);
+		String sessionId = request.getSession().getId();
+		TokenResponse tokens = authService.login(loginRequest, sessionId);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Authorization", "Bearer " + tokens.getAccessToken());
@@ -39,16 +44,28 @@ public class AuthController {
 	}
 
 	@PostMapping("/logout")
-	public ResponseEntity<ApiResponse<String>> logout(@RequestBody LoginRequest loginRequest,
-		HttpServletResponse response) {
-		TokenResponse tokens = authService.login(loginRequest);
+	public ResponseEntity<ApiResponse<String>> logout(@RequestHeader("Authorization") String accessHeader,
+		@CookieValue(value = "refreshToken", defaultValue = "") String refreshToken, HttpServletRequest request) {
+		if (refreshToken.isEmpty()) {
+			throw new RuntimeException("Refresh token is empty");
+		}
 
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("Authorization", "Bearer " + tokens.getAccessToken());
+		String sessionId = request.getSession().getId();
 
-		Cookie refreshTokenCookie = generateRefreshTokenCookie(tokens.getRefreshToken());
-		response.addCookie(refreshTokenCookie);
+		authService.logout(accessHeader, refreshToken, sessionId);
+		return ResponseEntity.ok(ApiResponse.ok());
+	}
 
+	@PostMapping("/refresh")
+	public ResponseEntity<ApiResponse<String>> refresh(
+		@CookieValue(value = "refreshToken", defaultValue = "") String refreshToken, HttpServletRequest request) {
+		if (refreshToken.isEmpty()) {
+			throw new RuntimeException("Refresh token is empty");
+		}
+
+		String sessionId = request.getSession().getId();
+
+		authService.refresh(refreshToken, sessionId);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 

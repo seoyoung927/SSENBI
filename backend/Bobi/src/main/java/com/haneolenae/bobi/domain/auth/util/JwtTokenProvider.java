@@ -71,6 +71,15 @@ public class JwtTokenProvider {
 			.parseClaimsJws(token);
 	}
 
+	public Long getIdFromToken(String token) {
+		Claims claims = Jwts.parser()
+			.setSigningKey(secretKey)
+			.parseClaimsJws(token)
+			.getBody();
+
+		return Long.valueOf(claims.get("id", String.class)); // id 클레임 가져오기
+	}
+
 	private String extractToken(String token) {
 		return token.split(" ")[1];
 	}
