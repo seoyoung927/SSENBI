@@ -1,7 +1,10 @@
+"use client";
+
 import ContentCard from "@/app/components/common/card/ContentCard";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
+import FloatingMenuButton from "@/app/components/layout/FloatingMenuButton";
 
 /*
 필수!!
@@ -57,6 +60,10 @@ export default function Example() {
       <FilledTag color="PURPLE" tagName="보라" />
       <FilledTag color="BEIGE" tagName="베이지" />
       <FilledTag color="GRAY" tagName="회색" />
+      <FloatingMenuButton text="메뉴 열기">
+        <div>menu1</div>
+        <div>메뉴2</div>
+      </FloatingMenuButton>
     </div>
   );
 }
