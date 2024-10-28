@@ -4,11 +4,7 @@ import ContentCard from "@/app/components/common/card/ContentCard";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
-import TagList from "@/app/components/common/tag/TagList";
-import Fab from "@/app/components/layout/FloatingActionButton";
-import MenuFab from "@/app/components/layout/FloatingMenuButton";
 import FloatingMenuButton from "@/app/components/layout/FloatingMenuButton";
-import FloatingActionButton from "@/app/components/layout/FloatingActionButton";
 
 /*
 필수!!
@@ -24,15 +20,6 @@ export default function Example() {
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
         content={"설명"}
-      />
-      <TagList
-        tags={[
-          { tagName: "VIP", tagColor: "RED" },
-          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
-          { tagName: "New Customer", tagColor: "GREEN" },
-          { tagName: "very very long long tag name", tagColor: "PURPLE" },
-        ]}
-        maxTagCount={2}
       />
       <CustomerCard
         name="길동"
