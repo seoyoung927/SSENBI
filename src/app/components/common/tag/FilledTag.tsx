@@ -18,7 +18,7 @@ type TagProps = {
   tagName: string;
 };
 
-export default function InputField({ color, tagName }: TagProps) {
+export default function FilledTag({ color, tagName }: TagProps) {
   const getColorValues = (color: TagProps["color"]) => {
     switch (color) {
       case "RED":
