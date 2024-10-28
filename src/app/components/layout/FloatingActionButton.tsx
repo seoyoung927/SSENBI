@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import styles from "./FloatingActionButton.module.css";
+import "./FloatingActionButton.css";
 import PlusIcon from "@/app/assets/svg/Plus.svg";
 
 type FloatingActionButtonProps = {
@@ -16,7 +16,7 @@ export default function FloatingActionButton({
   text = "",
 }: FloatingActionButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const expandedClassName = children === undefined ? "" : styles.expanded;
+  const expandedClassName = isExpanded && children ? "fab-expanded" : "";
   const handleClick = useCallback(() => {
     setIsExpanded((prev) => !prev);
     if (onClick) {
@@ -25,14 +25,9 @@ export default function FloatingActionButton({
   }, [onClick]);
 
   return (
-    <div className={styles.wrapper}>
-      {isExpanded && children && (
-        <div className={styles.content}>{children}</div>
-      )}
-      <button
-        onClick={handleClick}
-        className={`${styles.fab} ${isExpanded ? expandedClassName : ""}`}
-      >
+    <div className="fab-wrapper">
+      {isExpanded && children && <div className="fab-content">{children}</div>}
+      <button onClick={handleClick} className={`fab ${expandedClassName}`}>
         {showIcon && <PlusIcon />}
         {text && <span>{text}</span>}
       </button>
