@@ -27,3 +27,9 @@
   outline: none;
   background-color: var(--gray-100);
 }
+
+.input-field__field:disabled {
+  color: var(--gray-400);
+  background-color: var(--gray-200);
+  border: 1px solid var(--gray-200);
+}

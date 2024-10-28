@@ -12,5 +12,6 @@
     "message": "Messages",
     "mypage": "Layout",
     "customized": "Review"
-  }
+  },
+  "svg.preview.background": "white"
 }
