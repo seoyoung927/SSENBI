@@ -1,22 +1,6 @@
 import React from "react";
 import "./BorderTag.css";
-
-type TagProps = {
-  color:
-    | "RED"
-    | "PINK"
-    | "SALMON"
-    | "ORANGE"
-    | "YELLOW"
-    | "GREEN"
-    | "LIME"
-    | "SKYBLUE"
-    | "BLUE"
-    | "PURPLE"
-    | "BEIGE"
-    | "GRAY";
-  tagName: string;
-};
+import { TagProps } from "@/types/tag/tagTypes";
 
 export default function BorderTag({ color, tagName }: TagProps) {
   const getColorValues = (color: TagProps["color"]) => {

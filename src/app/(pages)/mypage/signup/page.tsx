@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { postSignupAPI } from "@/app/api/member/memberAPI";
 import InputField from "@/app/components/common/input/InputField";
 import { SignupFormData } from "@/types/member/memberTypes";
+import { postSignupAPI } from "@/app/api/member/memberAPI";
 
 export default function Signup() {
   const [memberId, setMemberId] = useState("");
