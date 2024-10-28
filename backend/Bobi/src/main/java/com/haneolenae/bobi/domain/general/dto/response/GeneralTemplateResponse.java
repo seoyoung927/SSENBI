@@ -12,6 +12,7 @@ public class GeneralTemplateResponse {
     private long templateId;
     private String templateTitle;
     private String templateContent;
+    private String image;
     private long usageCount;
     private LocalDateTime createdAt;
 }

@@ -23,6 +23,7 @@ public interface GeneralMapper {
     @Mapping(source = "generalTemplate.content", target = "templateContent")
     @Mapping(source = "generalTemplate.count", target = "usageCount")
     @Mapping(source = "generalTemplate.createdAt", target = "createdAt")
+    @Mapping(source = "generalTemplate.image", target = "image")
     GeneralTemplateResponse toGeneralTemplateResponse(GeneralTemplate generalTemplate);
 
     default CategoryTemplatesResponse toCategoryTemplates(Category category) {
