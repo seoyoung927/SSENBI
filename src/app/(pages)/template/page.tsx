@@ -8,11 +8,10 @@ import { useEffect, useState } from "react";
 
 interface MessageTemplateType {
   templateId: number;
-  count: number;
-  createdAt: string;
-  categoryName: string;
   templateTitle: string;
   templateContent: string;
+  templateUsageCount: number;
+  templateImageSrc: string;
 }
 
 const TEMPLATE_TABS = [
@@ -68,14 +67,13 @@ export default function Template() {
     messageApi.forEach((category: any) => {
       if (category.categoryName && Array.isArray(category.generalTemplates)) {
         categories.push(category.categoryName);
-        category.generalTemplates.forEach((template: any) => {
+        category.generalTemplates.forEach((template: MessageTemplateType) => {
           templates.push({
             templateId: template.templateId,
-            count: template.count,
-            createdAt: template.createdAt,
-            categoryName: category.categoryName,
             templateTitle: template.templateTitle,
+            templateUsageCount: template.templateUsageCount,
             templateContent: template.templateContent,
+            templateImageSrc: template.templateImageSrc,
           });
         });
       } else {
@@ -91,9 +89,7 @@ export default function Template() {
     const filtered =
       index === 0
         ? allMessageTemplates
-        : allMessageTemplates.filter(
-            (template) => template.categoryName === categoryList[index - 1],
-          );
+        : allMessageTemplates.filter((template) => template);
     setFilteredMessageTemplates(filtered);
   };
 
@@ -106,7 +102,7 @@ export default function Template() {
       {filteredMessageTemplates.map((message, index) => (
         <ContentCard
           key={index}
-          imgSrc=""
+          imgSrc={message.templateImageSrc}
           title={message.templateTitle}
           content={message.templateContent}
         />
