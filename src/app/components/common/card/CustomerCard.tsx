@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import "./CustomerCard.css";
-import BorderTag from "./BorderTag";
-import FilledTag from "./FilledTag";
+import BorderTag from "../tag/BorderTag";
+import FilledTag from "../tag/FilledTag";
 
 interface Tag {
   tagName: string;
