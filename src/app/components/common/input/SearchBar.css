@@ -1,8 +1,8 @@
 .search-bar {
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
   padding: 5px 10px;
   width: 100%;
   max-width: 400px;
@@ -19,7 +19,7 @@
 .search-icon {
   width: 20px;
   height: 20px;
-  color: #888;
+  color: var(--gray-500);
   cursor: pointer;
 }
 
