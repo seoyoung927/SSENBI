@@ -21,7 +21,7 @@ public interface GeneralMapper {
     @Mapping(source = "generalTemplate.id", target = "templateId")
     @Mapping(source = "generalTemplate.title", target = "templateTitle")
     @Mapping(source = "generalTemplate.content", target = "templateContent")
-    @Mapping(source = "generalTemplate.count", target = "count")
+    @Mapping(source = "generalTemplate.count", target = "usageCount")
     @Mapping(source = "generalTemplate.createdAt", target = "createdAt")
     GeneralTemplateResponse toGeneralTemplateResponse(GeneralTemplate generalTemplate);
 
