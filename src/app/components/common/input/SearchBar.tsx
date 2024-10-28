@@ -1,45 +1,63 @@
 "use client";
 
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import debounce from "lodash/debounce";
-import "./SearchBar.css";
 import ReadingGlassesIcon from "@/app/assets/svg/ReadingGlasses.svg";
+import XIcon from "@/app/assets/svg/X.svg";
+import "./SearchBar.css";
 
 interface SearchBarProps {
-  type?: "text" | "number";
-  value?: string | number;
+  type?: "text";
+  value?: string;
   placeholder?: string;
-  onChange: (value: string | number) => void;
+  onChange: (value: string) => void;
 }
 
 export default function SearchBar({
   type = "text",
-  value,
+  value = "",
   placeholder,
   onChange,
 }: SearchBarProps) {
-  const debouncedOnChange = useMemo(() => debounce(onChange, 300), [onChange]);
+  const [inputValue, setInputValue] = useState(value);
+
+  const debouncedOnChange = useMemo(() => debounce(onChange, 500), [onChange]);
 
   useEffect(() => {
+    debouncedOnChange(inputValue);
+
     return () => {
       debouncedOnChange.cancel();
     };
-  }, [debouncedOnChange]);
+  }, [inputValue, debouncedOnChange]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedOnChange(e.target.value);
+    setInputValue(e.target.value);
+  };
+
+  const removeValue = () => {
+    setInputValue("");
+    debouncedOnChange("");
   };
 
   return (
     <div className="search-bar">
+      <ReadingGlassesIcon className="search-icon" viewBox="0 0 24 24" />
+
       <input
         type={type}
         placeholder={placeholder}
-        value={value}
+        value={inputValue}
         onChange={handleChange}
         className="search-input"
       />
-      <ReadingGlassesIcon className="search-icon" viewBox="0 0 24 24" />
+      <span
+        onClick={removeValue}
+        className="search-icon"
+        style={{ cursor: "pointer" }}
+      >
+        <XIcon />
+      </span>
     </div>
   );
 }
