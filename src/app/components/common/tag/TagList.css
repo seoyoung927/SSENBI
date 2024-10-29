@@ -1,3 +1,8 @@
+.tag-list-wrapper {
+  position: relative;
+  user-select: none;
+}
+
 .tag-list {
   display: flex;
   gap: 8px;
@@ -7,15 +12,60 @@
   padding: 2px 8px;
   list-style: none;
   width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: var(--bg-hover-default);
+  }
 }
 
 .tag-list-remained {
-  display: inline-block;
-  border: 2px solid var(--red-600);
-  background-color: var(--red-100);
-  padding: 4px;
+  display: flex;
+  align-items: center;
+  background-color: var(--red-700);
+  padding: 4px 6px;
   border-radius: 24px;
-  color: var(--red-600);
+  color: var(--text-light);
   font-size: 0.8rem;
   font-weight: 600;
+}
+
+@keyframes popup-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tag-list-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 9998;
+}
+
+.tag-list-popup {
+  position: absolute;
+  /* top: 100%; */
+  top: 0;
+  left: 6px;
+  width: calc(100% - 12px);
+  padding: 16px;
+  background-color: var(--bg-default);
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: popup-appear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: top center;
+  z-index: 9999;
 }
