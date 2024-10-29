@@ -18,6 +18,10 @@
 .message-card:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
+.message-card:hover .message-card__content {
+  color: var(--blue-500);
+  transition: color 0.2s ease;
+}
 
 .message-card__details {
   flex: 1;

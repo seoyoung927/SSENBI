@@ -20,7 +20,7 @@ const MessageNewAI = () => {
 
   return (
     <div className="page-container">
-      <Header title="새 메시지" />
+      <Header title="새 메시지" showBackIcon={true} />
 
       <div className="message-form">
         <div className="form-group">

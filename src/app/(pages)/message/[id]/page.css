@@ -19,3 +19,17 @@
   display: flex;
   gap: 8px;
 }
+
+.message-info_delete-button {
+  width: calc(100% - 32px);
+  margin: 12px 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: inherit;
+  color: var(--red-800);
+}
+.message-info_delete-button:hover {
+  background-color: var(--gray-100);
+}
