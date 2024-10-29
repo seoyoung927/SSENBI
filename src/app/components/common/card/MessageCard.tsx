@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import "./MessageCard.css";
 import BorderTag from "../tag/BorderTag";
 import { TagColorTypes } from "@/types/tag/tagTypes";
@@ -51,8 +50,8 @@ export default function MessageCard({
         {/* todo : tagList */}
         <div className="message-tag-container">
           {/* created_at width 제외하고 100% overflow hidden */}
-          {tags.map((tag) => (
-            <BorderTag color={tag.tagColor} tagName={tag.tagName} />
+          {tags.map((tag, index) => (
+            <BorderTag key={index} color={tag.tagColor} tagName={tag.tagName} />
           ))}
           {/*
           {customers.map((customer) => (

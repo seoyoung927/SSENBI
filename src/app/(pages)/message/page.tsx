@@ -4,8 +4,8 @@ import SearchBar from "@/app/components/common/input/SearchBar";
 import MessageCard from "@/app/components/common/card/MessageCard";
 import { useState } from "react";
 import "./page.css";
-import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
+import Link from "next/link";
 
 export default function MessagePage() {
   const [searchValue, setSearchValue] = useState("");
@@ -28,38 +28,48 @@ export default function MessagePage() {
       {/* todo : tag List */}
 
       <div className="message-list">
-        <MessageCard
-          title="TEST"
-          content="asdfghjkl"
-          tags={[]}
-          customers={[]}
-          created_at="8월 12일 8시 23분"
-        />
+        <Link href="/message/1">
+          <MessageCard
+            title="TEST"
+            content="asdfghjkl"
+            tags={[]}
+            customers={[]}
+            created_at="8월 12일 8시 23분"
+          />
+        </Link>
 
-        <MessageCard
-          title="TEST"
-          content="asdfghjkl"
-          tags={[
-            { tagId: 2, tagName: "test", tagColor: "RED" },
-            { tagId: 3, tagName: "test", tagColor: "RED" },
-          ]}
-          customers={[]}
-          created_at="8월 12일 8시 23분"
-        />
+        <Link href="/message/2">
+          <MessageCard
+            title="TEST"
+            content="asdfghjkl"
+            tags={[
+              { tagId: 2, tagName: "test", tagColor: "RED" },
+              { tagId: 3, tagName: "test", tagColor: "RED" },
+            ]}
+            customers={[]}
+            created_at="8월 12일 8시 23분"
+          />
+        </Link>
 
-        <MessageCard
-          title="TEST"
-          content="asdfghjkl"
-          tags={[]}
-          customers={[]}
-          created_at="8월 12일 8시 23분"
-        />
+        <Link href="/message/3">
+          <MessageCard
+            title="TEST"
+            content="asdfghjkl"
+            tags={[]}
+            customers={[]}
+            created_at="8월 12일 8시 23분"
+          />
+        </Link>
 
         <FloatingMenuButton>
           <div>
             <ul>
-              <li>메세지 작성하기</li>
-              <li>AI 도움 받아 작성하기</li>
+              <Link href="/message/new">
+                <li>메세지 작성하기</li>
+              </Link>
+              <Link href="/message/new/ai">
+                <li>AI 도움 받아 작성하기</li>
+              </Link>
             </ul>
           </div>
         </FloatingMenuButton>
