@@ -32,17 +32,6 @@
   font-weight: 600;
 }
 
-@keyframes popup-appear {
-  0% {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .tag-list-overlay {
   position: fixed;
   top: 0;
@@ -55,17 +44,16 @@
 
 .tag-list-popup {
   position: absolute;
-  /* top: 100%; */
-  top: 0;
-  left: 6px;
-  width: calc(100% - 12px);
-  padding: 16px;
+  top: -8px;
+  left: 0px;
+  width: 100%;
+  padding: 8px 0;
   background-color: var(--bg-default);
   border-radius: 8px;
   border: 1px solid var(--border-default);
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  animation: popup-appear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform-origin: top center;
   z-index: 9999;
+  box-sizing: border-box;
 }
