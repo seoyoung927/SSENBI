@@ -4,7 +4,7 @@ import ContentCard from "@/app/components/common/card/ContentCard";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
-import FloatingMenuButton from "@/app/components/layout/FloatingMenuButton";
+import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
 
 /*
 필수!!

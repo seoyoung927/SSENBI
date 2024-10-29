@@ -1,0 +1,21 @@
+.tag-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  margin: 0;
+  padding: 2px 8px;
+  list-style: none;
+  width: 100%;
+}
+
+.tag-list-remained {
+  display: inline-block;
+  border: 2px solid var(--red-600);
+  background-color: var(--red-100);
+  padding: 4px;
+  border-radius: 24px;
+  color: var(--red-600);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
