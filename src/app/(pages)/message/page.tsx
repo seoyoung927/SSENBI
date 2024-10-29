@@ -5,7 +5,7 @@ import MessageCard from "@/app/components/common/card/MessageCard";
 import { useState } from "react";
 import "./page.css";
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
-import FloatingMenuButton from "@/app/components/layout/FloatingMenuButton";
+import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
 
 export default function MessagePage() {
   const [searchValue, setSearchValue] = useState("");
