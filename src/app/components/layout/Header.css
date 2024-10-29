@@ -6,3 +6,14 @@
   height: 40px;
   border-bottom: 1px solid var(--border-default);
 }
+
+.header_button-back {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  width: auto;
+}
