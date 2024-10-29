@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import InputField from "@/app/components/common/input/InputField";
 import { SignupFormData } from "@/types/member/memberTypes";
 import { postSignupAPI } from "@/app/api/member/memberAPI";
+import "./page.css";
+import Header from "@/app/components/layout/Header";
 
 export default function Signup() {
   const [memberId, setMemberId] = useState("");
@@ -49,11 +51,13 @@ export default function Signup() {
   };
 
   const handleCancel = () => {
-    router.push("/");
+    router.back();
   };
 
   return (
     <div className="page-container">
+      <Header title="회원가입" showBackIcon={true} />
+
       <InputField
         label="아이디"
         type="text"
@@ -103,12 +107,20 @@ export default function Signup() {
         onChange={(e) => setBusinessPhoneNumber(e.target.value)}
       />
 
-      <button onClick={handleSignup} className="signup-button">
-        회원가입
-      </button>
-      <button onClick={handleCancel} className="cancel-button">
-        취소
-      </button>
+      <div className="mypage-signup_button-group">
+        <button
+          onClick={handleCancel}
+          className=".mypage-signup_button mypage-signup_button-candel"
+        >
+          취소
+        </button>
+        <button
+          onClick={handleSignup}
+          className=".mypage-signup_button mypage-signup_button-signup"
+        >
+          회원가입
+        </button>
+      </div>
     </div>
   );
 }

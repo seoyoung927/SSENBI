@@ -16,6 +16,19 @@ export const postLoginAPI = async (formData: LoginFormData) => {
   throw new Error(response.data.message);
 };
 
+// Post Logout API
+export const postLogoutAPI = async () => {
+  const response = await axiosInstance.post("/auth/logout");
+
+  // 응답 코드가 SUCCESS인 경우
+  if (response.data.code === "S10000") {
+    Cookies.remove("accessToken");
+    return true;
+  }
+
+  throw new Error(response.data.message);
+};
+
 // 토큰 재발급 API
 export const postRefreshTokenAPI = async () => {
   const response = await axiosInstance.post(

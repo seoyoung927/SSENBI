@@ -6,6 +6,7 @@ import { useState } from "react";
 import "./page.css";
 import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
 import Link from "next/link";
+import Header from "@/app/components/layout/Header";
 
 export default function MessagePage() {
   const [searchValue, setSearchValue] = useState("");
@@ -16,6 +17,8 @@ export default function MessagePage() {
   };
   return (
     <div className="page-container">
+      <Header title="메시지" />
+
       <div className="search-bar-container">
         <SearchBar
           type="text"

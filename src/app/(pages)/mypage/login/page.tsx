@@ -5,6 +5,8 @@ import InputField from "@/app/components/common/input/InputField";
 import useAuthStore from "@/stores/authStore";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import "./page.css";
+import Header from "@/app/components/layout/Header";
 
 export default function Login() {
   const [loginId, setLoginId] = useState("");
@@ -30,11 +32,13 @@ export default function Login() {
   };
 
   const handleSignup = () => {
-    router.push("/signup");
+    router.push("/mypage/signup");
   };
 
   return (
     <div className="page-container">
+      <Header title="로그인" showBackIcon={true} />
+
       <InputField
         label="아이디"
         type="text"
@@ -49,12 +53,20 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button onClick={handleLogin} className="login-button">
-        로그인
-      </button>
-      <button onClick={handleSignup} className="cancel-button">
-        회원가입
-      </button>
+      <div className="mypage-login_button-group">
+        <button
+          onClick={handleLogin}
+          className="mypage-login_button  mypage-login_button-login"
+        >
+          로그인
+        </button>
+        <button
+          onClick={handleSignup}
+          className="mypage-login_button  mypage-login_button-signup"
+        >
+          회원가입
+        </button>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { putMemberAPI } from "@/app/api/member/memberAPI";
 import InputField from "@/app/components/common/input/InputField";
+import "./page.css";
+import Header from "@/app/components/layout/Header";
 
 // 회원정보 수정 데이터 타입
 export interface UpdateMemberFormData {
@@ -36,7 +38,7 @@ export default function Modify() {
       const isSuccess = await putMemberAPI({ token, formData });
 
       if (isSuccess) {
-        router.push("/");
+        router.push("/mypage");
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -48,11 +50,13 @@ export default function Modify() {
   };
 
   const handleCancel = () => {
-    router.push("/");
+    router.push("/mypage");
   };
 
   return (
     <div className="page-container">
+      <Header title="회원정보 수정" showBackIcon={true} />
+
       <InputField
         label="아이디"
         type="text"
@@ -106,12 +110,14 @@ export default function Modify() {
         onChange={(e) => setBusinessPhoneNumber(e.target.value)}
       />
 
-      <button onClick={handleModify} className="modify-button">
-        저장
-      </button>
-      <button onClick={handleCancel} className="cancel-button">
-        취소
-      </button>
+      <div className="mypage-modify_button-group">
+        <button onClick={handleCancel} className="mypage-modify_button-cancel">
+          취소
+        </button>
+        <button onClick={handleModify} className="mypage-modify_button-modify">
+          저장
+        </button>
+      </div>
     </div>
   );
 }

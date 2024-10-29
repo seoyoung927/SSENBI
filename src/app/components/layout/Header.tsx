@@ -12,7 +12,7 @@ export default function Header({ title, showBackIcon = false }: HeaderProps) {
   const router = useRouter();
 
   return (
-    <div className="header small-title">
+    <div className="header heading">
       {showBackIcon && (
         <button
           onClick={() => router.back()}

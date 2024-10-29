@@ -46,7 +46,7 @@ export default function ResponsiveTabBar() {
         onClick={() => router.push("/message")}
       >
         <MessageIcon />
-        <p className="menu-bar_menu-text">메세지</p>
+        <p className="menu-bar_menu-text">메시지</p>
       </div>
 
       <div
