@@ -2,23 +2,7 @@ import React from "react";
 import "./CustomerCard.css";
 import BorderTag from "../tag/BorderTag";
 import FilledTag from "../tag/FilledTag";
-
-interface Tag {
-  tagName: string;
-  tagColor:
-    | "RED"
-    | "PINK"
-    | "SALMON"
-    | "ORANGE"
-    | "YELLOW"
-    | "GREEN"
-    | "LIME"
-    | "SKYBLUE"
-    | "BLUE"
-    | "PURPLE"
-    | "BEIGE"
-    | "GRAY";
-}
+import { Tag } from "@/types/tag/Tag";
 
 interface CustomerCardProps {
   name: string;
