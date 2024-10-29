@@ -26,8 +26,8 @@ const TEMPLATE_TABS = [
 ];
 
 export default function Template() {
-  const [currentTab, setCurrentTab] = useState<number>(0);
-  const [categoryList, setCategoryList] = useState<string[]>([]);
+  const [, setCurrentTab] = useState<number>(0);
+  const [, setCategoryList] = useState<string[]>([]);
   const [allMessageTemplates, setAllMessageTemplates] = useState<
     MessageTemplateType[]
   >([]);
