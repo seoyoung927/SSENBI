@@ -8,8 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
+@NoArgsConstructor
 public class TemplateCustomer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +26,9 @@ public class TemplateCustomer {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+
+	public TemplateCustomer(CustomTemplate customTemplate, Customer customer) {
+		this.customTemplate = customTemplate;
+		this.customer = customer;
+	}
 }

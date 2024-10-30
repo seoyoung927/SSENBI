@@ -14,8 +14,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomTemplate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +34,7 @@ public class CustomTemplate {
 	private String content;
 
 	@Column
-	private String count;
+	private Integer count;
 
 	@Column
 	@CreationTimestamp
@@ -40,9 +46,19 @@ public class CustomTemplate {
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updatedAt;
 
-	@OneToMany(mappedBy = "custom_template")
+	@OneToMany(mappedBy = "customTemplate")
 	private List<TemplateCustomer> templateCustomers;
 
-	@OneToMany(mappedBy = "custom_template")
+	@OneToMany(mappedBy = "customTemplate")
 	private List<TemplateTag> templateTags;
+
+	// @ManyToOne
+	// @JoinColumn(name = "member_id")
+	// private Member member;
+
+	public CustomTemplate(String title, String content, Integer count) {
+		this.title = title;
+		this.content = content;
+		this.count = count;
+	}
 }

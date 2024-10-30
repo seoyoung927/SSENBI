@@ -3,9 +3,9 @@ spring:
     name: Ssenbi
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${test.mariadb.host}:3306/${test.mariadb.database}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-    username: ${test.mariadb.username}
-    password: ${test.mariadb.pwd}
+    url: jdbc:mysql://localhost:3306/bobidb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
   jpa:
     properties:
       hibernate:

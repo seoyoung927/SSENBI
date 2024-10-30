@@ -16,7 +16,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Customer {
 	@Id
@@ -39,7 +41,7 @@ public class Customer {
 	private String memo;
 
 	@Column
-	private Byte color;
+	private String color;
 
 	@Column
 	private Integer tagCount;
@@ -54,7 +56,7 @@ public class Customer {
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updatedAt;
 
-	@OneToMany(mappedBy = "custom_template")
+	@OneToMany(mappedBy = "customer")
 	private List<TemplateCustomer> templateCustomers;
 
 	//@ManyToOne

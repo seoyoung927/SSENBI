@@ -8,8 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class TemplateTag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +26,9 @@ public class TemplateTag {
 	@ManyToOne
 	@JoinColumn(name = "tag_id")
 	private Tag tag;
+
+	public TemplateTag(CustomTemplate customTemplate, Tag tag) {
+		this.customTemplate = customTemplate;
+		this.tag = tag;
+	}
 }
