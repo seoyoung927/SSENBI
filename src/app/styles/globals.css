@@ -143,10 +143,13 @@
   --beige-900: #8a6440;
   --beige-1000: #6f5134;
 
+  --primary-color: #008fff;
+
   /* Text Colors */
   --text-default: var(--gray-900);
   --text-secondary: var(--gray-500);
   --text-tertiary: var(--gray-400);
+  --text-light: var(--gray-100);
 
   /* Background Colors */
   --bg-default: #ffffff; /* white */

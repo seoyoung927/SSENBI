@@ -26,3 +26,18 @@
 .search-icon:hover {
   color: #333;
 }
+
+.search-icon--remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray-300);
+  border-radius: 9999px;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+    stroke-width: 2;
+  }
+}

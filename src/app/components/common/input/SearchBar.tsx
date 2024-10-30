@@ -53,10 +53,10 @@ export default function SearchBar({
       />
       <span
         onClick={removeValue}
-        className="search-icon"
+        className="search-icon search-icon--remove"
         style={{ cursor: "pointer" }}
       >
-        <XIcon />
+        <XIcon viewBox="0 0 20 20" />
       </span>
     </div>
   );
