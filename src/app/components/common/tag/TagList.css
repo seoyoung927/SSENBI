@@ -12,13 +12,11 @@
   padding: 2px 8px;
   list-style: none;
   width: 100%;
-  cursor: pointer;
-  transition: background-color 0.3s;
   border-radius: 8px;
+}
 
-  &:hover {
-    background-color: var(--bg-hover-default);
-  }
+.pointer {
+  cursor: pointer;
 }
 
 .tag-list-remained {
@@ -51,9 +49,121 @@
   background-color: var(--bg-default);
   border-radius: 8px;
   border: 1px solid var(--border-default);
-  cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform-origin: top center;
   z-index: 9999;
   box-sizing: border-box;
+}
+
+.tag-list-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 24px;
+  padding: 4px 6px 4px 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 2px solid;
+}
+
+.tag-list-delete {
+  display: flex;
+  align-items: center;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  background-color: inherit;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.tag-list-input-wrapper {
+  display: flex;
+  align-items: stretch;
+
+  & > input {
+    flex: 1;
+    padding: 0 8px;
+    /* border: 2px solid var(--border-default); */
+    border: none;
+    border-radius: 8px;
+    outline: none;
+
+    &::placeholder {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+.tag-list-tag-RED {
+  background-color: var(--red-100);
+  border-color: var(--red-600);
+  color: var(--red-600);
+}
+.tag-list-tag-ORANGE {
+  background-color: var(--orange-100);
+  border-color: var(--orange-600);
+  color: var(--orange-600);
+}
+
+.tag-list-tag-YELLOW {
+  background-color: var(--yellow-100);
+  border-color: var(--yellow-700);
+  color: var(--yellow-700);
+}
+
+.tag-list-tag-GREEN {
+  background-color: var(--green-100);
+  border-color: var(--green-700);
+  color: var(--green-700);
+}
+
+.tag-list-tag-LIME {
+  background-color: var(--lime-100);
+  border-color: var(--lime-700);
+  color: var(--lime-700);
+}
+.tag-list-tag-SKYBLUE {
+  background-color: var(--skyblue-100);
+  border-color: var(--skyblue-700);
+  color: var(--skyblue-700);
+}
+
+.tag-list-tag-BLUE {
+  background-color: var(--blue-100);
+  border-color: var(--blue-700);
+  color: var(--blue-700);
+}
+
+.tag-list-tag-PURPLE {
+  background-color: var(--purple-100);
+  border-color: var(--purple-700);
+  color: var(--purple-700);
+}
+
+.tag-list-tag-PINK {
+  background-color: var(--pink-100);
+  border-color: var(--pink-700);
+  color: var(--pink-700);
+}
+
+.tag-list-tag-SALMON {
+  background-color: var(--salmon-100);
+  border-color: var(--salmon-700);
+  color: var(--salmon-700);
+}
+
+.tag-list-tag-BEIGE {
+  background-color: var(--beige-100);
+  border-color: var(--beige-700);
+  color: var(--beige-700);
+}
+
+.tag-list-tag-GRAY {
+  background-color: var(--gray-100);
+  border-color: var(--gray-700);
+  color: var(--gray-700);
 }
