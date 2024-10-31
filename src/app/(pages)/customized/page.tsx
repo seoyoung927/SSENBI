@@ -7,6 +7,7 @@ import { TagColorTypes } from "@/types/tag/tagTypes";
 import Link from "next/link";
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
+import { useRouter } from "next/navigation";
 
 // Tag 타입 정의
 interface TemplateTag {
@@ -85,12 +86,13 @@ const dummyData: ApiResponse = [
 ];
 
 export default function CustomizedPage() {
+  const router = useRouter();
   const [filteredCustomMessageTemplates] = useState<ApiResponse | null>(
     dummyData,
   );
 
   // useEffect(() => {
-  //   const fetchCustomMessage = async () => {
+  //   const fetchCustomTemplates = async () => {
   //     try {
   //       const token = "ACCESS_TOKEN";
   //       const data = await getCustomTemplatesAPI({ token });
@@ -102,6 +104,10 @@ export default function CustomizedPage() {
 
   //   fetchCustomMessage();
   // }, []);
+
+  const handleNewTemplate = () => {
+    router.push("/customized/new");
+  };
 
   return (
     <div className="page-container">
@@ -121,7 +127,7 @@ export default function CustomizedPage() {
         </Link>
       ))}
 
-      <FloatingActionButton text={"템플릿 추가"} />
+      <FloatingActionButton onClick={handleNewTemplate} text={"템플릿 추가"} />
     </div>
   );
 }

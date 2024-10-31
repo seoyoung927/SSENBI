@@ -31,12 +31,6 @@ interface ApiResponse {
   customers: Customer[];
 }
 
-interface MessageIdPageProps {
-  params: {
-    id: string;
-  };
-}
-
 const dummyData: ApiResponse = {
   messageId: 1,
   title: "제목",
@@ -62,7 +56,13 @@ const dummyData: ApiResponse = {
   ],
 };
 
-const MessageId = ({ params }: MessageIdPageProps) => {
+interface MessageIdPageProps {
+  params: {
+    id: string;
+  };
+}
+
+const MessageIdPage = ({ params }: MessageIdPageProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const { id } = params;
