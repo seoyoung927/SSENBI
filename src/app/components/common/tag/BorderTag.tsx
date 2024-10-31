@@ -2,7 +2,7 @@ import React from "react";
 import "./BorderTag.css";
 import { TagProps } from "@/types/tag/tagTypes";
 
-export default function BorderTag({ color, tagName }: TagProps) {
+export default function BorderTag({ color, tagName, prefix = "#" }: TagProps) {
   const getColorValues = (color: TagProps["color"]) => {
     switch (color) {
       case "RED":
@@ -84,7 +84,8 @@ export default function BorderTag({ color, tagName }: TagProps) {
         color: borderColor,
       }}
     >
-      #{tagName}
+      {prefix}
+      {tagName}
     </div>
   );
 }
