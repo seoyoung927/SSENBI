@@ -16,6 +16,8 @@ interface UpdateMemberFormData {
   businessPhoneNumber: string;
 }
 
+const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
+
 export default function ModifyPage() {
   const [memberId, setMemberId] = useState("exampleId"); // 읽기 전용 예시 값
   const [password, setPassword] = useState("password"); // 읽기 전용 예시 값
@@ -32,11 +34,13 @@ export default function ModifyPage() {
 
   // 비밀번호 확인이 변경될 때 비밀번호가 일치하는지 검사
   useEffect(() => {
-    if (confirmPassword && confirmPassword !== password) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPasswordError("");
-    }
+    useEffect(() => {
+      const errorMsg =
+        confirmPassword && confirmPassword !== password
+          ? PASSWORD_MISMATCH_ERROR
+          : "";
+      setPasswordError(errorMsg);
+    }, [confirmPassword, password]);
   }, [confirmPassword, password]);
 
   useEffect(() => {

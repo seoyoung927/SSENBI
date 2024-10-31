@@ -10,6 +10,8 @@ import Header from "@/app/components/layout/Header";
 import Image from "next/image";
 import "./page.css";
 
+const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
+
 export default function Signup() {
   const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
@@ -25,11 +27,13 @@ export default function Signup() {
   const router = useRouter();
 
   useEffect(() => {
-    if (confirmPassword && confirmPassword !== password) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPasswordError("");
-    }
+    useEffect(() => {
+      const errorMsg =
+        confirmPassword && confirmPassword !== password
+          ? PASSWORD_MISMATCH_ERROR
+          : "";
+      setPasswordError(errorMsg);
+    }, [confirmPassword, password]);
   }, [confirmPassword, password]);
 
   useEffect(() => {
