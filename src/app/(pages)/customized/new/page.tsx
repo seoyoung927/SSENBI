@@ -45,8 +45,9 @@ export default function CustomizedNewPage() {
         customers: selectedCustomers,
         tags: selectedTags,
       });
-
-      router.push("/customized");
+      if (response.code === "S10000") {
+        router.push("/customized");
+      }
     } catch (error) {
       console.error("저장 중 오류 발생:", error);
     }
@@ -64,7 +65,7 @@ export default function CustomizedNewPage() {
       />
 
       <div className="customized-new_form-group">
-        <label className="customized-new_form-group__label">받는사람</label>
+        <label className="customized-new_form-group__label">고객</label>
         <TagList
           tags={[
             { tagName: "VIP", tagColor: "RED" },
@@ -77,9 +78,20 @@ export default function CustomizedNewPage() {
       </div>
 
       <div className="customized-new_form-group">
-        <label className="customized-new_form-group_label body-small">
-          내용
-        </label>
+        <label className="customized-new_form-group__label">태그</label>
+        <TagList
+          tags={[
+            { tagName: "VIP", tagColor: "RED" },
+            { tagName: "Frequent Buyer", tagColor: "ORANGE" },
+            { tagName: "New Customer", tagColor: "GREEN" },
+            { tagName: "very very long long tag name", tagColor: "PURPLE" },
+          ]}
+          maxTagCount={2}
+        />
+      </div>
+
+      <div className="customized-new_form-group">
+        <label className="customized-new_form-group_label">내용</label>
         <textarea
           className="customized-new_form-group_textarea body-medium"
           value={content}

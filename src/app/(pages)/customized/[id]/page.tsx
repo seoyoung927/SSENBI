@@ -6,8 +6,9 @@ import Header from "@/app/components/layout/Header";
 import { TagColorTypes } from "@/types/tag/tagTypes";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
-import router, { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { deleteCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
+import Modal from "@/app/components/common/modal/Modal";
 
 // Tag 타입 정의
 interface TemplateTag {
@@ -63,6 +64,9 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const router = useRouter();
   const { id } = params;
   const [customMessageTemplate] = useState<ApiResponse | null>(dummyData);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isAIEdit, setAIEdit] = useState<boolean>(false);
+  const [isEdit, setEdit] = useState<boolean>(false);
 
   const handleDelete = async () => {
     const token = "your-auth-token";
@@ -79,8 +83,22 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     }
   };
 
-  const handleNew = () => {
-    router.push("/customized/new");
+  const openAIEditModal = () => {
+    setAIEdit(true);
+    setEdit(false);
+    setModalOpen(true);
+  };
+
+  const openEditModal = () => {
+    setEdit(true);
+    setAIEdit(false);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setAIEdit(false);
+    setEdit(false);
   };
 
   return (
@@ -124,20 +142,46 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       </div>
 
       <div className="customized-detail_button-group">
-        <button type="button" className="customized-detail_button">
-          취소
-        </button>
-        <button type="button" className="customized-detail_button">
-          AI로 작성
-        </button>
         <button
           onClick={handleDelete}
           type="button"
           className="customized-detail_button"
         >
-          저장하기
+          삭제
+        </button>
+        <button
+          onClick={openAIEditModal}
+          type="button"
+          className="customized-detail_button"
+        >
+          AI로 수정
+        </button>
+        <button
+          onClick={openEditModal}
+          type="button"
+          className="customized-detail_button"
+        >
+          수정하기
         </button>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onConfirm={() => {
+            setModalOpen(false);
+          }}
+          title={isAIEdit ? "AI로 수정" : "수정하기"}
+        >
+          {isAIEdit ? (
+            <p>AI를 사용하여 템플릿을 자동으로 수정하시겠습니까?</p>
+          ) : (
+            <p>템플릿 내용을 직접 수정하시겠습니까?</p>
+          )}
+        </Modal>
+      )}
     </div>
   );
 }
