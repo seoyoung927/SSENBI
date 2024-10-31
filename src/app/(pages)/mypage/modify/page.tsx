@@ -7,6 +7,7 @@ import InputField from "@/app/components/common/input/InputField";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
 import Image from "next/image";
+
 // 회원정보 수정 데이터 타입
 export interface UpdateMemberFormData {
   business: string;
@@ -41,16 +42,28 @@ export default function ModifyPage() {
         router.push("/mypage");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error("회원정보 수정 실패:", error.message);
-      } else {
-        console.error("회원정보 수정 실패: 알 수 없는 오류 발생");
-      }
+      handleError(error);
     }
   };
 
   const handleCancel = () => {
     router.push("/mypage");
+  };
+
+  const handleError = (error: unknown) => {
+    if (error instanceof Error) {
+      console.error("회원정보 수정 실패:", error.message);
+    } else {
+      console.error("회원정보 수정 실패: 알 수 없는 오류 발생");
+    }
+  };
+
+  const handleInputChange = (
+    setter: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value);
+    };
   };
 
   return (
@@ -65,7 +78,7 @@ export default function ModifyPage() {
         label="아이디"
         type="text"
         value={memberId}
-        onChange={(e) => setMemberId(e.target.value)}
+        onChange={handleInputChange(setMemberId)}
         disabled
       />
 
@@ -73,21 +86,21 @@ export default function ModifyPage() {
         label="비밀번호"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handleInputChange(setPassword)}
       />
 
       <InputField
         label="비밀번호 확인"
         type="password"
         value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+        onChange={handleInputChange(setConfirmPassword)}
       />
 
       <InputField
         label="이름"
         type="text"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={handleInputChange(setName)}
         disabled
       />
 
@@ -95,21 +108,21 @@ export default function ModifyPage() {
         label="사업체 명"
         type="text"
         value={business}
-        onChange={(e) => setBusiness(e.target.value)}
+        onChange={handleInputChange(setBusiness)}
       />
 
       <InputField
         label="개인 전화번호"
         type="text"
         value={personalPhoneNumber}
-        onChange={(e) => setPersonalPhoneNumber(e.target.value)}
+        onChange={handleInputChange(setPersonalPhoneNumber)}
       />
 
       <InputField
         label="사업체 전화번호"
         type="text"
         value={businessPhoneNumber}
-        onChange={(e) => setBusinessPhoneNumber(e.target.value)}
+        onChange={handleInputChange(setBusinessPhoneNumber)}
       />
 
       <div className="mypage-modify_button-group">
