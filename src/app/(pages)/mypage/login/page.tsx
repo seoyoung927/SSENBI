@@ -63,16 +63,10 @@ export default function LoginPage() {
       />
 
       <div className="mypage-login_button-group">
-        <button
-          onClick={handleLogin}
-          className="mypage-login_button mypage-login_button-login"
-        >
+        <button onClick={handleLogin} className="blue_button">
           로그인
         </button>
-        <button
-          onClick={handleSignup}
-          className="mypage-login_button mypage-login_button-signup"
-        >
+        <button onClick={handleSignup} className="white_button">
           회원가입
         </button>
       </div>
