@@ -1,20 +1,21 @@
 "use client";
-/*
-필수!!
-  모든 페이지는 첫 줄에
- <div className="page-container"> 필수
- bottom 바 스타일 조정때문!! 
-*/
 
 import UserInfoCard from "@/app/components/common/card/UserInfoCard";
 import Header from "@/app/components/layout/Header";
+import { useEffect } from "react";
+import "./page.css";
 
 export default function Mypage() {
+  useEffect(() => {
+    // 로그인 유무 확인해서 안되어 있으면 login 페이지로 보내기!
+  }, []);
+
   return (
     <div className="page-container">
       <Header title="마이페이지" />
-
-      <UserInfoCard name="김싸피" customerCount={0} sentMessageCount={0} />
+      <div className="mypage-container">
+        <UserInfoCard name="김싸피" customerCount={0} sentMessageCount={0} />
+      </div>
     </div>
   );
 }

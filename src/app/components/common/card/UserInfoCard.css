@@ -4,14 +4,13 @@
   justify-content: flex-start;
   align-items: flex-start;
   border: 1px solid #f5f5f5;
-  border-radius: 12px;
   padding: 16px;
-  background-color: var(--gray-100);
+  background-color: #7277f5;
+  color: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.2s ease;
   max-width: 100%;
   gap: 12px;
-  margin: 12px;
 }
 
 .user-info_name-container {

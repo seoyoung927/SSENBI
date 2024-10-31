@@ -1,0 +1,10 @@
+.mypage-container {
+  background-color: var(--gray-200);
+  min-height: calc(100vh - 50px);
+}
+
+@media (max-width: 480px) {
+  .mypage-container {
+    min-height: calc(100vh - 129px);
+  }
+}
