@@ -1,5 +1,5 @@
 // Get Custom Templates API Params
-export interface GetCustomTemplatesParams {
+export type GetCustomTemplatesParams = {
   token: string;
   page?: number;
   size?: number;
@@ -7,16 +7,16 @@ export interface GetCustomTemplatesParams {
   templateTags?: number[];
   templateCustomers?: number[];
   templateSearch?: string;
-}
+};
 
 // Get Single Custom Template API Params
-export interface GetCustomTemplateParams {
+export type GetCustomTemplateParams = {
   token: string;
   templateId: number;
-}
+};
 
 // Put Custom Template API Params
-export interface PutCustomTemplateParams {
+export type PutCustomTemplateParams = {
   token: string;
   templateId: number;
   title: string;
@@ -25,48 +25,48 @@ export interface PutCustomTemplateParams {
   afterTags: number[];
   beforeCustomerIds: number[];
   afterCustomerIds: number[];
-}
+};
 
 // Post Custom Template API Params
-export interface PostCustomTemplateParams {
+export type PostCustomTemplateParams = {
   token: string;
   title: string;
   content: string;
   tags: number[];
   customers: number[];
-}
+};
 
 // Delete Custom Template API Params
-export interface DeleteCustomTemplateParams {
+export type DeleteCustomTemplateParams = {
   token: string;
   templateId: number;
-}
+};
 
 // Post Custom Template Tag API Params
-export interface PostCustomTemplateTagParams {
+export type PostCustomTemplateTagParams = {
   token: string;
   templateId: number;
   tagName: string;
   tagColor: string;
-}
+};
 
 // Delete Custom Template Tag API Params
-export interface DeleteCustomTemplateTagParams {
+export type DeleteCustomTemplateTagParams = {
   token: string;
   templateId: number;
-}
+};
 
 // Post Custom Template Customer API Params
-export interface PostCustomTemplateCustomerParams {
+export type PostCustomTemplateCustomerParams = {
   token: string;
   templateId: number;
   customerId: number;
   customerColor: string;
-}
+};
 
 // Delete Custom Template Customer API Params
-export interface DeleteCustomTemplateCustomerParams {
+export type DeleteCustomTemplateCustomerParams = {
   token: string;
   templateId: number;
   customerId: number;
-}
+};

@@ -21,22 +21,20 @@ export const getCustomTemplatesAPI = async ({
   templateCustomers,
   templateSearch,
 }: GetCustomTemplatesParams) => {
-  return axiosInstance
-    .get("/customTemplate", {
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-      params: {
-        page,
-        size,
-        sort,
-        templateTags,
-        templateCustomers,
-        templateSearch,
-      },
-    })
-    .then((response) => response.data);
+  const response = await axiosInstance.get("/customTemplate", {
+    headers: {
+      Authorization: token,
+    },
+    params: {
+      page,
+      size,
+      sort,
+      templateTags,
+      templateCustomers,
+      templateSearch,
+    },
+  });
+  return response.data;
 };
 
 // Get Single Custom Template API
@@ -44,14 +42,14 @@ export const getCustomTemplateAPI = async ({
   token,
   templateId,
 }: GetCustomTemplateParams) => {
-  return axiosInstance
+  const response = await axiosInstance
     .get(`/customTemplate/${templateId}`, {
       headers: {
         Authorization: token,
-        "Content-Type": "application/json",
       },
     })
     .then((response) => response.data);
+  return response.data;
 };
 
 // Put Custom Template API
@@ -65,25 +63,23 @@ export const putCustomTemplateAPI = async ({
   beforeCustomerIds,
   afterCustomerIds,
 }: PutCustomTemplateParams) => {
-  return axiosInstance
-    .put(
-      `/customTemplate/${templateId}`,
-      {
-        templateTitle: title,
-        templateContent: content,
-        templateBeforeTagIds: beforeTags,
-        templateAfterTagIds: afterTags,
-        templateBeforeCustomerIds: beforeCustomerIds,
-        templateAfterCustomerIds: afterCustomerIds,
+  const response = await axiosInstance.put(
+    `/customTemplate/${templateId}`,
+    {
+      templateTitle: title,
+      templateContent: content,
+      templateBeforeTagIds: beforeTags,
+      templateAfterTagIds: afterTags,
+      templateBeforeCustomerIds: beforeCustomerIds,
+      templateAfterCustomerIds: afterCustomerIds,
+    },
+    {
+      headers: {
+        Authorization: token,
       },
-      {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      },
-    )
-    .then((response) => response.data);
+    },
+  );
+  return response.data;
 };
 
 // Post Custom Template API
@@ -94,23 +90,21 @@ export const postCustomTemplateAPI = async ({
   tags,
   customers,
 }: PostCustomTemplateParams) => {
-  return axiosInstance
-    .post(
-      "/customTemplate",
-      {
-        templateTitle: title,
-        templateContent: content,
-        templateTagIds: tags,
-        templateCustomerIds: customers,
+  const response = await axiosInstance.post(
+    "/customTemplate",
+    {
+      templateTitle: title,
+      templateContent: content,
+      templateTagIds: tags,
+      templateCustomerIds: customers,
+    },
+    {
+      headers: {
+        Authorization: token,
       },
-      {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      },
-    )
-    .then((response) => response.data);
+    },
+  );
+  return response.data;
 };
 
 // Delete Custom Template API
@@ -118,14 +112,12 @@ export const deleteCustomTemplateAPI = async ({
   token,
   templateId,
 }: DeleteCustomTemplateParams) => {
-  return axiosInstance
-    .delete(`/customTemplate/${templateId}`, {
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => response.data);
+  const response = await axiosInstance.delete(`/customTemplate/${templateId}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return response.data;
 };
 
 // Post Custom Template Tag API
@@ -135,21 +127,19 @@ export const postCustomTemplateTagAPI = async ({
   tagName,
   tagColor,
 }: PostCustomTemplateTagParams) => {
-  return axiosInstance
-    .post(
-      `/customTemplate/${templateId}/tag`,
-      {
-        tagName,
-        tagColor,
+  const response = await axiosInstance.post(
+    `/customTemplate/${templateId}/tag`,
+    {
+      tagName,
+      tagColor,
+    },
+    {
+      headers: {
+        Authorization: token,
       },
-      {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      },
-    )
-    .then((response) => response.data);
+    },
+  );
+  return response.data;
 };
 
 // Delete Custom Template Tag API
@@ -157,14 +147,15 @@ export const deleteCustomTemplateTagAPI = async ({
   token,
   templateId,
 }: DeleteCustomTemplateTagParams) => {
-  return axiosInstance
-    .delete(`/customTemplate/${templateId}/tag`, {
+  const response = await axiosInstance.delete(
+    `/customTemplate/${templateId}/tag`,
+    {
       headers: {
         Authorization: token,
-        "Content-Type": "application/json",
       },
-    })
-    .then((response) => response.data);
+    },
+  );
+  return response.data;
 };
 
 // Post Custom Template Customer API
@@ -174,21 +165,19 @@ export const postCustomTemplateCustomerAPI = async ({
   customerId,
   customerColor,
 }: PostCustomTemplateCustomerParams) => {
-  return axiosInstance
-    .post(
-      `/customTemplate/${templateId}/customer`,
-      {
-        customerId,
-        customerColor,
+  const response = await axiosInstance.post(
+    `/customTemplate/${templateId}/customer`,
+    {
+      customerId,
+      customerColor,
+    },
+    {
+      headers: {
+        Authorization: token,
       },
-      {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      },
-    )
-    .then((response) => response.data);
+    },
+  );
+  return response.data;
 };
 
 // Delete Custom Template Customer API
@@ -197,12 +186,13 @@ export const deleteCustomTemplateCustomerAPI = async ({
   templateId,
   customerId,
 }: DeleteCustomTemplateCustomerParams) => {
-  return axiosInstance
-    .delete(`/customTemplate/${templateId}/customer/${customerId}`, {
+  const response = await axiosInstance.delete(
+    `/customTemplate/${templateId}/customer/${customerId}`,
+    {
       headers: {
         Authorization: token,
-        "Content-Type": "application/json",
       },
-    })
-    .then((response) => response.data);
+    },
+  );
+  return response.data;
 };

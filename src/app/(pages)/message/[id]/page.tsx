@@ -6,7 +6,7 @@ import BorderTag from "@/app/components/common/tag/BorderTag";
 import Header from "@/app/components/layout/Header";
 import { TagColorTypes } from "@/types/tag/tagTypes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { deleteMessageAPI, getMessageAPI } from "@/app/api/message/messageAPI";
+import { deleteMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
 
 interface Tag {
@@ -144,4 +144,4 @@ const MessageIdPage = ({ params }: MessageIdPageProps) => {
   );
 };
 
-export default MessageId;
+export default MessageIdPage;

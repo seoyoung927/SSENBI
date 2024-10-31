@@ -7,10 +7,7 @@ import { TagColorTypes } from "@/types/tag/tagTypes";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import { useRouter } from "next/navigation";
-import {
-  deleteCustomTemplateAPI,
-  putCustomTemplateAPI,
-} from "@/app/api/customized/customizedAPI";
+import { deleteCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
 import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
 import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
@@ -75,8 +72,7 @@ interface CustomizedIdPageProps {
 export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const router = useRouter();
   const { id } = params;
-  const [customMessageTemplate, setCustomMessageTemplate] =
-    useState<ApiResponse | null>(dummyData);
+  const [customMessageTemplate] = useState<ApiResponse | null>(dummyData);
   const [modifiedTemplate, setModifiedTemplate] =
     useState<ModifiedTemplate | null>({
       templateTitle: dummyData.templateTitle,
@@ -88,7 +84,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     });
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [isAIEdit, setAIEdit] = useState<boolean>(false);
-  const [isEdit, setEdit] = useState<boolean>(false);
+  const [, setEdit] = useState<boolean>(false);
 
   const handleDelete = async () => {
     const token = "your-auth-token";

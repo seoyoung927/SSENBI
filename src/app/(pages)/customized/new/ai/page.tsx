@@ -13,10 +13,8 @@ export default function CustomizedNewAIPage() {
   const [title, setTitle] = useState<string>("");
   const [content, setContet] = useState<string>("");
   // TODO: 수정 필요 - 추가 로직 및 API와 연결
-  const [selectedCustomers, setSelectedCustomers] = useState<number[]>([
-    1, 2, 3,
-  ]);
-  const [selectedTags, setSelectedTags] = useState<number[]>([1, 2, 3]);
+  const [selectedCustomers] = useState<number[]>([1, 2, 3]);
+  const [selectedTags] = useState<number[]>([1, 2, 3]);
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -58,6 +56,7 @@ export default function CustomizedNewAIPage() {
         type="text"
         value={title}
         onChange={handleTitle}
+        maxLength={20}
       />
 
       <div className="customized-new_form-group">
