@@ -19,12 +19,13 @@ public interface GeneralMapper {
 	@Mapping(source = "category.name", target = "categoryName")
 	CategoryResponse toCategoryResponse(Category category);
 
-	@Mapping(source = "generalTemplate.id", target = "templateId")
-	@Mapping(source = "generalTemplate.title", target = "templateTitle")
-	@Mapping(source = "generalTemplate.content", target = "templateContent")
-	@Mapping(source = "generalTemplate.count", target = "count")
-	@Mapping(source = "generalTemplate.createdAt", target = "createdAt")
-	GeneralTemplateResponse toGeneralTemplateResponse(GeneralTemplate generalTemplate);
+    @Mapping(source = "generalTemplate.id", target = "templateId")
+    @Mapping(source = "generalTemplate.title", target = "templateTitle")
+    @Mapping(source = "generalTemplate.content", target = "templateContent")
+    @Mapping(source = "generalTemplate.count", target = "usageCount")
+    @Mapping(source = "generalTemplate.createdAt", target = "createdAt")
+    @Mapping(source = "generalTemplate.image", target = "image")
+    GeneralTemplateResponse toGeneralTemplateResponse(GeneralTemplate generalTemplate);
 
 	default CategoryTemplatesResponse toCategoryTemplates(Category category) {
 		if (category == null) {
