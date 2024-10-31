@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { putMemberAPI } from "@/app/api/member/memberAPI";
+import { validatePassword } from "@/utils/validatePassword";
 import InputField from "@/app/components/common/input/InputField";
-import "./page.css";
 import Header from "@/app/components/layout/Header";
 import Image from "next/image";
+import "./page.css";
 
 // 회원정보 수정 데이터 타입
 interface UpdateMemberFormData {
@@ -14,6 +15,8 @@ interface UpdateMemberFormData {
   personalPhoneNumber: string;
   businessPhoneNumber: string;
 }
+
+const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
 
 export default function ModifyPage() {
   const [memberId, setMemberId] = useState("exampleId"); // 읽기 전용 예시 값
@@ -31,34 +34,14 @@ export default function ModifyPage() {
 
   // 비밀번호 확인이 변경될 때 비밀번호가 일치하는지 검사
   useEffect(() => {
-    if (confirmPassword && confirmPassword !== password) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPasswordError("");
-    }
+    useEffect(() => {
+      const errorMsg =
+        confirmPassword && confirmPassword !== password
+          ? PASSWORD_MISMATCH_ERROR
+          : "";
+      setPasswordError(errorMsg);
+    }, [confirmPassword, password]);
   }, [confirmPassword, password]);
-
-  // 비밀번호 유효성 검사 함수
-  const validatePassword = (pwd: string) => {
-    const hasKorean = /[가-힣]/.test(pwd);
-    const isLengthValid = pwd.length >= 8 && pwd.length <= 20;
-    const hasLowercase = /[a-z]/.test(pwd);
-    const hasNumber = /[0-9]/.test(pwd);
-
-    if (hasKorean) {
-      return "비밀번호에 한글 문자를 사용할 수 없습니다.";
-    }
-    if (!isLengthValid) {
-      return "비밀번호는 8자리 이상 20자리 이하이어야 합니다.";
-    }
-    if (!hasLowercase) {
-      return "비밀번호에 영어 소문자를 최소 1개 이상 포함해야 합니다.";
-    }
-    if (!hasNumber) {
-      return "비밀번호에 숫자를 최소 1개 이상 포함해야 합니다.";
-    }
-    return "";
-  };
 
   useEffect(() => {
     const validationMessage = validatePassword(password);
