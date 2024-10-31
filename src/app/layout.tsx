@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
 import ResponsiveTabBar from "./components/layout/ResponsiveTabBar";
+import LoginStateChecker from "./LoginStateChecker";
 
 const pretendard = localFont({
   src: "./assets/fonts/PretendardVariable.woff2",
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <head>
@@ -29,6 +30,9 @@ export default function RootLayout({
       </head>
       <body className={`${pretendard.variable}`}>
         <ResponsiveTabBar />
+        {/* TODO :  추후 로그인 기능 완성 후 주석 제거
+        <LoginStateChecker />
+        */}
         {children}
       </body>
     </html>
