@@ -11,7 +11,7 @@ interface MessageTemplateType {
   templateTitle: string;
   templateContent: string;
   templateUsageCount: number;
-  templateImageSrc: string;
+  image: string;
 }
 
 const TEMPLATE_TABS = [
@@ -73,7 +73,7 @@ export default function Template() {
             templateTitle: template.templateTitle,
             templateUsageCount: template.templateUsageCount,
             templateContent: template.templateContent,
-            templateImageSrc: template.templateImageSrc,
+            image: template.image,
           });
         });
       } else {
@@ -102,7 +102,7 @@ export default function Template() {
       {filteredMessageTemplates.map((message, index) => (
         <ContentCard
           key={index}
-          imgSrc={message.templateImageSrc}
+          imgSrc={message.image}
           title={message.templateTitle}
           content={message.templateContent}
         />

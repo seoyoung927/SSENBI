@@ -21,7 +21,15 @@ export default function MypagePage() {
         <div className="mypage-content-container">
           <p className="body-strong">태그 0</p>
           {/* 태그 리스트 */}
-          <TagList tags={[{ tagName: "test", tagColor: "BLUE" }]} />
+          <TagList
+            tags={[
+              {
+                tagName: "test",
+                tagColor: "BLUE",
+                tagId: 0,
+              },
+            ]}
+          />
         </div>
       </div>
     </div>

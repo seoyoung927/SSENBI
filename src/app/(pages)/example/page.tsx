@@ -24,10 +24,18 @@ export default function Example() {
       />
       <TagList
         tags={[
-          { tagName: "VIP", tagColor: "RED" },
-          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
-          { tagName: "New Customer", tagColor: "GREEN" },
-          { tagName: "very very long long tag name", tagColor: "PURPLE" },
+          {
+            tagName: "VIP",
+            tagColor: "RED",
+            tagId: 0,
+          },
+          { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
+          { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
+          {
+            tagName: "very very long long tag name",
+            tagColor: "PURPLE",
+            tagId: 3,
+          },
         ]}
         // maxTagCount={2}
       />
@@ -35,14 +43,38 @@ export default function Example() {
         name="길동"
         phoneNumber="010-1111-1111"
         tags={[
-          { tagName: "VIP", tagColor: "RED" },
-          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
-          { tagName: "New Customer", tagColor: "GREEN" },
+          {
+            tagName: "VIP",
+            tagColor: "RED",
+            tagId: 11,
+          },
+          {
+            tagName: "Frequent Buyer",
+            tagColor: "ORANGE",
+            tagId: 12,
+          },
+          {
+            tagName: "New Customer",
+            tagColor: "GREEN",
+            tagId: 13,
+          },
         ]}
         customerTags={[
-          { tagName: "VIP", tagColor: "RED" },
-          { tagName: "Frequent Buyer", tagColor: "ORANGE" },
-          { tagName: "New Customer", tagColor: "GREEN" },
+          {
+            customerName: "VIP",
+            customerColor: "RED",
+            customerId: 21,
+          },
+          {
+            customerName: "Frequent Buyer",
+            customerColor: "ORANGE",
+            customerId: 22,
+          },
+          {
+            customerName: "New Customer",
+            customerColor: "GREEN",
+            customerId: 23,
+          },
         ]}
       />
       <BorderTag color="RED" tagName="빨강" />

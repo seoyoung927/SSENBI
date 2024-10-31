@@ -67,6 +67,7 @@ export default function TagList({
     const newItem: TagType = {
       tagName: newItemName,
       tagColor: getRandomTagColor(),
+      tagId: 61,
     };
 
     setValidItems((prev) => ({
