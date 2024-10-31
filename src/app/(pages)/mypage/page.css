@@ -6,15 +6,14 @@
 .mypage-content-container {
   position: relative;
   top: -10px;
-  min-height: 70vh;
+  min-height: calc(100vh - 220px);
   background-color: white;
   width: 90%;
   margin: 0 auto;
   z-index: 3;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 첫 번째 배경 레이어 (흰색, 30% 투명도) */
 .mypage-content-container::before {
   content: "";
   position: absolute;
@@ -43,5 +42,8 @@
 @media (max-width: 480px) {
   .mypage-user-container {
     min-height: calc(100vh - 129px);
+  }
+  .mypage-content-container {
+    min-height: calc(100vh - 285px);
   }
 }
