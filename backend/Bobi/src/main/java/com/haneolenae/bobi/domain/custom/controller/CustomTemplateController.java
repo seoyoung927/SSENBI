@@ -5,13 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
-import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.service.CustomTemplateService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -53,11 +51,11 @@ public class CustomTemplateController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
-	@PutMapping("/{templateId}")
-	public ResponseEntity<?> editCustomTemplate(@PathVariable("templateId") long templateId,
-		@RequestBody EditCustomTemplateRequest editCustomTemplateRequest) {
-
-	}
+	// @PutMapping("/{templateId}")
+	// public ResponseEntity<?> editCustomTemplate(@PathVariable("templateId") long templateId,
+	// 	@RequestBody EditCustomTemplateRequest editCustomTemplateRequest) {
+	//
+	// }
 
 	@DeleteMapping("/{templateId}")
 	public ResponseEntity<?> deleteCustomTemplate(//@RequestHeader("Authorization") String token,
