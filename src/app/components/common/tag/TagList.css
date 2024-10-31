@@ -1,3 +1,7 @@
+.no-scroll {
+  overflow: hidden;
+}
+
 .tag-list-wrapper {
   position: relative;
   user-select: none;
@@ -22,80 +26,160 @@
 .tag-list-remained {
   display: flex;
   align-items: center;
-  background-color: var(--red-700);
-  padding: 4px 6px;
+  background-color: var(--bg-hover-secondary);
+  padding: 4px 8px;
   border-radius: 24px;
-  color: var(--text-light);
+  color: var(--text-secondary);
   font-size: 0.8rem;
   font-weight: 600;
 }
 
-.tag-list-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: transparent;
-  z-index: 9998;
-}
-
 .tag-list-popup {
-  position: absolute;
-  top: -8px;
-  left: 0px;
-  width: 100%;
-  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
   background-color: var(--bg-default);
   border-radius: 8px;
   border: 1px solid var(--border-default);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transform-origin: top center;
-  z-index: 9999;
-  box-sizing: border-box;
+  padding: 0 0 16px;
+  min-width: 0;
+  width: var(--radix-popover-trigger-width);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 10;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--bg-default);
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-default);
+    border-radius: 8px;
+    border: 2px solid var(--bg-default);
+  }
+}
+
+@keyframes popoverShow {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popoverHide {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.tag-list-popup[data-state="open"] {
+  animation: popoverShow 200ms ease-out forwards;
+}
+
+.tag-list-popup[data-state="closed"] {
+  animation: popoverHide 200ms ease-in forwards;
+}
+
+.tag-list-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: start;
+  gap: 8px;
+  padding: 0 16px;
 }
 
 .tag-list-item {
   display: flex;
   align-items: center;
-  gap: 2px;
+  justify-content: space-between;
+  gap: 8px;
   border-radius: 24px;
-  padding: 4px 6px 4px 8px;
-  font-size: 0.8rem;
+  /* padding: 8px 16px; */
+  padding: 4px 8px;
+  font-size: 0.9rem;
   font-weight: 600;
   border: 2px solid;
+  max-width: 100%;
+
+  & > span,
+  & > input {
+    outline-color: var(--border-default);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
 }
 
 .tag-list-delete {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   border: none;
   color: inherit;
   cursor: pointer;
   background-color: inherit;
-
-  & > svg {
-    width: 16px;
-    height: 16px;
-  }
 }
 
-.tag-list-input-wrapper {
+.tag-list-delete > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.tag-list-input-wrapper > input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-default);
+  outline-color: var(--primary-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.tag-list-item input[type="text"] {
+  border-radius: 4px;
+  background-color: inherit;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.tag-list-input-wrapper > input::placeholder {
+  color: var(--text-secondary);
+}
+
+.tag-list-header {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  padding: 16px;
+  background-color: var(--bg-default);
+}
 
-  & > input {
-    flex: 1;
-    padding: 0 8px;
-    /* border: 2px solid var(--border-default); */
-    border: none;
-    border-radius: 8px;
-    outline: none;
-
-    &::placeholder {
-      color: var(--text-secondary);
-    }
-  }
+.tab-ui {
+  display: flex;
+  /* gap: 8px; */
+  /* background-color: var(--bg-default); */
+  background-color: var(--bg-hover-default);
+  border-radius: 8px;
+  /* border: 1px solid var(--border-default); */
 }
 
 .tag-list-tag-RED {
@@ -103,6 +187,7 @@
   border-color: var(--red-600);
   color: var(--red-600);
 }
+
 .tag-list-tag-ORANGE {
   background-color: var(--orange-100);
   border-color: var(--orange-600);
@@ -126,10 +211,11 @@
   border-color: var(--lime-700);
   color: var(--lime-700);
 }
+
 .tag-list-tag-SKYBLUE {
-  background-color: var(--skyblue-100);
-  border-color: var(--skyblue-700);
-  color: var(--skyblue-700);
+  background-color: var(--sky-blue-100);
+  border-color: var(--sky-blue-700);
+  color: var(--sky-blue-700);
 }
 
 .tag-list-tag-BLUE {
