@@ -6,6 +6,7 @@ import useAuthStore from "@/stores/authStore";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
+import Image from "next/image";
 import "./page.css";
 
 export default function LoginPage() {
@@ -47,6 +48,9 @@ export default function LoginPage() {
   return (
     <div className="page-container">
       <Header title="로그인" showBackIcon={true} />
+      <div className="mypage-login-image-container">
+        <Image src="/assets/images/ssenbi_logo.png" alt="ssenbi 로고" fill />
+      </div>
 
       <InputField
         label="아이디"
