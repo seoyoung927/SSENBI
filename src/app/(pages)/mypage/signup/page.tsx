@@ -129,6 +129,7 @@ export default function Signup() {
         label="아이디"
         type="text"
         value={memberId}
+        maxLength={20}
         onChange={handleMemberIdChange}
       />
 
@@ -136,6 +137,7 @@ export default function Signup() {
         label="비밀번호"
         type="password"
         value={password}
+        maxLength={25}
         onChange={handlePasswordChange}
       />
 
@@ -145,6 +147,7 @@ export default function Signup() {
         label="비밀번호 확인"
         type="password"
         value={confirmPassword}
+        maxLength={25}
         onChange={handleConfirmPasswordChange}
       />
 
@@ -155,6 +158,7 @@ export default function Signup() {
         type="text"
         value={name}
         onChange={handleNameChange}
+        maxLength={25}
       />
 
       <InputField
@@ -162,6 +166,7 @@ export default function Signup() {
         type="text"
         value={business}
         onChange={handleBusinessChange}
+        maxLength={25}
       />
 
       <InputField
@@ -169,6 +174,7 @@ export default function Signup() {
         type="text"
         value={personalPhoneNumber}
         onChange={handlePersonalPhoneNumberChange}
+        maxLength={25}
       />
 
       <InputField
@@ -176,6 +182,7 @@ export default function Signup() {
         type="text"
         value={businessPhoneNumber}
         onChange={handleBusinessPhoneNumberChange}
+        maxLength={25}
       />
 
       <div className="mypage-signup_button-group">

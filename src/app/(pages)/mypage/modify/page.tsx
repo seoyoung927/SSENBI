@@ -118,6 +118,7 @@ export default function ModifyPage() {
         type="text"
         value={memberId}
         onChange={handleInputChange(setMemberId)}
+        maxLength={20}
         disabled
       />
 
@@ -125,6 +126,7 @@ export default function ModifyPage() {
         label="비밀번호"
         type="password"
         value={password}
+        maxLength={25}
         onChange={handleInputChange(setPassword)}
       />
 
@@ -134,6 +136,7 @@ export default function ModifyPage() {
         label="비밀번호 확인"
         type="password"
         value={confirmPassword}
+        maxLength={25}
         onChange={handleInputChange(setConfirmPassword)}
       />
 
@@ -145,6 +148,7 @@ export default function ModifyPage() {
         value={name}
         onChange={handleInputChange(setName)}
         disabled
+        maxLength={25}
       />
 
       <InputField
@@ -152,6 +156,7 @@ export default function ModifyPage() {
         type="text"
         value={business}
         onChange={handleInputChange(setBusiness)}
+        maxLength={25}
       />
 
       <InputField
@@ -159,6 +164,7 @@ export default function ModifyPage() {
         type="text"
         value={personalPhoneNumber}
         onChange={handleInputChange(setPersonalPhoneNumber)}
+        maxLength={25}
       />
 
       <InputField
@@ -166,6 +172,7 @@ export default function ModifyPage() {
         type="text"
         value={businessPhoneNumber}
         onChange={handleInputChange(setBusinessPhoneNumber)}
+        maxLength={25}
       />
 
       <div className="mypage-modify_button-group">

@@ -57,6 +57,7 @@ export default function LoginPage() {
         type="text"
         value={loginId}
         onChange={handleLoginIdChange}
+        maxLength={20}
       />
 
       <InputField
@@ -64,6 +65,7 @@ export default function LoginPage() {
         type="password"
         value={password}
         onChange={handlePasswordChange}
+        maxLength={25}
       />
 
       <div className="mypage-login_button-group">
