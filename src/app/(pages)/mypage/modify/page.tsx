@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { putMemberAPI } from "@/app/api/member/memberAPI";
 import InputField from "@/app/components/common/input/InputField";
@@ -9,7 +9,7 @@ import Header from "@/app/components/layout/Header";
 import Image from "next/image";
 
 // 회원정보 수정 데이터 타입
-export interface UpdateMemberFormData {
+interface UpdateMemberFormData {
   business: string;
   personalPhoneNumber: string;
   businessPhoneNumber: string;
@@ -19,12 +19,22 @@ export default function ModifyPage() {
   const [memberId, setMemberId] = useState("exampleId"); // 읽기 전용 예시 값
   const [password, setPassword] = useState("password"); // 읽기 전용 예시 값
   const [confirmPassword, setConfirmPassword] = useState("password"); // 읽기 전용 예시 값
-  const [name, setName] = useState("홍길동"); // 읽기 전용 예시 값
+  const [name, setName] = useState(""); // 읽기 전용 예시 값
   const [business, setBusiness] = useState("");
   const [personalPhoneNumber, setPersonalPhoneNumber] = useState("");
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState("");
+  const [passwordError, setPasswordError] = useState<string>(""); // 비밀번호 오류 메시지 상태
 
   const router = useRouter();
+
+  // 비밀번호 확인이 변경될 때 비밀번호가 일치하는지 검사
+  useEffect(() => {
+    if (confirmPassword && confirmPassword !== password) {
+      setPasswordError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setPasswordError("");
+    }
+  }, [confirmPassword, password]);
 
   const handleModify = async () => {
     const token = "YOUR_AUTH_TOKEN"; // 실제 토큰으로 교체해야 합니다
@@ -95,6 +105,8 @@ export default function ModifyPage() {
         value={confirmPassword}
         onChange={handleInputChange(setConfirmPassword)}
       />
+
+      <div className="error-message">{passwordError}</div>
 
       <InputField
         label="이름"

@@ -312,3 +312,10 @@ a {
   background-color: var(--border-default);
   opacity: 1;
 }
+
+.error-message {
+  color: var(--red-600);
+  height: 12px;
+  font-size: 11px;
+  padding-left: 12px;
+}

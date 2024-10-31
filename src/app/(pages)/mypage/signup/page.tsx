@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import InputField from "@/app/components/common/input/InputField";
 import { SignupFormData } from "@/types/member/memberTypes";
@@ -17,8 +17,17 @@ export default function Signup() {
   const [business, setBusiness] = useState("");
   const [personalPhoneNumber, setPersonalPhoneNumber] = useState("");
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState("");
+  const [passwordError, setPasswordError] = useState<string>("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (confirmPassword && confirmPassword !== password) {
+      setPasswordError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setPasswordError("");
+    }
+  }, [confirmPassword, password]);
 
   const handleSignup = async () => {
     // 비밀번호 확인
@@ -107,6 +116,8 @@ export default function Signup() {
         value={confirmPassword}
         onChange={handleConfirmPasswordChange}
       />
+
+      <div className="error-message">{passwordError}</div>
 
       <InputField
         label="이름"
