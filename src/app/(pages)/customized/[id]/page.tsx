@@ -3,7 +3,6 @@
 import { useState } from "react";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
-import { TagColorTypes } from "@/types/tag/tagTypes";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import { useRouter } from "next/navigation";
@@ -11,20 +10,7 @@ import { deleteCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
 import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
 import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
-
-// Tag 타입 정의
-interface TemplateTag {
-  tagId: number;
-  tagName: string;
-  tagColor: TagColorTypes;
-}
-
-// Customer 타입 정의
-interface TemplateCustomer {
-  customerId: number;
-  customerName: string;
-  customerColor: TagColorTypes;
-}
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -33,8 +19,8 @@ interface CustomTemplate {
   templateContent: string;
   templateUsageCount: number;
   templateCreatedAt: string;
-  templateTags: TemplateTag[];
-  templateCustomers: TemplateCustomer[];
+  templateTags: TagType[];
+  templateCustomers: CustomerType[];
 }
 
 // ApiResponse 타입 정의
@@ -49,10 +35,26 @@ const dummyData: ApiResponse = {
   templateCreatedAt: "2024-10-25T01:22:27",
   templateTags: [{ tagId: 1, tagName: "직장인", tagColor: "GREEN" }],
   templateCustomers: [
-    { customerId: 12, customerName: "홍길동", customerColor: "GREEN" },
-    { customerId: 13, customerName: "김철수", customerColor: "PINK" },
-    { customerId: 14, customerName: "이영희", customerColor: "SALMON" },
-    { customerId: 15, customerName: "박수진", customerColor: "RED" },
+    {
+      customerId: 12,
+      customerName: "홍길동",
+      customerColor: "GREEN",
+    },
+    {
+      customerId: 13,
+      customerName: "김철수",
+      customerColor: "PINK",
+    },
+    {
+      customerId: 14,
+      customerName: "이영희",
+      customerColor: "SALMON",
+    },
+    {
+      customerId: 15,
+      customerName: "박수진",
+      customerColor: "RED",
+    },
   ],
 };
 

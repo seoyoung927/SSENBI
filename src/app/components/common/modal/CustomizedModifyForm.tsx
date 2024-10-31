@@ -1,22 +1,9 @@
 import React, { useState } from "react";
 import "./CustomizedModifyForm.css";
-import { TagColorTypes } from "@/types/tag/tagTypes";
+
 import InputField from "../input/InputField";
 import TagList from "../tag/TagList";
-
-// Tag 타입 정의
-interface TemplateTag {
-  tagId: number;
-  tagName: string;
-  tagColor: TagColorTypes;
-}
-
-// Customer 타입 정의
-interface TemplateCustomer {
-  customerId: number;
-  customerName: string;
-  customerColor: TagColorTypes;
-}
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -25,8 +12,8 @@ interface CustomTemplate {
   templateContent: string;
   templateUsageCount: number;
   templateCreatedAt: string;
-  templateTags: TemplateTag[];
-  templateCustomers: TemplateCustomer[];
+  templateTags: TagType[];
+  templateCustomers: CustomerType[];
 }
 
 // ApiResponse 타입 정의
@@ -88,16 +75,33 @@ export const CustomizedModifyForm = ({
         type="text"
         value={title}
         onChange={handleTitle}
+        maxLength={20}
       />
 
       <div className="customized-modify_form-group">
         <label className="customized-modify_form-group__label">고객</label>
         <TagList
           tags={[
-            { tagName: "VIP", tagColor: "RED" },
-            { tagName: "Frequent Buyer", tagColor: "ORANGE" },
-            { tagName: "New Customer", tagColor: "GREEN" },
-            { tagName: "very very long long tag name", tagColor: "PURPLE" },
+            {
+              tagName: "VIP",
+              tagColor: "RED",
+              tagId: 31,
+            },
+            {
+              tagName: "Frequent Buyer",
+              tagColor: "ORANGE",
+              tagId: 32,
+            },
+            {
+              tagName: "New Customer",
+              tagColor: "GREEN",
+              tagId: 33,
+            },
+            {
+              tagName: "very very long long tag name",
+              tagColor: "PURPLE",
+              tagId: 34,
+            },
           ]}
           maxTagCount={2}
         />
@@ -107,10 +111,26 @@ export const CustomizedModifyForm = ({
         <label className="customized-modify_form-group__label">태그</label>
         <TagList
           tags={[
-            { tagName: "VIP", tagColor: "RED" },
-            { tagName: "Frequent Buyer", tagColor: "ORANGE" },
-            { tagName: "New Customer", tagColor: "GREEN" },
-            { tagName: "very very long long tag name", tagColor: "PURPLE" },
+            {
+              tagName: "VIP",
+              tagColor: "RED",
+              tagId: 41,
+            },
+            {
+              tagName: "Frequent Buyer",
+              tagColor: "ORANGE",
+              tagId: 42,
+            },
+            {
+              tagName: "New Customer",
+              tagColor: "GREEN",
+              tagId: 43,
+            },
+            {
+              tagName: "very very long long tag name",
+              tagColor: "PURPLE",
+              tagId: 44,
+            },
           ]}
           maxTagCount={2}
         />

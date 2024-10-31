@@ -4,31 +4,18 @@ import React, { useState } from "react";
 import "./page.css";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import Header from "@/app/components/layout/Header";
-import { TagColorTypes } from "@/types/tag/tagTypes";
+import { TagType, CustomerType } from "@/types/tag/tagTypes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { deleteMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
-
-interface Tag {
-  tagId: number;
-  tagName: string;
-  tagColor: TagColorTypes;
-}
-
-interface Customer {
-  customerId: number;
-  customerName: string;
-  customerPhoneNumber: string;
-  customerColor: TagColorTypes;
-}
 
 interface ApiResponse {
   messageId: number;
   title: string;
   messageContent: string;
   sendedAt: string;
-  tags: Tag[];
-  customers: Customer[];
+  tags: TagType[];
+  customers: CustomerType[];
 }
 
 const dummyData: ApiResponse = {

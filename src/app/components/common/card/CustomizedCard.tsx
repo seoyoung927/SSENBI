@@ -1,25 +1,13 @@
 import React from "react";
 import "./CustomizedCard.css";
 import BorderTag from "../tag/BorderTag";
-import { TagColorTypes } from "@/types/tag/tagTypes";
-
-interface Tag {
-  tagId: number;
-  tagName: string;
-  tagColor: TagColorTypes;
-}
-
-interface Customer {
-  customerId: number;
-  customerName: string;
-  customerColor: string;
-}
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 
 interface MessageCardProps {
   title: string;
   content: string;
-  tags: Tag[];
-  customers: Customer[];
+  tags: TagType[];
+  customers: CustomerType[];
 }
 
 export default function CustomizedCard({

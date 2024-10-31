@@ -34,13 +34,11 @@ export default function ModifyPage() {
 
   // 비밀번호 확인이 변경될 때 비밀번호가 일치하는지 검사
   useEffect(() => {
-    useEffect(() => {
-      const errorMsg =
-        confirmPassword && confirmPassword !== password
-          ? PASSWORD_MISMATCH_ERROR
-          : "";
-      setPasswordError(errorMsg);
-    }, [confirmPassword, password]);
+    const errorMsg =
+      confirmPassword && confirmPassword !== password
+        ? PASSWORD_MISMATCH_ERROR
+        : "";
+    setPasswordError(errorMsg);
   }, [confirmPassword, password]);
 
   useEffect(() => {

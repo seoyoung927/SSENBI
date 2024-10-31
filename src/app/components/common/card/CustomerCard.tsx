@@ -2,13 +2,13 @@ import React from "react";
 import "./CustomerCard.css";
 import BorderTag from "../tag/BorderTag";
 import FilledTag from "../tag/FilledTag";
-import { TagType } from "@/types/tag/Tag";
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 
 interface CustomerCardProps {
   name: string;
   phoneNumber: string;
   tags: TagType[];
-  customerTags: TagType[];
+  customerTags: CustomerType[];
 }
 
 export default function CustomerCard({
@@ -22,11 +22,19 @@ export default function CustomerCard({
       <h2 className="customer-card__name">{name}</h2>
       <p className="customer-card_phone-number">{phoneNumber}</p>
       <div className="customer-card__card-tags">
-        {tags?.map((tag, index) => (
-          <BorderTag key={index} tagName={tag.tagName} color={tag.tagColor} />
+        {tags?.map((tag) => (
+          <BorderTag
+            key={tag.tagId}
+            tagName={tag.tagName}
+            color={tag.tagColor}
+          />
         ))}
-        {customerTags?.map((tag, index) => (
-          <FilledTag key={index} tagName={tag.tagName} color={tag.tagColor} />
+        {customerTags?.map((tag) => (
+          <FilledTag
+            key={tag.customerId}
+            tagName={tag.customerName}
+            color={tag.customerColor}
+          />
         ))}
       </div>
     </div>

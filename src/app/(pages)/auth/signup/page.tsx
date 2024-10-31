@@ -27,13 +27,11 @@ export default function Signup() {
   const router = useRouter();
 
   useEffect(() => {
-    useEffect(() => {
-      const errorMsg =
-        confirmPassword && confirmPassword !== password
-          ? PASSWORD_MISMATCH_ERROR
-          : "";
-      setPasswordError(errorMsg);
-    }, [confirmPassword, password]);
+    const errorMsg =
+      confirmPassword && confirmPassword !== password
+        ? PASSWORD_MISMATCH_ERROR
+        : "";
+    setPasswordError(errorMsg);
   }, [confirmPassword, password]);
 
   useEffect(() => {

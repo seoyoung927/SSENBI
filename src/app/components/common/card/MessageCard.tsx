@@ -1,27 +1,7 @@
 import React from "react";
 import "./MessageCard.css";
 import BorderTag from "../tag/BorderTag";
-import { TagColorTypes } from "@/types/tag/tagTypes";
-interface Tag {
-  tagId: number;
-  tagName: string;
-  tagColor: TagColorTypes;
-}
-
-interface Customer {
-  customerId: number;
-  customerName: string;
-  customerColor: string;
-}
-
-interface MessageCardProps {
-  title?: string;
-  content: string;
-  created_at: string;
-  tags: Tag[];
-  customers: Customer[];
-}
-
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 interface ApiResponse {
   code: string;
   message: string;
@@ -32,8 +12,16 @@ interface Message {
   messageId: number;
   messageContent: string;
   sendedAt: string;
-  tags: Tag[];
-  customers: Customer[];
+  tags: TagType[];
+  customers: CustomerType[];
+}
+
+interface MessageCardProps {
+  title?: string;
+  content: string;
+  created_at: string;
+  tags: TagType[];
+  customers: CustomerType[];
 }
 
 export default function MessageCard({

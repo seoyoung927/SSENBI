@@ -3,25 +3,11 @@
 import { useState } from "react";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
-import { TagColorTypes } from "@/types/tag/tagTypes";
 import Link from "next/link";
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import { useRouter } from "next/navigation";
-
-// Tag 타입 정의
-interface TemplateTag {
-  tagId: number;
-  tagName: string;
-  tagColor: TagColorTypes;
-}
-
-// Customer 타입 정의
-interface TemplateCustomer {
-  customerId: number;
-  customerName: string;
-  customerColor: TagColorTypes;
-}
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -30,8 +16,8 @@ interface CustomTemplate {
   templateContent: string;
   templateUsageCount: number;
   templateCreatedAt: string;
-  templateTags: TemplateTag[];
-  templateCustomers: TemplateCustomer[];
+  templateTags: TagType[];
+  templateCustomers: CustomerType[];
 }
 
 // ApiResponse 타입 정의
