@@ -3,10 +3,10 @@
 import { useState } from "react";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
-import ContentCard from "@/app/components/common/card/ContentCard";
 import { TagColorTypes } from "@/types/tag/tagTypes";
-import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
 import Link from "next/link";
+import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
+import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 
 // Tag 타입 정의
 interface TemplateTag {
@@ -31,7 +31,6 @@ interface CustomTemplate {
   templateCreatedAt: string;
   templateTags: TemplateTag[];
   templateCustomers: TemplateCustomer[];
-  image: string;
 }
 
 // ApiResponse 타입 정의
@@ -49,7 +48,6 @@ const dummyData: ApiResponse = [
     templateCustomers: [
       { customerId: 12, customerName: "홍길동", customerColor: "GREEN" },
     ],
-    image: "https://ssenbi-bucket.s3.ap-northeast-2.amazonaws.com/guy.png",
   },
   {
     templateId: 2,
@@ -61,7 +59,6 @@ const dummyData: ApiResponse = [
     templateCustomers: [
       { customerId: 13, customerName: "김철수", customerColor: "PINK" },
     ],
-    image: "https://ssenbi-bucket.s3.ap-northeast-2.amazonaws.com/guy.png",
   },
   {
     templateId: 3,
@@ -73,7 +70,6 @@ const dummyData: ApiResponse = [
     templateCustomers: [
       { customerId: 14, customerName: "이영희", customerColor: "SALMON" },
     ],
-    image: "https://ssenbi-bucket.s3.ap-northeast-2.amazonaws.com/guy.png",
   },
   {
     templateId: 4,
@@ -85,7 +81,6 @@ const dummyData: ApiResponse = [
     templateCustomers: [
       { customerId: 15, customerName: "박수진", customerColor: "RED" },
     ],
-    image: "https://ssenbi-bucket.s3.ap-northeast-2.amazonaws.com/guy.png",
   },
 ];
 
@@ -117,24 +112,16 @@ export default function CustomizedPage() {
           key={message?.templateId}
           href={`/customized/${message?.templateId}`}
         >
-          <ContentCard
-            imgSrc={message?.image}
+          <CustomizedCard
             title={message?.templateTitle}
             content={message?.templateContent}
+            tags={message?.templateTags}
+            customers={message?.templateCustomers}
           />
         </Link>
       ))}
 
-      {/* TODO: 이거 바꿔야함 */}
-      <FloatingMenuButton>
-        <div>
-          <ul>
-            <Link href="/message/new">
-              <li>커스텀 추가하기</li>
-            </Link>
-          </ul>
-        </div>
-      </FloatingMenuButton>
+      <FloatingActionButton text={"템플릿 추가"} />
     </div>
   );
 }
