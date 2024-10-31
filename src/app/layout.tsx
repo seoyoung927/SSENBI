@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
 import ResponsiveTabBar from "./components/layout/ResponsiveTabBar";
+import { useAuthRedirect } from "@/utils/useAuthRedirect";
 
 const pretendard = localFont({
   src: "./assets/fonts/PretendardVariable.woff2",
@@ -15,9 +16,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const isLoggedIn = /* logic to check if the user is logged in */;
+
+  useAuthRedirect(isLoggedIn);
+
   return (
     <html lang="en">
       <head>
