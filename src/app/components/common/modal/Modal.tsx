@@ -5,12 +5,11 @@ import XIcon from "@/app/assets/svg/X.svg";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
   title: string;
   children: ReactNode;
 }
 
-const Modal = ({ isOpen, onClose, onConfirm, title, children }: ModalProps) => {
+const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -23,14 +22,6 @@ const Modal = ({ isOpen, onClose, onConfirm, title, children }: ModalProps) => {
           </button>
         </div>
         <div className="modal-content">{children}</div>
-        <div className="modal-footer">
-          <button className="modal-cancel" onClick={onClose}>
-            취소
-          </button>
-          <button className="modal-confirm" onClick={onConfirm}>
-            확인
-          </button>
-        </div>
       </div>
     </div>
   );

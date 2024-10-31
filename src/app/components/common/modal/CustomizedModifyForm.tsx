@@ -50,16 +50,24 @@ const dummyData: ApiResponse = {
 
 interface CustomizedModifyFormProps {
   templateId: string;
-  onSave: (title: string, content: string) => void;
+  onClose: () => void;
+  onSave: (
+    title?: string,
+    content?: string,
+    beforeTags?: number[],
+    afterTags?: number[],
+    beforeCustomerIds?: number[],
+    afterCustomerIds?: number[],
+  ) => void;
 }
 
 export const CustomizedModifyForm = ({
   templateId,
+  onClose,
   onSave,
 }: CustomizedModifyFormProps) => {
   const [title, setTitle] = useState<string>(dummyData?.templateTitle);
   const [content, setContet] = useState<string>(dummyData?.templateContent);
-  const [customMessageTemplate] = useState<ApiResponse | null>(dummyData);
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -70,7 +78,7 @@ export const CustomizedModifyForm = ({
   };
 
   const handleSave = () => {
-    onSave(title, content);
+    onSave();
   };
 
   return (
@@ -115,6 +123,15 @@ export const CustomizedModifyForm = ({
           value={content}
           onChange={handleContent}
         />
+      </div>
+
+      <div className="modal-footer">
+        <button className="modal-cancel" onClick={onClose}>
+          취소
+        </button>
+        <button className="modal-confirm" onClick={handleSave}>
+          확인
+        </button>
       </div>
     </div>
   );

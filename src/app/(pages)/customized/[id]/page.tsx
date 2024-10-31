@@ -7,7 +7,10 @@ import { TagColorTypes } from "@/types/tag/tagTypes";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import { useRouter } from "next/navigation";
-import { deleteCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
+import {
+  deleteCustomTemplateAPI,
+  putCustomTemplateAPI,
+} from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
 import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
 import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
@@ -56,6 +59,13 @@ const dummyData: ApiResponse = {
   ],
 };
 
+interface ModifiedTemplate {
+  templateTitle: string;
+  templateContent: string;
+  templateAfterTagIds: number[];
+  templateAfterCustomerIds: number[];
+}
+
 interface CustomizedIdPageProps {
   params: {
     id: string;
@@ -65,7 +75,17 @@ interface CustomizedIdPageProps {
 export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const router = useRouter();
   const { id } = params;
-  const [customMessageTemplate] = useState<ApiResponse | null>(dummyData);
+  const [customMessageTemplate, setCustomMessageTemplate] =
+    useState<ApiResponse | null>(dummyData);
+  const [modifiedTemplate, setModifiedTemplate] =
+    useState<ModifiedTemplate | null>({
+      templateTitle: dummyData.templateTitle,
+      templateContent: dummyData.templateContent,
+      templateAfterTagIds: dummyData.templateTags.map((tag) => tag.tagId), // Extract only tag IDs
+      templateAfterCustomerIds: dummyData.templateCustomers.map(
+        (customer) => customer.customerId,
+      ),
+    });
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [isAIEdit, setAIEdit] = useState<boolean>(false);
   const [isEdit, setEdit] = useState<boolean>(false);
@@ -103,9 +123,41 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     setEdit(false);
   };
 
-  const handleSaveTemplate = (title: string, content: string) => {
-    console.log("Saved data:", { title, content });
-    setModalOpen(false);
+  const handleSaveTemplate = async (
+    title?: string,
+    content?: string,
+    beforeTags?: number[],
+    afterTags?: number[],
+    beforeCustomerIds?: number[],
+    afterCustomerIds?: number[],
+  ) => {
+    if (modifiedTemplate === null) return;
+
+    const putCustomTemplateParams = {
+      token: "your-auth-token",
+      templateId: Number(id),
+      title: title ?? modifiedTemplate.templateTitle,
+      content: content ?? modifiedTemplate.templateContent,
+      beforeTags: beforeTags ?? [],
+      afterTags: afterTags ?? modifiedTemplate.templateAfterTagIds,
+      beforeCustomerIds: beforeCustomerIds ?? [],
+      afterCustomerIds:
+        afterCustomerIds ?? modifiedTemplate.templateAfterCustomerIds,
+    };
+
+    try {
+      // TODO: 다시 get
+      // const response = await putCustomTemplateAPI(putCustomTemplateParams);
+      setModifiedTemplate({
+        templateTitle: putCustomTemplateParams.title,
+        templateContent: putCustomTemplateParams.content,
+        templateAfterTagIds: putCustomTemplateParams.afterTags,
+        templateAfterCustomerIds: putCustomTemplateParams.afterCustomerIds,
+      });
+      setModalOpen(false);
+    } catch (error) {
+      console.error("Error updating template:", error);
+    }
   };
 
   return (
@@ -177,18 +229,20 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          onConfirm={handleCloseModal}
           title={isAIEdit ? "AI로 수정" : "수정하기"}
         >
           {isAIEdit ? (
             <CustomizedModifyAI
               templateId={id}
-              onSave={(title, content) => {
-                handleSaveTemplate(title, content);
-              }}
+              onClose={handleCloseModal}
+              onSave={handleSaveTemplate}
             />
           ) : (
-            <CustomizedModifyForm templateId={id} onSave={handleSaveTemplate} />
+            <CustomizedModifyForm
+              templateId={id}
+              onClose={handleCloseModal}
+              onSave={handleSaveTemplate}
+            />
           )}
         </Modal>
       )}
