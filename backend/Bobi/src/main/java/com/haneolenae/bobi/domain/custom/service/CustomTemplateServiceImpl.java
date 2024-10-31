@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.AddCustomerToTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.AddTagToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 import com.haneolenae.bobi.domain.custom.entity.CustomTemplate;
@@ -93,7 +95,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		}
 	}
 
-	@Override
+	@Transactional
 	public void editCustomTemplate(long templateId, EditCustomTemplateRequest request) {
 		CustomTemplate customTemplate = customTemplateRepository.findById(templateId).orElseThrow();
 
@@ -101,13 +103,13 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		customTemplate.editTitleAndContent(request);
 
 		//태그 수정
-		editTags(customTemplate.getTemplateTags(), request, templateId);
+		editTags(request, templateId);
 
 		//커스토머 수정
-		editCustomer(customTemplate.getTemplateCustomers(), request, templateId);
+		editCustomer(request, templateId);
 	}
 
-	private void editTags(List<TemplateTag> tags, EditCustomTemplateRequest request, long templateId) {
+	private void editTags(EditCustomTemplateRequest request, long templateId) {
 		Set<Long> beforeTagSet = new HashSet<>(request.getTemplateBeforeTagIds());
 		Set<Long> afterTagSet = new HashSet<>(request.getTemplateAfterTagIds());
 
@@ -128,7 +130,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	}
 
-	private void editCustomer(List<TemplateCustomer> customers, EditCustomTemplateRequest request, long templateId) {
+	private void editCustomer(EditCustomTemplateRequest request, long templateId) {
 		Set<Long> beforeCustomerSet = new HashSet<>(request.getTemplateBeforeCustomerIds());
 		Set<Long> afterCustomerSet = new HashSet<>(request.getTemplateAfterCustomerIds());
 
@@ -160,5 +162,39 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		templateCustomerRepository.deleteByCustomTemplateId(customTemplate.getId());
 
 		customTemplateRepository.delete(customTemplate);
+	}
+
+	@Transactional
+	public void addTagToTemplate(long memberId, long templateId, AddTagToTemplateRequest request) {
+		//member로 체크하자
+
+		templateTagRepository.save(
+			new TemplateTag(
+				customTemplateRepository.getReferenceById(templateId),
+				tagRepository.getReferenceById(request.getTagId())
+			)
+		);
+	}
+
+	@Transactional
+	public void addCustomerToTemplate(long memberId, long templateId, AddCustomerToTemplateRequest request) {
+		//member로 체크하자
+
+		templateCustomerRepository.save(
+			new TemplateCustomer(
+				customTemplateRepository.getReferenceById(templateId),
+				customerRepository.getReferenceById(request.getCustomerId())
+			)
+		);
+	}
+
+	@Transactional
+	public void removeCustomerFromTemplate(long memberId, long templateId, long customerId) {
+		templateCustomerRepository.deleteByCustomerIdAndCustomTemplateId(customerId, templateId);
+	}
+
+	@Transactional
+	public void removeTagFromTemplate(long memberId, long templateId, long tagId) {
+		templateTagRepository.deleteByTagIdAndCustomTemplateId(tagId, templateId);
 	}
 }

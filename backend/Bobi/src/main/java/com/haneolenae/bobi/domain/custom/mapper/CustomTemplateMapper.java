@@ -13,6 +13,7 @@ import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 import com.haneolenae.bobi.domain.custom.entity.CustomTemplate;
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
 import com.haneolenae.bobi.domain.custom.entity.TemplateTag;
+import com.haneolenae.bobi.domain.general.entity.GeneralTemplate;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CustomTemplateMapper {
@@ -42,5 +43,9 @@ public interface CustomTemplateMapper {
 				customer -> new CustomCustomerResponse(customer.getCustomer().getId(), customer.getCustomer().getName(),
 					customer.getCustomer().getColor()))
 			.toList();
+	}
+
+	default CustomTemplate toCustomTemplate(GeneralTemplate generalTemplate) {
+		return new CustomTemplate(generalTemplate.getTitle(), generalTemplate.getContent(), 0);
 	}
 }

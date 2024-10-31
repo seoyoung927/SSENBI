@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.AddCustomerToTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.AddTagToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.service.CustomTemplateService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
@@ -79,23 +81,41 @@ public class CustomTemplateController {
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
-	//
-	// @PostMapping("/{templateId}/tag")
-	// public ResponseEntity<?> addTagToCustomTemplate(@PathVariable("templateId") long templateId){
-	//
-	// }
-	// @DeleteMapping("/{templateId}/tag/{tagId}")
-	// public ResponseEntity<?> deleteTagFromCustomTemplate(@PathVariable("templateId") long templateId, @PathVariable("tagId") long tagId){
-	//
-	// }
-	//
-	// @PostMapping("/{templateId}/customer")
-	// public ResponseEntity<?> addCustomerToCustomTemplate(@PathVariable("templateId") long templateId){
-	//
-	// }
-	// @DeleteMapping("/{templateId}/customer/{customerId}")
-	// public ResponseEntity<?> deleteCustomerFromCustomTemplate(@PathVariable("templateId") long templateId, @PathVariable("customerId") long tagId){
-	//
-	// }
+
+	@PostMapping("/{templateId}/tag")
+	public ResponseEntity<?> addTagToCustomTemplate(@PathVariable("templateId") long templateId, @RequestBody
+	AddTagToTemplateRequest request) {
+		long memberId = 0L;
+		customTemplateService.addTagToTemplate(memberId, templateId, request);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{templateId}/tag/{tagId}")
+	public ResponseEntity<?> deleteTagFromCustomTemplate(@PathVariable("templateId") long templateId,
+		@PathVariable("tagId") long tagId) {
+		long memberId = 0L;
+
+		customTemplateService.removeTagFromTemplate(memberId, templateId, tagId);
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
+
+	@PostMapping("/{templateId}/customer")
+	public ResponseEntity<?> addCustomerToCustomTemplate(@PathVariable("templateId") long templateId, @RequestBody
+	AddCustomerToTemplateRequest request) {
+		long memberId = 0L;
+		customTemplateService.addCustomerToTemplate(memberId, templateId, request);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{templateId}/customer/{customerId}")
+	public ResponseEntity<?> deleteCustomerFromCustomTemplate(@PathVariable("templateId") long templateId,
+		@PathVariable("customerId") long tagId) {
+		long memberId = 0L;
+		customTemplateService.removeCustomerFromTemplate(memberId, templateId, tagId);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
 
 }

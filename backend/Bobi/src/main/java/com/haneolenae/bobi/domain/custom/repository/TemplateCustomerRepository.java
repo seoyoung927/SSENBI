@@ -16,4 +16,6 @@ public interface TemplateCustomerRepository extends CrudRepository<TemplateCusto
 	void deleteByCustomTemplateId(Long customTemplateId);
 
 	void deleteByCustomerId(Long customerId);
+
+	void deleteByCustomerIdAndCustomTemplateId(Long customerId, Long customTemplateId);
 }

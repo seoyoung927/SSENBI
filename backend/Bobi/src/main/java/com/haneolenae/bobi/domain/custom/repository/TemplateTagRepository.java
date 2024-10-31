@@ -18,4 +18,6 @@ public interface TemplateTagRepository extends JpaRepository<TemplateTag, Long> 
 
 	@Query
 	void deleteByTagId(Long tagId);
+
+	void deleteByTagIdAndCustomTemplateId(Long tagId, Long customTemplateId);
 }
