@@ -1,20 +1,9 @@
 import React from "react";
 import "./FilledTag.css";
+import { TagColor } from "@/types/tag/tagTypes";
 
 type TagProps = {
-  color:
-    | "RED"
-    | "PINK"
-    | "SALMON"
-    | "ORANGE"
-    | "YELLOW"
-    | "GREEN"
-    | "LIME"
-    | "SKYBLUE"
-    | "BLUE"
-    | "PURPLE"
-    | "BEIGE"
-    | "GRAY";
+  color: TagColor;
   tagName: string;
 };
 

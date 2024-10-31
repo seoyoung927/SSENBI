@@ -1,18 +1,14 @@
-export type TagColorTypes =
-  | "RED"
-  | "PINK"
-  | "SALMON"
-  | "ORANGE"
-  | "YELLOW"
-  | "GREEN"
-  | "LIME"
-  | "SKYBLUE"
-  | "BLUE"
-  | "PURPLE"
-  | "BEIGE"
-  | "GRAY";
+import { TAG_COLORS } from "./../../utils/constants";
+
+export type TagType = {
+  tagName: string;
+  tagColor: TagColor;
+};
+
+export type TagColor = (typeof TAG_COLORS)[number];
 
 export type TagProps = {
-  color: TagColorTypes;
+  color: TagColor;
   tagName: string;
+  prefix?: string;
 };
