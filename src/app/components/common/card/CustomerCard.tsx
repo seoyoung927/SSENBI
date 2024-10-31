@@ -2,13 +2,13 @@ import React from "react";
 import "./CustomerCard.css";
 import BorderTag from "../tag/BorderTag";
 import FilledTag from "../tag/FilledTag";
-import { Tag } from "@/types/tag/Tag";
+import { TagType } from "@/types/tag/Tag";
 
 interface CustomerCardProps {
   name: string;
   phoneNumber: string;
-  tags: Tag[];
-  customerTags: Tag[];
+  tags: TagType[];
+  customerTags: TagType[];
 }
 
 export default function CustomerCard({

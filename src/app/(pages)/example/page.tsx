@@ -29,7 +29,7 @@ export default function Example() {
           { tagName: "New Customer", tagColor: "GREEN" },
           { tagName: "very very long long tag name", tagColor: "PURPLE" },
         ]}
-        maxTagCount={2}
+        // maxTagCount={2}
       />
       <CustomerCard
         name="길동"
