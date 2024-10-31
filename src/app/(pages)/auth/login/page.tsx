@@ -34,7 +34,7 @@ export default function LoginPage() {
   };
 
   const handleSignup = () => {
-    router.push("/mypage/signup");
+    router.push("/auth/signup");
   };
 
   const handleLoginIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {

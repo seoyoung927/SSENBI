@@ -78,7 +78,7 @@ export default function ModifyPage() {
       const isSuccess = await putMemberAPI({ token, formData });
 
       if (isSuccess) {
-        router.push("/mypage");
+        router.push("/auth/mypage");
       }
     } catch (error) {
       handleError(error);
@@ -86,7 +86,7 @@ export default function ModifyPage() {
   };
 
   const handleCancel = () => {
-    router.push("/mypage");
+    router.push("/auth/mypage");
   };
 
   const handleError = (error: unknown) => {

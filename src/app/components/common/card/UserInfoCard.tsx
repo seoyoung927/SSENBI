@@ -19,7 +19,7 @@ export default function UserInfoCard({
   const router = useRouter();
 
   const handleSettingsClick = () => {
-    router.push("/mypage/modify");
+    router.push("/auth/modify");
   };
 
   const handleCustomerClick = () => {
