@@ -9,6 +9,8 @@ import FilledTag from "@/app/components/common/tag/FilledTag";
 import { useRouter } from "next/navigation";
 import { deleteCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
+import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
+import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
 
 // Tag 타입 정의
 interface TemplateTag {
@@ -101,6 +103,11 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     setEdit(false);
   };
 
+  const handleSaveTemplate = (title: string, content: string) => {
+    console.log("Saved data:", { title, content });
+    setModalOpen(false);
+  };
+
   return (
     <div className="page-container">
       <Header title="커스텀" showBackIcon={true} />
@@ -170,15 +177,18 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          onConfirm={() => {
-            setModalOpen(false);
-          }}
+          onConfirm={handleCloseModal}
           title={isAIEdit ? "AI로 수정" : "수정하기"}
         >
           {isAIEdit ? (
-            <p>AI를 사용하여 템플릿을 자동으로 수정하시겠습니까?</p>
+            <CustomizedModifyAI
+              templateId={id}
+              onSave={(title, content) => {
+                handleSaveTemplate(title, content);
+              }}
+            />
           ) : (
-            <p>템플릿 내용을 직접 수정하시겠습니까?</p>
+            <CustomizedModifyForm templateId={id} onSave={handleSaveTemplate} />
           )}
         </Modal>
       )}
