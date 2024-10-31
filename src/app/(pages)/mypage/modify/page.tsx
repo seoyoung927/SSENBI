@@ -6,7 +6,7 @@ import { putMemberAPI } from "@/app/api/member/memberAPI";
 import InputField from "@/app/components/common/input/InputField";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
-
+import Image from "next/image";
 // 회원정보 수정 데이터 타입
 export interface UpdateMemberFormData {
   business: string;
@@ -14,7 +14,7 @@ export interface UpdateMemberFormData {
   businessPhoneNumber: string;
 }
 
-export default function Modify() {
+export default function ModifyPage() {
   const [memberId, setMemberId] = useState("exampleId"); // 읽기 전용 예시 값
   const [password, setPassword] = useState("password"); // 읽기 전용 예시 값
   const [confirmPassword, setConfirmPassword] = useState("password"); // 읽기 전용 예시 값
@@ -57,6 +57,10 @@ export default function Modify() {
     <div className="page-container">
       <Header title="회원정보 수정" showBackIcon={true} />
 
+      <div className="mypage-modify-image-container">
+        <Image src="/assets/images/ssenbi_logo.png" fill alt="ssenbi 로고" />
+      </div>
+
       <InputField
         label="아이디"
         type="text"
@@ -70,7 +74,6 @@ export default function Modify() {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        disabled
       />
 
       <InputField
@@ -78,7 +81,6 @@ export default function Modify() {
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        disabled
       />
 
       <InputField

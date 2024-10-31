@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import "./page.css";
 import TagList from "@/app/components/common/tag/TagList";
 
-export default function Mypage() {
+export default function MypagePage() {
   //useState로 tags, customer 관리하기
 
   useEffect(() => {
