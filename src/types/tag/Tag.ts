@@ -1,4 +1,4 @@
-export type Tag = {
+export type TagType = {
   tagName: string;
   tagColor:
     | "RED"

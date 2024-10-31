@@ -29,3 +29,12 @@ button {
 .mypage-modify_button-modify:hover {
   background-color: var(--blue-700);
 }
+
+.mypage-modify-image-container {
+  margin: 46px 0px;
+  width: 300px;
+  height: 100px;
+  justify-self: center;
+  position: relative;
+  object-fit: cover;
+}
