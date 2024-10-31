@@ -208,6 +208,8 @@ a {
   width: var(--divWidth);
   max-width: var(--divWidth);
   margin-left: 100px;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 @media (max-width: 480px) {
@@ -215,6 +217,7 @@ a {
     width: 100vw;
     max-width: 100vw;
     margin: 0;
+    max-height: calc(100vh - 90px);
   }
 }
 

@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import InputField from "@/app/components/common/input/InputField";
 import { SignupFormData } from "@/types/member/memberTypes";
 import { postSignupAPI } from "@/app/api/member/memberAPI";
-import "./page.css";
 import Header from "@/app/components/layout/Header";
+import Image from "next/image";
+import "./page.css";
 
 export default function Signup() {
   const [memberId, setMemberId] = useState("");
@@ -81,6 +82,10 @@ export default function Signup() {
   return (
     <div className="page-container">
       <Header title="회원가입" showBackIcon={true} />
+
+      <div className="mypage-signup-image-container">
+        <Image src="/assets/images/ssenbi_logo.png" fill alt="ssenbi_logo" />
+      </div>
 
       <InputField
         label="아이디"
