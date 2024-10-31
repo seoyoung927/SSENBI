@@ -5,6 +5,7 @@
 
 .mypage-content-container {
   position: relative;
+  padding: 24px;
   top: -10px;
   min-height: calc(100vh - 220px);
   background-color: white;
