@@ -7,7 +7,7 @@ import "./page.css";
 import TagList from "@/app/components/common/tag/TagList";
 
 export default function MypagePage() {
-  //useState로 tags, customer 관리하기
+  // todo : useState로 tags, customer 관리하기
 
   useEffect(() => {
     // 로그인 유무 확인해서 안되어 있으면 login 페이지로 보내기!
