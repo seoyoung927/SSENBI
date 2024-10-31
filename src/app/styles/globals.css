@@ -96,7 +96,7 @@
   --gray-1000: #111111;
 
   /* Sky Blue Scale */
-  --sky-blue-100: #002f5e19; /* Lightest Sky Blue */
+  --sky-blue-100: #d5f3f7; /* Lightest Sky Blue */
   --sky-blue-200: #b2ebf2; /* Light Sky Blue */
   --sky-blue-300: #80deea; /* Sky Blue */
   --sky-blue-400: #4dd0e1; /* Medium Sky Blue */
@@ -108,7 +108,7 @@
   --sky-blue-1000: #006064; /* Deepest Sky Blue */
 
   /* Blue Scale */
-  --blue-100: #e0f7ff; /* Lightest Blue */
+  --blue-100: #e8f0fe; /* Lightest Blue */
   --blue-200: #b2ebff; /* Light Blue */
   --blue-300: #80deff; /* Sky Blue */
   --blue-400: #4dd0ff; /* Medium Light Blue */
