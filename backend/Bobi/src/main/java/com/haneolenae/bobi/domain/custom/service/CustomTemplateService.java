@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 
 public interface CustomTemplateService {
@@ -14,6 +15,8 @@ public interface CustomTemplateService {
 	CustomTemplateResponse getCustomTemplate(long memberId, long templateId);
 
 	void addCustomTemplate(AddCustomTemplateRequest request);
+
+	void editCustomTemplate(long templateId, EditCustomTemplateRequest request);
 
 	void deleteCustomTemplate(long memberId, long templateId);
 }
