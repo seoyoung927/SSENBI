@@ -1,9 +1,9 @@
 import React from "react";
 import "./FilledTag.css";
-import { TagColor } from "@/types/tag/tagTypes";
+import { TagColorType } from "@/types/tag/tagTypes";
 
 type TagProps = {
-  color: TagColor;
+  color: TagColorType;
   tagName: string;
 };
 
