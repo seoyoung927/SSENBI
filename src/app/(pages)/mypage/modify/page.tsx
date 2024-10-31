@@ -24,6 +24,8 @@ export default function ModifyPage() {
   const [personalPhoneNumber, setPersonalPhoneNumber] = useState("");
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState("");
   const [passwordError, setPasswordError] = useState<string>(""); // 비밀번호 오류 메시지 상태
+  const [passwordValidationMessage, setPasswordValidationMessage] =
+    useState<string>(""); // 비밀번호 유효성 검사 메시지 상태
 
   const router = useRouter();
 
@@ -35,6 +37,33 @@ export default function ModifyPage() {
       setPasswordError("");
     }
   }, [confirmPassword, password]);
+
+  // 비밀번호 유효성 검사 함수
+  const validatePassword = (pwd: string) => {
+    const hasKorean = /[가-힣]/.test(pwd);
+    const isLengthValid = pwd.length >= 8 && pwd.length <= 20;
+    const hasLowercase = /[a-z]/.test(pwd);
+    const hasNumber = /[0-9]/.test(pwd);
+
+    if (hasKorean) {
+      return "비밀번호에 한글 문자를 사용할 수 없습니다.";
+    }
+    if (!isLengthValid) {
+      return "비밀번호는 8자리 이상 20자리 이하이어야 합니다.";
+    }
+    if (!hasLowercase) {
+      return "비밀번호에 영어 소문자를 최소 1개 이상 포함해야 합니다.";
+    }
+    if (!hasNumber) {
+      return "비밀번호에 숫자를 최소 1개 이상 포함해야 합니다.";
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    const validationMessage = validatePassword(password);
+    setPasswordValidationMessage(validationMessage);
+  }, [password]);
 
   const handleModify = async () => {
     const token = "YOUR_AUTH_TOKEN"; // 실제 토큰으로 교체해야 합니다
@@ -98,6 +127,8 @@ export default function ModifyPage() {
         value={password}
         onChange={handleInputChange(setPassword)}
       />
+
+      <div className="error-message">{passwordValidationMessage}</div>
 
       <InputField
         label="비밀번호 확인"
