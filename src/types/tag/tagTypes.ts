@@ -1,14 +1,22 @@
 import { TAG_COLORS } from "./../../utils/constants";
 
 export type TagType = {
+  tagId: number;
   tagName: string;
-  tagColor: TagColor;
+  tagColor: TagColorType;
 };
 
-export type TagColor = (typeof TAG_COLORS)[number];
+export type CustomerType = {
+  customerId: number;
+  customerName: string;
+  customerPhoneNumber?: string;
+  customerColor: TagColorType;
+};
+
+export type TagColorType = (typeof TAG_COLORS)[number];
 
 export type TagProps = {
-  color: TagColor;
+  color: TagColorType;
   tagName: string;
   prefix?: string;
 };

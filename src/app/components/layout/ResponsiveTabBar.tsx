@@ -30,7 +30,7 @@ export default function ResponsiveTabBar() {
         onClick={() => router.push("/customized")}
       >
         <StarIcon />
-        <p className="menu-bar_menu-text">Custom</p>
+        <p className="menu-bar_menu-text">커스텀</p>
       </div>
 
       <div
