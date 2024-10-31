@@ -13,8 +13,9 @@ export default function Mypage() {
   return (
     <div className="page-container">
       <Header title="마이페이지" />
-      <div className="mypage-container">
+      <div className="mypage-user-container">
         <UserInfoCard name="김싸피" customerCount={0} sentMessageCount={0} />
+        <div className="mypage-content-container"></div>
       </div>
     </div>
   );
