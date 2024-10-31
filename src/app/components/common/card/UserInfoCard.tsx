@@ -18,27 +18,36 @@ export default function UserInfoCard({
 }: UserInfoCardProps) {
   const router = useRouter();
 
+  const handleSettingsClick = () => {
+    router.push("/auth/modify");
+  };
+
+  const handleCustomerClick = () => {
+    router.push("/customer");
+  };
+
+  const handleMessageClick = () => {
+    router.push("/message");
+  };
+
   return (
     <div className="user-info-card">
       <div className="user-info_name-container">
         <span className="heading user-info_name">{name}</span>
-        <div
-          className="user-info_icon"
-          onClick={() => router.push("/mypage/modify")}
-        >
+        <div className="user-info_icon" onClick={handleSettingsClick}>
           <SettingIcon />
         </div>
       </div>
       <div className="user-info_count-container">
         <span
           className="user-info_count body-medium"
-          onClick={() => router.push("/customized")}
+          onClick={handleCustomerClick}
         >
           고객수 {customerCount}
         </span>
         <span
           className="user-info_count body-medium"
-          onClick={() => router.push("/message")}
+          onClick={handleMessageClick}
         >
           보낸 메시지 {sentMessageCount}
         </span>

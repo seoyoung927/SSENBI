@@ -3,29 +3,29 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 12px;
+  gap: 5px;
   margin: 12px;
 }
 
 .input-field__label {
   font-size: 1rem;
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 
 .input-field__field {
   width: 100%;
-  font-size: 1rem;
   color: var(--text-primary);
+  font-size: 1rem;
   border-radius: 12px;
-  border: 1px solid var(--gray-100);
+  border: 1px solid var(--gray-200);
   background-color: var(--gray-100);
   padding: 10px;
 }
 
 .input-field__field:focus {
-  border: 1px solid var(--gray-500);
+  border: 1px solid var(--blue-200);
+  background-color: var(--blue-100);
   outline: none;
-  background-color: var(--gray-100);
 }
 
 .input-field__field:disabled {

@@ -50,8 +50,8 @@ export default function ResponsiveTabBar() {
       </div>
 
       <div
-        className={`menu-bar__menu ${getClass("mypage")}`}
-        onClick={() => router.push("/mypage")}
+        className={`menu-bar__menu ${getClass("auth")}`}
+        onClick={() => router.push("/auth/mypage")}
       >
         <SmileIcon />
         <p className="menu-bar_menu-text">마이페이지</p>
