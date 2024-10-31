@@ -1,4 +1,3 @@
-// src/utils/authUtils.ts
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 

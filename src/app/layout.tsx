@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./styles/globals.css";
 import ResponsiveTabBar from "./components/layout/ResponsiveTabBar";
 import { useAuthRedirect } from "@/utils/useAuthRedirect";
+import useAuthStore from "@/stores/authStore";
 
 const pretendard = localFont({
   src: "./assets/fonts/PretendardVariable.woff2",
@@ -19,7 +20,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const isLoggedIn = /* logic to check if the user is logged in */;
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   useAuthRedirect(isLoggedIn);
 
