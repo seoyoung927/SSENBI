@@ -204,21 +204,21 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <button
           onClick={handleDelete}
           type="button"
-          className="customized-detail_button"
+          className="customized-detail_button red_button"
         >
           삭제
         </button>
         <button
           onClick={openAIEditModal}
           type="button"
-          className="customized-detail_button"
+          className="customized-detail_button blue_button"
         >
           AI로 수정
         </button>
         <button
           onClick={openEditModal}
           type="button"
-          className="customized-detail_button"
+          className="customized-detail_button blue_button"
         >
           수정하기
         </button>

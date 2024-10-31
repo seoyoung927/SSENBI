@@ -312,6 +312,18 @@ a {
   background-color: var(--border-default);
   opacity: 1;
 }
+.red_button {
+  background-color: var(--red-700);
+  opacity: 0.9;
+  color: var(--bg-default);
+  border-radius: 16px;
+  padding: 10px;
+  width: 100%;
+  font-weight: 700;
+}
+.red_button:hover {
+  opacity: 1;
+}
 
 .error-message {
   color: var(--red-600);

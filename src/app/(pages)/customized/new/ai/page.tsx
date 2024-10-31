@@ -99,14 +99,14 @@ export default function CustomizedNewAIPage() {
         <button
           onClick={handleCancel}
           type="button"
-          className="customized-new_button"
+          className="customized-new_button white_button"
         >
           취소
         </button>
         <button
           onClick={handleSubmit}
           type="button"
-          className="customized-new_button"
+          className="customized-new_button blue_button"
         >
           작성
         </button>

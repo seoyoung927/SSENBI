@@ -103,21 +103,21 @@ export default function CustomizedNewPage() {
         <button
           onClick={handleCancel}
           type="button"
-          className="customized-new_button"
+          className="customized-new_button white_button"
         >
           취소
         </button>
         <button
           onClick={handleAI}
           type="button"
-          className="customized-new_button"
+          className="customized-new_button blue_button"
         >
           AI로 수정
         </button>
         <button
           onClick={handleSubmit}
           type="button"
-          className="customized-new_button"
+          className="customized-new_button blue_button"
         >
           작성
         </button>
