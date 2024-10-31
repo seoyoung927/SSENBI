@@ -7,12 +7,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
+import com.haneolenae.bobi.domain.tag.entity.Tag;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -46,6 +48,10 @@ public class Customer {
 	@Column
 	private Integer tagCount;
 
+	@OneToMany
+	@JoinColumn(name = "tag_id")
+	private List<Tag> tags;
+
 	@Column
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -61,4 +67,17 @@ public class Customer {
 
 	//@ManyToOne
 	//private Member member;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Customer customer = (Customer) o;
+		return id != null && id.equals(customer.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }
