@@ -54,6 +54,30 @@ export default function Signup() {
     router.back();
   };
 
+  const handleMemberIdChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setMemberId(e.target.value);
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPassword(e.target.value);
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => setConfirmPassword(e.target.value);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setName(e.target.value);
+
+  const handleBusinessChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setBusiness(e.target.value);
+
+  const handlePersonalPhoneNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => setPersonalPhoneNumber(e.target.value);
+
+  const handleBusinessPhoneNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => setBusinessPhoneNumber(e.target.value);
+
   return (
     <div className="page-container">
       <Header title="회원가입" showBackIcon={true} />
@@ -62,62 +86,56 @@ export default function Signup() {
         label="아이디"
         type="text"
         value={memberId}
-        onChange={(e) => setMemberId(e.target.value)}
+        onChange={handleMemberIdChange}
       />
 
       <InputField
         label="비밀번호"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
       />
 
       <InputField
         label="비밀번호 확인"
         type="password"
         value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+        onChange={handleConfirmPasswordChange}
       />
 
       <InputField
         label="이름"
         type="text"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={handleNameChange}
       />
 
       <InputField
-        label="사업체 명"
+        label="상 호"
         type="text"
         value={business}
-        onChange={(e) => setBusiness(e.target.value)}
+        onChange={handleBusinessChange}
       />
 
       <InputField
         label="개인 전화번호"
         type="text"
         value={personalPhoneNumber}
-        onChange={(e) => setPersonalPhoneNumber(e.target.value)}
+        onChange={handlePersonalPhoneNumberChange}
       />
 
       <InputField
-        label="사업체 전화번호"
+        label="업체 전화번호"
         type="text"
         value={businessPhoneNumber}
-        onChange={(e) => setBusinessPhoneNumber(e.target.value)}
+        onChange={handleBusinessPhoneNumberChange}
       />
 
       <div className="mypage-signup_button-group">
-        <button
-          onClick={handleCancel}
-          className=".mypage-signup_button mypage-signup_button-candel"
-        >
+        <button onClick={handleCancel} className="white_button">
           취소
         </button>
-        <button
-          onClick={handleSignup}
-          className=".mypage-signup_button mypage-signup_button-signup"
-        >
+        <button onClick={handleSignup} className="blue_button">
           회원가입
         </button>
       </div>
