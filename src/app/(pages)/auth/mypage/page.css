@@ -42,9 +42,9 @@
 
 @media (max-width: 480px) {
   .mypage-user-container {
-    min-height: calc(100vh - 129px);
+    min-height: calc(100vh - 105px);
   }
   .mypage-content-container {
-    min-height: calc(100vh - 285px);
+    min-height: calc(100vh - 261px);
   }
 }
