@@ -24,6 +24,8 @@ public enum ApiType {
 	// Tag
 	TAG_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.T40401, ApiCode.T40401.getMsg()),
 
+	// Message
+	EXTERNAL_MESSAGE_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.MS50001, ApiCode.MS50001.getMsg()),
 
 	// 500
 	SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.X10000, ApiCode.X10000.getMsg());

@@ -5,7 +5,5 @@ import com.haneolenae.bobi.domain.message.entity.Message;
 
 public interface MessageService {
 
-	void saveMessage(Message message);
-
-	void sendMessage(long memberId, SendMessageRequest sendMessageRequest);
+ 	void sendMessage(long memberId, SendMessageRequest sendMessageRequest);
 }

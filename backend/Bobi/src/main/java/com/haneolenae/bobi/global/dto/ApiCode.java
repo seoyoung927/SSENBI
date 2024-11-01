@@ -20,6 +20,9 @@ public enum ApiCode {
 	// Tag
 	T40401("Tag not found"),
 
+	// Message
+	MS50001("Failed to send message"),
+
 	// Error
 	E10001("This Error is sample error"),
 

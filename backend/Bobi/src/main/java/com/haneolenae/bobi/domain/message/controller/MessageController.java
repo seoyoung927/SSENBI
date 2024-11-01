@@ -44,7 +44,7 @@ public class MessageController {
 		@RequestBody SendMessageRequest sendMessageRequest){
 
 		// token에서 memberId 추출
-		int tempMemberId = 1;
+		long tempMemberId = 1;
 		messageService.sendMessage(tempMemberId, sendMessageRequest);
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
