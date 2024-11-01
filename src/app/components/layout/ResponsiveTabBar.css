@@ -1,13 +1,13 @@
 .menu-bar {
   display: flex;
   flex-direction: column;
-  width: 100px;
+  width: 80px;
   height: 100vh;
   position: fixed;
   gap: 20px;
   left: 0;
   margin: 0;
-  padding: 12px 12px;
+  padding: 12px 4px;
   border-top: var(--gray-300) solid 1px;
   background: var(--sky-blue-100);
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -17,21 +17,23 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 50px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  user-select: none;
 }
 
 .menu-bar_menu-text {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 @media (max-width: 480px) {
   .menu-bar {
     justify-content: space-evenly;
     flex-direction: row;
-    height: 80px;
+    height: 56px;
+
+    padding: 8px 24px;
     width: 100vw;
     bottom: 0;
   }
@@ -42,10 +44,12 @@
 }
 
 .svg-icon_selected {
-  stroke: var(--blue-500);
-  color: var(--blue-500);
+  stroke: var(--primary-color);
+  color: var(--primary-color);
+  stroke-width: 1.5;
 }
 .svg-icon_unselected {
-  stroke: var(--gray-500);
-  color: var(--gray-500);
+  stroke: var(--text-secondary);
+  color: var(--text-secondary);
+  stroke-width: 1.5;
 }
