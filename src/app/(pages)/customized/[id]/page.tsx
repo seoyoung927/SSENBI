@@ -84,9 +84,9 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         (customer) => customer.customerId,
       ),
     });
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [isAIEdit, setAIEdit] = useState<boolean>(false);
-  const [, setEdit] = useState<boolean>(false);
+  const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
+    useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalModalOpen] = useState<boolean>(false);
 
   const handleDelete = async () => {
     const token = "your-auth-token";
@@ -104,21 +104,19 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   };
 
   const openAIEditModal = () => {
-    setAIEdit(true);
-    setEdit(false);
-    setModalOpen(true);
+    setIsAIEditModalModalOpen(true);
   };
 
   const openEditModal = () => {
-    setEdit(true);
-    setAIEdit(false);
-    setModalOpen(true);
+    setIsEditModalModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setAIEdit(false);
-    setEdit(false);
+  const closeAIEditModal = () => {
+    setIsAIEditModalModalOpen(false);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalModalOpen(false);
   };
 
   const handleSaveTemplate = async (
@@ -152,7 +150,8 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         templateAfterTagIds: putCustomTemplateParams.afterTags,
         templateAfterCustomerIds: putCustomTemplateParams.afterCustomerIds,
       });
-      setModalOpen(false);
+      setIsAIEditModalModalOpen(false);
+      setIsEditModalModalOpen(false);
     } catch (error) {
       console.error("Error updating template:", error);
     }
@@ -223,25 +222,31 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
+      {isAIEditModalOpen && (
         <Modal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          title={isAIEdit ? "AI로 수정" : "수정하기"}
+          isOpen={isAIEditModalOpen}
+          onClose={closeAIEditModal}
+          title={"AI 쎈비와 수정하기"}
         >
-          {isAIEdit ? (
-            <CustomizedModifyAI
-              templateId={id}
-              onClose={handleCloseModal}
-              onSave={handleSaveTemplate}
-            />
-          ) : (
-            <CustomizedModifyForm
-              templateId={id}
-              onClose={handleCloseModal}
-              onSave={handleSaveTemplate}
-            />
-          )}
+          <CustomizedModifyAI
+            templateId={id}
+            onClose={closeAIEditModal}
+            onSave={handleSaveTemplate}
+          />
+        </Modal>
+      )}
+
+      {isEditModalOpen && (
+        <Modal
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          title={"수정하기"}
+        >
+          <CustomizedModifyForm
+            templateId={id}
+            onClose={closeEditModal}
+            onSave={handleSaveTemplate}
+          />
         </Modal>
       )}
     </div>
