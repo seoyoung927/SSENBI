@@ -26,8 +26,8 @@ const TEMPLATE_TABS = [
 ];
 
 export default function Template() {
-  const [, setCurrentTab] = useState<number>(0);
-  const [, setCategoryList] = useState<string[]>([]);
+  const [currentTab, setCurrentTab] = useState<number>(0);
+  const [categoryList, setCategoryList] = useState<string[]>([]);
   const [allMessageTemplates, setAllMessageTemplates] = useState<
     MessageTemplateType[]
   >([]);
@@ -53,7 +53,7 @@ export default function Template() {
     try {
       const response = await getTemplateAPI();
       console.log("API Response:", response);
-      return response.result || [];
+      return response.result;
     } catch (error) {
       console.error("Error fetching message API:", error);
       return [];
