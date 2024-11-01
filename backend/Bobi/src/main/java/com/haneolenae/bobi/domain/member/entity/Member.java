@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -82,5 +84,11 @@ public class Member {
 		this.personalPhoneNumber = personalPhoneNumber;
 		this.businessPhoneNumber = businessPhoneNumber;
 		this.uuid = uuid;
+	}
+
+	public void update(MemberUpdateRequest request) {
+		this.business = request.getBusiness();
+		this.personalPhoneNumber = request.getPersonalPhoneNumber();
+		this.businessPhoneNumber = request.getBusinessPhoneNumber();
 	}
 }

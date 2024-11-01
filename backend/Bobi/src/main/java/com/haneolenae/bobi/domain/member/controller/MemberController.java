@@ -1,12 +1,18 @@
 package com.haneolenae.bobi.domain.member.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.haneolenae.bobi.domain.member.dto.MemberRegistRequest;
+import com.haneolenae.bobi.domain.member.dto.request.MemberRegistRequest;
+import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
 import com.haneolenae.bobi.domain.member.service.MemberService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -26,6 +32,14 @@ public class MemberController {
 	public ResponseEntity<ApiResponse<String>> regist(@RequestBody MemberRegistRequest memberRegistRequest) {
 		log.info("input");
 		memberService.regist(memberRegistRequest);
+		return ResponseEntity.ok(ApiResponse.ok());
+	}
+
+	@PutMapping
+	public ResponseEntity<ApiResponse<String>> update(@RequestHeader("Authorization") String accessToken,
+		@RequestBody MemberUpdateRequest request) {
+
+		memberService.update(accessToken, request);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
