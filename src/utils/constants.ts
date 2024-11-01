@@ -1,4 +1,6 @@
-export const TAG_COLORS = [
+import { TagColorType } from "@/types/tag/tagTypes";
+
+export const TAG_COLORS: TagColorType[] = [
   "RED",
   "PINK",
   "SALMON",
