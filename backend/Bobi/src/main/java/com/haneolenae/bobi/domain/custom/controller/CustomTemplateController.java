@@ -19,6 +19,7 @@ import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomerToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddTagToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.ReplicateCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.service.CustomTemplateService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -117,4 +118,13 @@ public class CustomTemplateController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
+	@PostMapping("/{templateId}/replicate")
+	public ResponseEntity<?> replicateCustomTemplate(@PathVariable long templateId,
+		@RequestBody ReplicateCustomTemplateRequest request) {
+		long memberId = 0L;
+
+		customTemplateService.replicateCustomTemplate(memberId, templateId, request);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
 }

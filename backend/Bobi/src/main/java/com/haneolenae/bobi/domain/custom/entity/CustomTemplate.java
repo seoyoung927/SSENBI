@@ -20,6 +20,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -77,5 +78,18 @@ public class CustomTemplate {
 	public void editTitleAndContent(EditCustomTemplateRequest request) {
 		this.title = request.getTemplateTitle();
 		this.content = request.getTemplateContent();
+	}
+
+	@Builder
+	public CustomTemplate(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
+	public CustomTemplate replicateMe() {
+		return CustomTemplate.builder()
+			.title(this.title + " (복사)")
+			.content(this.content)
+			.build();
 	}
 }

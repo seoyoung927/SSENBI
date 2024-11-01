@@ -12,6 +12,7 @@ import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomerToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddTagToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.ReplicateCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 import com.haneolenae.bobi.domain.custom.entity.CustomTemplate;
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
@@ -196,5 +197,36 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	@Transactional
 	public void removeTagFromTemplate(long memberId, long templateId, long tagId) {
 		templateTagRepository.deleteByTagIdAndCustomTemplateId(tagId, templateId);
+	}
+
+	@Override
+	public void replicateCustomTemplate(long memberId, long templateId, ReplicateCustomTemplateRequest request) {
+		CustomTemplate customTemplate = customTemplateRepository.findById(templateId).orElseThrow();
+
+		CustomTemplate replicatedCustomTemplate = customTemplate.replicateMe();
+
+		customTemplateRepository.save(replicatedCustomTemplate);
+		//태그와 커스토머 복사
+		if (request.getIsReplicateTagAndCustomer()) {
+			customTemplate.getTemplateTags().stream()
+				.forEach(templateTag ->
+					templateTagRepository.save(
+						new TemplateTag(
+							replicatedCustomTemplate,
+							templateTag.getTag()
+						)
+					)
+				);
+			customTemplate.getTemplateCustomers().stream().forEach(
+				templateCustomer ->
+					templateCustomerRepository.save(
+						new TemplateCustomer(
+							replicatedCustomTemplate,
+							templateCustomer.getCustomer()
+						)
+					)
+			);
+		}
+
 	}
 }
