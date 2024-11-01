@@ -7,6 +7,7 @@ import { validatePassword } from "@/utils/validatePassword";
 import InputField from "@/app/components/common/input/InputField";
 import Header from "@/app/components/layout/Header";
 import Image from "next/image";
+import Cookies from "js-cookie";
 import "./page.css";
 
 // 회원정보 수정 데이터 타입
@@ -47,7 +48,8 @@ export default function ModifyPage() {
   }, [password]);
 
   const handleModify = async () => {
-    const token = "YOUR_AUTH_TOKEN"; // 실제 토큰으로 교체해야 합니다
+    const token = Cookies.get("accessToken");
+    if (!token) return;
 
     const formData: UpdateMemberFormData = {
       business,

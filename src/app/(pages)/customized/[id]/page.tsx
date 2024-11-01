@@ -14,6 +14,7 @@ import Modal from "@/app/components/common/modal/Modal";
 import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
 import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import Cookies from "js-cookie";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -88,7 +89,9 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   useEffect(() => {
     const fetchDCustomTemplate = async (templateId: string) => {
       try {
-        const token = "ACCESS_TOKEN";
+        const token = Cookies.get("accessToken");
+        if (!token) return;
+
         const data = await getCustomTemplateAPI({ token, templateId });
         console.log("templateId : ", templateId, data);
         setCustomMessageTemplate(data.result);
@@ -100,7 +103,9 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   }, []);
 
   const handleDelete = async () => {
-    const token = "your-auth-token";
+    const token = Cookies.get("accessToken");
+    if (!token) return;
+
     try {
       const response = await deleteCustomTemplateAPI({
         token,

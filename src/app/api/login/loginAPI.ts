@@ -8,8 +8,9 @@ export const postLoginAPI = async (formData: LoginFormData) => {
 
   // 응답 코드가 SUCCESS인 경우
   if (response.data.code === "S10000") {
+    const accessToken = response.headers["authorization"];
     //쿠키 생성 시점으로부터 1일 후에 만료
-    Cookies.set("accessToken", response.data.accessToken, { expires: 1 });
+    Cookies.set("accessToken", accessToken, { expires: 1 });
     return true;
   }
 
