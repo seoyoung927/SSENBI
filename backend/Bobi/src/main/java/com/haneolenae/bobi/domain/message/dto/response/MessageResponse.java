@@ -14,10 +14,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageListResponse {
+public class MessageResponse {
 
 	private int messageId;
 	private String messageContent;
 	private LocalDateTime sendAt;
-	private List<Tag> tags;
+	private List<MessageTagDto> tags;
 }

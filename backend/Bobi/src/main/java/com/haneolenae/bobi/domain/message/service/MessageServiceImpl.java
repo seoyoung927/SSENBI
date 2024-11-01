@@ -16,9 +16,11 @@ import com.haneolenae.bobi.domain.customer.repository.CustomerTagRepository;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.message.dto.request.SendMessageRequest;
+import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
 import com.haneolenae.bobi.domain.message.entity.Message;
 import com.haneolenae.bobi.domain.message.entity.MessageCustomer;
 import com.haneolenae.bobi.domain.message.entity.MessageTag;
+import com.haneolenae.bobi.domain.message.mapper.MessageMapper;
 import com.haneolenae.bobi.domain.message.repository.MessageCustomerRepository;
 import com.haneolenae.bobi.domain.message.repository.MessageRepository;
 import com.haneolenae.bobi.domain.message.repository.MessageTagRepository;
@@ -36,11 +38,14 @@ public class MessageServiceImpl implements MessageService {
 	private static final Logger log = LoggerFactory.getLogger(MessageServiceImpl.class);
 	private final MemberRepository memberRepository;
 	private final CustomerRepository customerRepository;
-	private final TagRepository tagRepository;
 	private final CustomerTagRepository customerTagRepository;
+	private final TagRepository tagRepository;
 	private final MessageRepository messageRepository;
 	private final MessageCustomerRepository messageCustomerRepository;
 	private final MessageTagRepository messageTagRepository;
+
+	private final MessageMapper messageMapper;
+
 
 	@Transactional
 	public void sendMessage(long memberId, SendMessageRequest sendMessageRequest) {
@@ -118,5 +123,20 @@ public class MessageServiceImpl implements MessageService {
 
 			// TODO: 실패한 사람 리스트 반환해줘야 함
 		}
+	}
+
+	@Override
+	public List<MessageResponse> getMessageList(long memberId, String keyword) {
+
+		// TODO: 멤버 유효성 검사
+		Member sender = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_FOUND));
+
+		// TODO: 검색어로 검색
+		List<Message> messages = messageRepository.findMessagesByKeywordAndMemberId(keyword, memberId);
+
+		return messages.stream()
+			.map(messageMapper::toMessageResponse)
+			.toList();
 	}
 }
