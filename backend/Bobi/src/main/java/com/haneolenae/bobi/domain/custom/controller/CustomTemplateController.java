@@ -42,8 +42,8 @@ public class CustomTemplateController {
 		//long memberId = tokenProvider.getId(accessToken);
 		long memberId = 0L;
 
-		return ResponseEntity.ok(
-			customTemplateService.getCustomTemplates(new ApiResponse<>((memberId, pageable, templateTags, templateCustomers,
+		return ResponseEntity.ok(new ApiResponse<>(
+			customTemplateService.getCustomTemplates(memberId, pageable, templateTags, templateCustomers,
 				templateSearch)));
 	}
 
