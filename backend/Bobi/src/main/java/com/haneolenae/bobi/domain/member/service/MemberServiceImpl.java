@@ -13,6 +13,8 @@ import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.mapper.MemberMapper;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 
 import jakarta.transaction.Transactional;
 
@@ -35,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void regist(MemberRegistRequest memberRegistRequest) {
 		if (alreadyExistMemberId(memberRegistRequest.getMemberId())) {
-			throw new RuntimeException("C40003");
+			throw new ApiException(ApiType.MEMBER_ALREADY_REGIST);
 		}
 		memberRegistRequest.setPassword(passwordEncoder.encode(memberRegistRequest.getPassword()));
 
@@ -47,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public void update(String accessToken, MemberUpdateRequest request) {
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
-		Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("M40001"));
+		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		member.update(request);
 	}
@@ -55,10 +57,10 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public void updatePassword(String accessToken, MemberUpdatePasswordRequest request) {
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
-		Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("M40001"));
+		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		if (isNotSamePassword(request.getPassword(), member.getPassword())) {
-			throw new RuntimeException("M40101");
+			throw new ApiException(ApiType.MEMBER_PASSWORD_INVALID);
 		}
 
 		member.updatePassword(passwordEncoder.encode(request.getChangePassword()));

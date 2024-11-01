@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 public class JwtTokenProvider {
 	private Key secretKey = generateSecretKey(
 		"c14aedf77d1d17e7f3259f26a01c6fd9bd70b32b334a51509abc616386a3b67aa481573a9dda3bae5043cd44eecaeb79842cea930621baf23f198cceae9d8234");
-	private long accessTokenValidTime = 30 * 60 * 1000L;//30분
-	private long refreshTokenValidTime = 30 * 60 * 1000L;//30분
+	private long accessTokenValidTime = 720 * 60 * 1000L;//12시간 (차후 축소 예정)
+	private long refreshTokenValidTime = 720 * 60 * 1000L;//12시간
 
 	private Key generateSecretKey(String secret) {
 		byte[] keyBytes = Decoders.BASE64.decode(secret);
@@ -53,8 +53,7 @@ public class JwtTokenProvider {
 			.compact();
 	}
 
-	public boolean validateToken(String authorizationHeader) {
-		final String token = extractToken(authorizationHeader);
+	public boolean validateToken(String token) {
 		try {
 			final Jws<Claims> claims = getClaimsJws(token);
 			return !claims
@@ -95,9 +94,4 @@ public class JwtTokenProvider {
 
 		return Math.max(0, expiration.getTime() - now.getTime());
 	}
-
-	private String extractToken(String token) {
-		return token.split(" ")[1];
-	}
-
 }

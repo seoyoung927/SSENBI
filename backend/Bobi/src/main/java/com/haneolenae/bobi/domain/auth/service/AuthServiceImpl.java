@@ -8,6 +8,8 @@ import com.haneolenae.bobi.domain.auth.dto.response.TokenResponse;
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 import com.haneolenae.bobi.global.util.RedisUtil;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final RedisUtil redisUtil;
-	private final int REFRESH_TOKEN_TIME = 180;
+	private final int REFRESH_TOKEN_TIME = 720; //12시간 (나중에 같이 줄여야함)
 
 	public AuthServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder,
 		JwtTokenProvider jwtTokenProvider, RedisUtil redisUtil) {
@@ -33,10 +35,10 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public TokenResponse login(LoginRequest loginRequest, String sessionId) {
 		Member member = memberRepository.findByMemberId(loginRequest.getLoginId())
-			.orElseThrow(() -> new RuntimeException("A40001"));
+			.orElseThrow(() -> new ApiException(ApiType.LOGIN_FAILED));
 
 		if (!isSamePassword(loginRequest.getPassword(), member.getPassword())) {
-			throw new RuntimeException("A40001");
+			throw new ApiException(ApiType.LOGIN_FAILED);
 		}
 
 		//토큰 발급
@@ -68,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
 
 		//TODO:가지고 있는 refreshToken과 redis의 refreshToken이 다르다면, 잘못된 접근이라 예외 처리
 		if (isNotSameRefreshToken(savedRefreshToken, refreshToken)) {
-			throw new RuntimeException("A40003");
+			throw new ApiException(ApiType.REFRESH_TOKEN_NOT_SAME);
 		}
 
 		return new RefreshResponse(jwtTokenProvider.createAccessToken(id));
@@ -76,10 +78,6 @@ public class AuthServiceImpl implements AuthService {
 
 	private boolean isSamePassword(String inputPassword, String encodePassword) {
 		return passwordEncoder.matches(inputPassword, encodePassword);
-	}
-
-	private String extractAccessToken(String token) {
-		return token.split(" ")[1];
 	}
 
 	private String createRedisKey(Long id, String sessionId) {
@@ -91,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
 
 		//TODO:없으면 만료가 되었기에 재 로그인하라고 예외처리
 		if (rawData.isEmpty()) {
-			throw new RuntimeException("A40002"); //차후 수정
+			throw new ApiException(ApiType.REFRESH_TOKEN_EXPIRED);
 		}
 
 		return (String)rawData.get();
