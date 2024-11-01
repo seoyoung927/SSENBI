@@ -93,7 +93,7 @@ export default function CustomizedPage() {
   }, []);
 
   const handleNewTemplate = () => {
-    router.push("/customized/new");
+    router.push("/customized/create");
   };
 
   return (

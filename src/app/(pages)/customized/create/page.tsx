@@ -29,7 +29,7 @@ export default function CustomizedNewPage() {
   };
 
   const handleAI = () => {
-    router.push("/customized/new/ai");
+    router.push("/customized/create/ai");
   };
 
   const handleSubmit = async () => {
