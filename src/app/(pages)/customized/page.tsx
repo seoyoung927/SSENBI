@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import FloatingActionButton from "@/app/components/common/button/FloatingActionB
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import { useRouter } from "next/navigation";
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -73,23 +74,24 @@ const dummyData: ApiResponse = [
 
 export default function CustomizedPage() {
   const router = useRouter();
-  const [filteredCustomMessageTemplates] = useState<ApiResponse | null>(
-    dummyData,
-  );
+  const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
+    useState<ApiResponse | null>(dummyData);
 
-  // useEffect(() => {
-  //   const fetchCustomTemplates = async () => {
-  //     try {
-  //       const token = "ACCESS_TOKEN";
-  //       const data = await getCustomTemplatesAPI({ token });
-  //       setFilteredMessageTemplates(data.result[0]?.generalTemplates);
-  //     } catch (error) {
-  //       console.error("Error fetching message:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchCustomTemplates = async () => {
+      try {
+        const token = "ACCESS_TOKEN";
+        const data = await getCustomTemplatesAPI({ token });
+        console.log(data);
+        // setFilteredMessageTemplates(data.result[0]?.generalTemplates);
+        setFilteredMessageTemplates(data);
+      } catch (error) {
+        console.error("Error fetching message:", error);
+      }
+    };
 
-  //   fetchCustomMessage();
-  // }, []);
+    fetchCustomTemplates();
+  }, []);
 
   const handleNewTemplate = () => {
     router.push("/customized/new");

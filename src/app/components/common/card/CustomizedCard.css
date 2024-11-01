@@ -46,6 +46,8 @@
 }
 
 .customized-tag-container {
+  display: flex;
+  gap: 4px;
   overflow: hidden;
   white-space: nowrap;
   width: 80%;
