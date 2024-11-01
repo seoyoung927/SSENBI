@@ -15,4 +15,9 @@ public interface TemplateTagRepository extends JpaRepository<TemplateTag, Long> 
 	@Modifying
 	@Query("DELETE FROM TemplateTag t WHERE t.customTemplate.id = :customTemplateId")
 	void deleteByCustomTemplateId(Long customTemplateId);
+
+	@Query
+	void deleteByTagId(Long tagId);
+
+	void deleteByTagIdAndCustomTemplateId(Long tagId, Long customTemplateId);
 }
