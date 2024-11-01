@@ -64,61 +64,19 @@ export default function CustomizedNewPage() {
       />
 
       <div className="customized-new_form-group">
-        <label className="customized-new_form-group__label">고객</label>
-        <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 1,
-            },
-            {
-              tagName: "Frequent Buyer",
-              tagColor: "ORANGE",
-              tagId: 2,
-            },
-            {
-              tagName: "New Customer",
-              tagColor: "GREEN",
-              tagId: 3,
-            },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 4,
-            },
-          ]}
-          maxTagCount={2}
-        />
-      </div>
-
-      <div className="customized-new_form-group">
-        <label className="customized-new_form-group__label">태그</label>
-        <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 5,
-            },
-            {
-              tagName: "Frequent Buyer",
-              tagColor: "ORANGE",
-              tagId: 6,
-            },
-            {
-              tagName: "New Customer",
-              tagColor: "GREEN",
-              tagId: 7,
-            },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 8,
-            },
-          ]}
-          maxTagCount={2}
-        />
+        <label className="customized-new_form-group__label">태그 및 고객</label>
+        <div className="customized-new_tag-container">
+          <TagList
+            tags={[
+              {
+                tagName: "VIP",
+                tagColor: "RED",
+                tagId: 1,
+              },
+            ]}
+            maxTagCount={5}
+          />
+        </div>
       </div>
 
       <div className="customized-new_form-group">
