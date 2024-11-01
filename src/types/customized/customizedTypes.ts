@@ -12,7 +12,7 @@ export type GetCustomTemplatesParams = {
 // Get Single Custom Template API Params
 export type GetCustomTemplateParams = {
   token: string;
-  templateId: number;
+  templateId: string;
 };
 
 // Put Custom Template API Params

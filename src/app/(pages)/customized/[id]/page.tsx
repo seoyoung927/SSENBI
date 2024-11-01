@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./page.css";
 import Header from "@/app/components/layout/Header";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import { useRouter } from "next/navigation";
-import { deleteCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
+import {
+  deleteCustomTemplateAPI,
+  getCustomTemplateAPI,
+} from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
 import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
 import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
@@ -74,19 +77,27 @@ interface CustomizedIdPageProps {
 export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const router = useRouter();
   const { id } = params;
-  const [customMessageTemplate] = useState<ApiResponse | null>(dummyData);
+  const [customMessageTemplate, setCustomMessageTemplate] =
+    useState<ApiResponse | null>(null);
   const [modifiedTemplate, setModifiedTemplate] =
-    useState<ModifiedTemplate | null>({
-      templateTitle: dummyData.templateTitle,
-      templateContent: dummyData.templateContent,
-      templateAfterTagIds: dummyData.templateTags.map((tag) => tag.tagId), // Extract only tag IDs
-      templateAfterCustomerIds: dummyData.templateCustomers.map(
-        (customer) => customer.customerId,
-      ),
-    });
+    useState<ModifiedTemplate | null>(null);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchDCustomTemplate = async (templateId: string) => {
+      try {
+        const token = "ACCESS_TOKEN";
+        const data = await getCustomTemplateAPI({ token, templateId });
+        console.log("templateId : ", templateId, data);
+        setCustomMessageTemplate(data.result);
+      } catch (error) {
+        console.error("Error fetching message:", error);
+      }
+    };
+    fetchDCustomTemplate(id);
+  }, []);
 
   const handleDelete = async () => {
     const token = "your-auth-token";
