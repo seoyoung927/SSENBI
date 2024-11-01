@@ -43,9 +43,8 @@ public class CustomTemplateController {
 		long memberId = 0L;
 
 		return ResponseEntity.ok(
-			customTemplateService.getCustomTemplates(memberId, pageable, templateTags, templateCustomers,
-				templateSearch));
-
+			customTemplateService.getCustomTemplates(new ApiResponse<>((memberId, pageable, templateTags, templateCustomers,
+				templateSearch)));
 	}
 
 	@GetMapping("/{templateId}")
@@ -54,7 +53,7 @@ public class CustomTemplateController {
 		// 	long memberId = tokenProvider.getId(accessToken);
 		long memberId = 0L;
 
-		return ResponseEntity.ok(customTemplateService.getCustomTemplate(memberId, templateId));
+		return ResponseEntity.ok(new ApiResponse<>(customTemplateService.getCustomTemplate(memberId, templateId)));
 	}
 
 	@PostMapping
