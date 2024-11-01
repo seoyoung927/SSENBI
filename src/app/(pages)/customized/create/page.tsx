@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import { postCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
+import Cookies from "js-cookie";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
@@ -34,7 +35,8 @@ export default function CustomizedNewPage() {
 
   const handleSubmit = async () => {
     try {
-      const token = "YOUR_AUTH_TOKEN";
+      const token = Cookies.get("accessToken");
+      if (!token) return;
 
       const response = await postCustomTemplateAPI({
         token,

@@ -8,6 +8,7 @@ import { TagType, CustomerType } from "@/types/tag/tagTypes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { deleteMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface ApiResponse {
   messageId: number;
@@ -59,7 +60,9 @@ const MessageIdPage = ({ params }: MessageIdPageProps) => {
   // useEffect(() => {
   //   const fetchMessage = async () => {
   //     try {
-  //       const token = "your-auth-token";
+  //       const token = Cookies.get("accessToken");
+  //       if (!token) return;
+
   //       const data = await getMessageAPI({ token, messageId: id });
   //       setMessageData(data);
   //     } catch (error) {
@@ -68,10 +71,12 @@ const MessageIdPage = ({ params }: MessageIdPageProps) => {
   //   };
 
   //   fetchMessage();
-  // // }, [id]);
+  // }, [id]);
 
   const handleDelete = async () => {
-    const token = "your-auth-token";
+    const token = Cookies.get("accessToken");
+    if (!token) return;
+
     try {
       const response = await deleteMessageAPI({
         token,

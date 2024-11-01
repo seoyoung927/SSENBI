@@ -9,6 +9,7 @@ import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import { useRouter } from "next/navigation";
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
+import Cookies from "js-cookie";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -80,7 +81,9 @@ export default function CustomizedPage() {
   useEffect(() => {
     const fetchCustomTemplates = async () => {
       try {
-        const token = "ACCESS_TOKEN";
+        const token = Cookies.get("accessToken");
+        if (!token) return;
+
         const data = await getCustomTemplatesAPI({ token });
         console.log(data);
         setFilteredMessageTemplates(data.result);
