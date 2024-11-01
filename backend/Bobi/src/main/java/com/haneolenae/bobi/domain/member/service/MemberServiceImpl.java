@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.member.dto.request.MemberRegistRequest;
+import com.haneolenae.bobi.domain.member.dto.request.MemberUpdatePasswordRequest;
 import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.mapper.MemberMapper;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -41,17 +44,31 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(member);
 	}
 
-	@Override
+	@Transactional
 	public void update(String accessToken, MemberUpdateRequest request) {
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("M40001"));
-		//TODO: request의 정합성 체크
 
 		member.update(request);
-		memberRepository.save(member);
+	}
+
+	@Transactional
+	public void updatePassword(String accessToken, MemberUpdatePasswordRequest request) {
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("M40001"));
+
+		if (isNotSamePassword(request.getPassword(), member.getPassword())) {
+			throw new RuntimeException("M40101");
+		}
+
+		member.updatePassword(passwordEncoder.encode(request.getChangePassword()));
 	}
 
 	private boolean alreadyExistMemberId(String memberId) {
 		return memberRepository.findByMemberId(memberId).isPresent();
+	}
+
+	private boolean isNotSamePassword(String rawPassword, String encodedPassword) {
+		return !passwordEncoder.matches(rawPassword, encodedPassword);
 	}
 }

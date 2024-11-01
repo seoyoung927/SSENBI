@@ -91,4 +91,8 @@ public class Member {
 		this.personalPhoneNumber = request.getPersonalPhoneNumber();
 		this.businessPhoneNumber = request.getBusinessPhoneNumber();
 	}
+
+	public void updatePassword(String password) {
+		this.password = password;
+	}
 }
