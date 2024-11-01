@@ -10,6 +10,9 @@ import com.haneolenae.bobi.domain.member.dto.MemberRegistRequest;
 import com.haneolenae.bobi.domain.member.service.MemberService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -21,6 +24,7 @@ public class MemberController {
 
 	@PostMapping
 	public ResponseEntity<ApiResponse<String>> regist(@RequestBody MemberRegistRequest memberRegistRequest) {
+		log.info("input");
 		memberService.regist(memberRegistRequest);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}

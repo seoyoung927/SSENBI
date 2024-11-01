@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -23,8 +25,8 @@ public class JwtTokenProvider {
 	private long refreshTokenValidTime = 30 * 60 * 1000L;//30분
 
 	private Key generateSecretKey(String secret) {
-		byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-		return new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA512");
+		byte[] keyBytes = Decoders.BASE64.decode(secret);
+		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
 	public String createAccessToken(Long id) {
@@ -72,12 +74,26 @@ public class JwtTokenProvider {
 	}
 
 	public Long getIdFromToken(String token) {
-		Claims claims = Jwts.parser()
-			.setSigningKey(secretKey)
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(secretKey) // 동일한 키 사용
+			.build()
 			.parseClaimsJws(token)
 			.getBody();
 
-		return Long.valueOf(claims.get("id", String.class)); // id 클레임 가져오기
+		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기
+	}
+
+	public Long getExpiration(String token) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(secretKey)
+			.build()
+			.parseClaimsJws(token)
+			.getBody();
+
+		Date expiration = claims.getExpiration();
+		Date now = new Date();
+
+		return Math.max(0, expiration.getTime() - now.getTime());
 	}
 
 	private String extractToken(String token) {
