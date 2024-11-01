@@ -55,6 +55,13 @@
   border-radius: 4px;
 }
 
+.chat-input:hover,
+.chat-input:active,
+.chat-input:focus {
+  border: 1px solid var(--border-secondary);
+  outline: none;
+}
+
 .send-button {
   padding: 8px 12px;
   background-color: var(--blue-500);

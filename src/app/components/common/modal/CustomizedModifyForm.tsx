@@ -79,7 +79,9 @@ export const CustomizedModifyForm = ({
       />
 
       <div className="customized-modify_form-group">
-        <label className="customized-modify_form-group__label">고객</label>
+        <label className="customized-modify_form-group__label">
+          태그 및 고객
+        </label>
         <TagList
           tags={[
             {
@@ -101,35 +103,6 @@ export const CustomizedModifyForm = ({
               tagName: "very very long long tag name",
               tagColor: "PURPLE",
               tagId: 34,
-            },
-          ]}
-          maxTagCount={2}
-        />
-      </div>
-
-      <div className="customized-modify_form-group">
-        <label className="customized-modify_form-group__label">태그</label>
-        <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 41,
-            },
-            {
-              tagName: "Frequent Buyer",
-              tagColor: "ORANGE",
-              tagId: 42,
-            },
-            {
-              tagName: "New Customer",
-              tagColor: "GREEN",
-              tagId: 43,
-            },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 44,
             },
           ]}
           maxTagCount={2}

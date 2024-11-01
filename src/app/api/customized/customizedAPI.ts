@@ -22,9 +22,10 @@ export const getCustomTemplatesAPI = async ({
   templateSearch,
 }: GetCustomTemplatesParams) => {
   const response = await axiosInstance.get("/customTemplate", {
-    headers: {
-      Authorization: token,
-    },
+    // todo : header
+    // headers: {
+    //   Authorization: token,
+    // },
     params: {
       page,
       size,
@@ -42,13 +43,12 @@ export const getCustomTemplateAPI = async ({
   token,
   templateId,
 }: GetCustomTemplateParams) => {
-  const response = await axiosInstance
-    .get(`/customTemplate/${templateId}`, {
-      headers: {
-        Authorization: token,
-      },
-    })
-    .then((response) => response.data);
+  const response = await axiosInstance.get(`/customTemplate/${templateId}`, {
+    // todo : header
+    // headers: {
+    //   Authorization: token,
+    // },
+  });
   return response.data;
 };
 
