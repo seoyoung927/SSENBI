@@ -3,6 +3,7 @@ package com.haneolenae.bobi.domain.member.service;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,14 @@ public class MemberServiceImpl implements MemberService {
 		this.memberMapper = memberMapper;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtTokenProvider = jwtTokenProvider;
+	}
+
+	@Override
+	public MemberResponse get(String accessToken) {
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		return memberMapper.toMember(member);
 	}
 
 	@Override
