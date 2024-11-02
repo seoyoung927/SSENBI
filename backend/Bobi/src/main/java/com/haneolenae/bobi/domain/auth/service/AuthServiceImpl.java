@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
 		String accessToken = jwtTokenProvider.createAccessToken(member.getId());
 		String refreshToken = jwtTokenProvider.createRefreshToken(member.getId());
 
+		System.out.println(accessToken);
 		//TODO:refreshToken redis 입력 (key: userId_sessionId/value: refreshToken)
 		redisUtil.save(createRedisKey(member.getId(), sessionId), refreshToken, REFRESH_TOKEN_TIME);
 
@@ -53,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public void logout(String accessHeader, String refreshToken, String sessionId) {
-		String accessToken = accessHeader;
+		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 
 		//TODO:redis에서 id랑 session조합해서 refreshToken 제거

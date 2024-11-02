@@ -5,6 +5,7 @@ import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 import com.haneolenae.bobi.global.dto.ApiType;
 import com.haneolenae.bobi.global.exception.ApiException;
+import com.haneolenae.bobi.global.util.RedisUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,14 +24,21 @@ public class JwtFilter implements Filter {
     private final Set<RequestMatcher> excludedPaths = new HashSet<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisUtil redisUtil;
 
-    public JwtFilter(JwtTokenProvider jwtTokenProvider) {
+    public JwtFilter(JwtTokenProvider jwtTokenProvider, RedisUtil redisUtil) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.redisUtil = redisUtil;
         // 제외하고 싶은 URL과 메소드 조합을 추가
         excludedPaths.add(new RequestMatcher("/member", HttpMethod.POST));
         excludedPaths.add(new RequestMatcher("/auth/login", HttpMethod.POST));
         excludedPaths.add(new RequestMatcher("/auth/refresh", HttpMethod.POST));
         excludedPaths.add(new RequestMatcher("/general/**", HttpMethod.GET));
+        excludedPaths.add(new RequestMatcher("/swagger-ui/**", HttpMethod.GET));
+        excludedPaths.add(new RequestMatcher("/swagger-resources/**", HttpMethod.GET));
+        excludedPaths.add(new RequestMatcher("/v3/api-docs/**", HttpMethod.GET));
+        excludedPaths.add(new RequestMatcher("/swagger-ui.html", HttpMethod.GET));
+
     }
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -50,11 +58,24 @@ public class JwtFilter implements Filter {
         }
 
         try {
-            String accessToken = httpRequest.getHeader("Authorization");
+            String accessHeader = httpRequest.getHeader("Authorization");
+            System.out.println(accessHeader);
 
-            if (accessToken == null || !jwtTokenProvider.validateToken(accessToken)) {
+            if (accessHeader == null) {
                 throw new ApiException(ApiType.ACCESS_TOKEN_INVALID);
             }
+
+            String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
+
+            if (!jwtTokenProvider.validateToken(accessToken)) {
+                throw new ApiException(ApiType.ACCESS_TOKEN_INVALID);
+            }
+
+            if(redisUtil.isBlackList(accessToken)){
+                log.info("블랙리스트 감지");
+                throw new ApiException(ApiType.ACCESS_TOKEN_INVALID);
+            }
+
             chain.doFilter(request, response);
         }catch(ApiException e){
             HttpServletResponse httpResponse = (HttpServletResponse) response;

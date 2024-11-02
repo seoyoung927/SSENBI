@@ -53,6 +53,10 @@ public class JwtTokenProvider {
 			.compact();
 	}
 
+	public String getTokenFromHeader(String accessHeader){
+		return accessHeader.split(" ")[1];
+	}
+
 	public boolean validateToken(String token) {
 		try {
 			final Jws<Claims> claims = getClaimsJws(token);

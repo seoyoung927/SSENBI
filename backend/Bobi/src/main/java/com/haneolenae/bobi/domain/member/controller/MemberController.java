@@ -25,7 +25,7 @@ public class MemberController {
 	}
 
 	@GetMapping
-	public ResponseEntity<ApiResponse<MemberResponse>> getMember(@RequestHeader("Authorization") String accessToken, @RequestBody MemberUpdateRequest request) {
+	public ResponseEntity<ApiResponse<MemberResponse>> getMember(@RequestHeader("Authorization") String accessToken) {
 		return ResponseEntity.ok(new ApiResponse<>(memberService.get(accessToken)));
 	}
 

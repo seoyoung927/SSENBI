@@ -39,4 +39,8 @@ public class RedisUtil {
 			TimeUnit.MILLISECONDS
 		);
 	}
+
+	public boolean isBlackList(String key){
+		return Optional.ofNullable(redisBlacklistTemplate.opsForValue().get(key)).isPresent();
+	}
 }

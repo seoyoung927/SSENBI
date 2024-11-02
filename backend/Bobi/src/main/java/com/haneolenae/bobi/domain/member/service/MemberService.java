@@ -8,10 +8,10 @@ import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
 import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 
 public interface MemberService {
-	public MemberResponse get(String accessToken);
+	public MemberResponse get(String accessHeader);
 	public void regist(MemberRegistRequest memberRegistRequest);
 
-	public void update(String accessToken, MemberUpdateRequest request);
+	public void update(String accessHeader, MemberUpdateRequest request);
 
-	public void updatePassword(String accessToken, MemberUpdatePasswordRequest request);
+	public void updatePassword(String accessHeader, MemberUpdatePasswordRequest request);
 }
