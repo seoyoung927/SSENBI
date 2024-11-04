@@ -12,7 +12,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 	private Key secretKey = generateSecretKey(
@@ -56,11 +58,13 @@ public class JwtTokenProvider {
 	public boolean validateToken(String token) {
 		try {
 			final Jws<Claims> claims = getClaimsJws(token);
+			log.info("date: {}", claims.getBody().getExpiration().toString());
 			return !claims
 				.getBody()
 				.getExpiration()
 				.before(new Date());
 		} catch (JwtException | IllegalArgumentException e) {
+			log.info("jwt validate exception");
 			return false;
 		}
 	}
