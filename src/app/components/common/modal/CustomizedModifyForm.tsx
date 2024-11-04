@@ -31,13 +31,26 @@ interface CustomizedModifyFormProps {
   ) => void;
 }
 
-export const CustomizedModifyForm = ({
+export default function CustomizedModifyForm({
   templateId,
   onClose,
   onSave,
-}: CustomizedModifyFormProps) => {
+}: CustomizedModifyFormProps) {
   const [title, setTitle] = useState<string>("");
   const [content, setContet] = useState<string>("");
+  const [tags, setTags] = useState<TagType[]>([
+    {
+      tagName: "VIP",
+      tagColor: "RED",
+      tagId: 31,
+    },
+    {
+      tagName: "Frequent Buyer",
+      tagColor: "ORANGE",
+      tagId: 32,
+    },
+  ]);
+  const [customers, setCustomers] = useState<TagType[]>([]);
 
   useEffect(() => {
     const fetchCustomTemplate = async (templateId: string) => {
@@ -78,31 +91,7 @@ export const CustomizedModifyForm = ({
         <label className="customized-modify_form-group__label">
           태그 및 고객
         </label>
-        <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 31,
-            },
-            {
-              tagName: "Frequent Buyer",
-              tagColor: "ORANGE",
-              tagId: 32,
-            },
-            {
-              tagName: "New Customer",
-              tagColor: "GREEN",
-              tagId: 33,
-            },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 34,
-            },
-          ]}
-          maxTagCount={2}
-        />
+        <TagList tags={tags} maxTagCount={2} customers={customers} />
       </div>
 
       <div className="customized-modify_form-group">
@@ -124,4 +113,4 @@ export const CustomizedModifyForm = ({
       </div>
     </div>
   );
-};
+}
