@@ -40,7 +40,7 @@ public class JwtFilter implements Filter {
 		excludedPaths.add(new RequestMatcher("/swagger-resources/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/v3/api-docs/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/swagger-ui.html", HttpMethod.GET));
-
+		excludedPaths.add(new RequestMatcher("/**", HttpMethod.OPTIONS));
 	}
 
 	@Override
@@ -71,6 +71,7 @@ public class JwtFilter implements Filter {
 			String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 
 			if (!jwtTokenProvider.validateToken(accessToken)) {
+				log.info("invalid access token");
 				throw new ApiException(ApiType.ACCESS_TOKEN_INVALID);
 			}
 
@@ -82,7 +83,7 @@ public class JwtFilter implements Filter {
 			chain.doFilter(request, response);
 		} catch (ApiException e) {
 			HttpServletResponse httpResponse = (HttpServletResponse)response;
-			httpResponse.setStatus(e.getApiType().getStatus().value());
+			httpResponse.setStatus(HttpServletResponse.SC_OK);
 			httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			httpResponse.setCharacterEncoding("UTF-8");
 
@@ -90,7 +91,10 @@ public class JwtFilter implements Filter {
 
 			String jsonResponse = objectMapper.writeValueAsString(errorResponse);
 
+			log.info("response: {}", jsonResponse);
+
 			httpResponse.getWriter().write(jsonResponse);
+			httpResponse.getWriter().flush();
 		}
 
 		log.info("jwt filter filter out");
@@ -99,6 +103,9 @@ public class JwtFilter implements Filter {
 	private boolean shouldExclude(HttpServletRequest request) {
 		String requestPath = request.getRequestURI();
 		String method = request.getMethod();
+
+		log.info("requestPath = {}", requestPath);
+		log.info("method = {}", method);
 
 		return excludedPaths.stream()
 			.anyMatch(matcher -> matcher.matches(requestPath, HttpMethod.valueOf(method)));
