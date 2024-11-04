@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
+import com.haneolenae.bobi.domain.member.entity.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +15,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
@@ -65,14 +68,21 @@ public class CustomTemplate {
 	@OneToMany(mappedBy = "customTemplate", fetch = FetchType.LAZY)
 	private List<TemplateTag> templateTags;
 
-	// @ManyToOne
-	// @JoinColumn(name = "member_id")
-	// private Member member;
+	@ManyToOne
+	@JoinColumn(name = "member_id")
+	private Member member;
 
 	public CustomTemplate(String title, String content, Integer count) {
 		this.title = title;
 		this.content = content;
 		this.count = count;
+	}
+
+	public CustomTemplate(String title, String content, Integer count, Member member) {
+		this.title = title;
+		this.content = content;
+		this.count = count;
+		this.member = member;
 	}
 
 	public void editTitleAndContent(EditCustomTemplateRequest request) {

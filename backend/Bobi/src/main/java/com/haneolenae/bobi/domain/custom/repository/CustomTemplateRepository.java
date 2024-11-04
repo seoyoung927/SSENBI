@@ -19,8 +19,8 @@ public interface CustomTemplateRepository extends JpaRepository<CustomTemplate, 
 	Optional<CustomTemplate> findTemplateWithCustomersAndTags(@Param("templateIds") List<Long> templateIds);
 
 	@Query("SELECT t FROM CustomTemplate t " +
-		"WHERE " +
-		"(:templateTags IS NULL OR EXISTS (" +
+		"WHERE t.member.id = :memberId " +
+		"AND (:templateTags IS NULL OR EXISTS (" +
 		"    SELECT 1 FROM TemplateTag tt JOIN tt.tag tag " +
 		"    WHERE tt.customTemplate = t AND tag.id IN :templateTags" +
 		")) " +
@@ -29,11 +29,12 @@ public interface CustomTemplateRepository extends JpaRepository<CustomTemplate, 
 		"    WHERE tc.customTemplate = t AND customer.id IN :templateCustomer" +
 		")) " +
 		"AND (:templateSearch IS NULL OR " +
-		"     t.title LIKE %:templateSearch% OR t.content LIKE %:templateSearch%)")
-	Page<CustomTemplate> findTemplates(
-		Pageable pageable,
+		"     t.title LIKE CONCAT('%', :templateSearch, '%') OR t.content LIKE CONCAT('%', :templateSearch, '%'))")
+	Page<CustomTemplate> findTemplates(Pageable pageable,
 		@Param("templateTags") List<Integer> templateTags,
 		@Param("templateCustomer") List<Integer> templateCustomer,
-		@Param("templateSearch") String templateSearch
-	);
+		@Param("templateSearch") String templateSearch,
+		@Param("memberId") long memberId);
+
+	Optional<CustomTemplate> findByIdAndMemberId(long id, long memberId);
 }
