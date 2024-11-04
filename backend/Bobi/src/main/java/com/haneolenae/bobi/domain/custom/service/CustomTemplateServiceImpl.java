@@ -201,32 +201,31 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Override
 	public void replicateCustomTemplate(long memberId, long templateId, ReplicateCustomTemplateRequest request) {
-		CustomTemplate customTemplate = customTemplateRepository.findById(templateId).orElseThrow();
+		CustomTemplate customTemplate = customTemplateRepository.findById(templateId)
+			.orElseThrow();
 
 		CustomTemplate replicatedCustomTemplate = customTemplate.replicateMe();
-
 		customTemplateRepository.save(replicatedCustomTemplate);
-		//태그와 커스토머 복사
+
+		// 태그와 고객 복사
 		if (request.getIsReplicateTagAndCustomer()) {
-			customTemplate.getTemplateTags().stream()
-				.forEach(templateTag ->
-					templateTagRepository.save(
-						new TemplateTag(
-							replicatedCustomTemplate,
-							templateTag.getTag()
-						)
+			customTemplate.getTemplateTags().forEach(templateTag ->
+				templateTagRepository.save(
+					new TemplateTag(
+						replicatedCustomTemplate,
+						templateTag.getTag()
 					)
-				);
-			customTemplate.getTemplateCustomers().stream().forEach(
-				templateCustomer ->
-					templateCustomerRepository.save(
-						new TemplateCustomer(
-							replicatedCustomTemplate,
-							templateCustomer.getCustomer()
-						)
+				)
+			);
+
+			customTemplate.getTemplateCustomers().forEach(templateCustomer ->
+				templateCustomerRepository.save(
+					new TemplateCustomer(
+						replicatedCustomTemplate,
+						templateCustomer.getCustomer()
 					)
+				)
 			);
 		}
-
 	}
 }
