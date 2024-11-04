@@ -7,8 +7,7 @@ export const useAuthRedirect = (isLoggedIn: boolean) => {
   const excludedRoutes = ["/template", "/auth/login", "/auth/signup"];
 
   useEffect(() => {
-    if (!isLoggedIn && !excludedRoutes.includes(pathname)) {
-      // console.log("useAuthRedirect", isLoggedIn);
+    if (isLoggedIn === false && !excludedRoutes.includes(pathname)) {
       router.push("/auth/login");
     }
   }, [isLoggedIn, pathname, router]);
