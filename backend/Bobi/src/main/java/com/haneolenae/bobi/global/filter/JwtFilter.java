@@ -35,7 +35,7 @@ public class JwtFilter implements Filter {
 		excludedPaths.add(new RequestMatcher("/member", HttpMethod.POST));
 		excludedPaths.add(new RequestMatcher("/auth/login", HttpMethod.POST));
 		excludedPaths.add(new RequestMatcher("/auth/refresh", HttpMethod.POST));
-		// excludedPaths.add(new RequestMatcher("/general/**", HttpMethod.GET));
+		excludedPaths.add(new RequestMatcher("/general/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/swagger-ui/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/swagger-resources/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/v3/api-docs/**", HttpMethod.GET));
