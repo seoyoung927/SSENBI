@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { postRefreshTokenAPI } from "@/app/api/login/loginAPI";
-
+import { postLogoutAPI, postRefreshTokenAPI } from "@/app/api/login/loginAPI";
+import Cookies from "js-cookie";
 interface AuthState {
   isLoggedIn: boolean | undefined;
   setLogin: () => void;
@@ -16,7 +16,17 @@ const useAuthStore = create<AuthState>()(
 
       setLogin: () => set({ isLoggedIn: true }),
 
-      setLogout: () => set({ isLoggedIn: false }),
+      setLogout: async () => {
+        try {
+          const token = Cookies.get("accessToken");
+          if (!token) return;
+
+          await postLogoutAPI({ token });
+          set({ isLoggedIn: false });
+        } catch (error) {
+          console.error("로그아웃 실패:", error);
+        }
+      },
 
       checkAuth: async () => {
         try {
