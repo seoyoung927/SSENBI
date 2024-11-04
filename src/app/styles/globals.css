@@ -331,3 +331,30 @@ a {
   font-size: 11px;
   padding-left: 12px;
 }
+
+/* 기본 스크롤바 설정 */
+
+/* 가로 스크롤바 스타일 */
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 3px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background-color: var(--gray-300);
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--blue-200);
+  width: 12px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease; /* Transition effect */
+}
+
+.horizontal-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: var(--blue-400);
+}
+
+.horizontal-scroll::-webkit-scrollbar-button {
+  display: none;
+}
