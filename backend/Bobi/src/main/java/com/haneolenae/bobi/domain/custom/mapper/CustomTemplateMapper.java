@@ -46,7 +46,7 @@ public interface CustomTemplateMapper {
 			.toList();
 	}
 
-	default CustomTemplate toCustomTemplate(GeneralTemplate generalTemplate) {
-		return new CustomTemplate(generalTemplate.getTitle(), generalTemplate.getContent(), 0);
+	default CustomTemplate toCustomTemplate(GeneralTemplate generalTemplate, Member member) {
+		return new CustomTemplate(generalTemplate.getTitle(), generalTemplate.getContent(), 0, member);
 	}
 }

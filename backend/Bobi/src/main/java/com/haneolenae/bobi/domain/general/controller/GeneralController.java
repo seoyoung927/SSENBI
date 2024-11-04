@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.general.dto.request.DuplicateGeneralTemplateRequest;
 import com.haneolenae.bobi.domain.general.dto.response.CategoryResponse;
 import com.haneolenae.bobi.domain.general.dto.response.CategoryTemplatesResponse;
@@ -25,9 +27,11 @@ import com.haneolenae.bobi.global.dto.ApiResponse;
 @RequestMapping("/general")
 public class GeneralController {
 
+	private final JwtTokenProvider jwtTokenProvider;
 	private final GeneralService generalService;
 
-	public GeneralController(GeneralService generalService) {
+	public GeneralController(JwtTokenProvider jwtTokenProvider, GeneralService generalService) {
+		this.jwtTokenProvider = jwtTokenProvider;
 		this.generalService = generalService;
 	}
 
@@ -54,8 +58,10 @@ public class GeneralController {
 
 	@PostMapping("/template/duplicate")
 	public ResponseEntity<ApiResponse<String>> duplicateGeneralTemplate(
+		@RequestHeader("Authorization") String token,
 		@RequestBody DuplicateGeneralTemplateRequest request) {
-		long memberId = 0L;
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
 		generalService.duplicateGeneralTemplate(memberId, request);
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}

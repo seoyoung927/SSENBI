@@ -19,5 +19,5 @@ public interface GeneralService {
 
 	List<CategoryTemplatesResponse> getTemplatesGroupByCategory();
 
-	void duplicateGeneralTemplate(Long memberId, DuplicateGeneralTemplateRequest request);
+	void duplicateGeneralTemplate(long memberId, DuplicateGeneralTemplateRequest request);
 }
