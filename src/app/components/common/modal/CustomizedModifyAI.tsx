@@ -24,11 +24,11 @@ interface CustomizedModifyAIProps {
   ) => void;
 }
 
-export const CustomizedModifyAI: React.FC<CustomizedModifyAIProps> = ({
+export default function CustomizedModifyAI({
   templateId,
   onClose,
   onSave,
-}) => {
+}: CustomizedModifyAIProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: SenderType.AI,
@@ -119,4 +119,4 @@ export const CustomizedModifyAI: React.FC<CustomizedModifyAIProps> = ({
       </div>
     </div>
   );
-};
+}
