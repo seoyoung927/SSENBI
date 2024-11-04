@@ -34,8 +34,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberResponse get(String accessHeader) {
-		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
-		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Long id = jwtTokenProvider.getIdFromToken(accessHeader);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		return memberMapper.toMember(member);
