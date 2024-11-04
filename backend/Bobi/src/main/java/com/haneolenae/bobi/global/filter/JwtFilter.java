@@ -83,7 +83,7 @@ public class JwtFilter implements Filter {
 			chain.doFilter(request, response);
 		} catch (ApiException e) {
 			HttpServletResponse httpResponse = (HttpServletResponse)response;
-			httpResponse.setStatus(e.getApiType().getStatus().value());
+			httpResponse.setStatus(HttpServletResponse.SC_OK);
 			httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			httpResponse.setCharacterEncoding("UTF-8");
 
