@@ -13,29 +13,33 @@ const axiosInstance = axios.create({
 
 // 응답 인터셉터 설정
 axiosInstance.interceptors.response.use(
-  (response) => response, // 정상 응답일 경우 그대로 반환
+  (response) => response,
   async (error) => {
+    console.log(error);
     const originalRequest = error.config;
     const errorCode = error.response?.data?.code;
-
+    const statusCode = error.response?.status || error.request?.status;
+    console.log(error.response);
     // 401 에러 (A40101: 토큰 만료)
     if (errorCode === "A40101" && !originalRequest._retry) {
-      originalRequest._retry = true;
+      originalRequest._retry = true; // 첫 재시도만 허용
 
       try {
         const isSuccess = await postRefreshTokenAPI();
         if (isSuccess) {
           const newToken = Cookies.get("accessToken");
-          originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-          return axiosInstance(originalRequest); // 실패했던 요청 재시도
+          if (newToken) {
+            originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+            return axiosInstance(originalRequest); // 실패했던 요청 재시도
+          }
         }
       } catch (refreshError) {
+        console.error("토큰 갱신 실패:", refreshError);
         return Promise.reject(refreshError);
       }
     }
 
-    // 다른 에러는 그대로 반환
-    return Promise.reject(error);
+    return Promise.reject(error); // 무한 루프 방지를 위해 반환
   },
 );
 
