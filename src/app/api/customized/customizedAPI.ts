@@ -17,21 +17,21 @@ export const getCustomTemplatesAPI = async ({
   page,
   size,
   sort,
-  templateTags,
-  templateCustomers,
-  templateSearch,
+  // templateTags,
+  // templateCustomers,
+  // templateSearch,
 }: GetCustomTemplatesParams) => {
   const response = await axiosInstance.get("/customTemplate", {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
     params: {
       page,
       size,
       sort,
-      templateTags,
-      templateCustomers,
-      templateSearch,
+      // templateTags,
+      // templateCustomers,
+      // templateSearch,
     },
   });
   return response.data;
@@ -44,7 +44,7 @@ export const getCustomTemplateAPI = async ({
 }: GetCustomTemplateParams) => {
   const response = await axiosInstance.get(`/customTemplate/${templateId}`, {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   return response.data;
@@ -73,7 +73,7 @@ export const putCustomTemplateAPI = async ({
     },
     {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
@@ -98,7 +98,7 @@ export const postCustomTemplateAPI = async ({
     },
     {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
@@ -112,7 +112,7 @@ export const deleteCustomTemplateAPI = async ({
 }: DeleteCustomTemplateParams) => {
   const response = await axiosInstance.delete(`/customTemplate/${templateId}`, {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   return response.data;
@@ -133,7 +133,7 @@ export const postCustomTemplateTagAPI = async ({
     },
     {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
@@ -149,7 +149,7 @@ export const deleteCustomTemplateTagAPI = async ({
     `/customTemplate/${templateId}/tag`,
     {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
@@ -171,7 +171,7 @@ export const postCustomTemplateCustomerAPI = async ({
     },
     {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
@@ -188,7 +188,7 @@ export const deleteCustomTemplateCustomerAPI = async ({
     `/customTemplate/${templateId}/customer/${customerId}`,
     {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
