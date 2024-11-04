@@ -7,8 +7,6 @@
   width: calc(100vw - 150px);
   height: calc(100vw - 150px);
   text-align: center;
-  color: #555;
-  background-color: #000; /* optional: add background for better visibility */
 }
 
 .flex-container {
