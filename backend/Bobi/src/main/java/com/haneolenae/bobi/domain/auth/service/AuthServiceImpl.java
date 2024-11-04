@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public RefreshResponse refresh(String refreshToken, String sessionId) {
-		Long id = jwtTokenProvider.getIdFromToken(refreshToken);
+		Long id = jwtTokenProvider.getIdFromRefreshToken(refreshToken);
 		//TODO:redis에서 id와 sessionId를 조합해 refreshToken 가져오기
 		String savedRefreshToken = getSavedRefreshToken(id, sessionId);
 

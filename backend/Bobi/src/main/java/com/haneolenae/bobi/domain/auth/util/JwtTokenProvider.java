@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtTokenProvider {
 	private Key secretKey = generateSecretKey(
 		"c14aedf77d1d17e7f3259f26a01c6fd9bd70b32b334a51509abc616386a3b67aa481573a9dda3bae5043cd44eecaeb79842cea930621baf23f198cceae9d8234");
-	private long accessTokenValidTime = 30 * 1440 * 60 * 1000L;//한달 (차후 축소 예정)
+	private long accessTokenValidTime = 30 * 1000L;//한달 (차후 축소 예정)
 	private long refreshTokenValidTime = 30 * 1440 * 60 * 1000L;//한달 (분/초/밀리초)
 
 	private Key generateSecretKey(String secret) {
@@ -81,6 +81,16 @@ public class JwtTokenProvider {
 			.setSigningKey(secretKey) // 동일한 키 사용
 			.build()
 			.parseClaimsJws(getTokenFromHeader(token))
+			.getBody();
+
+		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기
+	}
+
+	public Long getIdFromRefreshToken(String refreshToken) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(secretKey) // 동일한 키 사용
+			.build()
+			.parseClaimsJws(refreshToken)
 			.getBody();
 
 		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기
