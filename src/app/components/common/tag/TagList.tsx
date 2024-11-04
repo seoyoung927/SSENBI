@@ -1,7 +1,7 @@
 "use client";
 import "./TagList.css";
 import BorderTag from "./BorderTag";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import XIcon from "@/app/assets/svg/X.svg";
 import getRandomTagColor from "@/utils/getRandomTagColor";
 import * as Popover from "@radix-ui/react-popover";
@@ -38,18 +38,11 @@ export default function TagList({
     index: number;
     text: string;
   } | null>(null);
-  const [triggerWidth, setTriggerWidth] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLUListElement>(null);
   const isEmptyList = Object.values(validItems).every(
     (list) => list.length === 0,
   );
-
-  useEffect(() => {
-    if (triggerRef.current) {
-      setTriggerWidth(triggerRef.current.offsetWidth);
-    }
-  }, []);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && isValidInput(event.currentTarget.value)) {

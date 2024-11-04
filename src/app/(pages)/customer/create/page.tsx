@@ -5,35 +5,32 @@ import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import Header from "@/app/components/layout/Header";
 import { CustomerType } from "@/types/tag/tagTypes";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
-const DUMMY_DATA: CustomerType = {
-  customerId: 1,
-  customerName: "홍길동",
-  customerPhoneNumber: "010-1234-5678",
-  customerColor: "SALMON",
-  customerTags: [
-    {
-      tagId: 1,
-      tagColor: "RED",
-      tagName: "VIP",
-    },
-  ],
-};
+type CustomerCreationType = Omit<CustomerType, "customerId" | "customerColor">;
 
-export default function CustomerDetailPage() {
-  // TODO: fetch customer from server
-  const customer = DUMMY_DATA;
+export default function CustomerCreatePage() {
+  const [customer, setCustomer] = useState<CustomerCreationType>({
+    customerName: "",
+    customerPhoneNumber: "",
+    customerTags: [],
+  });
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setCustomer({
+      ...customer,
+      customerName: e.target.value,
+    });
   };
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setCustomer({
+      ...customer,
+      customerPhoneNumber: e.target.value,
+    });
   };
 
   return (
     <div className="page-container">
-      <Header title={`${customer.customerName}`} showBackIcon />
+      <Header title="새 고객 추가" showBackIcon />
       <InputField
         type="text"
         onChange={handleNameChange}

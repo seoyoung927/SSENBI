@@ -6,6 +6,8 @@ import SearchBar from "@/app/components/common/input/SearchBar";
 import Header from "@/app/components/layout/Header";
 import { CustomerType } from "@/types/tag/tagTypes";
 import Link from "next/link";
+import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
+import { useRouter } from "next/navigation";
 
 const DUMMY_DATA: CustomerType[] = [
   {
@@ -50,11 +52,15 @@ const DUMMY_DATA: CustomerType[] = [
 ];
 
 export default function Customer() {
+  const router = useRouter();
   // TODO: fetch customers from server
   const customers = DUMMY_DATA;
 
   const handleSearch = (value: string) => {
     console.log(value);
+  };
+  const handleCreateCustomer = () => {
+    router.push("/customer/create");
   };
 
   return (
@@ -80,6 +86,8 @@ export default function Customer() {
           </li>
         ))}
       </ul>
+
+      <FloatingActionButton onClick={handleCreateCustomer} text={"고객 추가"} />
     </div>
   );
 }
