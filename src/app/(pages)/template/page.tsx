@@ -96,9 +96,12 @@ export default function Template() {
   return (
     <div className="page-container">
       <Banner />
+      {/* 이 div가 가로 스크롤 스타일 이쁘게 바꾸고 싶은 곳 */}
+
       <div>
         <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
       </div>
+
       {filteredMessageTemplates.map((message, index) => (
         <ContentCard
           key={index}
