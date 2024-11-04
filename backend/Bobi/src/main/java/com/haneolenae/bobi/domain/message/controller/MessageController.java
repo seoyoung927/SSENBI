@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.message.dto.request.SendMessageRequest;
 import com.haneolenae.bobi.domain.message.dto.response.MessageDetailResponse;
 import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
@@ -30,22 +32,25 @@ import lombok.extern.slf4j.Slf4j;
 public class MessageController {
 
 	private final MessageService messageService;
+	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<MessageResponse>>> searchMessageList(
-		//@RequestHeader("Authorization") String token,
+		@RequestHeader("Authorization") String token,
 		@RequestParam(required = false) String keyword
 	){
-		long memberId = 1L;
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
 		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageList(memberId, keyword)));
 	}
 
 	@GetMapping("/{messageId}")
 	public ResponseEntity<ApiResponse<MessageDetailResponse>> getMessageDetail(
-		//@RequestHeader("Authorization") String token,
+		@RequestHeader("Authorization") String token,
 		@PathVariable("messageId") long messageId) {
 
-		long memberId = 1L;
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
 		log.info("getMessageDetail messageId: {}", messageId);
 
 		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageDetail(memberId, messageId)));
@@ -53,12 +58,12 @@ public class MessageController {
 
 	@PostMapping()
 	public ResponseEntity<ApiResponse<String>> sendMessage(
-		// @RequestHeader("Authorization") String token,
+		@RequestHeader("Authorization") String token,
 		@RequestBody SendMessageRequest sendMessageRequest){
 
-		// token에서 memberId 추출
-		long tempMemberId = 1;
-		messageService.sendMessage(tempMemberId, sendMessageRequest);
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
+		messageService.sendMessage(memberId, sendMessageRequest);
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
