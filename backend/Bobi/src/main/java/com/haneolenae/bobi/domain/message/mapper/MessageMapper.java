@@ -19,16 +19,16 @@ public interface MessageMapper {
 
 	@Mapping(source = "id", target = "messageId")
 	@Mapping(source = "content", target = "messageContent")
-	@Mapping(source = "createdAt", target = "sendAt")
-	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "tags")
+	@Mapping(source = "createdAt", target = "messageSendAt")
+	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "messageTags")
 	MessageResponse toMessageResponse(final Message message);
 
 
 	@Mapping(source = "id", target = "messageId")
 	@Mapping(source = "content", target = "messageContent")
-	@Mapping(source = "createdAt", target = "sendAt")
-	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "tags")
-	@Mapping(expression = "java(mapMessageCustomerDto(message.getMessageCustomers()))", target = "customers")
+	@Mapping(source = "createdAt", target = "messageSendAt")
+	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "messageTags")
+	@Mapping(expression = "java(mapMessageCustomerDto(message.getMessageCustomers()))", target = "messageCustomers")
 	MessageDetailResponse toMessageDetailResponse(final Message message);
 
 

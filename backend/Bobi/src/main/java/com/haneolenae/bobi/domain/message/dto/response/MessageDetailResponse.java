@@ -16,8 +16,8 @@ public class MessageDetailResponse {
 
 	private int messageId;
 	private String messageContent;
-	private LocalDateTime sendAt;
-	private List<MessageTagDto> tags;
-	private List<MessageCustomerDto> customers;
+	private LocalDateTime messageSendAt;
+	private List<MessageTagDto> messageTags;
+	private List<MessageCustomerDto> messageCustomers;
 
 }

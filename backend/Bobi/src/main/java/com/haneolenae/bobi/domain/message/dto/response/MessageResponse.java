@@ -3,8 +3,6 @@ package com.haneolenae.bobi.domain.message.dto.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.haneolenae.bobi.domain.tag.entity.Tag;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +16,6 @@ public class MessageResponse {
 
 	private int messageId;
 	private String messageContent;
-	private LocalDateTime sendAt;
-	private List<MessageTagDto> tags;
+	private LocalDateTime messageSendAt;
+	private List<MessageTagDto> messageTags;
 }
