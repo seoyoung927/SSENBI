@@ -23,6 +23,7 @@ import com.haneolenae.bobi.domain.custom.repository.TemplateCustomerRepository;
 import com.haneolenae.bobi.domain.custom.repository.TemplateTagRepository;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
+import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 import com.haneolenae.bobi.domain.tag.repository.TagRepository;
 
@@ -35,24 +36,27 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	private final TemplateCustomerRepository templateCustomerRepository;
 	private final TagRepository tagRepository;
 	private final CustomerRepository customerRepository;
+	private final MemberRepository memberRepository;
 
 	public CustomTemplateServiceImpl(CustomTemplateMapper customTemplateMapper,
 		CustomTemplateRepository customTemplateRepository,
 		TemplateTagRepository templateTagRepository, TemplateCustomerRepository templateCustomerRepository,
-		TagRepository tagRepository, CustomerRepository customerRepository) {
+		TagRepository tagRepository, CustomerRepository customerRepository,
+		MemberRepository memberRepository) {
 		this.customTemplateMapper = customTemplateMapper;
 		this.customTemplateRepository = customTemplateRepository;
 		this.templateTagRepository = templateTagRepository;
 		this.templateCustomerRepository = templateCustomerRepository;
 		this.tagRepository = tagRepository;
 		this.customerRepository = customerRepository;
+		this.memberRepository = memberRepository;
 	}
 
 	@Override
 	public List<CustomTemplateResponse> getCustomTemplates(long memberId, Pageable pageable, List<Integer> templateTags,
 		List<Integer> templateCustomer, String templateSearch) {
 		List<CustomTemplate> customTemplates = customTemplateRepository.findTemplates(pageable, templateTags,
-			templateCustomer, templateSearch).getContent();
+			templateCustomer, templateSearch, memberId).getContent();
 
 		return customTemplates.stream().map(customTemplateMapper::toCustomTemplateResponse)
 			.toList();
@@ -60,16 +64,17 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Override
 	public CustomTemplateResponse getCustomTemplate(long memberId, long templateId) {
-		//CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId);
-		//예외 처리 필요
-		CustomTemplate customTemplate = customTemplateRepository.findById(templateId)
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow();
+
 		return customTemplateMapper.toCustomTemplateResponse(customTemplate);
 	}
 
 	@Transactional
-	public void addCustomTemplate(AddCustomTemplateRequest request) {
-		CustomTemplate customTemplate = customTemplateMapper.toCustomTemplate(request);
+	public void addCustomTemplate(long memberId, AddCustomTemplateRequest request) {
+		CustomTemplate customTemplate = customTemplateMapper.toCustomTemplate(request,
+			memberRepository.getReferenceById(memberId)
+		);
 
 		//이제 id 사용 가능
 		customTemplateRepository.save(customTemplate);
@@ -97,8 +102,9 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	}
 
 	@Transactional
-	public void editCustomTemplate(long templateId, EditCustomTemplateRequest request) {
-		CustomTemplate customTemplate = customTemplateRepository.findById(templateId).orElseThrow();
+	public void editCustomTemplate(long memberId, long templateId, EditCustomTemplateRequest request) {
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
+			.orElseThrow();
 
 		//제목과 내용 수정
 		customTemplate.editTitleAndContent(request);
@@ -153,8 +159,8 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Transactional
 	public void deleteCustomTemplate(long memberId, long templateId) {
-		//예외 던저야함
-		CustomTemplate customTemplate = customTemplateRepository.findById(templateId).orElseThrow();
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
+			.orElseThrow();
 
 		//연관관계 해제
 		templateTagRepository.deleteByCustomTemplateId(templateId);
@@ -167,8 +173,6 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Transactional
 	public void addTagToTemplate(long memberId, long templateId, AddTagToTemplateRequest request) {
-		//member로 체크하자
-
 		templateTagRepository.save(
 			new TemplateTag(
 				customTemplateRepository.getReferenceById(templateId),
@@ -179,8 +183,6 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Transactional
 	public void addCustomerToTemplate(long memberId, long templateId, AddCustomerToTemplateRequest request) {
-		//member로 체크하자
-
 		templateCustomerRepository.save(
 			new TemplateCustomer(
 				customTemplateRepository.getReferenceById(templateId),
@@ -201,7 +203,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Override
 	public void replicateCustomTemplate(long memberId, long templateId, ReplicateCustomTemplateRequest request) {
-		CustomTemplate customTemplate = customTemplateRepository.findById(templateId)
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
 			.orElseThrow();
 
 		CustomTemplate replicatedCustomTemplate = customTemplate.replicateMe();

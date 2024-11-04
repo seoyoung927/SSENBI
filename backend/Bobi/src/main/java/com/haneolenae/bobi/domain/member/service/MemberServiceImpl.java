@@ -1,9 +1,5 @@
 package com.haneolenae.bobi.domain.member.service;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +7,7 @@ import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.member.dto.request.MemberRegistRequest;
 import com.haneolenae.bobi.domain.member.dto.request.MemberUpdatePasswordRequest;
 import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
+import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.mapper.MemberMapper;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
@@ -37,7 +34,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberResponse get(String accessHeader) {
-		String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
+		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
@@ -58,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	public void update(String accessHeader, MemberUpdateRequest request) {
-		String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
+		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
@@ -67,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	public void updatePassword(String accessHeader, MemberUpdatePasswordRequest request) {
-		String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
+		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 

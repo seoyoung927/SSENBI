@@ -1,5 +1,10 @@
 package com.haneolenae.bobi.domain.auth.util;
 
+import java.security.Key;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -7,15 +12,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Date;
-
-import javax.crypto.spec.SecretKeySpec;
-
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
-import org.springframework.stereotype.Component;
 
 @Component
 public class JwtTokenProvider {
@@ -80,7 +76,7 @@ public class JwtTokenProvider {
 		Claims claims = Jwts.parserBuilder()
 			.setSigningKey(secretKey) // 동일한 키 사용
 			.build()
-			.parseClaimsJws(token)
+			.parseClaimsJws(getTokenFromHeader(token))
 			.getBody();
 
 		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기

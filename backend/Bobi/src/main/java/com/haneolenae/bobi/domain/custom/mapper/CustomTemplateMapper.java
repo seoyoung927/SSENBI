@@ -14,6 +14,7 @@ import com.haneolenae.bobi.domain.custom.entity.CustomTemplate;
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
 import com.haneolenae.bobi.domain.custom.entity.TemplateTag;
 import com.haneolenae.bobi.domain.general.entity.GeneralTemplate;
+import com.haneolenae.bobi.domain.member.entity.Member;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CustomTemplateMapper {
@@ -27,8 +28,8 @@ public interface CustomTemplateMapper {
 	@Mapping(target = "templateCustomers", expression = "java(mapTemplateCustomers(customTemplate.getTemplateCustomers()))")
 	CustomTemplateResponse toCustomTemplateResponse(CustomTemplate customTemplate);
 
-	default CustomTemplate toCustomTemplate(AddCustomTemplateRequest request) {
-		return new CustomTemplate(request.getTemplateTitle(), request.getTemplateContent(), 0);
+	default CustomTemplate toCustomTemplate(AddCustomTemplateRequest request, Member member) {
+		return new CustomTemplate(request.getTemplateTitle(), request.getTemplateContent(), 0, member);
 	}
 
 	default List<CustomTagResponse> mapTemplateTags(List<TemplateTag> templateTags) {
