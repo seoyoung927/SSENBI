@@ -8,6 +8,7 @@ import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomerToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddTagToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.ReplicateCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 
 public interface CustomTemplateService {
@@ -29,4 +30,6 @@ public interface CustomTemplateService {
 	void removeCustomerFromTemplate(long memberId, long templateId, long customerId);
 
 	void removeTagFromTemplate(long memberId, long templateId, long tagId);
+
+	void replicateCustomTemplate(long memberId, long templateId, ReplicateCustomTemplateRequest request);
 }

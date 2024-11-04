@@ -19,6 +19,8 @@ import com.haneolenae.bobi.domain.custom.dto.request.AddCustomTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddCustomerToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.AddTagToTemplateRequest;
 import com.haneolenae.bobi.domain.custom.dto.request.EditCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.request.ReplicateCustomTemplateRequest;
+import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 import com.haneolenae.bobi.domain.custom.service.CustomTemplateService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -33,7 +35,8 @@ public class CustomTemplateController {
 	}
 
 	@GetMapping
-	public ResponseEntity<?> searchCustomTemplates(//@RequestHeader("Authorization") String token,
+	public ResponseEntity<ApiResponse<List<CustomTemplateResponse>>> searchCustomTemplates(
+		//@RequestHeader("Authorization") String token,
 		Pageable pageable,
 		@RequestParam(required = false) List<Integer> templateTags,
 		@RequestParam(required = false) List<Integer> templateCustomers,
@@ -48,7 +51,8 @@ public class CustomTemplateController {
 	}
 
 	@GetMapping("/{templateId}")
-	public ResponseEntity<?> getCustomTemplate(//@RequestHeader("Authorization") String token,
+	public ResponseEntity<ApiResponse<CustomTemplateResponse>> getCustomTemplate(
+		//@RequestHeader("Authorization") String token,
 		@PathVariable("templateId") long templateId) {
 		// 	long memberId = tokenProvider.getId(accessToken);
 		long memberId = 0L;
@@ -57,21 +61,21 @@ public class CustomTemplateController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> addCustomTemplate(@RequestBody AddCustomTemplateRequest request) {
+	public ResponseEntity<ApiResponse<String>> addCustomTemplate(@RequestBody AddCustomTemplateRequest request) {
 		customTemplateService.addCustomTemplate(request);
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
 	@PutMapping("/{templateId}")
-	public ResponseEntity<?> editCustomTemplate(@PathVariable("templateId") long templateId,
+	public ResponseEntity<ApiResponse<String>> editCustomTemplate(@PathVariable("templateId") long templateId,
 		@RequestBody EditCustomTemplateRequest request) {
 		customTemplateService.editCustomTemplate(templateId, request);
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{templateId}")
-	public ResponseEntity<?> deleteCustomTemplate(//@RequestHeader("Authorization") String token,
+	public ResponseEntity<ApiResponse<String>> deleteCustomTemplate(//@RequestHeader("Authorization") String token,
 		@PathVariable("templateId") long templateId) {
 		// long memberId = tokenProvider.getId(accessToken);
 		long memberId = 0L;
@@ -82,8 +86,8 @@ public class CustomTemplateController {
 	}
 
 	@PostMapping("/{templateId}/tag")
-	public ResponseEntity<?> addTagToCustomTemplate(@PathVariable("templateId") long templateId, @RequestBody
-	AddTagToTemplateRequest request) {
+	public ResponseEntity<ApiResponse<String>> addTagToCustomTemplate(@PathVariable("templateId") long templateId,
+		@RequestBody AddTagToTemplateRequest request) {
 		long memberId = 0L;
 		customTemplateService.addTagToTemplate(memberId, templateId, request);
 
@@ -91,7 +95,7 @@ public class CustomTemplateController {
 	}
 
 	@DeleteMapping("/{templateId}/tag/{tagId}")
-	public ResponseEntity<?> deleteTagFromCustomTemplate(@PathVariable("templateId") long templateId,
+	public ResponseEntity<ApiResponse<String>> deleteTagFromCustomTemplate(@PathVariable("templateId") long templateId,
 		@PathVariable("tagId") long tagId) {
 		long memberId = 0L;
 
@@ -100,8 +104,8 @@ public class CustomTemplateController {
 	}
 
 	@PostMapping("/{templateId}/customer")
-	public ResponseEntity<?> addCustomerToCustomTemplate(@PathVariable("templateId") long templateId, @RequestBody
-	AddCustomerToTemplateRequest request) {
+	public ResponseEntity<ApiResponse<String>> addCustomerToCustomTemplate(@PathVariable("templateId") long templateId,
+		@RequestBody AddCustomerToTemplateRequest request) {
 		long memberId = 0L;
 		customTemplateService.addCustomerToTemplate(memberId, templateId, request);
 
@@ -109,7 +113,8 @@ public class CustomTemplateController {
 	}
 
 	@DeleteMapping("/{templateId}/customer/{customerId}")
-	public ResponseEntity<?> deleteCustomerFromCustomTemplate(@PathVariable("templateId") long templateId,
+	public ResponseEntity<ApiResponse<String>> deleteCustomerFromCustomTemplate(
+		@PathVariable("templateId") long templateId,
 		@PathVariable("customerId") long tagId) {
 		long memberId = 0L;
 		customTemplateService.removeCustomerFromTemplate(memberId, templateId, tagId);
@@ -117,4 +122,13 @@ public class CustomTemplateController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
+	@PostMapping("/{templateId}/replicate")
+	public ResponseEntity<ApiResponse<String>> replicateCustomTemplate(@PathVariable long templateId,
+		@RequestBody ReplicateCustomTemplateRequest request) {
+		long memberId = 0L;
+
+		customTemplateService.replicateCustomTemplate(memberId, templateId, request);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
 }
