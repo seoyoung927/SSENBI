@@ -6,7 +6,6 @@ export const getMemberAPI = async ({ token }: { token: string }) => {
   const response = await axiosInstance.get("/member", {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
   });
   return response.data;
@@ -29,7 +28,6 @@ export const putMemberAPI = async ({
   const response = await axiosInstance.put("/member", formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
   });
   return response.data;
