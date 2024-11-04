@@ -53,7 +53,8 @@ public class GeneralController {
 	}
 
 	@PostMapping("/template/duplicate")
-	public ResponseEntity<?> duplicateGeneralTemplate(@RequestBody DuplicateGeneralTemplateRequest request) {
+	public ResponseEntity<ApiResponse<String>> duplicateGeneralTemplate(
+		@RequestBody DuplicateGeneralTemplateRequest request) {
 		long memberId = 0L;
 		generalService.duplicateGeneralTemplate(memberId, request);
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);

@@ -17,6 +17,16 @@ public enum ApiType {
 
 	// Member
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
+	MEMBER_REQUEST_INVALID(HttpStatus.BAD_REQUEST, ApiCode.M40001, ApiCode.M40001.getMsg()),
+	MEMBER_PASSWORD_INVALID(HttpStatus.UNAUTHORIZED, ApiCode.M40101, ApiCode.M40101.getMsg()),
+	MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
+	MEMBER_ALREADY_REGIST(HttpStatus.CONFLICT, ApiCode.M40901, ApiCode.M40901.getMsg()),
+
+	// Auth
+	LOGIN_FAILED(HttpStatus.BAD_REQUEST, ApiCode.A40001, ApiCode.A40001.getMsg()),
+	REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, ApiCode.A40101, ApiCode.A40101.getMsg()),
+	ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, ApiCode.A40102, ApiCode.A40102.getMsg()),
+	REFRESH_TOKEN_NOT_SAME(HttpStatus.FORBIDDEN, ApiCode.A40301, ApiCode.A40301.getMsg()),
 
 	// Customer
 	CUSTOMER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),

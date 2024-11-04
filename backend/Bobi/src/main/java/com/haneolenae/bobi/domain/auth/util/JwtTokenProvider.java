@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -19,12 +21,12 @@ import org.springframework.stereotype.Component;
 public class JwtTokenProvider {
 	private Key secretKey = generateSecretKey(
 		"c14aedf77d1d17e7f3259f26a01c6fd9bd70b32b334a51509abc616386a3b67aa481573a9dda3bae5043cd44eecaeb79842cea930621baf23f198cceae9d8234");
-	private long accessTokenValidTime = 30 * 60 * 1000L;//30분
-	private long refreshTokenValidTime = 30 * 60 * 1000L;//30분
+	private long accessTokenValidTime = 1 * 60 * 1000L;//1분 (차후 축소 예정)
+	private long refreshTokenValidTime = 720 * 60 * 1000L;//12시간 (분/초/밀리초)
 
 	private Key generateSecretKey(String secret) {
-		byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-		return new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA512");
+		byte[] keyBytes = Decoders.BASE64.decode(secret);
+		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
 	public String createAccessToken(Long id) {
@@ -51,8 +53,11 @@ public class JwtTokenProvider {
 			.compact();
 	}
 
-	public boolean validateToken(String authorizationHeader) {
-		final String token = extractToken(authorizationHeader);
+	public String getTokenFromHeader(String accessHeader) {
+		return accessHeader.split(" ")[1];
+	}
+
+	public boolean validateToken(String token) {
 		try {
 			final Jws<Claims> claims = getClaimsJws(token);
 			return !claims
@@ -72,16 +77,25 @@ public class JwtTokenProvider {
 	}
 
 	public Long getIdFromToken(String token) {
-		Claims claims = Jwts.parser()
-			.setSigningKey(secretKey)
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(secretKey) // 동일한 키 사용
+			.build()
 			.parseClaimsJws(token)
 			.getBody();
 
-		return Long.valueOf(claims.get("id", String.class)); // id 클레임 가져오기
+		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기
 	}
 
-	private String extractToken(String token) {
-		return token.split(" ")[1];
-	}
+	public Long getExpiration(String token) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(secretKey)
+			.build()
+			.parseClaimsJws(token)
+			.getBody();
 
+		Date expiration = claims.getExpiration();
+		Date now = new Date();
+
+		return Math.max(0, expiration.getTime() - now.getTime());
+	}
 }

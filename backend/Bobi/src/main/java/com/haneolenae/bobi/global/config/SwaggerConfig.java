@@ -1,5 +1,7 @@
 package com.haneolenae.bobi.global.config;
 
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,9 +22,20 @@ import io.swagger.v3.oas.models.info.Info;
 public class SwaggerConfig {
 	@Bean
 	public OpenAPI openAPI() {
-		return new OpenAPI()
-			.components(new Components())
-			.info(apiInfo());
+//		return new OpenAPI()
+//			.components(new Components())
+//			.info(apiInfo());
+
+		String jwtSchemeName="jwtAuth";
+		SecurityRequirement securityRequirement=new SecurityRequirement().addList(jwtSchemeName);
+		Components components=new Components().addSecuritySchemes(jwtSchemeName,new SecurityScheme().name(jwtSchemeName).type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
+
+
+		return new OpenAPI().components(
+				new Components())
+				.info(apiInfo())
+				.addSecurityItem(securityRequirement)
+				.components(components);
 	}
 
 	private Info apiInfo() {

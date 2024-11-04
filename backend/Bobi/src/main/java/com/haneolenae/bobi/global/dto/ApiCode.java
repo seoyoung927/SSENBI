@@ -12,7 +12,16 @@ public enum ApiCode {
 	S10001("CREATED"),
 
 	// Member
-	M40401("Member not found"),
+	M40001("입력된 데이터가 잘못되었습니다."),
+	M40101("비밀번호가 일치하지 않습니다."),
+	M40401("사용자가 존재하지 않습니다."),
+	M40901("이미 가입된 회원이 존재합니다."),
+
+	// Auth
+	A40001("ID 또는 비밀번호를 다시 확인하세요."),
+	A40101("리프레시 토큰이 만료되었습니다. 다시 로그인 해주세요."),
+	A40102("액세스 토큰 유효하지 않습니다. 갱신을 받아주세요."),
+	A40301("토큰이 일치하지 않습니다."),
 
 	// Customer
 	C40401("Customer not found"),
@@ -23,11 +32,13 @@ public enum ApiCode {
 	// Message
 	MS50001("Failed to send message"),
  	MS40401("존재하지 않는 메시지입니다."),
+
 	// Error
 	E10001("This Error is sample error"),
 
-	// Server
 	X10000("SERVER_ERROR");
+
+
 
 	private final String msg;
 }

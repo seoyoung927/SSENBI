@@ -1,17 +1,14 @@
 package com.haneolenae.bobi.domain.member.mapper;
 
+import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.haneolenae.bobi.domain.general.dto.response.CategoryTemplatesResponse;
-import com.haneolenae.bobi.domain.member.dto.MemberRegistRequest;
+import com.haneolenae.bobi.domain.member.dto.request.MemberRegistRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
 
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface MemberMapper {
@@ -31,5 +28,14 @@ public interface MemberMapper {
 			.uuid(UUID.randomUUID())
 			.build();
 	}
+
+	@Mapping(source = "member.memberId", target = "memberId")
+	@Mapping(source = "member.name", target = "name")
+	@Mapping(source = "member.business", target = "business")
+	@Mapping(source = "member.personalPhoneNumber", target = "personalPhoneNumber")
+	@Mapping(source = "member.businessPhoneNumber", target = "businessPhoneNumber")
+	MemberResponse toMember(Member member);
+
+
 }
 

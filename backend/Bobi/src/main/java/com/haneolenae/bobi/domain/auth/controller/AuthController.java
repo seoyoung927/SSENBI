@@ -34,11 +34,9 @@ public class AuthController {
 		String sessionId = request.getSession().getId();
 		TokenResponse tokens = authService.login(loginRequest, sessionId);
 
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("Authorization", "Bearer " + tokens.getAccessToken());
-
 		Cookie refreshTokenCookie = generateRefreshTokenCookie(tokens.getRefreshToken());
 		response.addCookie(refreshTokenCookie);
+		response.addHeader("Authorization", tokens.getAccessToken());
 
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
