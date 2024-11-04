@@ -33,4 +33,5 @@
   & svg {
     transition: rotate 0.2s;
   }
+  outline: none;
 }
