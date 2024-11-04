@@ -39,11 +39,11 @@ export default function ModifyPage() {
       const token = Cookies.get("accessToken");
       if (!token) return;
       try {
-        //const res1 = await postRefreshTokenAPI();
         const response = await getMemberAPI({ token });
         console.log(response);
       } catch (error) {
-        handleError(error);
+        console.error("get Member API 실패", error);
+        // handleError(error);
       }
     };
 

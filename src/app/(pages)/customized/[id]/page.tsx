@@ -11,8 +11,8 @@ import {
   getCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
-import { CustomizedModifyForm } from "@/app/components/common/modal/CustomizedModifyForm";
-import { CustomizedModifyAI } from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
+import CustomizedModifyForm from "@/app/components/common/modal/CustomizedModifyForm";
+import CustomizedModifyAI from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 
@@ -38,28 +38,7 @@ const dummyData: ApiResponse = {
   templateUsageCount: 10,
   templateCreatedAt: "2024-10-25T01:22:27",
   templateTags: [{ tagId: 1, tagName: "직장인", tagColor: "GREEN" }],
-  templateCustomers: [
-    {
-      customerId: 12,
-      customerName: "홍길동",
-      customerColor: "GREEN",
-    },
-    {
-      customerId: 13,
-      customerName: "김철수",
-      customerColor: "PINK",
-    },
-    {
-      customerId: 14,
-      customerName: "이영희",
-      customerColor: "SALMON",
-    },
-    {
-      customerId: 15,
-      customerName: "박수진",
-      customerColor: "RED",
-    },
-  ],
+  templateCustomers: [],
 };
 
 interface ModifiedTemplate {

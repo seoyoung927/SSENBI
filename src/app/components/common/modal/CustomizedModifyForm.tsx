@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CustomizedModifyForm.css";
 
 import InputField from "../input/InputField";
 import TagList from "../tag/TagList";
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
+import Cookies from "js-cookie";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -15,25 +17,6 @@ interface CustomTemplate {
   templateTags: TagType[];
   templateCustomers: CustomerType[];
 }
-
-// ApiResponse 타입 정의
-type ApiResponse = CustomTemplate;
-
-// dummyData 선언
-const dummyData: ApiResponse = {
-  templateId: 1,
-  templateTitle: "직장인 템플릿",
-  templateContent: "이 템플릿의 목적",
-  templateUsageCount: 10,
-  templateCreatedAt: "2024-10-25T01:22:27",
-  templateTags: [{ tagId: 1, tagName: "직장인", tagColor: "GREEN" }],
-  templateCustomers: [
-    { customerId: 12, customerName: "홍길동", customerColor: "GREEN" },
-    { customerId: 13, customerName: "김철수", customerColor: "PINK" },
-    { customerId: 14, customerName: "이영희", customerColor: "SALMON" },
-    { customerId: 15, customerName: "박수진", customerColor: "RED" },
-  ],
-};
 
 interface CustomizedModifyFormProps {
   templateId: string;
@@ -48,13 +31,39 @@ interface CustomizedModifyFormProps {
   ) => void;
 }
 
-export const CustomizedModifyForm = ({
+export default function CustomizedModifyForm({
   templateId,
   onClose,
   onSave,
-}: CustomizedModifyFormProps) => {
-  const [title, setTitle] = useState<string>(dummyData?.templateTitle);
-  const [content, setContet] = useState<string>(dummyData?.templateContent);
+}: CustomizedModifyFormProps) {
+  const [title, setTitle] = useState<string>("");
+  const [content, setContet] = useState<string>("");
+  const [tags, setTags] = useState<TagType[]>([
+    {
+      tagName: "VIP",
+      tagColor: "RED",
+      tagId: 31,
+    },
+    {
+      tagName: "Frequent Buyer",
+      tagColor: "ORANGE",
+      tagId: 32,
+    },
+  ]);
+  const [customers, setCustomers] = useState<TagType[]>([]);
+
+  useEffect(() => {
+    const fetchCustomTemplate = async (templateId: string) => {
+      const token = Cookies.get("accessToken");
+      if (!token) return;
+
+      const respose = await getCustomTemplateAPI({ token, templateId });
+
+      console.log(respose);
+    };
+
+    fetchCustomTemplate(templateId);
+  }, []);
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -82,31 +91,7 @@ export const CustomizedModifyForm = ({
         <label className="customized-modify_form-group__label">
           태그 및 고객
         </label>
-        <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 31,
-            },
-            {
-              tagName: "Frequent Buyer",
-              tagColor: "ORANGE",
-              tagId: 32,
-            },
-            {
-              tagName: "New Customer",
-              tagColor: "GREEN",
-              tagId: 33,
-            },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 34,
-            },
-          ]}
-          maxTagCount={2}
-        />
+        <TagList tags={tags} maxTagCount={2} customers={customers} />
       </div>
 
       <div className="customized-modify_form-group">
@@ -128,4 +113,4 @@ export const CustomizedModifyForm = ({
       </div>
     </div>
   );
-};
+}
