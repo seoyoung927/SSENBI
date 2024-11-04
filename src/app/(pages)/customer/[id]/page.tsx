@@ -60,9 +60,14 @@ export default function CustomerDetailPage() {
         value={customer.customerPhoneNumber || ""}
         maxLength={13}
       />
-      <div className="tags-wrapper">
+      <div className="field-wrapper">
         <label className="label">태그</label>
         <TagList tags={customer.customerTags} setTags={handleTagChange} />
+      </div>
+      <div className="field-wrapper">
+        {/* TODO: 메모 추가 */}
+        <label className="label">메모</label>
+        <textarea className="body memo" />
       </div>
     </div>
   );
