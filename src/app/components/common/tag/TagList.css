@@ -13,7 +13,7 @@
   flex-wrap: wrap;
   white-space: nowrap;
   margin: 0;
-  padding: 2px 8px;
+  padding-block: 2px;
   list-style: none;
   width: 100%;
   border-radius: 8px;
@@ -21,6 +21,10 @@
 
 .pointer {
   cursor: pointer;
+}
+
+.empty-tags {
+  color: var(--text-secondary);
 }
 
 .tag-list-remained {

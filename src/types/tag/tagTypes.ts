@@ -1,5 +1,3 @@
-import { TAG_COLORS } from "./../../utils/constants";
-
 export type TagType = {
   tagId: number;
   tagName: string;
@@ -11,9 +9,22 @@ export type CustomerType = {
   customerName: string;
   customerPhoneNumber?: string;
   customerColor: TagColorType;
+  customerTags: TagType[];
 };
 
-export type TagColorType = (typeof TAG_COLORS)[number];
+export type TagColorType =
+  | "RED"
+  | "PINK"
+  | "SALMON"
+  | "ORANGE"
+  | "YELLOW"
+  | "GREEN"
+  | "LIME"
+  | "SKYBLUE"
+  | "BLUE"
+  | "PURPLE"
+  | "BEIGE"
+  | "GRAY";
 
 export type TagProps = {
   color: TagColorType;

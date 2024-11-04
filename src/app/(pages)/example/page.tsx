@@ -6,6 +6,8 @@ import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
 import TagList from "@/app/components/common/tag/TagList";
 import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
+import { useState } from "react";
+import { TagType } from "@/types/tag/tagTypes";
 
 /*
 필수!!
@@ -15,6 +17,22 @@ import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButto
 */
 
 export default function Example() {
+  const [tags, setTags] = useState<TagType[]>([
+    {
+      tagName: "VIP",
+      tagColor: "RED",
+      tagId: 0,
+    },
+    { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
+    { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
+    {
+      tagName: "very very long long tag name",
+      tagColor: "PURPLE",
+      tagId: 3,
+    },
+  ]);
+  const [customers, setCustomers] = useState<TagType[]>([]);
+
   return (
     <div className="page-container">
       <ContentCard
@@ -22,23 +40,16 @@ export default function Example() {
         title={"제목"}
         content={"설명"}
       />
-      <TagList
-        tags={[
-          {
-            tagName: "VIP",
-            tagColor: "RED",
-            tagId: 0,
-          },
-          { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
-          { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
-          {
-            tagName: "very very long long tag name",
-            tagColor: "PURPLE",
-            tagId: 3,
-          },
-        ]}
-        // maxTagCount={2}
-      />
+      <div style={{ paddingInline: 8 }}>
+        <TagList
+          tags={tags}
+          setTags={setTags}
+          customers={customers}
+          setCustomers={setCustomers}
+          canAddCustomer
+          maxTagCount={2}
+        />
+      </div>
       <CustomerCard
         name="길동"
         phoneNumber="010-1111-1111"
@@ -57,23 +68,6 @@ export default function Example() {
             tagName: "New Customer",
             tagColor: "GREEN",
             tagId: 13,
-          },
-        ]}
-        customerTags={[
-          {
-            customerName: "VIP",
-            customerColor: "RED",
-            customerId: 21,
-          },
-          {
-            customerName: "Frequent Buyer",
-            customerColor: "ORANGE",
-            customerId: 22,
-          },
-          {
-            customerName: "New Customer",
-            customerColor: "GREEN",
-            customerId: 23,
           },
         ]}
       />
