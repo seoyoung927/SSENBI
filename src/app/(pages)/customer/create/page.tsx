@@ -4,7 +4,7 @@ import "../layout.css";
 import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import Header from "@/app/components/layout/Header";
-import { CustomerType } from "@/types/tag/tagTypes";
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import { ChangeEvent, useState } from "react";
 
 type CustomerCreationType = Omit<CustomerType, "customerId" | "customerColor">;
@@ -27,6 +27,12 @@ export default function CustomerCreatePage() {
       customerPhoneNumber: e.target.value,
     });
   };
+  const handleTagChange = (tags: TagType[]) => {
+    setCustomer({
+      ...customer,
+      customerTags: tags,
+    });
+  };
 
   return (
     <div className="page-container">
@@ -47,7 +53,7 @@ export default function CustomerCreatePage() {
       />
       <div className="tags-wrapper">
         <label className="label">태그</label>
-        <TagList tags={customer.customerTags} />
+        <TagList tags={customer.customerTags} setTags={handleTagChange} />
       </div>
     </div>
   );

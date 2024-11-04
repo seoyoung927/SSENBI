@@ -6,6 +6,8 @@ import FilledTag from "@/app/components/common/tag/FilledTag";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
 import TagList from "@/app/components/common/tag/TagList";
 import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
+import { useState } from "react";
+import { TagType } from "@/types/tag/tagTypes";
 
 /*
 필수!!
@@ -15,6 +17,22 @@ import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButto
 */
 
 export default function Example() {
+  const [tags, setTags] = useState<TagType[]>([
+    {
+      tagName: "VIP",
+      tagColor: "RED",
+      tagId: 0,
+    },
+    { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
+    { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
+    {
+      tagName: "very very long long tag name",
+      tagColor: "PURPLE",
+      tagId: 3,
+    },
+  ]);
+  const [customers, setCustomers] = useState<TagType[]>([]);
+
   return (
     <div className="page-container">
       <ContentCard
@@ -24,20 +42,10 @@ export default function Example() {
       />
       <div style={{ paddingInline: 8 }}>
         <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 0,
-            },
-            { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
-            { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 3,
-            },
-          ]}
+          tags={tags}
+          setTags={setTags}
+          customers={customers}
+          setCustomers={setCustomers}
           canAddCustomer
           maxTagCount={2}
         />
