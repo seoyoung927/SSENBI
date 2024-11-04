@@ -100,6 +100,9 @@ public class JwtFilter implements Filter {
 		String requestPath = request.getRequestURI();
 		String method = request.getMethod();
 
+		log.info("requestPath = {}", requestPath);
+		log.info("method = {}", method);
+
 		return excludedPaths.stream()
 			.anyMatch(matcher -> matcher.matches(requestPath, HttpMethod.valueOf(method)));
 	}
