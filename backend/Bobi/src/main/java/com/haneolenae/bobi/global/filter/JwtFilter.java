@@ -94,6 +94,7 @@ public class JwtFilter implements Filter {
 			log.info("response: {}", jsonResponse);
 
 			httpResponse.getWriter().write(jsonResponse);
+			httpResponse.getWriter().flush();
 		}
 
 		log.info("jwt filter filter out");
