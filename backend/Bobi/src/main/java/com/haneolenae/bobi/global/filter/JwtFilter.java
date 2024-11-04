@@ -71,6 +71,7 @@ public class JwtFilter implements Filter {
 			String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 
 			if (!jwtTokenProvider.validateToken(accessToken)) {
+				log.info("invalid access token");
 				throw new ApiException(ApiType.ACCESS_TOKEN_INVALID);
 			}
 
@@ -89,6 +90,8 @@ public class JwtFilter implements Filter {
 			ApiResponse<Object> errorResponse = new ApiResponse<Object>(e.getApiType(), e.getResult());
 
 			String jsonResponse = objectMapper.writeValueAsString(errorResponse);
+
+			log.info("response: {}", jsonResponse);
 
 			httpResponse.getWriter().write(jsonResponse);
 		}
