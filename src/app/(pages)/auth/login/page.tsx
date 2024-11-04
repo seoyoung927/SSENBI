@@ -49,7 +49,12 @@ export default function LoginPage() {
     <div className="page-container">
       <Header title="로그인" showBackIcon={true} />
       <div className="mypage-login-image-container">
-        <Image src="/assets/images/ssenbi_logo.png" alt="ssenbi 로고" fill />
+        <Image
+          src="/assets/images/ssenbi_logo.png"
+          alt="ssenbi 로고"
+          priority
+          fill
+        />
       </div>
 
       <InputField

@@ -18,6 +18,7 @@
   bottom: 76px;
   right: 24px;
   color: var(--text-light);
+  outline: none;
 }
 
 .fmb {

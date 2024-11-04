@@ -8,7 +8,8 @@ export default function NavigationBar() {
       <Image
         src="/assets/images/ssenbi_banner.gif"
         alt="banner"
-        layout="fill"
+        fill
+        priority
         sizes="100vw"
         style={{ objectFit: "cover" }}
       />
