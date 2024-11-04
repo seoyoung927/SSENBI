@@ -54,6 +54,8 @@ public class JwtFilter implements Filter {
 		ServletException {
 		log.info("jwt filter filter in");
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
+		String origin = httpRequest.getHeader("Origin");
+		log.info("origin: {}", origin);
 
 		if (shouldExclude(httpRequest)) {
 			log.info("exclude");
