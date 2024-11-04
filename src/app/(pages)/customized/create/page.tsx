@@ -14,8 +14,8 @@ export default function CustomizedNewPage() {
   const [title, setTitle] = useState<string>("");
   const [content, setContet] = useState<string>("");
   // TODO: 수정 필요 - 추가 로직 및 API와 연결
-  const [selectedCustomers] = useState<number[]>([1, 2, 3]);
-  const [selectedTags] = useState<number[]>([1, 2, 3]);
+  const [selectedCustomers] = useState<number[]>([]);
+  const [selectedTags] = useState<number[]>([]);
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);

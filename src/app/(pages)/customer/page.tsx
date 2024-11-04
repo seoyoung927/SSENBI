@@ -51,7 +51,7 @@ const DUMMY_DATA: CustomerType[] = [
   },
 ];
 
-export default function Customer() {
+export default function CustomerPage() {
   const router = useRouter();
   // TODO: fetch customers from server
   const customers = DUMMY_DATA;

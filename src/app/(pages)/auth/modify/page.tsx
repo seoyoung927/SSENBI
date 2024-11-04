@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import { putMemberAPI } from "@/app/api/member/memberAPI";
+import { getMemberAPI, putMemberAPI } from "@/app/api/member/memberAPI";
 import { validatePassword } from "@/utils/validatePassword";
 import InputField from "@/app/components/common/input/InputField";
 import Header from "@/app/components/layout/Header";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import "./page.css";
+import { postRefreshTokenAPI } from "@/app/api/login/loginAPI";
 
 // 회원정보 수정 데이터 타입
 interface UpdateMemberFormData {
@@ -32,6 +33,22 @@ export default function ModifyPage() {
     useState<string>(""); // 비밀번호 유효성 검사 메시지 상태
 
   const router = useRouter();
+
+  useEffect(() => {
+    const getMember = async () => {
+      const token = Cookies.get("accessToken");
+      if (!token) return;
+      try {
+        //const res1 = await postRefreshTokenAPI();
+        const response = await getMemberAPI({ token });
+        console.log(response);
+      } catch (error) {
+        handleError(error);
+      }
+    };
+
+    getMember();
+  }, []);
 
   // 비밀번호 확인이 변경될 때 비밀번호가 일치하는지 검사
   useEffect(() => {

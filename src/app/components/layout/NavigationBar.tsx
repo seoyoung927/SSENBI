@@ -21,8 +21,8 @@ export default function NavigationBar({
 
   return (
     <div className="navigation-bar">
-      <nav className="tab-menu">
-        <ul className="tab-list">
+      <nav className="tab-menu horizontal-scroll">
+        <ul className="tab-list ">
           {tabs.map((tab, index) => (
             <li
               key={index}

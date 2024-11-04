@@ -85,7 +85,7 @@ export default function CustomizedPage() {
         if (!token) return;
 
         const data = await getCustomTemplatesAPI({ token });
-        console.log(data);
+        console.log("customized data", data);
         setFilteredMessageTemplates(data.result);
       } catch (error) {
         console.error("Error fetching message:", error);
