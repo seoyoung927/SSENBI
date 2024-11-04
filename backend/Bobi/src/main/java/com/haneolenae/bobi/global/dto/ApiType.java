@@ -26,6 +26,10 @@ public enum ApiType {
 	MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
 	MEMBER_ALREADY_REGIST(HttpStatus.CONFLICT, ApiCode.M40901, ApiCode.M40901.getMsg()),
 
+	CUSTOM_TEMPLATE_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
+
+	GENERAL_TEMPLATE_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.G40401, ApiCode.G40401.getMsg()),
+
 	// 500
 	SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.X10000, ApiCode.X10000.getMsg());
 
