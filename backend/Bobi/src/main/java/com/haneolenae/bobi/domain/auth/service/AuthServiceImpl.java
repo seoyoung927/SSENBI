@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public void logout(String accessHeader, String refreshToken, String sessionId) {
-		String accessToken = accessHeader;
+		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 
 		//TODO:redis에서 id랑 session조합해서 refreshToken 제거

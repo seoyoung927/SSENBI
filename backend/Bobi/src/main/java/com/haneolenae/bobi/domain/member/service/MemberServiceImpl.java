@@ -3,6 +3,7 @@ package com.haneolenae.bobi.domain.member.service;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public MemberResponse get(String accessHeader) {
+		String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		return memberMapper.toMember(member);
+	}
+
+	@Override
 	public void regist(MemberRegistRequest memberRegistRequest) {
 		if (alreadyExistMemberId(memberRegistRequest.getMemberId())) {
 			throw new ApiException(ApiType.MEMBER_ALREADY_REGIST);
@@ -47,7 +57,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Transactional
-	public void update(String accessToken, MemberUpdateRequest request) {
+	public void update(String accessHeader, MemberUpdateRequest request) {
+		String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
@@ -55,7 +66,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Transactional
-	public void updatePassword(String accessToken, MemberUpdatePasswordRequest request) {
+	public void updatePassword(String accessHeader, MemberUpdatePasswordRequest request) {
+		String accessToken=jwtTokenProvider.getTokenFromHeader(accessHeader);
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
