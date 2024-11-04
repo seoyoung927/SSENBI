@@ -26,6 +26,7 @@ public enum ApiType {
 
 	// Message
 	EXTERNAL_MESSAGE_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.MS50001, ApiCode.MS50001.getMsg()),
+	MESSAGE_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.MS40401, ApiCode.MS40401.getMsg()),
 
 	// 500
 	SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.X10000, ApiCode.X10000.getMsg());

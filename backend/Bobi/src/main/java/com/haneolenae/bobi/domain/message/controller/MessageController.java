@@ -15,19 +15,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.message.dto.request.SendMessageRequest;
+import com.haneolenae.bobi.domain.message.dto.response.MessageDetailResponse;
 import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
 import com.haneolenae.bobi.domain.message.service.MessageService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")
 public class MessageController {
 
 	private final MessageService messageService;
-	private static final Logger log = LoggerFactory.getLogger(MessageController.class);
 
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<MessageResponse>>> searchMessageList(
@@ -39,9 +41,14 @@ public class MessageController {
 	}
 
 	@GetMapping("/{messageId}")
-	public ResponseEntity<?> getMessageDetail(@PathVariable("messageId") int messageId){
+	public ResponseEntity<ApiResponse<MessageDetailResponse>> getMessageDetail(
+		//@RequestHeader("Authorization") String token,
+		@PathVariable("messageId") long messageId) {
+
+		long memberId = 1L;
 		log.info("getMessageDetail messageId: {}", messageId);
-		return ResponseEntity.ok().build();
+
+		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageDetail(memberId, messageId)));
 	}
 
 	@PostMapping()
@@ -55,10 +62,5 @@ public class MessageController {
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
-
-	public ResponseEntity<?> deleteMessage(){
-		return ResponseEntity.ok().build();
-	}
-
 
 }

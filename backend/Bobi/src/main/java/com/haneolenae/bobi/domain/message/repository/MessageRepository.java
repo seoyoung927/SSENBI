@@ -1,6 +1,7 @@
 package com.haneolenae.bobi.domain.message.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,8 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 		"AND m.member.id = :memberId")
 	List<Message> findMessagesByKeywordAndMemberId(@Param("keyword") String keyword,
 		@Param("memberId") Long memberId);
+
+
+	Optional<Message> findByIdAndMemberId(Long messageId, Long memberId);
 
 }

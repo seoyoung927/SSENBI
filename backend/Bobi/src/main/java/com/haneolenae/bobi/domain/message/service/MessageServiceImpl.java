@@ -16,6 +16,7 @@ import com.haneolenae.bobi.domain.customer.repository.CustomerTagRepository;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.message.dto.request.SendMessageRequest;
+import com.haneolenae.bobi.domain.message.dto.response.MessageDetailResponse;
 import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
 import com.haneolenae.bobi.domain.message.entity.Message;
 import com.haneolenae.bobi.domain.message.entity.MessageCustomer;
@@ -138,5 +139,19 @@ public class MessageServiceImpl implements MessageService {
 		return messages.stream()
 			.map(messageMapper::toMessageResponse)
 			.toList();
+	}
+
+	@Override
+	public MessageDetailResponse getMessageDetail(long memberId, long messageId) {
+
+		// TODO: 멤버 유효성 검사
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() ->new ApiException(ApiType.MEMBER_NOT_FOUND));
+
+		// TODO: message 가져오기
+		Message message = messageRepository.findByIdAndMemberId(messageId, member.getId())
+			.orElseThrow(() -> new ApiException(ApiType.MESSAGE_NOT_FOUND));
+
+		return messageMapper.toMessageDetailResponse(message);
 	}
 }

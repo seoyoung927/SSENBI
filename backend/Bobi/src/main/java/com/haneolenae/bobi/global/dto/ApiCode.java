@@ -22,7 +22,7 @@ public enum ApiCode {
 
 	// Message
 	MS50001("Failed to send message"),
-
+ 	MS40401("존재하지 않는 메시지입니다."),
 	// Error
 	E10001("This Error is sample error"),
 
