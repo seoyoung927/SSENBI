@@ -40,7 +40,7 @@ public class JwtFilter implements Filter {
 		excludedPaths.add(new RequestMatcher("/swagger-resources/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/v3/api-docs/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/swagger-ui.html", HttpMethod.GET));
-
+		excludedPaths.add(new RequestMatcher("/**", HttpMethod.OPTIONS));
 	}
 
 	@Override
