@@ -159,7 +159,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Transactional
 	public void deleteCustomTemplate(long memberId, long templateId) {
-		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow();
 
 		//연관관계 해제
