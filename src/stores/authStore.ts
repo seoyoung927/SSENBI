@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { postRefreshTokenAPI } from "@/app/api/login/loginAPI";
 
 interface AuthState {
-  isLoggedIn: boolean;
+  isLoggedIn: boolean | undefined;
   setLogin: () => void;
   setLogout: () => void;
   checkAuth: () => Promise<void>;
@@ -12,7 +12,7 @@ interface AuthState {
 const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      isLoggedIn: false,
+      isLoggedIn: undefined,
 
       setLogin: () => set({ isLoggedIn: true }),
 
