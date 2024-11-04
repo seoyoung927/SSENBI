@@ -4,8 +4,8 @@ import "../layout.css";
 import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import Header from "@/app/components/layout/Header";
-import { CustomerType } from "@/types/tag/tagTypes";
-import { ChangeEvent } from "react";
+import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { ChangeEvent, useState } from "react";
 
 const DUMMY_DATA: CustomerType = {
   customerId: 1,
@@ -23,12 +23,24 @@ const DUMMY_DATA: CustomerType = {
 
 export default function CustomerDetailPage() {
   // TODO: fetch customer from server
-  const customer = DUMMY_DATA;
+  const [customer, setCustomer] = useState<CustomerType>(DUMMY_DATA);
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setCustomer({
+      ...customer,
+      customerName: e.target.value,
+    });
   };
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setCustomer({
+      ...customer,
+      customerPhoneNumber: e.target.value,
+    });
+  };
+  const handleTagChange = (tags: TagType[]) => {
+    setCustomer({
+      ...customer,
+      customerTags: tags,
+    });
   };
 
   return (
@@ -50,7 +62,7 @@ export default function CustomerDetailPage() {
       />
       <div className="tags-wrapper">
         <label className="label">태그</label>
-        <TagList tags={customer.customerTags} />
+        <TagList tags={customer.customerTags} setTags={handleTagChange} />
       </div>
     </div>
   );
