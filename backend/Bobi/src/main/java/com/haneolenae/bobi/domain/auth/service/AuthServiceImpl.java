@@ -45,7 +45,6 @@ public class AuthServiceImpl implements AuthService {
 		String accessToken = jwtTokenProvider.createAccessToken(member.getId());
 		String refreshToken = jwtTokenProvider.createRefreshToken(member.getId());
 
-		System.out.println(accessToken);
 		//TODO:refreshToken redis 입력 (key: userId_sessionId/value: refreshToken)
 		redisUtil.save(createRedisKey(member.getId(), sessionId), refreshToken, REFRESH_TOKEN_TIME);
 
