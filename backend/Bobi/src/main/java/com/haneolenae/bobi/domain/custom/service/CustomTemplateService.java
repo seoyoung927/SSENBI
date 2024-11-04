@@ -17,9 +17,9 @@ public interface CustomTemplateService {
 
 	CustomTemplateResponse getCustomTemplate(long memberId, long templateId);
 
-	void addCustomTemplate(AddCustomTemplateRequest request);
+	void addCustomTemplate(long memberId, AddCustomTemplateRequest request);
 
-	void editCustomTemplate(long templateId, EditCustomTemplateRequest request);
+	void editCustomTemplate(long memberId, long templateId, EditCustomTemplateRequest request);
 
 	void deleteCustomTemplate(long memberId, long templateId);
 

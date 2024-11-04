@@ -16,6 +16,7 @@ import com.haneolenae.bobi.domain.general.entity.GeneralTemplate;
 import com.haneolenae.bobi.domain.general.mapper.GeneralMapper;
 import com.haneolenae.bobi.domain.general.repository.CategoryRepository;
 import com.haneolenae.bobi.domain.general.repository.GeneralTemplateRepository;
+import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 
 @Service
 public class GeneralServiceImpl implements GeneralService {
@@ -25,15 +26,17 @@ public class GeneralServiceImpl implements GeneralService {
 	private final CustomTemplateRepository customTemplateRepository;
 	private final GeneralMapper generalMapper;
 	private final CustomTemplateMapper customTemplateMapper;
+	private final MemberRepository memberRepository;
 
 	public GeneralServiceImpl(CategoryRepository categoryRepository,
 		GeneralTemplateRepository generalTemplateRepository, CustomTemplateRepository customTemplateRepository,
-		GeneralMapper generalMapper, CustomTemplateMapper customTemplateMapper) {
+		GeneralMapper generalMapper, CustomTemplateMapper customTemplateMapper, MemberRepository memberRepository) {
 		this.categoryRepository = categoryRepository;
 		this.generalTemplateRepository = generalTemplateRepository;
 		this.customTemplateRepository = customTemplateRepository;
 		this.generalMapper = generalMapper;
 		this.customTemplateMapper = customTemplateMapper;
+		this.memberRepository = memberRepository;
 	}
 
 	@Override
@@ -69,13 +72,13 @@ public class GeneralServiceImpl implements GeneralService {
 	}
 
 	@Override
-	public void duplicateGeneralTemplate(Long memberId, DuplicateGeneralTemplateRequest request) {
+	public void duplicateGeneralTemplate(long memberId, DuplicateGeneralTemplateRequest request) {
 		GeneralTemplate generalTemplate = generalTemplateRepository.findById(request.getTemplateId()).orElseThrow();
 
 		generalTemplate.countUp();
 
 		customTemplateRepository.save(
-			customTemplateMapper.toCustomTemplate(generalTemplate)
+			customTemplateMapper.toCustomTemplate(generalTemplate, memberRepository.getReferenceById(memberId))
 		);
 	}
 
