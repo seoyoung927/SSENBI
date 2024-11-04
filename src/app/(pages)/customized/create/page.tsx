@@ -8,9 +8,11 @@ import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import { postCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
+import { TagType } from "@/types/tag/tagTypes";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
+  const [tags, setTags] = useState<TagType[]>([]);
   const [title, setTitle] = useState<string>("");
   const [content, setContet] = useState<string>("");
   // TODO: 수정 필요 - 추가 로직 및 API와 연결
@@ -68,16 +70,7 @@ export default function CustomizedNewPage() {
       <div className="customized-new_form-group">
         <label className="customized-new_form-group__label">태그 및 고객</label>
         <div className="customized-new_tag-container">
-          <TagList
-            tags={[
-              {
-                tagName: "VIP",
-                tagColor: "RED",
-                tagId: 1,
-              },
-            ]}
-            maxTagCount={5}
-          />
+          <TagList tags={tags} maxTagCount={5} />
         </div>
       </div>
 
