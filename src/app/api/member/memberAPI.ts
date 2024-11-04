@@ -1,6 +1,16 @@
 import { SignupFormData, PutMemberFormData } from "@/types/member/memberTypes";
 import axiosInstance from "../axiosInstance";
 
+// Get Member API
+export const getMemberAPI = async ({ token }: { token: string }) => {
+  const response = await axiosInstance.get("/member", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
 // Post Signup API
 export const postSignupAPI = async (formData: SignupFormData) => {
   const response = await axiosInstance.post("/member", formData);
@@ -18,7 +28,6 @@ export const putMemberAPI = async ({
   const response = await axiosInstance.put("/member", formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
   });
   return response.data;

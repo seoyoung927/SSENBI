@@ -5,6 +5,7 @@ import Header from "@/app/components/layout/Header";
 import { useEffect, useState } from "react";
 import "./page.css";
 import TagList from "@/app/components/common/tag/TagList";
+import Cookies from "js-cookie";
 
 export default function MypagePage() {
   // todo : useState로 tags, customer 관리하기
