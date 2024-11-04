@@ -13,6 +13,7 @@ interface TagListProps {
   tags?: TagType[];
   customers?: TagType[];
   maxTagCount?: number;
+  canAddCustomer?: boolean;
 }
 
 const TAG_TABS = ["태그", "고객"];
@@ -25,6 +26,7 @@ export default function TagList({
   tags = [],
   customers = [],
   maxTagCount = Infinity,
+  canAddCustomer = false,
 }: TagListProps) {
   const [validItems, setValidItems] = useState<{ [key: string]: TagType[] }>({
     [TAG_TABS[0]]: tags,
@@ -39,6 +41,9 @@ export default function TagList({
   const [triggerWidth, setTriggerWidth] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLUListElement>(null);
+  const isEmptyList = Object.values(validItems).every(
+    (list) => list.length === 0,
+  );
 
   useEffect(() => {
     if (triggerRef.current) {
@@ -127,7 +132,10 @@ export default function TagList({
       <Popover.Root>
         <Popover.Trigger asChild>
           <ul ref={triggerRef} className="tag-list pointer">
-            {Object.keys(validItems).map((tab) =>
+            {isEmptyList && (
+              <li className="body-small empty-tags"> 태그 추가</li>
+            )}
+            {Object.keys(validItems).map((tab) => [
               validItems[tab]
                 .slice(0, maxTagCount)
                 .map((tag) => (
@@ -139,22 +147,20 @@ export default function TagList({
                     )}
                   </li>
                 )),
-            )}
-            {validItems[tab].length > maxTagCount && (
-              <li className="tag-list-remained">{`+${
-                validItems[tab].length - maxTagCount
-              }개 더보기`}</li>
-            )}
+              validItems[tab].length > maxTagCount && (
+                <li className="tag-list-remained">{`+${
+                  validItems[tab].length - maxTagCount
+                }개 더보기`}</li>
+              ),
+            ])}
           </ul>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content
-            className="tag-list-popup"
-            sideOffset={5}
-            style={{ width: `${triggerWidth}px` }}
-          >
+          <Popover.Content className="tag-list-popup" sideOffset={5}>
             <div className="tag-list-header">
-              <TabBar tabs={TAG_TABS} activeTab={tab} setActiveTab={setTab} />
+              {canAddCustomer && (
+                <TabBar tabs={TAG_TABS} activeTab={tab} setActiveTab={setTab} />
+              )}
               <div className="tag-list-input-wrapper body-small">
                 <input
                   type="text"

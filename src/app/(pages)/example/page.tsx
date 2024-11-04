@@ -22,23 +22,26 @@ export default function Example() {
         title={"제목"}
         content={"설명"}
       />
-      <TagList
-        tags={[
-          {
-            tagName: "VIP",
-            tagColor: "RED",
-            tagId: 0,
-          },
-          { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
-          { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
-          {
-            tagName: "very very long long tag name",
-            tagColor: "PURPLE",
-            tagId: 3,
-          },
-        ]}
-        // maxTagCount={2}
-      />
+      <div style={{ paddingInline: 8 }}>
+        <TagList
+          tags={[
+            {
+              tagName: "VIP",
+              tagColor: "RED",
+              tagId: 0,
+            },
+            { tagName: "Frequent Buyer", tagColor: "ORANGE", tagId: 1 },
+            { tagName: "New Customer", tagColor: "GREEN", tagId: 2 },
+            {
+              tagName: "very very long long tag name",
+              tagColor: "PURPLE",
+              tagId: 3,
+            },
+          ]}
+          canAddCustomer
+          maxTagCount={2}
+        />
+      </div>
       <CustomerCard
         name="길동"
         phoneNumber="010-1111-1111"
@@ -57,23 +60,6 @@ export default function Example() {
             tagName: "New Customer",
             tagColor: "GREEN",
             tagId: 13,
-          },
-        ]}
-        customerTags={[
-          {
-            customerName: "VIP",
-            customerColor: "RED",
-            customerId: 21,
-          },
-          {
-            customerName: "Frequent Buyer",
-            customerColor: "ORANGE",
-            customerId: 22,
-          },
-          {
-            customerName: "New Customer",
-            customerColor: "GREEN",
-            customerId: 23,
           },
         ]}
       />

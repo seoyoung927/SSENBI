@@ -5,6 +5,7 @@ import "./page.css";
 import SearchBar from "@/app/components/common/input/SearchBar";
 import Header from "@/app/components/layout/Header";
 import { CustomerType } from "@/types/tag/tagTypes";
+import Link from "next/link";
 
 const DUMMY_DATA: CustomerType[] = [
   {
@@ -68,13 +69,14 @@ export default function Customer() {
         {customers.map((customer) => (
           <li key={customer.customerId} className="customer-item">
             {/* TODO: routing 적용 */}
-            <CustomerCard
-              name={customer.customerName}
-              phoneNumber={customer.customerPhoneNumber || ""}
-              tags={[]}
-              // TODO: 태그 데이터 수정 - 고객 이름 대신 고객이 속한 태그를 보여줘야 함
-              customerTags={[customer]}
-            />
+            <Link href={`/customer/${customer.customerId}`}>
+              <CustomerCard
+                name={customer.customerName}
+                phoneNumber={customer.customerPhoneNumber || ""}
+                // TODO: 태그 데이터 수정 - 고객 이름 대신 고객이 속한 태그를 보여줘야 함
+                tags={customer.customerTags}
+              />
+            </Link>
           </li>
         ))}
       </ul>
