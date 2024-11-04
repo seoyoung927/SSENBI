@@ -78,6 +78,7 @@ export default function CustomizedPage() {
             <Image
               src="/assets/images/messageIcon.png"
               fill
+              priority
               alt="메세지 icon"
             />
           </div>

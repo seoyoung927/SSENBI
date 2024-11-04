@@ -19,6 +19,7 @@ export default function ContentCard({
         <Image
           src={imgSrc}
           alt={title}
+          priority
           className="content-card__image"
           width={150}
           height={150}

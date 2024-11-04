@@ -103,7 +103,13 @@ export default function Signup() {
       <Header title="회원가입" showBackIcon={true} />
 
       <div className="mypage-signup-image-container">
-        <Image src="/assets/images/ssenbi_logo.png" fill alt="ssenbi_logo" />
+        <Image
+          src="/assets/images/ssenbi_logo.png"
+          fill
+          priority
+          alt="ssenbi 로고"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
 
       <InputField

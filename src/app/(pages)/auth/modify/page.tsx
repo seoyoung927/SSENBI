@@ -110,7 +110,13 @@ export default function ModifyPage() {
       <Header title="회원정보 수정" showBackIcon={true} />
 
       <div className="mypage-modify-image-container">
-        <Image src="/assets/images/ssenbi_logo.png" fill alt="ssenbi 로고" />
+        <Image
+          src="/assets/images/ssenbi_logo.png"
+          fill
+          priority
+          alt="ssenbi 로고"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
 
       <InputField
