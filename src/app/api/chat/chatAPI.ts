@@ -12,8 +12,7 @@ export const postAIChatAPI = async ({
   const response = await axiosInstance.post(
     `/ai/ask`,
     {
-      //   comments,
-      template: "",
+      comments,
       requirements,
     },
     {

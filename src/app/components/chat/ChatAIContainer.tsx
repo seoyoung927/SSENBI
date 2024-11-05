@@ -40,6 +40,12 @@ export default function ChatAIContainer({
     setToken(token);
   }, []);
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +66,7 @@ export default function ChatAIContainer({
       const chatResponse = await postAIChatAPI({
         token,
         // comments: newMessage,
-        template: newMessage,
+        comments: newMessage,
         requirements:
           "비즈니스 상황에서 고객에게 보내는 메세지, 한글로 보내주세요 존댓말로 해주세요!!",
       });
@@ -80,12 +86,6 @@ export default function ChatAIContainer({
       alert("ai 응답 과정 중 에러가 발생하였습니다. 관리자에게 문의해주세요");
     }
   };
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
 
   const handleSave = () => {
     const title = "새로운 제목 예시";
