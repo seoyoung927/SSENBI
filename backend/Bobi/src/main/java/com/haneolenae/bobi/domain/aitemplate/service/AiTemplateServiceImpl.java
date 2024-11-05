@@ -29,7 +29,7 @@ public class AiTemplateServiceImpl implements AiTemplateService {
 	private OpenAiRequest makeOpenAiRequest(UserRequest request) {
 		MessageRequest systemMessageRequest = makeSystemMessage();
 		MessageRequest userMessageRequest = makeUserMessage(request);
-		System.out.println(systemMessageRequest.getContent());
+
 		return OpenAiRequest.builder()
 			.model("gpt-4o")
 			.messages(List.of(systemMessageRequest, userMessageRequest))
@@ -51,7 +51,7 @@ public class AiTemplateServiceImpl implements AiTemplateService {
 	private MessageRequest makeUserMessage(UserRequest request) {
 		return MessageRequest.builder()
 			.role("user")
-			.content(request.getTemplate() + "를 " + request.getRequirements() + "하게 바꿔줘")
+			.content(request.getComment() + "를 " + request.getRequirements() + "하게 바꿔줘")
 			.build();
 	}
 }
