@@ -5,6 +5,7 @@ import ContentCard from "@/app/components/common/card/ContentCard";
 import NavigationBar from "@/app/components/layout/NavigationBar";
 import { getTemplateAPI } from "@/app/api/template/templateAPI";
 import { useEffect, useState } from "react";
+import { HashLoader } from "react-spinners";
 
 interface MessageTemplateType {
   templateId: number;
@@ -26,6 +27,7 @@ const TEMPLATE_TABS = [
 ];
 
 export default function Template() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [categoryList, setCategoryList] = useState<string[]>([]);
   const [allMessageTemplates, setAllMessageTemplates] = useState<
@@ -37,12 +39,19 @@ export default function Template() {
 
   useEffect(() => {
     const fetchMessageApi = async () => {
-      const messageApi = await fetchTemplates();
-      if (Array.isArray(messageApi)) {
-        const { categories, templates } = processTemplates(messageApi);
-        setCategoryList(categories);
-        setAllMessageTemplates(templates);
-        setFilteredMessageTemplates(templates);
+      try {
+        const messageApi = await fetchTemplates();
+        if (Array.isArray(messageApi)) {
+          const { categories, templates } = processTemplates(messageApi);
+          setCategoryList(categories);
+          setAllMessageTemplates(templates);
+          setFilteredMessageTemplates(templates);
+        }
+      } catch (err) {
+        alert("template 페이지 로딩이 실패하였습니다. 관리자에게 문의해주세요");
+        console.error(err);
+      } finally {
+        // setIsLoading(false);
       }
     };
 
@@ -100,6 +109,13 @@ export default function Template() {
 
       <div>
         <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
+      </div>
+      <div style={{ margin: 50 }}>
+        <HashLoader
+          loading={isLoading}
+          color="var(--primary-color)"
+          speedMultiplier={1}
+        />
       </div>
 
       {filteredMessageTemplates.map((message, index) => (
