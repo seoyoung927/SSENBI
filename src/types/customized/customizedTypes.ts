@@ -1,5 +1,5 @@
 // Get Custom Templates API Params
-export type GetCustomTemplatesParams = {
+export type GetCustomTemplatesParamsType = {
   token: string;
   page?: number;
   size?: number;
@@ -10,13 +10,13 @@ export type GetCustomTemplatesParams = {
 };
 
 // Get Single Custom Template API Params
-export type GetCustomTemplateParams = {
+export type GetCustomTemplateParamsType = {
   token: string;
   templateId: string;
 };
 
 // Put Custom Template API Params
-export type PutCustomTemplateParams = {
+export type PutCustomTemplateParamsType = {
   token: string;
   templateId: number;
   title: string;
@@ -28,7 +28,7 @@ export type PutCustomTemplateParams = {
 };
 
 // Post Custom Template API Params
-export type PostCustomTemplateParams = {
+export type PostCustomTemplateParamsType = {
   token: string;
   title: string;
   content: string;
@@ -37,13 +37,13 @@ export type PostCustomTemplateParams = {
 };
 
 // Delete Custom Template API Params
-export type DeleteCustomTemplateParams = {
+export type DeleteCustomTemplateParamsType = {
   token: string;
   templateId: number;
 };
 
 // Post Custom Template Tag API Params
-export type PostCustomTemplateTagParams = {
+export type PostCustomTemplateTagParamsType = {
   token: string;
   templateId: number;
   tagName: string;
@@ -51,13 +51,13 @@ export type PostCustomTemplateTagParams = {
 };
 
 // Delete Custom Template Tag API Params
-export type DeleteCustomTemplateTagParams = {
+export type DeleteCustomTemplateTagParamsType = {
   token: string;
   templateId: number;
 };
 
 // Post Custom Template Customer API Params
-export type PostCustomTemplateCustomerParams = {
+export type PostCustomTemplateCustomerParamsType = {
   token: string;
   templateId: number;
   customerId: number;
@@ -65,7 +65,7 @@ export type PostCustomTemplateCustomerParams = {
 };
 
 // Delete Custom Template Customer API Params
-export type DeleteCustomTemplateCustomerParams = {
+export type DeleteCustomTemplateCustomerParamsType = {
   token: string;
   templateId: number;
   customerId: number;

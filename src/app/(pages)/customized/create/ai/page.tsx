@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import "./page.css";
 import Header from "@/app/components/layout/Header";
 import { useRouter } from "next/navigation";
 import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import { postCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
+import "./page.css";
 
 export default function CustomizedNewAIPage() {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [content, setContet] = useState<string>("");
+
   // TODO: 수정 필요 - 추가 로직 및 API와 연결
   const [selectedCustomers] = useState<number[]>([]);
   const [selectedTags] = useState<number[]>([]);
@@ -86,36 +87,6 @@ export default function CustomizedNewAIPage() {
               tagId: 4,
             },
           ]}
-          maxTagCount={2}
-        />
-      </div>
-
-      <div className="customized-new_form-group">
-        <label className="customized-new_form-group__label">태그</label>
-        <TagList
-          tags={[
-            {
-              tagName: "VIP",
-              tagColor: "RED",
-              tagId: 5,
-            },
-            {
-              tagName: "Frequent Buyer",
-              tagColor: "ORANGE",
-              tagId: 6,
-            },
-            {
-              tagName: "New Customer",
-              tagColor: "GREEN",
-              tagId: 7,
-            },
-            {
-              tagName: "very very long long tag name",
-              tagColor: "PURPLE",
-              tagId: 8,
-            },
-          ]}
-          maxTagCount={2}
         />
       </div>
 

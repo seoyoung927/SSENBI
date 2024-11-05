@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import "./page.css";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import Header from "@/app/components/layout/Header";
 import { TagType, CustomerType } from "@/types/tag/tagTypes";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { deleteMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import "./page.css";
 
 interface ApiResponse {
   messageId: number;
@@ -19,44 +18,17 @@ interface ApiResponse {
   customers: CustomerType[];
 }
 
-const dummyData: ApiResponse = {
-  messageId: 1,
-  title: "제목",
-  messageContent: "속닥속닥",
-  sendedAt: "2024년 10월 25일 1시 48분",
-  tags: [
-    { tagId: 1, tagName: "직장인", tagColor: "RED" },
-    { tagId: 2, tagName: "학생", tagColor: "BLUE" },
-  ],
-  customers: [
-    {
-      customerId: 1,
-      customerName: "홍길동",
-      customerPhoneNumber: "010-1234-5678",
-      customerColor: "GREEN",
-      customerTags: [],
-    },
-    {
-      customerId: 2,
-      customerName: "임꺽정",
-      customerPhoneNumber: "010-9876-5432",
-      customerColor: "YELLOW",
-      customerTags: [],
-    },
-  ],
-};
-
 interface MessageIdPageProps {
   params: {
     id: string;
   };
 }
 
-const MessageIdPage = ({ params }: MessageIdPageProps) => {
+export default function MessageIdPage({ params }: MessageIdPageProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const { id } = params;
-  const [messageData] = useState<ApiResponse | null>(dummyData);
+  const [messageData] = useState<ApiResponse>();
   // const [messageData, setMessageData] = useState<ApiResponse | null>(null);
 
   // useEffect(() => {
@@ -136,6 +108,4 @@ const MessageIdPage = ({ params }: MessageIdPageProps) => {
       </div>
     </div>
   );
-};
-
-export default MessageIdPage;
+}

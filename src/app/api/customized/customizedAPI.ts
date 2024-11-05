@@ -1,13 +1,13 @@
 import {
-  DeleteCustomTemplateCustomerParams,
-  DeleteCustomTemplateParams,
-  DeleteCustomTemplateTagParams,
-  GetCustomTemplateParams,
-  GetCustomTemplatesParams,
-  PostCustomTemplateCustomerParams,
-  PostCustomTemplateParams,
-  PostCustomTemplateTagParams,
-  PutCustomTemplateParams,
+  DeleteCustomTemplateCustomerParamsType,
+  DeleteCustomTemplateParamsType,
+  DeleteCustomTemplateTagParamsType,
+  GetCustomTemplateParamsType,
+  GetCustomTemplatesParamsType,
+  PostCustomTemplateCustomerParamsType,
+  PostCustomTemplateParamsType,
+  PostCustomTemplateTagParamsType,
+  PutCustomTemplateParamsType,
 } from "@/types/customized/customizedTypes";
 import axiosInstance from "../axiosInstance";
 
@@ -20,7 +20,7 @@ export const getCustomTemplatesAPI = async ({
   // templateTags,
   // templateCustomers,
   // templateSearch,
-}: GetCustomTemplatesParams) => {
+}: GetCustomTemplatesParamsType) => {
   const response = await axiosInstance.get("/customTemplate", {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ export const getCustomTemplatesAPI = async ({
 export const getCustomTemplateAPI = async ({
   token,
   templateId,
-}: GetCustomTemplateParams) => {
+}: GetCustomTemplateParamsType) => {
   const response = await axiosInstance.get(`/customTemplate/${templateId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export const putCustomTemplateAPI = async ({
   afterTags,
   beforeCustomerIds,
   afterCustomerIds,
-}: PutCustomTemplateParams) => {
+}: PutCustomTemplateParamsType) => {
   const response = await axiosInstance.put(
     `/customTemplate/${templateId}`,
     {
@@ -87,7 +87,7 @@ export const postCustomTemplateAPI = async ({
   content,
   tags,
   customers,
-}: PostCustomTemplateParams) => {
+}: PostCustomTemplateParamsType) => {
   const response = await axiosInstance.post(
     "/customTemplate",
     {
@@ -109,7 +109,7 @@ export const postCustomTemplateAPI = async ({
 export const deleteCustomTemplateAPI = async ({
   token,
   templateId,
-}: DeleteCustomTemplateParams) => {
+}: DeleteCustomTemplateParamsType) => {
   const response = await axiosInstance.delete(`/customTemplate/${templateId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -124,7 +124,7 @@ export const postCustomTemplateTagAPI = async ({
   templateId,
   tagName,
   tagColor,
-}: PostCustomTemplateTagParams) => {
+}: PostCustomTemplateTagParamsType) => {
   const response = await axiosInstance.post(
     `/customTemplate/${templateId}/tag`,
     {
@@ -144,7 +144,7 @@ export const postCustomTemplateTagAPI = async ({
 export const deleteCustomTemplateTagAPI = async ({
   token,
   templateId,
-}: DeleteCustomTemplateTagParams) => {
+}: DeleteCustomTemplateTagParamsType) => {
   const response = await axiosInstance.delete(
     `/customTemplate/${templateId}/tag`,
     {
@@ -162,7 +162,7 @@ export const postCustomTemplateCustomerAPI = async ({
   templateId,
   customerId,
   customerColor,
-}: PostCustomTemplateCustomerParams) => {
+}: PostCustomTemplateCustomerParamsType) => {
   const response = await axiosInstance.post(
     `/customTemplate/${templateId}/customer`,
     {
@@ -183,7 +183,7 @@ export const deleteCustomTemplateCustomerAPI = async ({
   token,
   templateId,
   customerId,
-}: DeleteCustomTemplateCustomerParams) => {
+}: DeleteCustomTemplateCustomerParamsType) => {
   const response = await axiosInstance.delete(
     `/customTemplate/${templateId}/customer/${customerId}`,
     {

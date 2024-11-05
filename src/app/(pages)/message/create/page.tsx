@@ -4,10 +4,14 @@ import React, { useState } from "react";
 import "./page.css";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
+import Modal from "@/app/components/common/modal/Modal";
+import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 
 const MessageNew = () => {
-  const [customer, setCustomer] = useState("");
-  const [content, setContent] = useState("");
+  const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
+    useState<boolean>(false);
+  const [customer, setCustomer] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const router = useRouter();
 
   const handleSend = () => {
@@ -16,6 +20,18 @@ const MessageNew = () => {
 
   const handleCancel = () => {
     router.push("/message");
+  };
+
+  const closeAIEditModal = () => {
+    setIsAIEditModalModalOpen(false);
+  };
+
+  const handleSaveMessage = (content: string) => {
+    setContent(content);
+  };
+
+  const openAIModal = () => {
+    setIsAIEditModalModalOpen(true);
   };
 
   return (
@@ -51,6 +67,13 @@ const MessageNew = () => {
             취소
           </button>
           <button
+            onClick={openAIModal}
+            type="button"
+            className="message-new_button-send"
+          >
+            쎈비 AI 도움 받기
+          </button>
+          <button
             onClick={handleSend}
             type="button"
             className="message-new_button-send"
@@ -59,6 +82,19 @@ const MessageNew = () => {
           </button>
         </div>
       </div>
+      {isAIEditModalOpen && (
+        <Modal
+          isOpen={isAIEditModalOpen}
+          onClose={closeAIEditModal}
+          title={"AI 쎈비와 문자 작성하기"}
+        >
+          <ChatAIContainer
+            onClose={closeAIEditModal}
+            onSave={handleSaveMessage}
+            initialContent={content}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 16px;
-  height: 40px;
+  padding: 24px 12px;
+  height: 65px;
   border-bottom: 1px solid var(--border-default);
 }
 

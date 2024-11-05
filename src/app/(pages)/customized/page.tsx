@@ -11,6 +11,7 @@ import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import "./page.css";
+import HashLoading from "@/app/components/common/loading/HashLoading";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -27,9 +28,12 @@ interface CustomTemplate {
 type ApiResponse = CustomTemplate[];
 
 export default function CustomizedPage() {
-  const router = useRouter();
   const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
     useState<ApiResponse>([]);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCustomTemplates = async () => {
@@ -42,6 +46,9 @@ export default function CustomizedPage() {
         setFilteredMessageTemplates(data.result);
       } catch (error) {
         console.error("Error fetching message:", error);
+        alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -51,6 +58,10 @@ export default function CustomizedPage() {
   const handleNewTemplate = () => {
     router.push("/customized/create");
   };
+
+  if (isLoading) {
+    return <HashLoading />;
+  }
 
   return (
     <div className="page-container">

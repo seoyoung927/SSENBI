@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./CustomizedModifyForm.css";
 
-import InputField from "../input/InputField";
-import TagList from "../tag/TagList";
+import InputField from "../common/input/InputField";
+import TagList from "../common/tag/TagList";
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
