@@ -1,7 +1,7 @@
 package com.haneolenae.bobi.domain.aitemplate.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ public class AiTemplateController {
 		this.aiTemplateService = aiTemplateService;
 	}
 
-	@GetMapping("/ask")
+	@PostMapping("/ask")
 	public ResponseEntity<?> askAi(@RequestBody UserRequest request) {
 		return ResponseEntity.ok(new ApiResponse<>(aiTemplateService.askAi(request)));
 	}
