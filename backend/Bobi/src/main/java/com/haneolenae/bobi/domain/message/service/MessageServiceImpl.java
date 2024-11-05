@@ -40,11 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-	// @Value("${coolsms.api.key}")
-	// private String apiKey;
-	//
-	// @Value("${coolsms.api.secret}")
-	// private String apiSecret;
+	@Value("${coolsms.senderPhoneNumber}")
+	private String senderPhoneNumber;
 
 	private final MemberRepository memberRepository;
 	private final CustomerRepository customerRepository;
@@ -190,7 +187,7 @@ public class MessageServiceImpl implements MessageService {
 	public void sendCoolSms(String receiverPhone, String msg) {
 		net.nurigo.sdk.message.model.Message coolMessage = new net.nurigo.sdk.message.model.Message();
 		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-		coolMessage.setFrom("01054621615");
+		coolMessage.setFrom(senderPhoneNumber);
 		coolMessage.setTo(receiverPhone);
 		coolMessage.setText(msg);
 		// coolMessage.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다.");

@@ -20,9 +20,11 @@ springdoc:
     operations-sorter: alpha
 
 coolsms:
+  senderPhoneNumber: ${COOLSMS_SENDER}
   api:
     key: ${COOLSMS_API_KEY}
     secret: ${COOLSMS_API_SECRET}
+
 
 
 
