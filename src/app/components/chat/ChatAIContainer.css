@@ -23,6 +23,8 @@
 
 .ai-message {
   justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
 }
 
 .chat-bubble {
@@ -75,4 +77,53 @@
 
 .save-button-container {
   text-align: center;
+}
+
+.check-icon-container {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.check-icon {
+  fill: var(--gray-300);
+}
+
+.check-icon:hover {
+  fill: var(--green-600);
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--gray-400);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 10;
+  transition: opacity 0.2s;
+  opacity: 0;
+  width: 100px;
+}
+
+.check-icon-container:hover .tooltip {
+  display: block;
+  opacity: 1;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--gray-400) transparent;
 }

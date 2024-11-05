@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { postAIChatAPI } from "@/app/api/chat/chatAPI";
+import Cookies from "js-cookie";
+import CheckIcon from "@/app/assets/svg/Check.svg";
 import "./ChatAIContainer.css";
+import Image from "next/image";
 
 enum SenderType {
+  NOTICE = "notice",
   USER = "user",
   AI = "ai",
 }
@@ -13,14 +18,7 @@ interface MessageType {
 
 interface ChatAIContainerPropsType {
   onClose: () => void;
-  onSave: (
-    title?: string,
-    content?: string,
-    beforeTags?: number[],
-    afterTags?: number[],
-    beforeCustomerIds?: number[],
-    afterCustomerIds?: number[],
-  ) => void;
+  onSave: (content: string) => void;
 }
 
 export default function ChatAIContainer({
@@ -29,15 +27,21 @@ export default function ChatAIContainer({
 }: ChatAIContainerPropsType) {
   const [messages, setMessages] = useState<MessageType[]>([
     {
-      sender: SenderType.AI,
+      sender: SenderType.NOTICE,
       content: "안녕하세요! 템플릿을 어떻게 수정할까요?",
     },
   ]);
   const [newMessage, setNewMessage] = useState<string>("");
+  const [token, setToken] = useState<string>("");
+
+  useEffect(() => {
+    const token = Cookies.get("accessToken");
+    if (!token) return;
+    setToken(token);
+  }, []);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Separate input change handler
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(e.target.value);
   };
@@ -52,13 +56,29 @@ export default function ChatAIContainer({
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setNewMessage("");
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    try {
+      const chatResponse = await postAIChatAPI({
+        token,
+        // comments: newMessage,
+        template: newMessage,
+        requirements:
+          "비즈니스 상황에서 고객에게 보내는 메세지, 한글로 보내주세요 존댓말로 해주세요!!",
+      });
 
-    const aiResponse: MessageType = {
-      sender: SenderType.AI,
-      content: `AI 응답 예시: "${userMessage.content}"에 대해 템플릿을 수정합니다.`,
-    };
-    setMessages((prevMessages) => [...prevMessages, aiResponse]);
+      console.log("chatResponse", chatResponse);
+
+      const aiResponse: MessageType = {
+        sender: SenderType.AI,
+        content:
+          // todo : 나중에 수정
+          // `AI 응답은 다음과 같습니다.\n-----------------------\n` +
+          `${chatResponse.result}`,
+      };
+      setMessages((prevMessages) => [...prevMessages, aiResponse]);
+    } catch (err) {
+      console.error(err);
+      alert("ai 응답 과정 중 에러가 발생하였습니다. 관리자에게 문의해주세요");
+    }
   };
 
   useEffect(() => {
@@ -70,7 +90,7 @@ export default function ChatAIContainer({
   const handleSave = () => {
     const title = "새로운 제목 예시";
     const content = "새로운 내용 예시";
-    onSave(title, content);
+    onSave(content);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -88,6 +108,12 @@ export default function ChatAIContainer({
             className={`chat-message ${message.sender === SenderType.USER ? "user-message" : "ai-message"}`}
           >
             <div className="chat-bubble">{message.content}</div>
+            {message.sender === SenderType.AI && (
+              <div className="check-icon-container">
+                <CheckIcon className="check-icon" />
+                <div className="tooltip">메시지 저장하기</div>
+              </div>
+            )}
           </div>
         ))}
         <div ref={scrollRef} />
@@ -104,15 +130,6 @@ export default function ChatAIContainer({
         />
         <button onClick={handleSendMessage} className="send-button">
           전송
-        </button>
-      </div>
-
-      <div className="modal-footer">
-        <button className="modal-cancel" onClick={onClose}>
-          취소
-        </button>
-        <button className="modal-confirm" onClick={handleSave}>
-          확인
         </button>
       </div>
     </div>
