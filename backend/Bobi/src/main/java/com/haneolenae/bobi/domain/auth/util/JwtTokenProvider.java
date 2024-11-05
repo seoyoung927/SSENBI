@@ -86,6 +86,16 @@ public class JwtTokenProvider {
 		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기
 	}
 
+	public Long getIdFromRefreshToken(String refreshToken) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(secretKey) // 동일한 키 사용
+			.build()
+			.parseClaimsJws(refreshToken)
+			.getBody();
+
+		return Long.valueOf(claims.getSubject()); // id 클레임 가져오기
+	}
+
 	public Long getExpiration(String token) {
 		Claims claims = Jwts.parserBuilder()
 			.setSigningKey(secretKey)

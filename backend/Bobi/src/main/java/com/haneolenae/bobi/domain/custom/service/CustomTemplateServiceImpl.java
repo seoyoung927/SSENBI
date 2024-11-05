@@ -26,6 +26,8 @@ import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 import com.haneolenae.bobi.domain.tag.repository.TagRepository;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 
 @Service
 public class CustomTemplateServiceImpl implements CustomTemplateService {
@@ -65,7 +67,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	@Override
 	public CustomTemplateResponse getCustomTemplate(long memberId, long templateId) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
-			.orElseThrow();
+			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
 
 		return customTemplateMapper.toCustomTemplateResponse(customTemplate);
 	}
@@ -104,7 +106,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	@Transactional
 	public void editCustomTemplate(long memberId, long templateId, EditCustomTemplateRequest request) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
-			.orElseThrow();
+			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
 
 		//제목과 내용 수정
 		customTemplate.editTitleAndContent(request);
@@ -124,6 +126,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		Set<Long> gongtongTagIdSet = new HashSet<>(beforeTagSet);
 		gongtongTagIdSet.retainAll(afterTagSet);
 
+		//삭제
 		beforeTagSet.stream().filter(val -> !gongtongTagIdSet.contains(val))
 			.forEach(templateTagRepository::deleteByTagId);
 
@@ -160,7 +163,8 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	@Transactional
 	public void deleteCustomTemplate(long memberId, long templateId) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
-			.orElseThrow();
+			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
+
 
 		//연관관계 해제
 		templateTagRepository.deleteByCustomTemplateId(templateId);
@@ -204,7 +208,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	@Override
 	public void replicateCustomTemplate(long memberId, long templateId, ReplicateCustomTemplateRequest request) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
-			.orElseThrow();
+			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
 
 		CustomTemplate replicatedCustomTemplate = customTemplate.replicateMe();
 		customTemplateRepository.save(replicatedCustomTemplate);

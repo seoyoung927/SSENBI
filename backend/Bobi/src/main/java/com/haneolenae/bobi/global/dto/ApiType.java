@@ -24,6 +24,7 @@ public enum ApiType {
 
 	// Auth
 	LOGIN_FAILED(HttpStatus.BAD_REQUEST, ApiCode.A40001, ApiCode.A40001.getMsg()),
+	REFRESH_TOKEN_NOT_EXIST(HttpStatus.BAD_REQUEST, ApiCode.A40002, ApiCode.A40002.getMsg()),
 	REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, ApiCode.A40101, ApiCode.A40101.getMsg()),
 	ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, ApiCode.A40102, ApiCode.A40102.getMsg()),
 	REFRESH_TOKEN_NOT_SAME(HttpStatus.FORBIDDEN, ApiCode.A40301, ApiCode.A40301.getMsg()),
@@ -37,6 +38,10 @@ public enum ApiType {
 	// Message
 	EXTERNAL_MESSAGE_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.MS50001, ApiCode.MS50001.getMsg()),
 	MESSAGE_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.MS40401, ApiCode.MS40401.getMsg()),
+
+	CUSTOM_TEMPLATE_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
+
+	GENERAL_TEMPLATE_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.G40401, ApiCode.G40401.getMsg()),
 
 	// 500
 	SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.X10000, ApiCode.X10000.getMsg());

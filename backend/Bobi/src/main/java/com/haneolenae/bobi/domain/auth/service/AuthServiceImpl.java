@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public void logout(String accessHeader, String refreshToken, String sessionId) {
 		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
-		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Long id = jwtTokenProvider.getIdFromToken(accessHeader);
 
 		//TODO:redis에서 id랑 session조합해서 refreshToken 제거
 		redisUtil.remove(createRedisKey(id, sessionId));
@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public RefreshResponse refresh(String refreshToken, String sessionId) {
-		Long id = jwtTokenProvider.getIdFromToken(refreshToken);
+		Long id = jwtTokenProvider.getIdFromRefreshToken(refreshToken);
 		//TODO:redis에서 id와 sessionId를 조합해 refreshToken 가져오기
 		String savedRefreshToken = getSavedRefreshToken(id, sessionId);
 

@@ -54,8 +54,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	public void update(String accessHeader, MemberUpdateRequest request) {
-		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
-		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Long id = jwtTokenProvider.getIdFromToken(accessHeader);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		member.update(request);
@@ -63,8 +62,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	public void updatePassword(String accessHeader, MemberUpdatePasswordRequest request) {
-		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
-		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Long id = jwtTokenProvider.getIdFromToken(accessHeader);
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		if (isNotSamePassword(request.getPassword(), member.getPassword())) {
