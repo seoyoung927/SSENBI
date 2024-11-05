@@ -67,10 +67,10 @@ export default function MessagePage() {
         <FloatingMenuButton>
           <div>
             <ul>
-              <Link href="/message/new">
+              <Link href="/message/create">
                 <li>메세지 작성하기</li>
               </Link>
-              <Link href="/message/new/ai">
+              <Link href="/message/create/ai">
                 <li>AI 도움 받아 작성하기</li>
               </Link>
             </ul>
