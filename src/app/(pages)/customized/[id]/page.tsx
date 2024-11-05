@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import {
   deleteCustomTemplateAPI,
   getCustomTemplateAPI,
+  putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
 import CustomizedModifyForm from "@/app/components/common/modal/CustomizedModifyForm";
@@ -138,7 +139,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
     try {
       // TODO: 다시 get
-      // const response = await putCustomTemplateAPI(putCustomTemplateParams);
+      const response = await putCustomTemplateAPI(putCustomTemplateParams);
+
+      console.log("putCustomTemplateAPI response", response);
+
       setModifiedTemplate({
         templateTitle: putCustomTemplateParams.title,
         templateContent: putCustomTemplateParams.content,
