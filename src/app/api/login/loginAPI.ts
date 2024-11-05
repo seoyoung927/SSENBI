@@ -5,16 +5,15 @@ import Cookies from "js-cookie";
 // Post Login API
 export const postLoginAPI = async (formData: LoginFormData) => {
   const response = await axiosInstance.post("/auth/login", formData);
+  const accessToken = response.headers["authorization"];
 
   // 응답 코드가 SUCCESS인 경우
-  if (response.data.code === "S10000") {
-    const accessToken = response.headers["authorization"];
-    //쿠키 생성 시점으로부터 1일 후에 만료
-    Cookies.set("accessToken", accessToken, { expires: 1 });
+  if (response.data.code === "S10000" && accessToken !== undefined) {
+    Cookies.set("accessToken", accessToken, { expires: 1 }); //쿠키 생성 시점으로부터 1일 후에 만료
     return true;
   }
 
-  throw new Error(response.data.message);
+  return false;
 };
 
 // Post Logout API
@@ -52,5 +51,5 @@ export const postRefreshTokenAPI = async () => {
     return true;
   }
 
-  throw new Error(response.data.message);
+  return false;
 };

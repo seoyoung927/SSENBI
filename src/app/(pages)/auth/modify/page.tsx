@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getMemberAPI, putMemberAPI } from "@/app/api/member/memberAPI";
 import { validatePassword } from "@/utils/validatePassword";
@@ -9,7 +9,6 @@ import Header from "@/app/components/layout/Header";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import "./page.css";
-import { postRefreshTokenAPI } from "@/app/api/login/loginAPI";
 
 // 회원정보 수정 데이터 타입
 interface UpdateMemberFormData {
@@ -21,16 +20,16 @@ interface UpdateMemberFormData {
 const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
 
 export default function ModifyPage() {
-  const [memberId, setMemberId] = useState("exampleId"); // 읽기 전용 예시 값
-  const [password, setPassword] = useState("password"); // 읽기 전용 예시 값
-  const [confirmPassword, setConfirmPassword] = useState("password"); // 읽기 전용 예시 값
-  const [name, setName] = useState(""); // 읽기 전용 예시 값
-  const [business, setBusiness] = useState("");
-  const [personalPhoneNumber, setPersonalPhoneNumber] = useState("");
-  const [businessPhoneNumber, setBusinessPhoneNumber] = useState("");
-  const [passwordError, setPasswordError] = useState<string>(""); // 비밀번호 오류 메시지 상태
+  const [memberId, setMemberId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [business, setBusiness] = useState<string>("");
+  const [personalPhoneNumber, setPersonalPhoneNumber] = useState<string>("");
+  const [businessPhoneNumber, setBusinessPhoneNumber] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
   const [passwordValidationMessage, setPasswordValidationMessage] =
-    useState<string>(""); // 비밀번호 유효성 검사 메시지 상태
+    useState<string>("");
 
   const router = useRouter();
 
@@ -40,10 +39,13 @@ export default function ModifyPage() {
       if (!token) return;
       try {
         const response = await getMemberAPI({ token });
-        console.log(response);
+        setMemberId(response?.result?.memberId);
+        setName(response?.result?.name);
+        setBusiness(response?.result?.business);
+        setPersonalPhoneNumber(response?.result?.personalPhoneNumber);
+        setBusinessPhoneNumber(response?.result?.businessPhoneNumber);
       } catch (error) {
         console.error("get Member API 실패", error);
-        // handleError(error);
       }
     };
 
