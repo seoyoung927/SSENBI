@@ -69,7 +69,7 @@ const MessageNew = () => {
           <button
             onClick={openAIModal}
             type="button"
-            className="message-new_button-send"
+            className="message-new_button-send gradient_button"
           >
             쎈비 AI 도움 받기
           </button>

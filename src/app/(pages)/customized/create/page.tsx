@@ -94,9 +94,9 @@ export default function CustomizedNewPage() {
         <button
           onClick={handleAI}
           type="button"
-          className="customized-new_button blue_button"
+          className="customized-new_button gradient_button"
         >
-          AI로 수정
+          쎈비 AI 도움 받기
         </button>
         <button
           onClick={handleSubmit}
