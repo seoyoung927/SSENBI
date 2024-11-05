@@ -17,6 +17,7 @@ public enum ApiType {
 
 	//400
 	LOGIN_FAILED(HttpStatus.BAD_REQUEST, ApiCode.A40001, ApiCode.A40001.getMsg()),
+	REFRESH_TOKEN_NOT_EXIST(HttpStatus.BAD_REQUEST, ApiCode.A40002, ApiCode.A40002.getMsg()),
 	REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, ApiCode.A40101, ApiCode.A40101.getMsg()),
 	ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, ApiCode.A40102, ApiCode.A40102.getMsg()),
 	REFRESH_TOKEN_NOT_SAME(HttpStatus.FORBIDDEN, ApiCode.A40301, ApiCode.A40301.getMsg()),

@@ -4,6 +4,8 @@ import com.haneolenae.bobi.domain.auth.dto.request.LoginRequest;
 import com.haneolenae.bobi.domain.auth.dto.response.TokenResponse;
 import com.haneolenae.bobi.domain.auth.service.AuthService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +47,7 @@ public class AuthController {
 	public ResponseEntity<ApiResponse<String>> logout(@RequestHeader("Authorization") String accessHeader,
 		@CookieValue(value = "refreshToken", defaultValue = "") String refreshToken, HttpServletRequest request) {
 		if (refreshToken.isEmpty()) {
-			throw new RuntimeException("Refresh token is empty");
+			throw new ApiException(ApiType.REFRESH_TOKEN_NOT_EXIST);
 		}
 
 		String sessionId = request.getSession().getId();
@@ -58,7 +60,7 @@ public class AuthController {
 	public ResponseEntity<ApiResponse<String>> refresh(
 		@CookieValue(value = "refreshToken", defaultValue = "") String refreshToken, HttpServletRequest request) {
 		if (refreshToken.isEmpty()) {
-			throw new RuntimeException("Refresh token is empty");
+			throw new ApiException(ApiType.REFRESH_TOKEN_NOT_EXIST);
 		}
 
 		String sessionId = request.getSession().getId();
