@@ -19,7 +19,7 @@ export default function LoginPage() {
     try {
       const isSuccess = await postLoginAPI({ loginId, password });
 
-      if (isSuccess) {
+      if (isSuccess === true) {
         setLogin();
         router.push("/"); // 로그인 성공 후 홈으로 리다이렉션
       }

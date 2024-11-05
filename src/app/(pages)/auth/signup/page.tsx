@@ -59,7 +59,7 @@ export default function Signup() {
       const isSuccess = await postSignupAPI(signupData);
 
       if (isSuccess) {
-        router.push("/login");
+        router.push("/auth/login");
       }
     } catch (error) {
       if (error instanceof Error) {

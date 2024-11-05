@@ -41,3 +41,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# custom server and script files
+init-https.sh
+server.mjs

@@ -3,7 +3,8 @@ import "./Header.css";
 import BackIcon from "@/app/assets/svg/ChevronLeft.svg";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/stores/authStore";
-
+import Cookies from "js-cookie";
+import { postLogoutAPI } from "@/app/api/login/loginAPI";
 interface HeaderProps {
   title: string;
   showBackIcon?: boolean;
@@ -18,14 +19,19 @@ export default function Header({ title, showBackIcon = false }: HeaderProps) {
     router.push("/auth/login");
   };
 
-  const handleLogout = () => {
-    Logout();
+  const handleLogout = async () => {
+    try {
+      const token = Cookies.get("accessToken");
+
+      if (!token) return;
+
+      await postLogoutAPI({ token });
+      Logout();
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+    }
     router.push("/");
   };
-
-  useEffect(() => {
-    console.log(isLoggedIn);
-  }, [isLoggedIn]);
 
   return (
     <div className="header heading">
@@ -50,7 +56,7 @@ export default function Header({ title, showBackIcon = false }: HeaderProps) {
           로그아웃
         </button>
       )}
-      {isLoggedIn === false && (
+      {isLoggedIn !== true && (
         <button
           type="button"
           className="header_button-auth"

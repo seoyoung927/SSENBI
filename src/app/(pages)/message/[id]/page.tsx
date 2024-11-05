@@ -34,12 +34,14 @@ const dummyData: ApiResponse = {
       customerName: "홍길동",
       customerPhoneNumber: "010-1234-5678",
       customerColor: "GREEN",
+      customerTags: [],
     },
     {
       customerId: 2,
       customerName: "임꺽정",
       customerPhoneNumber: "010-9876-5432",
       customerColor: "YELLOW",
+      customerTags: [],
     },
   ],
 };
