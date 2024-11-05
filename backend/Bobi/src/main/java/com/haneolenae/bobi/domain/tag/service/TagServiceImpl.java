@@ -1,11 +1,14 @@
 package com.haneolenae.bobi.domain.tag.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.tag.dto.request.TagCreateRequest;
 import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
+import com.haneolenae.bobi.domain.tag.dto.response.TagsResponse;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 import com.haneolenae.bobi.domain.tag.mapper.TagMapper;
 import com.haneolenae.bobi.domain.tag.repository.TagRepository;
@@ -23,6 +26,14 @@ public class TagServiceImpl implements TagService {
 		this.tagRepository = tagRepository;
 		this.memberRepository = memberRepository;
 		this.tagMapper = tagMapper;
+	}
+
+	@Override
+	public TagsResponse getAll(Long memberId) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		return tagMapper.toTag(tagRepository.findByMember(member));
 	}
 
 	@Override
