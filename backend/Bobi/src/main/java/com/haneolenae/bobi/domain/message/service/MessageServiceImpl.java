@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
@@ -34,10 +33,12 @@ import com.haneolenae.bobi.domain.tag.repository.TagRepository;
 import com.haneolenae.bobi.global.dto.ApiType;
 import com.haneolenae.bobi.global.exception.ApiException;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
 	@Value("${coolsms.senderPhoneNumber}")
@@ -57,27 +58,6 @@ public class MessageServiceImpl implements MessageService {
 	private final MessageMapper messageMapper;
 
 	private final DefaultMessageService coolSmsService;
-
-	public MessageServiceImpl(
-		@Value("${coolsms.api.key}") String apiKey,
-		@Value("${coolsms.api.secret}") String apiSecret,
-		MemberRepository memberRepository,
-		CustomerRepository customerRepository,
-		CustomerTagRepository customerTagRepository, TagRepository tagRepository, MessageRepository messageRepository,
-		MessageCustomerRepository messageCustomerRepository, MessageTagRepository messageTagRepository,
-		MessageMapper messageMapper) {
-		this.memberRepository = memberRepository;
-		this.customerRepository = customerRepository;
-		this.customerTagRepository = customerTagRepository;
-		this.tagRepository = tagRepository;
-		this.messageRepository = messageRepository;
-		this.messageCustomerRepository = messageCustomerRepository;
-		this.messageTagRepository = messageTagRepository;
-		this.messageMapper = messageMapper;
-
-		this.coolSmsService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret,
-			"https://api.coolsms.co.kr");
-	}
 
 	@Transactional
 	public void sendMessage(long memberId, SendMessageRequest sendMessageRequest) {
