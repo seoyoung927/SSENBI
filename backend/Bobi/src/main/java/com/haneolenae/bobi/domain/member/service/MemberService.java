@@ -9,7 +9,7 @@ import com.haneolenae.bobi.domain.member.dto.response.MemberOverviewResponse;
 import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 
 public interface MemberService {
-	public MemberResponse get(String accessHeader);
+	public MemberResponse get(Long id);
 
 	public MemberOverviewResponse getOverview(String accessToken);
 

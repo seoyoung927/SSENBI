@@ -3,6 +3,7 @@ package com.haneolenae.bobi.domain.auth.controller;
 import com.haneolenae.bobi.domain.auth.dto.request.LoginRequest;
 import com.haneolenae.bobi.domain.auth.dto.response.TokenResponse;
 import com.haneolenae.bobi.domain.auth.service.AuthService;
+import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 import com.haneolenae.bobi.global.dto.ApiType;
 import com.haneolenae.bobi.global.exception.ApiException;
@@ -24,9 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 	private final AuthService authService;
+	private final JwtTokenProvider jwtTokenProvider;
 
-	public AuthController(AuthService authService) {
+	public AuthController(AuthService authService, JwtTokenProvider jwtTokenProvider) {
 		this.authService = authService;
+		this.jwtTokenProvider = jwtTokenProvider;
 	}
 
 	@PostMapping("/login")
@@ -51,8 +54,10 @@ public class AuthController {
 		}
 
 		String sessionId = request.getSession().getId();
+		String accessToken = jwtTokenProvider.getTokenFromHeader(accessHeader);
+		Long id = jwtTokenProvider.getIdFromToken(accessHeader);
 
-		authService.logout(accessHeader, refreshToken, sessionId);
+		authService.logout(id, accessToken, sessionId);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
