@@ -38,7 +38,7 @@
 }
 
 .ai-message .chat-bubble {
-  background-color: var(--blue-500);
+  background-color: var(--blue-400);
   color: var(--bg-default);
   border-top-left-radius: 0;
 }
@@ -50,6 +50,7 @@
 
 .chat-input {
   flex-grow: 1;
+  width: 100%;
   padding: 8px;
   border: 1px solid var(--border-default);
   border-radius: 4px;
@@ -63,12 +64,13 @@
 }
 
 .send-button {
-  padding: 8px 12px;
+  padding: 8px 2px;
   background-color: var(--blue-500);
   color: var(--bg-default);
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 60px;
 }
 
 .save-button-container {
