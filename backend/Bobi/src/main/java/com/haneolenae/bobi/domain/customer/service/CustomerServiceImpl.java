@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.request.DeleteCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
@@ -120,5 +121,19 @@ public class CustomerServiceImpl implements CustomerService {
 		customerRepository.save(customer);
 
 		return mapper.toCustomerResponse(customer);
+	}
+
+	@Override
+	public void delete(long memberId, DeleteCustomerRequest request) {
+		// TODO: memberId 유효성 검사
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		// TODO: customerId 유효성 검사
+		Customer customer = customerRepository.findById(request.getId()).orElseThrow(
+			() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND)
+		);
+
+		customerRepository.delete(customer);
 	}
 }
