@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.tag.dto.request.TagCreateRequest;
+import com.haneolenae.bobi.domain.tag.dto.request.TagDeleteRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagUpdateRequest;
 import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
 import com.haneolenae.bobi.domain.tag.dto.response.TagsResponse;
@@ -58,6 +59,17 @@ public class TagServiceImpl implements TagService {
 		tag.update(request);
 
 		return tagMapper.toTag(tag);
+	}
+
+	@Transactional
+	public void delete(Long memberId, TagDeleteRequest request) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		Tag tag = tagRepository.findByIdAndMemberId(request.getTagId(), memberId)
+			.orElseThrow(() -> new ApiException(ApiType.TAG_MEMBER_INVALID));
+
+		tagRepository.delete(tag);
 	}
 
 	@Override

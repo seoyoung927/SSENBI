@@ -1,6 +1,8 @@
 package com.haneolenae.bobi.domain.tag.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.tag.dto.request.TagCreateRequest;
+import com.haneolenae.bobi.domain.tag.dto.request.TagDeleteRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagUpdateRequest;
 import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
 import com.haneolenae.bobi.domain.tag.dto.response.TagsResponse;
@@ -53,5 +56,15 @@ public class TagController {
 		Long memberId = jwtTokenProvider.getIdFromToken(accessToken);
 
 		return ResponseEntity.ok(new ApiResponse<>(tagService.update(memberId, request)));
+	}
+
+	@DeleteMapping
+	public ResponseEntity<ApiResponse<String>> updateTag(@RequestHeader("Authorization") String accessToken,
+		@RequestBody TagDeleteRequest request) {
+		Long memberId = jwtTokenProvider.getIdFromToken(accessToken);
+
+		tagService.delete(memberId, request);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 }
