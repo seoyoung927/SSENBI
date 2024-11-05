@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "./page.css";
 import Header from "@/app/components/layout/Header";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import FilledTag from "@/app/components/common/tag/FilledTag";
@@ -13,10 +12,11 @@ import {
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
 import CustomizedModifyForm from "@/app/components/chat/CustomizedModifyForm";
-import CustomizedModifyAI from "@/app/components/chat/CustomizedModifyAI"; // Import CustomizedModifyAI
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
+import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
+import "./page.css";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -60,9 +60,8 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const router = useRouter();
   const { id } = params;
   const [customMessageTemplate, setCustomMessageTemplate] =
-    useState<ApiResponse | null>(null);
-  const [modifiedTemplate, setModifiedTemplate] =
-    useState<ModifiedTemplate | null>(null);
+    useState<ApiResponse>();
+  const [modifiedTemplate, setModifiedTemplate] = useState<ModifiedTemplate>();
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalModalOpen] = useState<boolean>(false);
@@ -163,6 +162,18 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     }
   };
 
+  const handleSaveMessage = (content: string) => {
+    if (customMessageTemplate) {
+      // Update the content of the custom message template
+      const updatedTemplate = {
+        ...customMessageTemplate,
+        templateContent: content, // Update the template content
+      };
+
+      setCustomMessageTemplate(updatedTemplate); // Set the updated template
+    }
+  };
+
   const closeModals = () => {
     setIsAIEditModalModalOpen(false);
     setIsEditModalModalOpen(false);
@@ -240,10 +251,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           onClose={closeAIEditModal}
           title={"AI 쎈비와 수정하기"}
         >
-          <CustomizedModifyAI
-            templateId={id}
+          <ChatAIContainer
             onClose={closeAIEditModal}
-            onSave={handleSaveTemplate}
+            onSave={handleSaveMessage}
+            initialContent={customMessageTemplate?.templateContent}
           />
         </Modal>
       )}
