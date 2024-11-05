@@ -5,7 +5,7 @@ import ContentCard from "@/app/components/common/card/ContentCard";
 import NavigationBar from "@/app/components/layout/NavigationBar";
 import { getTemplateAPI } from "@/app/api/template/templateAPI";
 import { useEffect, useState } from "react";
-import { HashLoader } from "react-spinners";
+import HashLoading from "@/app/components/common/loading/HashLoading";
 
 interface MessageTemplateType {
   templateId: number;
@@ -51,7 +51,7 @@ export default function Template() {
         alert("template 페이지 로딩이 실패하였습니다. 관리자에게 문의해주세요");
         console.error(err);
       } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -102,20 +102,16 @@ export default function Template() {
     setFilteredMessageTemplates(filtered);
   };
 
+  if (isLoading) {
+    return <HashLoading />;
+  }
+
   return (
     <div className="page-container">
       <Banner />
-      {/* 이 div가 가로 스크롤 스타일 이쁘게 바꾸고 싶은 곳 */}
 
       <div>
         <NavigationBar tabs={TEMPLATE_TABS} onTabChange={handleTabChange} />
-      </div>
-      <div style={{ margin: 50 }}>
-        <HashLoader
-          loading={isLoading}
-          color="var(--primary-color)"
-          speedMultiplier={1}
-        />
       </div>
 
       {filteredMessageTemplates.map((message, index) => (
