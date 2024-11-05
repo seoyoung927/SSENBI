@@ -9,22 +9,26 @@ import TagList from "@/app/components/common/tag/TagList";
 import { postCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
 import { TagType } from "@/types/tag/tagTypes";
+import Modal from "@/app/components/common/modal/Modal";
+import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
   const [tags, setTags] = useState<TagType[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [content, setContet] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   // TODO: 수정 필요 - 추가 로직 및 API와 연결
   const [selectedCustomers] = useState<number[]>([]);
   const [selectedTags] = useState<number[]>([]);
+  const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
+    useState<boolean>(false);
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
   const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContet(event.target.value);
+    setContent(event.target.value);
   };
 
   const handleCancel = () => {
@@ -53,6 +57,17 @@ export default function CustomizedNewPage() {
     } catch (error) {
       console.error("저장 중 오류 발생:", error);
     }
+  };
+
+  const closeAIEditModal = () => {
+    setIsAIEditModalModalOpen(false);
+  };
+
+  const handleSaveMessage = (content: string) => {
+    setContent(content);
+  };
+  const openAIModal = () => {
+    setIsAIEditModalModalOpen(true);
   };
 
   return (
@@ -92,7 +107,7 @@ export default function CustomizedNewPage() {
           취소
         </button>
         <button
-          onClick={handleAI}
+          onClick={openAIModal}
           type="button"
           className="customized-new_button gradient_button"
         >
@@ -106,6 +121,20 @@ export default function CustomizedNewPage() {
           작성
         </button>
       </div>
+
+      {isAIEditModalOpen && (
+        <Modal
+          isOpen={isAIEditModalOpen}
+          onClose={closeAIEditModal}
+          title={"AI 쎈비와 문자 작성하기"}
+        >
+          <ChatAIContainer
+            onClose={closeAIEditModal}
+            onSave={handleSaveMessage}
+            initialContent={content}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
