@@ -52,7 +52,7 @@ export default function LoginPage() {
         <Image
           src="/assets/images/ssenbi_logo.png"
           alt="ssenbi 로고"
-          priority
+          lazy
           fill
         />
       </div>

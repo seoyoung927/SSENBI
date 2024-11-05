@@ -106,7 +106,7 @@ export default function Signup() {
         <Image
           src="/assets/images/ssenbi_logo.png"
           fill
-          priority
+          lazy
           alt="ssenbi 로고"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
