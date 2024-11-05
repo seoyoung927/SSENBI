@@ -11,11 +11,11 @@ import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 public interface MemberService {
 	public MemberResponse get(Long id);
 
-	public MemberOverviewResponse getOverview(String accessToken);
+	public MemberOverviewResponse getOverview(Long id);
 
 	public void regist(MemberRegistRequest memberRegistRequest);
 
-	public void update(String accessHeader, MemberUpdateRequest request);
+	public void update(Long id, MemberUpdateRequest request);
 
-	public void updatePassword(String accessHeader, MemberUpdatePasswordRequest request);
+	public void updatePassword(Long id, MemberUpdatePasswordRequest request);
 }

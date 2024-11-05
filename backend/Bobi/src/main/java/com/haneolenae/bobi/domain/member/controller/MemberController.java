@@ -38,7 +38,9 @@ public class MemberController {
 	@GetMapping("/overview")
 	public ResponseEntity<ApiResponse<MemberOverviewResponse>> getMemberOverview(
 		@RequestHeader("Authorization") String accessToken) {
-		return ResponseEntity.ok(new ApiResponse<>(memberService.getOverview(accessToken)));
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+
+		return ResponseEntity.ok(new ApiResponse<>(memberService.getOverview(id)));
 	}
 
 	@PostMapping
@@ -50,16 +52,18 @@ public class MemberController {
 	@PutMapping
 	public ResponseEntity<ApiResponse<String>> updateMember(@RequestHeader("Authorization") String accessToken,
 		@RequestBody MemberUpdateRequest request) {
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 
-		memberService.update(accessToken, request);
+		memberService.update(id, request);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
 	@PatchMapping("/password")
 	public ResponseEntity<ApiResponse<String>> updatePassword(@RequestHeader("Authorization") String accessToken,
 		@RequestBody MemberUpdatePasswordRequest request) {
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 
-		memberService.updatePassword(accessToken, request);
+		memberService.updatePassword(id, request);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
