@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import "./page.css";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import Header from "@/app/components/layout/Header";
 import { TagType, CustomerType } from "@/types/tag/tagTypes";
 import { deleteMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import "./page.css";
 
 interface ApiResponse {
   messageId: number;
@@ -24,7 +24,7 @@ interface MessageIdPageProps {
   };
 }
 
-const MessageIdPage = ({ params }: MessageIdPageProps) => {
+export default function MessageIdPage({ params }: MessageIdPageProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const { id } = params;
@@ -108,6 +108,4 @@ const MessageIdPage = ({ params }: MessageIdPageProps) => {
       </div>
     </div>
   );
-};
-
-export default MessageIdPage;
+}
