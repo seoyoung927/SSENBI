@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageCustomerDto {
-
 	private String customerName;
 	private String customerColor;
 }

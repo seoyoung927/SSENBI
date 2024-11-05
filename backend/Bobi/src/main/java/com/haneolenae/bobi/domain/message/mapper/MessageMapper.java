@@ -23,14 +23,12 @@ public interface MessageMapper {
 	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "messageTags")
 	MessageResponse toMessageResponse(final Message message);
 
-
 	@Mapping(source = "id", target = "messageId")
 	@Mapping(source = "content", target = "messageContent")
 	@Mapping(source = "createdAt", target = "messageSendAt")
 	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "messageTags")
 	@Mapping(expression = "java(mapMessageCustomerDto(message.getMessageCustomers()))", target = "messageCustomers")
 	MessageDetailResponse toMessageDetailResponse(final Message message);
-
 
 	default List<MessageTagDto> mapMessageTagDto(final List<MessageTag> messageTags) {
 		return messageTags.stream()
@@ -43,6 +41,5 @@ public interface MessageMapper {
 			.map(customer -> new MessageCustomerDto(customer.getName(), customer.getColor()))
 			.toList();
 	}
-
 
 }

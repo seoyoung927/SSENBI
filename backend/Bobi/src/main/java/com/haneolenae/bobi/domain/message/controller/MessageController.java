@@ -2,8 +2,6 @@ package com.haneolenae.bobi.domain.message.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +36,7 @@ public class MessageController {
 	public ResponseEntity<ApiResponse<List<MessageResponse>>> searchMessageList(
 		@RequestHeader("Authorization") String token,
 		@RequestParam(required = false) String keyword
-	){
+	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageList(memberId, keyword)));
@@ -59,7 +57,7 @@ public class MessageController {
 	@PostMapping()
 	public ResponseEntity<ApiResponse<String>> sendMessage(
 		@RequestHeader("Authorization") String token,
-		@RequestBody SendMessageRequest sendMessageRequest){
+		@RequestBody SendMessageRequest sendMessageRequest) {
 
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 

@@ -31,7 +31,7 @@ public class CustomerController {
 	@GetMapping
 	public ResponseEntity<ApiResponse<String>> searchCustomer(
 		@RequestHeader("Authorization") String token
- 	){
+	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 		return null;
 	}
@@ -40,7 +40,7 @@ public class CustomerController {
 	public ResponseEntity<ApiResponse<String>> getCustomerDetail(
 		@RequestHeader("Authorization") String token,
 		@PathVariable("customerId") long customerId
-	){
+	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 		return null;
 	}
@@ -49,7 +49,7 @@ public class CustomerController {
 	public ResponseEntity<ApiResponse<String>> addCustomer(
 		@RequestHeader("Authorization") String token,
 		@RequestBody AddCustomerRequest request
-	){
+	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		customerService.addCustomer(memberId, request);
@@ -59,7 +59,7 @@ public class CustomerController {
 	@PutMapping
 	public ResponseEntity<ApiResponse<String>> updateCustomer(
 		@RequestHeader("Authorization") String token
-	){
+	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 		return null;
 	}
@@ -67,7 +67,7 @@ public class CustomerController {
 	@DeleteMapping
 	public ResponseEntity<ApiResponse<String>> deleteCustomer(
 		@RequestHeader("Authorization") String token
-	){
+	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 		return null;
 	}

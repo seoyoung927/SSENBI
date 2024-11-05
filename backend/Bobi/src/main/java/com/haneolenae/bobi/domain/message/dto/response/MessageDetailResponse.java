@@ -13,11 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageDetailResponse {
-
 	private int messageId;
 	private String messageContent;
 	private LocalDateTime messageSendAt;
 	private List<MessageTagDto> messageTags;
 	private List<MessageCustomerDto> messageCustomers;
-
 }

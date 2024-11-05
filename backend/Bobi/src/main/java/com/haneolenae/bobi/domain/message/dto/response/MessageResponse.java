@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageResponse {
-
 	private int messageId;
 	private String messageContent;
 	private LocalDateTime messageSendAt;

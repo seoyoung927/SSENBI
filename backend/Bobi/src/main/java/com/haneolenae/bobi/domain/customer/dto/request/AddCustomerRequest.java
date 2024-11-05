@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class AddCustomerRequest {
-
 	private String name;
 	private int age;
 	private Gender gender;
@@ -20,5 +19,4 @@ public class AddCustomerRequest {
 	private List<Long> tags;
 	private String color;
 	private String memo;
-
 }

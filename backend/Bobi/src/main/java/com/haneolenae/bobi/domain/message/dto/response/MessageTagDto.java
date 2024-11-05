@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageTagDto {
-
 	private String tagName;
 	private String tagColor;
 }

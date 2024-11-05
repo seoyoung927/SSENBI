@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.haneolenae.bobi.domain.message.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
+
 	@Query("SELECT DISTINCT m FROM Message m " +
 		"LEFT JOIN m.messageCustomers mc " +
 		"LEFT JOIN m.messageTags mt " +
@@ -19,7 +20,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 		"AND m.member.id = :memberId")
 	List<Message> findMessagesByKeywordAndMemberId(@Param("keyword") String keyword,
 		@Param("memberId") Long memberId);
-
 
 	Optional<Message> findByIdAndMemberId(Long messageId, Long memberId);
 

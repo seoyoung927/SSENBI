@@ -31,7 +31,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Message {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
@@ -46,8 +47,6 @@ public class Message {
 
 	@OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
 	private List<MessageTag> messageTags;
-
-
 
 	@Column
 	@CreationTimestamp

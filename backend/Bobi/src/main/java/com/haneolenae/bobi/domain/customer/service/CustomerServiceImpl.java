@@ -33,10 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 		// TODO: request 유효성 검사
 
-
 		// TODO: tags 유효성 검사
 		List<Tag> retrievedTags = customerTagRepository.findTagsByMemberIdAndTagIds(memberId, request.getTags());
-		if(retrievedTags.size() != request.getTags().size()) {
+		if (retrievedTags.size() != request.getTags().size()) {
 			throw new ApiException(ApiType.TAG_NOT_FOUND);
 		}
 
@@ -51,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 			.color(request.getColor())
 			.tagCount(request.getTags().size())
 			.member(member)
-				.build();
+			.build();
 
 		customerRepository.save(customer);
 	}

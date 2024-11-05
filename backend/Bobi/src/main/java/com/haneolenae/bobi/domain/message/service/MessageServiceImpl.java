@@ -47,13 +47,12 @@ public class MessageServiceImpl implements MessageService {
 
 	private final MessageMapper messageMapper;
 
-
 	@Transactional
 	public void sendMessage(long memberId, SendMessageRequest sendMessageRequest) {
 
 		// TODO: 멤버 유효성 검사
 		Member sender = memberRepository.findById(memberId)
-			.orElseThrow(() ->new ApiException(ApiType.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_FOUND));
 
 		Message originMessage = Message.builder()
 			.content(sendMessageRequest.getMessage())
@@ -63,7 +62,7 @@ public class MessageServiceImpl implements MessageService {
 		Set<Customer> finalReceiverIdSet = new HashSet<>();
 
 		// TODO: 받는이 유효성 검사
-		for(long receiverId : sendMessageRequest.getReceiverIdList()){
+		for (long receiverId : sendMessageRequest.getReceiverIdList()) {
 			Customer customer = customerRepository.findById(receiverId)
 				.orElseThrow(() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND));
 
@@ -73,7 +72,7 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 태그 유효성 검사
 		List<MessageTag> messageTagList = new ArrayList<>();
-		for(long tagId : sendMessageRequest.getTagIdList()){
+		for (long tagId : sendMessageRequest.getTagIdList()) {
 			Tag tag = tagRepository.findByIdAndMemberId(tagId, memberId)
 				.orElseThrow(() -> new ApiException(ApiType.TAG_NOT_FOUND));
 
@@ -96,7 +95,7 @@ public class MessageServiceImpl implements MessageService {
 		messageRepository.save(originMessage);
 
 		// for message 보내기
-		for(Customer customer : finalReceiverIdSet){
+		for (Customer customer : finalReceiverIdSet) {
 
 			log.info("고객에게 메시지 전송 : " + customer.getId());
 
@@ -107,17 +106,17 @@ public class MessageServiceImpl implements MessageService {
 
 			boolean sendResult = true;
 
-			if (sendResult){
+			if (sendResult) {
 				// TODO: 전송 성공 시 DB 저장
 
 				// messageCustomer
 				messageCustomerRepository.save(MessageCustomer.builder()
-						.name(customer.getName())
-						.phoneNumber(customer.getPhoneNumber())
-						.color(customer.getColor())
-						.message(originMessage)
+					.name(customer.getName())
+					.phoneNumber(customer.getPhoneNumber())
+					.color(customer.getColor())
+					.message(originMessage)
 					.build());
-			}else{
+			} else {
 				// TODO: 전송 실패 시 예외 처리
 				throw new ApiException(ApiType.CUSTOMER_NOT_FOUND);
 			}
@@ -146,7 +145,7 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 멤버 유효성 검사
 		Member member = memberRepository.findById(memberId)
-			.orElseThrow(() ->new ApiException(ApiType.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_FOUND));
 
 		// TODO: message 가져오기
 		Message message = messageRepository.findByIdAndMemberId(messageId, member.getId())

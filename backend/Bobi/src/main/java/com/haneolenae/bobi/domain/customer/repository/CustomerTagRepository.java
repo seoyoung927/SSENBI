@@ -14,7 +14,7 @@ public interface CustomerTagRepository extends JpaRepository<CustomerTag, Long> 
 
 	@Query("SELECT ct.customer FROM CustomerTag ct WHERE ct.tag.id IN :tagIds")
 	List<Customer> findCustomersByTagIds(@Param("tagIds") List<Long> tagIds);
-
+	
 	@Query("SELECT ct.tag FROM CustomerTag ct " +
 		"JOIN ct.customer c " +
 		"JOIN c.member m " +
