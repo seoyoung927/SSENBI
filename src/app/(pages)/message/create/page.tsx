@@ -5,7 +5,7 @@ import "./page.css";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
 import Modal from "@/app/components/common/modal/Modal";
-import CustomizedModifyAI from "@/app/components/chat/CustomizedModifyAI";
+import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 
 const MessageNew = () => {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -27,6 +27,10 @@ const MessageNew = () => {
   };
 
   const handleSaveMessage = () => {};
+
+  const openAIModal = () => {
+    setIsAIEditModalModalOpen(true);
+  };
 
   return (
     <div className="page-container">
@@ -61,6 +65,13 @@ const MessageNew = () => {
             취소
           </button>
           <button
+            onClick={openAIModal}
+            type="button"
+            className="message-new_button-send"
+          >
+            쎈비 AI 도움 받기
+          </button>
+          <button
             onClick={handleSend}
             type="button"
             className="message-new_button-send"
@@ -76,8 +87,7 @@ const MessageNew = () => {
           onClose={closeAIEditModal}
           title={"AI 쎈비와 수정하기"}
         >
-          <CustomizedModifyAI
-            templateId={templateI}
+          <ChatAIContainer
             onClose={closeAIEditModal}
             onSave={handleSaveMessage}
           />
