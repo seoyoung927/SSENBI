@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.tag.dto.request.TagCreateRequest;
+import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
 import com.haneolenae.bobi.domain.tag.service.TagService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -26,13 +27,11 @@ public class TagController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<String>> createTag(@RequestHeader("Authorization") String accessToken,
+	public ResponseEntity<ApiResponse<TagResponse>> createTag(@RequestHeader("Authorization") String accessToken,
 		@RequestBody @Valid
 		TagCreateRequest request) {
 		Long memberId = jwtTokenProvider.getIdFromToken(accessToken);
 
-		tagService.create(memberId, request);
-
-		return null;
+		return ResponseEntity.ok(new ApiResponse<>(tagService.create(memberId, request)));
 	}
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
 import com.haneolenae.bobi.domain.tag.dto.request.TagCreateRequest;
+import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 import com.haneolenae.bobi.domain.tag.mapper.TagMapper;
 import com.haneolenae.bobi.domain.tag.repository.TagRepository;
@@ -25,7 +26,7 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
-	public void create(Long memberId, TagCreateRequest request) {
+	public TagResponse create(Long memberId, TagCreateRequest request) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
@@ -38,7 +39,7 @@ public class TagServiceImpl implements TagService {
 		}
 
 		Tag tag = tagMapper.toTag(request, member);
-		tagRepository.save(tag);
+		return tagMapper.toTag(tagRepository.save(tag));
 	}
 
 	private boolean isNameExist(Long id, String name) {
