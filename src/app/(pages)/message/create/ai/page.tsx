@@ -5,7 +5,7 @@ import "./page.css";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
 
-const MessageNewAI = () => {
+export default function MessageNewAI() {
   const [customer, setCustomer] = useState("");
   const [content, setContent] = useState("AI를 통해 작성");
   const router = useRouter();
@@ -61,6 +61,4 @@ const MessageNewAI = () => {
       </div>
     </div>
   );
-};
-
-export default MessageNewAI;
+}
