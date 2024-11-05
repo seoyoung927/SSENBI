@@ -17,6 +17,8 @@ import com.haneolenae.bobi.domain.general.mapper.GeneralMapper;
 import com.haneolenae.bobi.domain.general.repository.CategoryRepository;
 import com.haneolenae.bobi.domain.general.repository.GeneralTemplateRepository;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 
 @Service
 public class GeneralServiceImpl implements GeneralService {
@@ -73,7 +75,9 @@ public class GeneralServiceImpl implements GeneralService {
 
 	@Override
 	public void duplicateGeneralTemplate(long memberId, DuplicateGeneralTemplateRequest request) {
-		GeneralTemplate generalTemplate = generalTemplateRepository.findById(request.getTemplateId()).orElseThrow();
+		GeneralTemplate generalTemplate = generalTemplateRepository.findById(request.getTemplateId())
+			.orElseThrow(() -> new ApiException(
+				ApiType.GENERAL_TEMPLATE_NOT_EXIST));
 
 		generalTemplate.countUp();
 
