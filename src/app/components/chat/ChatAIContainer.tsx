@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import CheckIcon from "@/app/assets/svg/Check.svg";
 import "./ChatAIContainer.css";
 import Image from "next/image";
+import { TagType } from "@/types/tag/tagTypes";
 
 enum SenderType {
   NOTICE = "notice",
@@ -20,12 +21,16 @@ interface ChatAIContainerPropsType {
   onClose: () => void;
   onSave: (content: string) => void;
   initialContent?: string;
+  tags?: TagType[];
+  customers?: TagType[];
 }
 
 export default function ChatAIContainer({
   onClose,
   onSave,
   initialContent = "",
+  tags = [],
+  customers = [],
 }: ChatAIContainerPropsType) {
   const [messages, setMessages] = useState<MessageType[]>([
     {
