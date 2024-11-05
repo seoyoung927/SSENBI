@@ -91,6 +91,7 @@ const MessageNew = () => {
           <ChatAIContainer
             onClose={closeAIEditModal}
             onSave={handleSaveMessage}
+            initialContent={content}
           />
         </Modal>
       )}

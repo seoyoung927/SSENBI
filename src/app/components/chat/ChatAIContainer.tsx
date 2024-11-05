@@ -19,11 +19,13 @@ interface MessageType {
 interface ChatAIContainerPropsType {
   onClose: () => void;
   onSave: (content: string) => void;
+  initialContent?: string;
 }
 
 export default function ChatAIContainer({
   onClose,
   onSave,
+  initialContent = "",
 }: ChatAIContainerPropsType) {
   const [messages, setMessages] = useState<MessageType[]>([
     {
@@ -31,7 +33,7 @@ export default function ChatAIContainer({
       content: "안녕하세요! 템플릿을 어떻게 수정할까요?",
     },
   ]);
-  const [newMessage, setNewMessage] = useState<string>("");
+  const [newMessage, setNewMessage] = useState<string>(initialContent);
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
