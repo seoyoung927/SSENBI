@@ -219,9 +219,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <button
           onClick={openAIEditModal}
           type="button"
-          className="customized-detail_button blue_button"
+          className="customized-detail_button gradient_button"
+          style={{ borderRadius: 16 }}
         >
-          AI로 수정
+          쎈비 AI 도움 받기
         </button>
         <button
           onClick={openEditModal}
