@@ -8,9 +8,11 @@ import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
 
 public interface MessageService {
 
- 	void sendMessage(long memberId, SendMessageRequest sendMessageRequest);
+	void sendMessage(long memberId, SendMessageRequest sendMessageRequest);
 
 	List<MessageResponse> getMessageList(long memberId, String keyword);
 
 	MessageDetailResponse getMessageDetail(long memberId, long messageId);
+
+	void sendCoolSms(String receiverPhone, String msg);
 }

@@ -17,5 +17,7 @@ spring:
     open-in-view: true
   data:
     redis:
-      host: ${redis.host}
-      port: ${redis.port}
+      host: localhost
+      port: 6379
+
+
