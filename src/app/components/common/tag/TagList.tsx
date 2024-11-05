@@ -138,7 +138,7 @@ export default function TagList({
                   </li>
                 )),
               tagData[tab].length > maxTagCount && (
-                <li className="tag-list-remained">{`+${
+                <li key={`${tab}-remained`} className="tag-list-remained">{`+${
                   tagData[tab].length - maxTagCount
                 }개 더보기`}</li>
               ),
