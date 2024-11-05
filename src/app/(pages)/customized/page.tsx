@@ -95,8 +95,12 @@ export default function CustomizedPage() {
           </div>
         </div>
       )}
-
-      <FloatingActionButton onClick={handleNewTemplate} text={"템플릿 추가"} />
+      <div className="action-button">
+        <FloatingActionButton
+          onClick={handleNewTemplate}
+          text={"템플릿 추가"}
+        />
+      </div>
     </div>
   );
 }

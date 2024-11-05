@@ -42,3 +42,7 @@
   z-index: 0;
   object-fit: cover;
 }
+
+.action-button {
+  max-width: 60px;
+}
