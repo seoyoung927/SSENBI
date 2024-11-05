@@ -10,11 +10,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerDetailResponse {
+public class CustomerResponse {
 	private long customerId;
 	private String customerName;
 	private int customerAge;
-	private Gender custoerGender;
+	private Gender customerGender;
 	private String customerPhoneNumber;
 	private List<TagResponse> customerTags;
 	private String customerMemo;

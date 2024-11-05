@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
+import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 
@@ -89,5 +90,13 @@ public class Customer {
 	@Override
 	public int hashCode() {
 		return id != null ? id.hashCode() : 0;
+	}
+
+	public void update(UpdateCustomerRequest request) {
+		this.name = request.getName();
+		this.gender = request.getGender();
+		this.age = request.getAge();
+		this.phoneNumber = request.getPhoneNumber();
+		this.memo = request.getMemo();
 	}
 }

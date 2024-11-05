@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
 
-import com.haneolenae.bobi.domain.customer.dto.response.CustomerDetailResponse;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
@@ -23,7 +23,7 @@ public interface CustomerMapper {
 	@Mapping(source = "phoneNumber", target = "customerPhoneNumber")
 	@Mapping(source = "tags", target = "customerTags", qualifiedByName = "tagsToTagResponses")
 	@Mapping(source = "memo", target = "customerMemo")
-	CustomerDetailResponse toCustomerDetailResponse(Customer customer);
+	CustomerResponse toCustomerResponse(Customer customer);
 
 	@Named("tagsToTagResponses")
 	default List<TagResponse> tagsToTagResponses(List<Tag> tags) {
