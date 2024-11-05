@@ -7,7 +7,7 @@ import Header from "@/app/components/layout/Header";
 import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 
-const MessageNew = () => {
+export default function MessageNew() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
   const [customer, setCustomer] = useState<string>("");
@@ -69,7 +69,7 @@ const MessageNew = () => {
           <button
             onClick={openAIModal}
             type="button"
-            className="message-new_button-send"
+            className="message-new_button-send gradient_button"
           >
             쎈비 AI 도움 받기
           </button>
@@ -97,6 +97,4 @@ const MessageNew = () => {
       )}
     </div>
   );
-};
-
-export default MessageNew;
+}
