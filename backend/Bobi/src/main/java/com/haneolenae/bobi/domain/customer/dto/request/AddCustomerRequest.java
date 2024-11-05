@@ -17,7 +17,7 @@ public class AddCustomerRequest {
 	private int age;
 	private Gender gender;
 	private String phoneNumber;
-	private List<Integer> tags;
+	private List<Long> tags;
 	private String color;
 	private String memo;
 
