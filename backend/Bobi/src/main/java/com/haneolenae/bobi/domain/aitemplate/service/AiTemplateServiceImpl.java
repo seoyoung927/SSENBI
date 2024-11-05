@@ -42,8 +42,6 @@ public class AiTemplateServiceImpl implements AiTemplateService {
 		for (Map.Entry<String, String> entry : prompts.entrySet()) {
 			systemContent += "{" + entry.getKey() + "}" + entry.getValue();
 		}
-		System.out.println(systemContent);
-		System.out.println("test");
 		return MessageRequest.builder()
 			.role("system")
 			.content(systemContent)
