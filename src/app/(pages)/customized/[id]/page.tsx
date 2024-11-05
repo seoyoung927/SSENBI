@@ -12,8 +12,8 @@ import {
   putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
-import CustomizedModifyForm from "@/app/components/common/modal/CustomizedModifyForm";
-import CustomizedModifyAI from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
+import CustomizedModifyForm from "@/app/components/chat/CustomizedModifyForm";
+import CustomizedModifyAI from "@/app/components/chat/CustomizedModifyAI"; // Import CustomizedModifyAI
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";

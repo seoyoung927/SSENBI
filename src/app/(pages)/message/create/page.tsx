@@ -4,10 +4,14 @@ import React, { useState } from "react";
 import "./page.css";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
+import Modal from "@/app/components/common/modal/Modal";
+import CustomizedModifyAI from "@/app/components/chat/CustomizedModifyAI";
 
 const MessageNew = () => {
-  const [customer, setCustomer] = useState("");
-  const [content, setContent] = useState("");
+  const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
+    useState<boolean>(false);
+  const [customer, setCustomer] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const router = useRouter();
 
   const handleSend = () => {
@@ -17,6 +21,12 @@ const MessageNew = () => {
   const handleCancel = () => {
     router.push("/message");
   };
+
+  const closeAIEditModal = () => {
+    setIsAIEditModalModalOpen(false);
+  };
+
+  const handleSaveMessage = () => {};
 
   return (
     <div className="page-container">
@@ -59,6 +69,20 @@ const MessageNew = () => {
           </button>
         </div>
       </div>
+
+      {isAIEditModalOpen && (
+        <Modal
+          isOpen={isAIEditModalOpen}
+          onClose={closeAIEditModal}
+          title={"AI 쎈비와 수정하기"}
+        >
+          <CustomizedModifyAI
+            templateId={templateI}
+            onClose={closeAIEditModal}
+            onSave={handleSaveMessage}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
