@@ -52,7 +52,7 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 멤버 유효성 검사
 		Member sender = memberRepository.findById(memberId)
-			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		Message originMessage = Message.builder()
 			.content(sendMessageRequest.getMessage())
@@ -130,7 +130,7 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 멤버 유효성 검사
 		Member sender = memberRepository.findById(memberId)
-			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		// TODO: 검색어로 검색
 		List<Message> messages = messageRepository.findMessagesByKeywordAndMemberId(keyword, memberId);
@@ -145,7 +145,7 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 멤버 유효성 검사
 		Member member = memberRepository.findById(memberId)
-			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		// TODO: message 가져오기
 		Message message = messageRepository.findByIdAndMemberId(messageId, member.getId())

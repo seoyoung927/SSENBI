@@ -16,7 +16,6 @@ public enum ApiType {
 	SAMPLE_ERROR(HttpStatus.CONFLICT, ApiCode.E10001, ApiCode.E10001.getMsg()),
 
 	// Member
-	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
 	MEMBER_REQUEST_INVALID(HttpStatus.BAD_REQUEST, ApiCode.M40001, ApiCode.M40001.getMsg()),
 	MEMBER_PASSWORD_INVALID(HttpStatus.UNAUTHORIZED, ApiCode.M40101, ApiCode.M40101.getMsg()),
 	MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
