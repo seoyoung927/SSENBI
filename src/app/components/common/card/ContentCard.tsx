@@ -19,7 +19,7 @@ export default function ContentCard({
         <Image
           src={imgSrc}
           alt={title}
-          lazy
+          loading="lazy"
           className="content-card__image"
           width={150}
           height={150}

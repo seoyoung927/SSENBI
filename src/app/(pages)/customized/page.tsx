@@ -78,7 +78,7 @@ export default function CustomizedPage() {
             <Image
               src="/assets/images/messageIcon.png"
               fill
-              lazy
+              loading="lazy"
               alt="메세지 icon"
             />
           </div>
