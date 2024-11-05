@@ -34,6 +34,7 @@ public enum ApiType {
 
 	// Tag
 	TAG_COLOR_INVALID(HttpStatus.BAD_REQUEST, ApiCode.T40001, ApiCode.T40001.getMsg()),
+	TAG_MEMBER_INVALID(HttpStatus.FORBIDDEN, ApiCode.T40301, ApiCode.T40301.getMsg()),
 	TAG_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.T40401, ApiCode.T40401.getMsg()),
 	TAG_NAME_EXIST(HttpStatus.CONFLICT, ApiCode.T40901, ApiCode.T40901.getMsg()),
 
