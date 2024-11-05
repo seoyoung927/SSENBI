@@ -1,6 +1,8 @@
 package com.haneolenae.bobi.domain.member.mapper;
 
+import com.haneolenae.bobi.domain.member.dto.response.MemberOverviewResponse;
 import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -36,6 +38,8 @@ public interface MemberMapper {
 	@Mapping(source = "member.businessPhoneNumber", target = "businessPhoneNumber")
 	MemberResponse toMember(Member member);
 
-
+	@Mapping(source = "member.customerCount", target = "customerCount")
+	@Mapping(source = "member.messageCount", target = "messageCount")
+	MemberOverviewResponse toMemberOverview(Member member);
 }
 

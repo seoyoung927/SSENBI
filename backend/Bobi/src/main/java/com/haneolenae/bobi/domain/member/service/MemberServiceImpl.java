@@ -7,6 +7,7 @@ import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.member.dto.request.MemberRegistRequest;
 import com.haneolenae.bobi.domain.member.dto.request.MemberUpdatePasswordRequest;
 import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
+import com.haneolenae.bobi.domain.member.dto.response.MemberOverviewResponse;
 import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.mapper.MemberMapper;
@@ -38,6 +39,14 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		return memberMapper.toMember(member);
+	}
+
+	@Override
+	public MemberOverviewResponse getOverview(String accessToken) {
+		Long id = jwtTokenProvider.getIdFromToken(accessToken);
+		Member member = memberRepository.findById(id).orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		return memberMapper.toMemberOverview(member);
 	}
 
 	@Override

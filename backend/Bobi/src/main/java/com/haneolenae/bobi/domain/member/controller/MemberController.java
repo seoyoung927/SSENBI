@@ -2,7 +2,9 @@ package com.haneolenae.bobi.domain.member.controller;
 
 import java.util.UUID;
 
+import com.haneolenae.bobi.domain.member.dto.response.MemberOverviewResponse;
 import com.haneolenae.bobi.domain.member.dto.response.MemberResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,12 @@ public class MemberController {
 	@GetMapping
 	public ResponseEntity<ApiResponse<MemberResponse>> getMember(@RequestHeader("Authorization") String accessToken) {
 		return ResponseEntity.ok(new ApiResponse<>(memberService.get(accessToken)));
+	}
+
+	@GetMapping("/overview")
+	public ResponseEntity<ApiResponse<MemberOverviewResponse>> getMemberOverview(
+		@RequestHeader("Authorization") String accessToken) {
+		return ResponseEntity.ok(new ApiResponse<>(memberService.getOverview(accessToken)));
 	}
 
 	@PostMapping
