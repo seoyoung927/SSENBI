@@ -5,10 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
@@ -30,13 +34,18 @@ import com.haneolenae.bobi.domain.tag.repository.TagRepository;
 import com.haneolenae.bobi.global.dto.ApiType;
 import com.haneolenae.bobi.global.exception.ApiException;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
-@RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
-	private static final Logger log = LoggerFactory.getLogger(MessageServiceImpl.class);
+	// @Value("${coolsms.api.key}")
+	// private String apiKey;
+	//
+	// @Value("${coolsms.api.secret}")
+	// private String apiSecret;
+
 	private final MemberRepository memberRepository;
 	private final CustomerRepository customerRepository;
 	private final CustomerTagRepository customerTagRepository;
@@ -46,6 +55,29 @@ public class MessageServiceImpl implements MessageService {
 	private final MessageTagRepository messageTagRepository;
 
 	private final MessageMapper messageMapper;
+
+	private final DefaultMessageService coolSmsService;
+
+	public MessageServiceImpl(
+		@Value("${coolsms.api.key}") String apiKey,
+		@Value("${coolsms.api.secret}") String apiSecret,
+		MemberRepository memberRepository,
+		CustomerRepository customerRepository,
+		CustomerTagRepository customerTagRepository, TagRepository tagRepository, MessageRepository messageRepository,
+		MessageCustomerRepository messageCustomerRepository, MessageTagRepository messageTagRepository,
+		MessageMapper messageMapper) {
+		this.memberRepository = memberRepository;
+		this.customerRepository = customerRepository;
+		this.customerTagRepository = customerTagRepository;
+		this.tagRepository = tagRepository;
+		this.messageRepository = messageRepository;
+		this.messageCustomerRepository = messageCustomerRepository;
+		this.messageTagRepository = messageTagRepository;
+		this.messageMapper = messageMapper;
+
+		this.coolSmsService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret,
+			"https://api.coolsms.co.kr");
+	}
 
 	@Transactional
 	public void sendMessage(long memberId, SendMessageRequest sendMessageRequest) {
@@ -152,5 +184,19 @@ public class MessageServiceImpl implements MessageService {
 			.orElseThrow(() -> new ApiException(ApiType.MESSAGE_NOT_FOUND));
 
 		return messageMapper.toMessageDetailResponse(message);
+	}
+
+	@Override
+	public void sendCoolSms(String receiverPhone, String msg) {
+		net.nurigo.sdk.message.model.Message coolMessage = new net.nurigo.sdk.message.model.Message();
+		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+		coolMessage.setFrom("01054621615");
+		coolMessage.setTo(receiverPhone);
+		coolMessage.setText(msg);
+		// coolMessage.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다.");
+
+		SingleMessageSentResponse response = coolSmsService.sendOne(new SingleMessageSendingRequest(coolMessage));
+		System.out.println(response);
+
 	}
 }

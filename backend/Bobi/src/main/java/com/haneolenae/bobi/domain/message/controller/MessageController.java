@@ -66,4 +66,13 @@ public class MessageController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
+	@GetMapping("/sendtest")
+	public ResponseEntity<ApiResponse<String>> sendTestMessage(
+		@RequestParam("receiverPhone") String receiverPhone,
+		@RequestParam("msg") String msg
+	) {
+		messageService.sendCoolSms(receiverPhone, msg);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
 }

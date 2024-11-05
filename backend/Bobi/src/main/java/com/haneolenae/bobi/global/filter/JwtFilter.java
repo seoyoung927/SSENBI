@@ -1,5 +1,12 @@
 package com.haneolenae.bobi.global.filter;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.global.dto.ApiResponse;
@@ -7,18 +14,15 @@ import com.haneolenae.bobi.global.dto.ApiType;
 import com.haneolenae.bobi.global.exception.ApiException;
 import com.haneolenae.bobi.global.util.RedisUtil;
 
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 @Slf4j
 public class JwtFilter implements Filter {
@@ -36,6 +40,7 @@ public class JwtFilter implements Filter {
 		excludedPaths.add(new RequestMatcher("/auth/login", HttpMethod.POST));
 		excludedPaths.add(new RequestMatcher("/auth/refresh", HttpMethod.POST));
 		excludedPaths.add(new RequestMatcher("/general/**", HttpMethod.GET));
+		excludedPaths.add(new RequestMatcher("/message/sendtest", HttpMethod.GET)); // test for coolsms
 		excludedPaths.add(new RequestMatcher("/swagger-ui/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/swagger-resources/**", HttpMethod.GET));
 		excludedPaths.add(new RequestMatcher("/v3/api-docs/**", HttpMethod.GET));

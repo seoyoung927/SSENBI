@@ -4,9 +4,10 @@ server:
 
 spring:
   profiles:
-    active: prod
+    active: dev
   config:
     import: optional:file:.env[.properties]
+
 
 springdoc:
   packages-to-scan: com.haneolenae.bobi
@@ -17,4 +18,11 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+
+coolsms:
+  api:
+    key: ${COOLSMS_API_KEY}
+    secret: ${COOLSMS_API_SECRET}
+
+
 
