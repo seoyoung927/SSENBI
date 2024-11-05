@@ -43,6 +43,9 @@ public class MessageServiceImpl implements MessageService {
 	@Value("${coolsms.senderPhoneNumber}")
 	private String senderPhoneNumber;
 
+	private static final String BUSINESS_NAME_PLACEHOLDER = "[[업체명]]";
+	private static final String CUSTOMER_NAME_PLACEHOLDER = "[[고객명]]";
+
 	private final MemberRepository memberRepository;
 	private final CustomerRepository customerRepository;
 	private final CustomerTagRepository customerTagRepository;
@@ -111,6 +114,7 @@ public class MessageServiceImpl implements MessageService {
 				.message(originMessage)
 				.build());
 		}
+
 		// TODO: messageTag 저장
 		messageTagRepository.saveAll(messageTagList);
 
@@ -123,35 +127,49 @@ public class MessageServiceImpl implements MessageService {
 		// TODO: 메시지 저장
 		messageRepository.save(originMessage);
 
+		// 성공한 고객 리스트
+		List<MessageCustomer> successCustomers = new ArrayList<>();
+		// 실패한 고객 이름 리스트
+		List<String> failedCustomers = new ArrayList<>();
+
 		// for message 보내기
 		for (Customer customer : finalReceiverIdSet) {
 
 			log.info("고객에게 메시지 전송 : " + customer.getId());
 
 			// TODO: 고객에 맞는 메시지 생성
-			String msg = "test msg";
+			String msg = generateMessageForCustomer(originMessage.getContent(), sender, customer);
 
-			// TODO: 메시지 전송 외부 API 호출
+			try {
+				// TODO: 메시지 전송 외부 API 호출
+				sendCoolSms(customer.getPhoneNumber(), msg);
 
-			boolean sendResult = true;
-
-			if (sendResult) {
-				// TODO: 전송 성공 시 DB 저장
-
-				// messageCustomer
-				messageCustomerRepository.save(MessageCustomer.builder()
+				successCustomers.add(MessageCustomer.builder()
 					.name(customer.getName())
 					.phoneNumber(customer.getPhoneNumber())
 					.color(customer.getColor())
 					.message(originMessage)
 					.build());
-			} else {
-				// TODO: 전송 실패 시 예외 처리
-				throw new ApiException(ApiType.CUSTOMER_NOT_FOUND);
+
+			} catch (ApiException e) {
+				failedCustomers.add(customer.getName());
 			}
 
-			// TODO: 실패한 사람 리스트 반환해줘야 함
+			// 메시지 전송에 성공한 고객 데이터 저장
+			messageCustomerRepository.saveAll(successCustomers);
+
+			// TODO: 메시지 전송에 실패한 고객 이름 리스트 반환
+			if (!failedCustomers.isEmpty()) {
+				throw new ApiException(ApiType.EXTERNAL_MESSAGE_SERVICE_ERROR, failedCustomers);
+			}
 		}
+	}
+
+	public String generateMessageForCustomer(String content, Member sender, Customer customer) {
+		String message = content.replace(BUSINESS_NAME_PLACEHOLDER, sender.getBusiness());
+		message = message.replace(CUSTOMER_NAME_PLACEHOLDER, customer.getName());
+
+		return message;
 	}
 
 	@Override
@@ -190,10 +208,13 @@ public class MessageServiceImpl implements MessageService {
 		coolMessage.setFrom(senderPhoneNumber);
 		coolMessage.setTo(receiverPhone);
 		coolMessage.setText(msg);
-		// coolMessage.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다.");
 
 		SingleMessageSentResponse response = coolSmsService.sendOne(new SingleMessageSendingRequest(coolMessage));
-		System.out.println(response);
-
+		log.info(response.toString());
+		log.info(response.getStatusCode());
+		if (!response.getStatusCode().equals("2000")) {
+			log.info("third party message api fail");
+			throw new ApiException(ApiType.EXTERNAL_MESSAGE_SERVICE_ERROR);
+		}
 	}
 }

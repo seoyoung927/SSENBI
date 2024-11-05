@@ -28,21 +28,19 @@ public enum ApiCode {
 	G40401("유효한 제내랄 템플릿을 찾지 못했습니다"),
 
 	// Customer
-	C40401("유효한 커스텀 템플릿을 찾지 못했습니다."),
+	C40401("고객이 존재하지 않습니다."),
 
 	// Tag
 	T40401("적절하지 않은 태그입니다."),
 
 	// Message
 	MS50001("메시지 전송에 실패하였습니다."),
- 	MS40401("존재하지 않는 메시지입니다."),
+	MS40401("존재하지 않는 메시지입니다."),
 
 	// Error
 	E10001("This Error is sample error"),
 
 	X10000("SERVER_ERROR");
-
-
 
 	private final String msg;
 }
