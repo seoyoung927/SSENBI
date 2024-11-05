@@ -26,7 +26,9 @@ const MessageNew = () => {
     setIsAIEditModalModalOpen(false);
   };
 
-  const handleSaveMessage = () => {};
+  const handleSaveMessage = (content: string) => {
+    setContent(content);
+  };
 
   const openAIModal = () => {
     setIsAIEditModalModalOpen(true);

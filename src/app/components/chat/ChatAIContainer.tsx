@@ -87,9 +87,8 @@ export default function ChatAIContainer({
     }
   };
 
-  const handleSave = () => {
-    const title = "새로운 제목 예시";
-    const content = "새로운 내용 예시";
+  const saveContent = (content: string) => {
+    onClose();
     onSave(content);
   };
 
@@ -109,7 +108,10 @@ export default function ChatAIContainer({
           >
             <div className="chat-bubble">{message.content}</div>
             {message.sender === SenderType.AI && (
-              <div className="check-icon-container">
+              <div
+                className="check-icon-container"
+                onClick={() => saveContent(message.content)}
+              >
                 <CheckIcon className="check-icon" />
                 <div className="tooltip">메시지 저장하기</div>
               </div>
