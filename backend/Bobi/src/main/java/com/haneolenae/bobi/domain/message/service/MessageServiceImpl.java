@@ -104,9 +104,6 @@ public class MessageServiceImpl implements MessageService {
 		// 최종 발송 고객 리스트에 추가
 		finalReceiverIdSet.addAll(customers);
 
-		// TODO: 메시지 저장
-		messageRepository.save(originMessage);
-
 		// 성공한 고객 리스트
 		List<MessageCustomer> successCustomers = new ArrayList<>();
 		// 실패한 고객 이름 리스트
@@ -137,6 +134,12 @@ public class MessageServiceImpl implements MessageService {
 
 			// 메시지 전송에 성공한 고객 데이터 저장
 			messageCustomerRepository.saveAll(successCustomers);
+
+			// 하나라도 메시지가 전송 되었다면 message 저장
+			if (failedCustomers.size() != finalReceiverIdSet.size()) {
+				// TODO: 메시지 저장
+				messageRepository.save(originMessage);
+			}
 
 			// TODO: 메시지 전송에 실패한 고객 이름 리스트 반환
 			if (!failedCustomers.isEmpty()) {
