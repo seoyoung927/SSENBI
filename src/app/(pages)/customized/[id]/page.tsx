@@ -16,6 +16,7 @@ import CustomizedModifyForm from "@/app/components/common/modal/CustomizedModify
 import CustomizedModifyAI from "@/app/components/common/modal/CustomizedModifyAI"; // Import CustomizedModifyAI
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
+import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -115,45 +116,56 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     setIsEditModalModalOpen(false);
   };
 
-  const handleSaveTemplate = async (
-    title?: string,
-    content?: string,
-    beforeTags?: number[],
-    afterTags?: number[],
-    beforeCustomerIds?: number[],
-    afterCustomerIds?: number[],
-  ) => {
-    if (modifiedTemplate === null) return;
+  const updateModifiedTemplate = ({
+    title,
+    content,
+    afterTags,
+    afterCustomerIds,
+  }: Partial<PutCustomTemplateParamsType>) => {
+    setModifiedTemplate({
+      templateTitle: title || "",
+      templateContent: content || "",
+      templateAfterTagIds: afterTags || [],
+      templateAfterCustomerIds: afterCustomerIds || [],
+    });
+  };
 
-    const putCustomTemplateParams = {
+  const handleSaveTemplate = async (
+    title = modifiedTemplate?.templateTitle ?? "",
+    content = modifiedTemplate?.templateContent ?? "",
+    beforeTags: number[] = [],
+    afterTags: number[] = modifiedTemplate?.templateAfterTagIds ?? [],
+    beforeCustomerIds: number[] = [],
+    afterCustomerIds: number[] = modifiedTemplate?.templateAfterCustomerIds ??
+      [],
+  ) => {
+    if (!modifiedTemplate) return;
+
+    const PutCustomTemplateParamsType: PutCustomTemplateParamsType = {
       token: "your-auth-token",
       templateId: Number(id),
-      title: title ?? modifiedTemplate.templateTitle,
-      content: content ?? modifiedTemplate.templateContent,
-      beforeTags: beforeTags ?? [],
-      afterTags: afterTags ?? modifiedTemplate.templateAfterTagIds,
-      beforeCustomerIds: beforeCustomerIds ?? [],
-      afterCustomerIds:
-        afterCustomerIds ?? modifiedTemplate.templateAfterCustomerIds,
+      title,
+      content,
+      beforeTags,
+      afterTags,
+      beforeCustomerIds,
+      afterCustomerIds,
     };
 
     try {
-      // TODO: 다시 get
-      const response = await putCustomTemplateAPI(putCustomTemplateParams);
-
+      const response = await putCustomTemplateAPI(PutCustomTemplateParamsType);
       console.log("putCustomTemplateAPI response", response);
 
-      setModifiedTemplate({
-        templateTitle: putCustomTemplateParams.title,
-        templateContent: putCustomTemplateParams.content,
-        templateAfterTagIds: putCustomTemplateParams.afterTags,
-        templateAfterCustomerIds: putCustomTemplateParams.afterCustomerIds,
-      });
-      setIsAIEditModalModalOpen(false);
-      setIsEditModalModalOpen(false);
+      updateModifiedTemplate(PutCustomTemplateParamsType);
+      closeModals();
     } catch (error) {
       console.error("Error updating template:", error);
     }
+  };
+
+  const closeModals = () => {
+    setIsAIEditModalModalOpen(false);
+    setIsEditModalModalOpen(false);
   };
 
   return (
