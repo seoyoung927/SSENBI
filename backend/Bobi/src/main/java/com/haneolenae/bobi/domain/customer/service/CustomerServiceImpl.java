@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerDetailResponse;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
+import com.haneolenae.bobi.domain.customer.mapper.CustomerMapper;
 import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
 import com.haneolenae.bobi.domain.customer.repository.CustomerTagRepository;
 import com.haneolenae.bobi.domain.member.entity.Member;
@@ -24,6 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
 	private final CustomerRepository customerRepository;
 	private final CustomerTagRepository customerTagRepository;
 	private final MemberRepository memberRepository;
+
+	private final CustomerMapper mapper;
 
 	@Transactional
 	public void addCustomer(long memberId, AddCustomerRequest request) {
@@ -53,5 +57,21 @@ public class CustomerServiceImpl implements CustomerService {
 			.build();
 
 		customerRepository.save(customer);
+	}
+
+	@Override
+	public CustomerDetailResponse getCustomerDetail(long memberId, long customerId) {
+
+		// TODO: memberId 유효성 검사
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		// TODO: customerId 유효성 검사
+		Customer customer = customerRepository.findByIdAndMemberId(customerId, memberId).orElseThrow(
+			() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND)
+		);
+
+		// TODO: mapper 이용해서 response로 변경
+		return mapper.toCustomerDetailResponse(customer);
 	}
 }

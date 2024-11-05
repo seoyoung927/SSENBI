@@ -1,0 +1,21 @@
+package com.haneolenae.bobi.domain.customer.dto.response;
+
+import java.util.List;
+
+import com.haneolenae.bobi.domain.customer.entity.Gender;
+import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CustomerDetailResponse {
+	private long customerId;
+	private String customerName;
+	private int customerAge;
+	private Gender custoerGender;
+	private String customerPhoneNumber;
+	private List<TagResponse> customerTags;
+	private String customerMemo;
+}

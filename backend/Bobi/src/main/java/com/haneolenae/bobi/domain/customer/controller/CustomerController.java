@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerDetailResponse;
 import com.haneolenae.bobi.domain.customer.service.CustomerService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -37,12 +38,12 @@ public class CustomerController {
 	}
 
 	@GetMapping("/{customerId}")
-	public ResponseEntity<ApiResponse<String>> getCustomerDetail(
+	public ResponseEntity<ApiResponse<CustomerDetailResponse>> getCustomerDetail(
 		@RequestHeader("Authorization") String token,
 		@PathVariable("customerId") long customerId
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		return null;
+		return ResponseEntity.ok(new ApiResponse<>(customerService.getCustomerDetail(memberId, customerId)));
 	}
 
 	@PostMapping
@@ -53,7 +54,7 @@ public class CustomerController {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		customerService.addCustomer(memberId, request);
-		return null;
+		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
 	@PutMapping
