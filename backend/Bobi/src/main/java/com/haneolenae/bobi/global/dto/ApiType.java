@@ -33,7 +33,9 @@ public enum ApiType {
 	CUSTOMER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
 
 	// Tag
+	TAG_COLOR_INVALID(HttpStatus.BAD_REQUEST, ApiCode.T40001, ApiCode.T40001.getMsg()),
 	TAG_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.T40401, ApiCode.T40401.getMsg()),
+	TAG_NAME_EXIST(HttpStatus.CONFLICT, ApiCode.T40901, ApiCode.T40901.getMsg()),
 
 	// Message
 	EXTERNAL_MESSAGE_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.MS50001, ApiCode.MS50001.getMsg()),
