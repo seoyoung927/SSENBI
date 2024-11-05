@@ -21,7 +21,7 @@ public class AiTemplateController {
 	}
 
 	@PostMapping("/ask")
-	public ResponseEntity<?> askAi(@RequestBody UserRequest request) {
+	public ResponseEntity<ApiResponse<String>> askAi(@RequestBody UserRequest request) {
 		return ResponseEntity.ok(new ApiResponse<>(aiTemplateService.askAi(request)));
 	}
 }
