@@ -15,6 +15,7 @@ import com.haneolenae.bobi.domain.member.dto.request.MemberUpdateRequest;
 import com.haneolenae.bobi.domain.member.service.MemberService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,14 +45,15 @@ public class MemberController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<String>> registMember(@RequestBody MemberRegistRequest memberRegistRequest) {
+	public ResponseEntity<ApiResponse<String>> registMember(
+		@RequestBody @Valid MemberRegistRequest memberRegistRequest) {
 		memberService.regist(memberRegistRequest);
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
 	@PutMapping
 	public ResponseEntity<ApiResponse<String>> updateMember(@RequestHeader("Authorization") String accessToken,
-		@RequestBody MemberUpdateRequest request) {
+		@RequestBody @Valid MemberUpdateRequest request) {
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 
 		memberService.update(id, request);
@@ -60,7 +62,7 @@ public class MemberController {
 
 	@PatchMapping("/password")
 	public ResponseEntity<ApiResponse<String>> updatePassword(@RequestHeader("Authorization") String accessToken,
-		@RequestBody MemberUpdatePasswordRequest request) {
+		@RequestBody @Valid MemberUpdatePasswordRequest request) {
 		Long id = jwtTokenProvider.getIdFromToken(accessToken);
 
 		memberService.updatePassword(id, request);

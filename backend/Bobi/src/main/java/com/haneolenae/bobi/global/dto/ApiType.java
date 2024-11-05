@@ -43,6 +43,8 @@ public enum ApiType {
 
 	GENERAL_TEMPLATE_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.G40401, ApiCode.G40401.getMsg()),
 
+	// 400
+	REQUEST_DATA_ERROR(HttpStatus.BAD_REQUEST, ApiCode.R40001, ApiCode.R40001.getMsg()),
 	// 500
 	SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.X10000, ApiCode.X10000.getMsg());
 
