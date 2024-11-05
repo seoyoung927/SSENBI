@@ -80,12 +80,11 @@ const MessageNew = () => {
           </button>
         </div>
       </div>
-
       {isAIEditModalOpen && (
         <Modal
           isOpen={isAIEditModalOpen}
           onClose={closeAIEditModal}
-          title={"AI 쎈비와 수정하기"}
+          title={"AI 쎈비와 문자 작성하기"}
         >
           <ChatAIContainer
             onClose={closeAIEditModal}
