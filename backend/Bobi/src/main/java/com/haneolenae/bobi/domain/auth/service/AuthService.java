@@ -7,7 +7,7 @@ import com.haneolenae.bobi.domain.auth.dto.response.TokenResponse;
 public interface AuthService {
 	TokenResponse login(LoginRequest loginRequest, String sessionId);
 
-	void logout(String accessHeader, String refreshToken, String sessionId);
+	void logout(Long id, String accessToken, String sessionId);
 
 	RefreshResponse refresh(String refreshToken, String sessionId);
 }
