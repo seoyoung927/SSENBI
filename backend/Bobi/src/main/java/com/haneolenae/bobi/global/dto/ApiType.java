@@ -16,7 +16,6 @@ public enum ApiType {
 	SAMPLE_ERROR(HttpStatus.CONFLICT, ApiCode.E10001, ApiCode.E10001.getMsg()),
 
 	// Member
-	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
 	MEMBER_REQUEST_INVALID(HttpStatus.BAD_REQUEST, ApiCode.M40001, ApiCode.M40001.getMsg()),
 	MEMBER_PASSWORD_INVALID(HttpStatus.UNAUTHORIZED, ApiCode.M40101, ApiCode.M40101.getMsg()),
 	MEMBER_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.M40401, ApiCode.M40401.getMsg()),
@@ -33,7 +32,10 @@ public enum ApiType {
 	CUSTOMER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
 
 	// Tag
+	TAG_COLOR_INVALID(HttpStatus.BAD_REQUEST, ApiCode.T40001, ApiCode.T40001.getMsg()),
+	TAG_MEMBER_INVALID(HttpStatus.FORBIDDEN, ApiCode.T40301, ApiCode.T40301.getMsg()),
 	TAG_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.T40401, ApiCode.T40401.getMsg()),
+	TAG_NAME_EXIST(HttpStatus.CONFLICT, ApiCode.T40901, ApiCode.T40901.getMsg()),
 
 	// Message
 	EXTERNAL_MESSAGE_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.MS50001, ApiCode.MS50001.getMsg()),
