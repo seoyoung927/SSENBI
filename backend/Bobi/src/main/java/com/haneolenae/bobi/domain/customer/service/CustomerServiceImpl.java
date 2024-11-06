@@ -2,6 +2,7 @@ package com.haneolenae.bobi.domain.customer.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,16 @@ public class CustomerServiceImpl implements CustomerService {
 	private final TagRepository tagRepository;
 
 	private final CustomerMapper mapper;
+
+	@Override
+	public List<CustomerResponse> getCustomerList(long memberId, Pageable pageable, List<Long> tags,
+		String keyword) {
+
+		List<Customer> customers = customerRepository.findCustomers(memberId, pageable, tags, keyword)
+			.getContent();
+
+		return List.of();
+	}
 
 	@Transactional
 	public void addCustomer(long memberId, AddCustomerRequest request) {
@@ -136,4 +147,5 @@ public class CustomerServiceImpl implements CustomerService {
 
 		customerRepository.delete(customer);
 	}
+
 }

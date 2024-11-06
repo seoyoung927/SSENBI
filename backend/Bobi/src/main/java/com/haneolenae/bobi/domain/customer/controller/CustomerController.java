@@ -1,5 +1,8 @@
 package com.haneolenae.bobi.domain.customer.controller;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
@@ -33,11 +37,17 @@ public class CustomerController {
 	private final CustomerService customerService;
 
 	@GetMapping
-	public ResponseEntity<ApiResponse<String>> searchCustomer(
-		@RequestHeader("Authorization") String token
+	public ResponseEntity<ApiResponse<List<CustomerResponse>>> searchCustomer(
+		@RequestHeader("Authorization") String token,
+		Pageable pageable,
+		@RequestParam(required = false) List<Long> customerTags,
+		@RequestParam(required = false) String keyword
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		return null;
+
+		return ResponseEntity.ok(new ApiResponse<>(
+			customerService.getCustomerList(memberId, pageable, customerTags, keyword)
+		));
 	}
 
 	@GetMapping("/{customerId}")
