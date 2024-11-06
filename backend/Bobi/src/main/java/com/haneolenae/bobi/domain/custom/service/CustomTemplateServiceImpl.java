@@ -105,7 +105,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Transactional
 	public void editCustomTemplate(long memberId, long templateId, EditCustomTemplateRequest request) {
-		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
 
 		//제목과 내용 수정
