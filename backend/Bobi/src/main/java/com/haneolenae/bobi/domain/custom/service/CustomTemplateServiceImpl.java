@@ -207,7 +207,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	@Override
 	public void replicateCustomTemplate(long memberId, long templateId, ReplicateCustomTemplateRequest request) {
-		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(memberId, templateId)
+		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
 
 		CustomTemplate replicatedCustomTemplate = customTemplate.replicateMe();
