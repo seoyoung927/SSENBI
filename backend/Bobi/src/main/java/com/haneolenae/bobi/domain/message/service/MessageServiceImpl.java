@@ -41,12 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
-	@Value("${coolsms.senderPhoneNumber}")
-	private String senderPhoneNumber;
-
 	private static final String BUSINESS_NAME_PLACEHOLDER = "[[업체명]]";
 	private static final String CUSTOMER_NAME_PLACEHOLDER = "[[고객명]]";
-
 	private final MemberRepository memberRepository;
 	private final CustomerRepository customerRepository;
 	private final CustomerTagRepository customerTagRepository;
@@ -54,10 +50,10 @@ public class MessageServiceImpl implements MessageService {
 	private final MessageRepository messageRepository;
 	private final MessageCustomerRepository messageCustomerRepository;
 	private final MessageTagRepository messageTagRepository;
-
 	private final MessageMapper messageMapper;
-
 	private final DefaultMessageService coolSmsService;
+	@Value("${coolsms.senderPhoneNumber}")
+	private String senderPhoneNumber;
 
 	@Transactional
 	public void sendMessage(long memberId, SendMessageRequest sendMessageRequest) {
@@ -139,6 +135,7 @@ public class MessageServiceImpl implements MessageService {
 			if (failedCustomers.size() != finalReceiverIdSet.size()) {
 				// TODO: 메시지 저장
 				messageRepository.save(originMessage);
+				sender.increaseMessageCount();
 			}
 
 			// TODO: 메시지 전송에 실패한 고객 이름 리스트 반환
@@ -182,6 +179,18 @@ public class MessageServiceImpl implements MessageService {
 			.orElseThrow(() -> new ApiException(ApiType.MESSAGE_NOT_FOUND));
 
 		return messageMapper.toMessageDetailResponse(message);
+	}
+
+	@Transactional
+	public void deleteMessage(long memberId, long messageId) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		Message message = messageRepository.findByIdAndMemberId(messageId, member.getId())
+			.orElseThrow(() -> new ApiException(ApiType.MESSAGE_NOT_FOUND));
+
+		messageRepository.delete(message);
+		member.decreaseMessageCount();
 	}
 
 	@Override
