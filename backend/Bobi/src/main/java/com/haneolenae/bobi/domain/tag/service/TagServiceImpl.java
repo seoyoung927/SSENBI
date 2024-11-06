@@ -1,12 +1,10 @@
 package com.haneolenae.bobi.domain.tag.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
-import com.haneolenae.bobi.domain.tag.dto.request.TagCreateRequest;
+import com.haneolenae.bobi.domain.tag.dto.request.TagRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagDeleteRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagUpdateRequest;
 import com.haneolenae.bobi.domain.tag.dto.response.TagResponse;
@@ -41,7 +39,7 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Transactional
-	public TagResponse update(Long memberId, TagUpdateRequest request) {
+	public TagResponse update(Long memberId, Long tagId, TagRequest request) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
@@ -49,7 +47,7 @@ public class TagServiceImpl implements TagService {
 			throw new ApiException(ApiType.TAG_COLOR_INVALID);
 		}
 
-		Tag tag = tagRepository.findByIdAndMemberId(request.getId(), memberId)
+		Tag tag = tagRepository.findByIdAndMemberId(tagId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.TAG_MEMBER_INVALID));
 
 		if (isNameExist(memberId, request.getName()) && !tag.getName().equals(request.getName())) {
@@ -62,18 +60,18 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Transactional
-	public void delete(Long memberId, TagDeleteRequest request) {
+	public void delete(Long memberId, Long tagId) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
-		Tag tag = tagRepository.findByIdAndMemberId(request.getTagId(), memberId)
+		Tag tag = tagRepository.findByIdAndMemberId(tagId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.TAG_MEMBER_INVALID));
 
 		tagRepository.delete(tag);
 	}
 
 	@Override
-	public TagResponse create(Long memberId, TagCreateRequest request) {
+	public TagResponse create(Long memberId, TagRequest request) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
