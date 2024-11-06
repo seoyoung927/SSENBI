@@ -31,17 +31,6 @@ interface CustomTemplate {
 // ApiResponse 타입 정의
 type ApiResponse = CustomTemplate;
 
-// dummyData 선언
-const dummyData: ApiResponse = {
-  templateId: 1,
-  templateTitle: "직장인 템플릿",
-  templateContent: "이 템플릿의 목적",
-  templateUsageCount: 10,
-  templateCreatedAt: "2024-10-25T01:22:27",
-  templateTags: [{ tagId: 1, tagName: "직장인", tagColor: "GREEN" }],
-  templateCustomers: [],
-};
-
 interface ModifiedTemplate {
   templateTitle: string;
   templateContent: string;
@@ -60,26 +49,27 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const { id } = params;
   const [customMessageTemplate, setCustomMessageTemplate] =
     useState<ApiResponse>();
-  const [modifiedTemplate, setModifiedTemplate] = useState<ModifiedTemplate>();
+  const [modifiedTemplate, setModifiedTemplate] = useState<ApiResponse>();
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    const fetchDCustomTemplate = async (templateId: string) => {
-      try {
-        const token = Cookies.get("accessToken");
-        if (!token) return;
+    fetchCustomTemplate(id);
+  }, [id]);
 
-        const data = await getCustomTemplateAPI({ token, templateId });
-        console.log("templateId : ", templateId, data);
-        setCustomMessageTemplate(data.result);
-      } catch (error) {
-        console.error("Error fetching message:", error);
-      }
-    };
-    fetchDCustomTemplate(id);
-  }, []);
+  const fetchCustomTemplate = async (templateId: string) => {
+    try {
+      const token = Cookies.get("accessToken");
+      if (!token) return;
+
+      const data = await getCustomTemplateAPI({ token, templateId });
+      setCustomMessageTemplate(data.result);
+      setModifiedTemplate(data.result);
+    } catch (error) {
+      console.error("Error fetching message:", error);
+    }
+  };
 
   const handleDelete = async () => {
     const token = Cookies.get("accessToken");
@@ -98,6 +88,64 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     }
   };
 
+  const handleSaveMessage = () => {
+    if (customMessageTemplate) {
+      setCustomMessageTemplate(modifiedTemplate);
+    }
+  };
+
+  // Handle the save action for the template
+  const handleSaveTemplate = async () => {
+    if (!modifiedTemplate) return;
+
+    const PutCustomTemplateParamsType: PutCustomTemplateParamsType = {
+      templateId: Number(id),
+      title: modifiedTemplate.templateTitle,
+      content: modifiedTemplate.templateContent,
+      // beforeTags,
+      // afterTags,
+      // beforeCustomerIds,
+      // afterCustomerIds,
+    };
+
+    try {
+      const response = await putCustomTemplateAPI(PutCustomTemplateParamsType);
+      console.log("putCustomTemplateAPI response", response);
+
+      handleSaveMessage();
+    } catch (error) {
+      console.error("Error updating template:", error);
+    }
+  };
+
+  const toggleEditMode = () => {
+    if (isEdit) {
+      handleSaveTemplate();
+    }
+
+    setIsEdit(!isEdit);
+  };
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    field: "templateTitle" | "templateContent",
+  ) => {
+    setModifiedTemplate((prev) => {
+      if (prev) {
+        return { ...prev, [field]: e.target.value };
+      } else {
+        return {
+          templateId: Number(id),
+          templateTitle: "",
+          templateContent: "",
+          templateUsageCount: 0,
+          templateCreatedAt: "",
+          templateTags: [],
+          templateCustomers: [],
+        };
+      }
+    });
+  };
+
   const openAIEditModal = () => {
     setIsAIEditModalModalOpen(true);
   };
@@ -106,71 +154,8 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     setIsAIEditModalModalOpen(false);
   };
 
-  const updateModifiedTemplate = ({
-    title,
-    content,
-    afterTags,
-    afterCustomerIds,
-  }: Partial<PutCustomTemplateParamsType>) => {
-    setModifiedTemplate({
-      templateTitle: title || "",
-      templateContent: content || "",
-      templateAfterTagIds: afterTags || [],
-      templateAfterCustomerIds: afterCustomerIds || [],
-    });
-  };
-
-  const handleSaveTemplate = async (
-    title = modifiedTemplate?.templateTitle ?? "",
-    content = modifiedTemplate?.templateContent ?? "",
-    beforeTags: number[] = [],
-    afterTags: number[] = modifiedTemplate?.templateAfterTagIds ?? [],
-    beforeCustomerIds: number[] = [],
-    afterCustomerIds: number[] = modifiedTemplate?.templateAfterCustomerIds ??
-      [],
-  ) => {
-    if (!modifiedTemplate) return;
-
-    const PutCustomTemplateParamsType: PutCustomTemplateParamsType = {
-      token: "your-auth-token",
-      templateId: Number(id),
-      title,
-      content,
-      beforeTags,
-      afterTags,
-      beforeCustomerIds,
-      afterCustomerIds,
-    };
-
-    try {
-      const response = await putCustomTemplateAPI(PutCustomTemplateParamsType);
-      console.log("putCustomTemplateAPI response", response);
-
-      updateModifiedTemplate(PutCustomTemplateParamsType);
-      closeModals();
-    } catch (error) {
-      console.error("Error updating template:", error);
-    }
-  };
-
-  const handleSaveMessage = (content: string) => {
-    if (customMessageTemplate) {
-      // Update the content of the custom message template
-      const updatedTemplate = {
-        ...customMessageTemplate,
-        templateContent: content, // Update the template content
-      };
-
-      setCustomMessageTemplate(updatedTemplate); // Set the updated template
-    }
-  };
-
-  const closeModals = () => {
-    setIsAIEditModalModalOpen(false);
-  };
-
-  const toggleEditMode = () => {
-    setIsEdit(!isEdit);
+  const handleSaveAIContent = (content: string) => {
+    handleInputChange({ target: { value: content } } as any, "templateContent");
   };
 
   return (
@@ -180,12 +165,17 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       <div className="customized-info-list">
         <div className="customized-info">
           <p className="subheading">제목</p>
-          <p className="body">{customMessageTemplate?.templateTitle}</p>
+          <textarea
+            className="body"
+            value={modifiedTemplate?.templateTitle || ""}
+            onChange={(e) => handleInputChange(e, "templateTitle")}
+            disabled={!isEdit}
+          />
         </div>
         <div className="customized-info">
           <p className="subheading">고객</p>
           <div className="customized-info_tag-list">
-            {customMessageTemplate?.templateCustomers.map((tag) => (
+            {modifiedTemplate?.templateCustomers.map((tag) => (
               <FilledTag
                 key={tag.customerId}
                 color={tag.customerColor}
@@ -197,7 +187,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <div className="customized-info">
           <p className="subheading">태그</p>
           <div className="customized-info_tag-list">
-            {customMessageTemplate?.templateTags.map((tag) => (
+            {modifiedTemplate?.templateTags.map((tag) => (
               <BorderTag
                 key={tag.tagId}
                 color={tag.tagColor}
@@ -207,9 +197,13 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           </div>
         </div>
         <div className="customized-info">
-          <div className="customized-info_message-body">
-            {customMessageTemplate?.templateContent}
-          </div>
+          <p className="subheading">내용</p>
+          <textarea
+            className="body"
+            value={modifiedTemplate?.templateContent || ""}
+            onChange={(e) => handleInputChange(e, "templateContent")}
+            disabled={!isEdit}
+          />
         </div>
       </div>
 
@@ -234,7 +228,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           type="button"
           className="customized-detail_button blue_button"
         >
-          수정하기
+          {isEdit ? "수정 완료" : "수정하기"}
         </button>
       </div>
 
@@ -249,7 +243,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           <div className="modal-content">
             <ChatAIContainer
               onClose={closeAIEditModal}
-              onSave={handleSaveMessage}
+              onSave={handleSaveAIContent}
               initialContent={customMessageTemplate?.templateContent}
             />
           </div>

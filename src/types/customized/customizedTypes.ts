@@ -17,14 +17,14 @@ export type GetCustomTemplateParamsType = {
 
 // Put Custom Template API Params
 export type PutCustomTemplateParamsType = {
-  token: string;
+  token?: string;
   templateId: number;
   title: string;
   content: string;
-  beforeTags: number[];
-  afterTags: number[];
-  beforeCustomerIds: number[];
-  afterCustomerIds: number[];
+  beforeTags?: number[];
+  afterTags?: number[];
+  beforeCustomerIds?: number[];
+  afterCustomerIds?: number[];
 };
 
 // Post Custom Template API Params

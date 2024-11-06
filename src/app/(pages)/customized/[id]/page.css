@@ -89,3 +89,7 @@
   overflow-y: auto; /* 내용이 많아지면 세로 스크롤 */
   flex-grow: 1;
 }
+
+textarea {
+  width: 100%;
+}
