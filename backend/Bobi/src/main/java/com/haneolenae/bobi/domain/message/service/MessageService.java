@@ -14,5 +14,7 @@ public interface MessageService {
 
 	MessageDetailResponse getMessageDetail(long memberId, long messageId);
 
+	void deleteMessage(long memberId, long messageId);
+
 	void sendCoolSms(String receiverPhone, String msg);
 }

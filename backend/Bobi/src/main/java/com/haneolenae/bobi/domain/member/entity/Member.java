@@ -106,4 +106,12 @@ public class Member {
 	public void updatePassword(String password) {
 		this.password = password;
 	}
+
+	public void increaseMessageCount() {
+		messageCount++;
+	}
+
+	public void decreaseMessageCount() {
+		messageCount--;
+	}
 }

@@ -39,6 +39,7 @@ public enum ApiCode {
 	// Message
 	MS50001("메시지 전송에 실패하였습니다."),
 	MS40401("존재하지 않는 메시지입니다."),
+	MS40001("잘못된 검색어입니다."),
 
 	// Error
 	E10001("This Error is sample error"),
