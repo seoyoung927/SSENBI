@@ -250,7 +250,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           isOpen={isAIEditModalOpen}
           onClose={closeAIEditModal}
           title={"AI 쎈비와 수정하기"}
-          className="modal" /* 모달 고정 크기를 위한 클래스 추가 */
+          className="modal"
         >
           <div className="modal-content">
             <ChatAIContainer
