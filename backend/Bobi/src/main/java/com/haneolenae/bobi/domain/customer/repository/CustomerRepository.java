@@ -3,10 +3,9 @@ package com.haneolenae.bobi.domain.customer.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 
@@ -15,12 +14,32 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	Optional<Customer> findByIdAndMemberId(long customerId, long memberId);
 
+	// @Query("SELECT c FROM Customer c " +
+	// 	"JOIN c.tags t " +
+	// 	"WHERE c.member.id = :memberId " +
+	// 	"AND (:keyword IS NULL OR c.name LIKE CONCAT('%', :keyword, '%')) " +
+	// 	"AND (:tags IS NULL OR t.id IN :tags)")
 	@Query("SELECT c FROM Customer c " +
-		"JOIN c.tags t " + // tags와 Customer를 조인
+		"JOIN c.tags t " +
+		"WHERE c.member.id = :memberId ")
+	// "AND (:keyword IS NULL OR c.name LIKE '%a%' )")
+	// "AND (:keyword IS NULL OR c.name LIKE CONCAT('%', :keyword, '%')) ")
+	// "AND (:tags IS NULL OR t.id IN :tags)")
+	List<Customer> findCustomers(Long memberId);
+
+	List<Customer> findAllByMemberId(Long memberId);
+
+	@Query("SELECT c FROM Customer c WHERE c.member.id = :memberId AND (:keyword IS NULL OR c.name LIKE %:keyword%)")
+	List<Customer> findAllByMemberIdAndNameContaining(@Param("memberId") Long memberId,
+		@Param("keyword") String keyword);
+
+	@Query("SELECT DISTINCT c FROM Customer c " +
+		"JOIN c.tags t " +
 		"WHERE c.member.id = :memberId " +
 		"AND (:keyword IS NULL OR c.name LIKE %:keyword%) " +
-		"AND (:tags IS NULL OR t.id IN :tags)")
-		// tags 리스트에서 태그를 검색
-	Page<Customer> findCustomers(Long memberId, Pageable pageable, List<Long> tags, String keyword);
-
+		"AND (t.id IN :tags)")
+	List<Customer> findAllByMemberIdAndNameContainingAndTagsIn(
+		@Param("memberId") Long memberId,
+		@Param("keyword") String keyword,
+		@Param("tags") List<Long> tags);
 }

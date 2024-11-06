@@ -43,6 +43,8 @@ public class CustomerController {
 		@RequestParam(required = false) List<Long> customerTags,
 		@RequestParam(required = false) String keyword
 	) {
+		log.info("Search customer");
+
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		return ResponseEntity.ok(new ApiResponse<>(

@@ -42,10 +42,24 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CustomerResponse> getCustomerList(long memberId, Pageable pageable, List<Long> tags,
 		String keyword) {
 
-		List<Customer> customers = customerRepository.findCustomers(memberId, pageable, tags, keyword)
-			.getContent();
+		// TODO: memberId 유효성 검사
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
-		return List.of();
+		log.info("member_id: " + memberId);
+		// List<Customer> customers = customerRepository.findCustomers(memberId, pageable, tags, keyword)
+		// 	.getContent();
+
+		log.info("keyword: " + keyword);
+		log.info("tags: " + tags.toString());
+		List<Customer> customers = customerRepository.findCustomers(memberId);
+		// .getContent();
+		customers = customerRepository.findAllByMemberId(memberId);
+		customers = customerRepository.findAllByMemberIdAndNameContaining(memberId, keyword);
+		customers = customerRepository.findAllByMemberIdAndNameContainingAndTagsIn(memberId, keyword, tags);
+		log.info("customers.toString(): {}", customers.toString());
+
+		return mapper.toCustomerListResponse(customers);
 	}
 
 	@Transactional

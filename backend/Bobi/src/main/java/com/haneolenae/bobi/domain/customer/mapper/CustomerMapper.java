@@ -35,4 +35,11 @@ public interface CustomerMapper {
 				.build())
 			.collect(Collectors.toList());
 	}
+
+	// List<Customer>를 List<CustomerResponse>로 변환하는 메서드
+	default List<CustomerResponse> toCustomerListResponse(List<Customer> customers) {
+		return customers.stream()
+			.map(this::toCustomerResponse)  // 기존의 Customer -> CustomerResponse 변환 메서드를 호출
+			.collect(Collectors.toList());
+	}
 }
