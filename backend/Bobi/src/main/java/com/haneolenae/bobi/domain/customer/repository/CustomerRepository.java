@@ -15,11 +15,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	Optional<Customer> findByIdAndMemberId(long customerId, long memberId);
 
-	// 동적 쿼리를 사용하여 고객 목록을 조회
 	@Query("SELECT c FROM Customer c " +
+		"JOIN c.tags t " + // tags와 Customer를 조인
 		"WHERE c.member.id = :memberId " +
 		"AND (:keyword IS NULL OR c.name LIKE %:keyword%) " +
-		"AND (:tags IS NULL OR c.tags IN (SELECT t.customerId FROM Tag t WHERE t.tagId IN :customerTags))")
+		"AND (:tags IS NULL OR t.id IN :tags)")
+		// tags 리스트에서 태그를 검색
 	Page<Customer> findCustomers(Long memberId, Pageable pageable, List<Long> tags, String keyword);
 
 }

@@ -2,6 +2,8 @@ package com.haneolenae.bobi.domain.customer.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import com.haneolenae.bobi.domain.customer.dto.request.DeleteCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
+import com.haneolenae.bobi.domain.customer.entity.CustomerTag;
 import com.haneolenae.bobi.domain.customer.mapper.CustomerMapper;
 import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
 import com.haneolenae.bobi.domain.customer.repository.CustomerTagRepository;
@@ -27,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
+	private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	private final CustomerRepository customerRepository;
 	private final CustomerTagRepository customerTagRepository;
 	private final MemberRepository memberRepository;
@@ -54,6 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		// TODO: tags 유효성 검사
 		List<Tag> retrievedTags = customerTagRepository.findTagsByMemberIdAndTagIds(memberId, request.getTags());
+		log.info("memberId: {}, tags: {}", memberId, retrievedTags);
+		log.info("request.getTags(): {}", request.getTags());
 		if (retrievedTags.size() != request.getTags().size()) {
 			throw new ApiException(ApiType.TAG_NOT_FOUND);
 		}
@@ -70,6 +76,17 @@ public class CustomerServiceImpl implements CustomerService {
 			.tagCount(request.getTags().size())
 			.member(member)
 			.build();
+
+		// 연관관계 맵핑
+		if (!request.getTags().isEmpty()) {
+			List<Tag> tags = tagRepository.findByIdIn(request.getTags());
+			tags.forEach(tag -> {
+				log.info("save tag: {}", tag);
+				customerTagRepository.save(
+					new CustomerTag(customer, tag)
+				);
+			});
+		}
 
 		customerRepository.save(customer);
 	}
