@@ -6,7 +6,6 @@ import NavigationBar from "@/app/components/layout/NavigationBar";
 import { getTemplateAPI } from "@/app/api/template/templateAPI";
 import { useEffect, useState } from "react";
 import HashLoading from "@/app/components/common/loading/HashLoading";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface MessageTemplateType {
@@ -29,7 +28,6 @@ interface MessageTemplateType {
 // ];
 
 export default function Template() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [categoryList, setCategoryList] = useState<string[]>([]);
   const [allMessageTemplates, setAllMessageTemplates] = useState<
