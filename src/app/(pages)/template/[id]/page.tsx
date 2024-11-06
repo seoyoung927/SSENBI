@@ -57,6 +57,14 @@ export default function TemplateId({ params }: TemplateIdProps) {
   }, [id]);
 
   const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(templateData.templateContent);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleMyCustom = async () => {
     const token = Cookies.get("accessToken");
     if (!token) return;
     try {
@@ -69,10 +77,6 @@ export default function TemplateId({ params }: TemplateIdProps) {
     } catch (error) {
       console.error("post duplicate API 실패", error);
     }
-  };
-
-  const handleMyCustom = () => {
-    console.log("내 커스텀으로 가져오기");
   };
 
   if (isLoading) {
