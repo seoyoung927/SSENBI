@@ -30,9 +30,9 @@ public interface TagMapper {
 
 	}
 
-	@Mapping(source = "tag.id", target = "id")
-	@Mapping(source = "tag.name", target = "name")
-	@Mapping(source = "tag.color", target = "color")
+	@Mapping(source = "tag.id", target = "tagId")
+	@Mapping(source = "tag.name", target = "tagName")
+	@Mapping(source = "tag.color", target = "tagColor")
 	TagResponse toTag(Tag tag);
 
 }

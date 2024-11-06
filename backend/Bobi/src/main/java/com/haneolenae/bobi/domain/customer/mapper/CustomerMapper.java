@@ -29,9 +29,9 @@ public interface CustomerMapper {
 	default List<TagResponse> tagsToTagResponses(List<Tag> tags) {
 		return tags.stream()
 			.map(tag -> TagResponse.builder()
-				.id(tag.getId())
-				.name(tag.getName())
-				.color(tag.getColor())
+				.tagId(tag.getId())
+				.tagName(tag.getName())
+				.tagColor(tag.getColor())
 				.build())
 			.collect(Collectors.toList());
 	}
