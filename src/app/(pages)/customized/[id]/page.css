@@ -93,3 +93,7 @@
 textarea {
   width: 100%;
 }
+
+.textarea-content {
+  height: 15vh;
+}

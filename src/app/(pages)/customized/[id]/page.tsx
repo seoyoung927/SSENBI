@@ -199,7 +199,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <div className="customized-info">
           <p className="subheading">내용</p>
           <textarea
-            className="body"
+            className="textarea-content body"
             value={modifiedTemplate?.templateContent || ""}
             onChange={(e) => handleInputChange(e, "templateContent")}
             disabled={!isEdit}
