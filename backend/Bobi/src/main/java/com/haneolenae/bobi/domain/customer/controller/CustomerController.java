@@ -1,5 +1,6 @@
 package com.haneolenae.bobi.domain.customer.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.request.DeleteCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.service.CustomerService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
@@ -37,12 +41,12 @@ public class CustomerController {
 	}
 
 	@GetMapping("/{customerId}")
-	public ResponseEntity<ApiResponse<String>> getCustomerDetail(
+	public ResponseEntity<ApiResponse<CustomerResponse>> getCustomerDetail(
 		@RequestHeader("Authorization") String token,
 		@PathVariable("customerId") long customerId
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		return null;
+		return ResponseEntity.ok(new ApiResponse<>(customerService.getCustomerDetail(memberId, customerId)));
 	}
 
 	@PostMapping
@@ -53,23 +57,28 @@ public class CustomerController {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		customerService.addCustomer(memberId, request);
-		return null;
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<ApiResponse<String>> updateCustomer(
-		@RequestHeader("Authorization") String token
+	public ResponseEntity<ApiResponse<CustomerResponse>> updateCustomer(
+		@RequestHeader("Authorization") String token,
+		@RequestBody UpdateCustomerRequest request
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		return null;
+		return ResponseEntity.ok(new ApiResponse<>(customerService.updateCustomer(memberId, request)));
 	}
 
 	@DeleteMapping
 	public ResponseEntity<ApiResponse<String>> deleteCustomer(
-		@RequestHeader("Authorization") String token
+		@RequestHeader("Authorization") String token,
+		@RequestBody DeleteCustomerRequest request
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		return null;
+
+		customerService.delete(memberId, request);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
 }

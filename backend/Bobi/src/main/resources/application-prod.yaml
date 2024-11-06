@@ -19,12 +19,3 @@ spring:
     redis:
       host: ${redis.host}
       port: ${redis.port}
-
-openai:
-  api:
-    key: ${OPENAI_API_KEY}
-    url: ${OPENAI_API_URL}
-  prompts:
-    role: ${OPENAI_PROMPT_ROLE}
-    role2: ${OPENAI_PROMPT_ROLE2}
-    role3: ${OPENAI_PROMPT_ROLE3}
