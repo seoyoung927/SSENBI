@@ -13,6 +13,18 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use((config) => {
+  if (config.headers.Authorization) return config;
+
+  const token = Cookies.get("accessToken");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 // 응답 인터셉터에서 401 오류 시 refresh 요청을 한 번만 시도
 axiosInstance.interceptors.response.use(
   (response) => response,
