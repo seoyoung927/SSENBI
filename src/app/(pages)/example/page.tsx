@@ -31,7 +31,6 @@ export default function Example() {
       tagId: 3,
     },
   ]);
-  const [customers, setCustomers] = useState<TagType[]>([]);
 
   return (
     <div className="page-container">
@@ -41,14 +40,7 @@ export default function Example() {
         content={"설명"}
       />
       <div style={{ paddingInline: 8 }}>
-        <TagList
-          tags={tags}
-          setTags={setTags}
-          customers={customers}
-          setCustomers={setCustomers}
-          canAddCustomer
-          maxTagCount={2}
-        />
+        <TagList tags={tags} setTags={setTags} maxTagCount={2} />
       </div>
       <CustomerCard
         name="길동"

@@ -85,7 +85,7 @@ export default function CustomizedNewPage() {
       <div className="customized-new_form-group">
         <label className="customized-new_form-group__label">태그 및 고객</label>
         <div className="customized-new_tag-container">
-          <TagList tags={tags} maxTagCount={5} />
+          <TagList tags={tags} setTags={setTags} maxTagCount={5} />
         </div>
       </div>
 
