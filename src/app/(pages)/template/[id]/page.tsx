@@ -38,6 +38,7 @@ export default function TemplateId({ params }: TemplateIdProps) {
     createdAt: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const getSingleTemplate = async () => {
@@ -59,6 +60,10 @@ export default function TemplateId({ params }: TemplateIdProps) {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(templateData.templateContent);
+      setIsTooltipVisible(true);
+      setTimeout(() => {
+        setIsTooltipVisible(false);
+      }, 1500);
     } catch (err) {
       console.error(err);
     }
@@ -87,13 +92,18 @@ export default function TemplateId({ params }: TemplateIdProps) {
     <div className="page-container">
       <Header title={templateData.templateTitle} showBackIcon={true} />
       <div className="template-id_button-group">
-        <button
-          onClick={handleCopy}
-          type="button"
-          className="template-id_button blue_button"
-        >
-          복사하기
-        </button>
+        <div className="copy-button">
+          <button
+            onClick={handleCopy}
+            type="button"
+            className="template-id_button blue_button"
+          >
+            복사하기
+          </button>
+          <div className={`tooltip ${isTooltipVisible ? "visible" : ""}`}>
+            텍스트가 복사되었습니다!
+          </div>
+        </div>
         <button
           onClick={handleMyCustom}
           type="button"
