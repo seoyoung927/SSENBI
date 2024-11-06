@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TagCreateRequest {
+public class TagRequest {
 	@Pattern(
 		regexp = "^.{1,10}$",
 		message = "태그명은 10글자 이내여야 합니다."
