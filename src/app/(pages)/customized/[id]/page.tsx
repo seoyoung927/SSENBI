@@ -11,7 +11,6 @@ import {
   putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
-import CustomizedModifyForm from "@/app/components/chat/CustomizedModifyForm";
 import { CustomerType, TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
@@ -64,7 +63,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const [modifiedTemplate, setModifiedTemplate] = useState<ModifiedTemplate>();
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
-  const [isEditModalOpen, setIsEditModalModalOpen] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     const fetchDCustomTemplate = async (templateId: string) => {
@@ -103,16 +102,8 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     setIsAIEditModalModalOpen(true);
   };
 
-  const openEditModal = () => {
-    setIsEditModalModalOpen(true);
-  };
-
   const closeAIEditModal = () => {
     setIsAIEditModalModalOpen(false);
-  };
-
-  const closeEditModal = () => {
-    setIsEditModalModalOpen(false);
   };
 
   const updateModifiedTemplate = ({
@@ -176,7 +167,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
   const closeModals = () => {
     setIsAIEditModalModalOpen(false);
-    setIsEditModalModalOpen(false);
+  };
+
+  const toggleEditMode = () => {
+    setIsEdit(!isEdit);
   };
 
   return (
@@ -236,7 +230,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           쎈비 AI 도움 받기
         </button>
         <button
-          onClick={openEditModal}
+          onClick={toggleEditMode}
           type="button"
           className="customized-detail_button blue_button"
         >
@@ -259,20 +253,6 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
               initialContent={customMessageTemplate?.templateContent}
             />
           </div>
-        </Modal>
-      )}
-
-      {isEditModalOpen && (
-        <Modal
-          isOpen={isEditModalOpen}
-          onClose={closeEditModal}
-          title={"수정하기"}
-        >
-          <CustomizedModifyForm
-            templateId={id}
-            onClose={closeEditModal}
-            onSave={handleSaveTemplate}
-          />
         </Modal>
       )}
     </div>
