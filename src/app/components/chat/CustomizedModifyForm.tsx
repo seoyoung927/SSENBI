@@ -91,7 +91,7 @@ export default function CustomizedModifyForm({
         <label className="customized-modify_form-group__label">
           태그 및 고객
         </label>
-        <TagList tags={tags} maxTagCount={2} customers={customers} />
+        <TagList tags={tags} setTags={setTags} maxTagCount={2} />
       </div>
 
       <div className="customized-modify_form-group">

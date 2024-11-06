@@ -5,10 +5,18 @@ import Header from "@/app/components/layout/Header";
 import { useEffect, useState } from "react";
 import "./page.css";
 import TagList from "@/app/components/common/tag/TagList";
-import Cookies from "js-cookie";
+import { TagType } from "@/types/tag/tagTypes";
+
+const DUMMY_DATA: TagType[] = [
+  {
+    tagName: "test",
+    tagColor: "BLUE",
+    tagId: 0,
+  },
+];
 
 export default function MypagePage() {
-  // todo : useState로 tags, customer 관리하기
+  const [tags, setTags] = useState<TagType[]>(DUMMY_DATA);
 
   useEffect(() => {
     // 로그인 유무 확인해서 안되어 있으면 login 페이지로 보내기!
@@ -22,15 +30,8 @@ export default function MypagePage() {
         <div className="mypage-content-container">
           <p className="body-strong">태그 0</p>
           {/* 태그 리스트 */}
-          <TagList
-            tags={[
-              {
-                tagName: "test",
-                tagColor: "BLUE",
-                tagId: 0,
-              },
-            ]}
-          />
+          <TagList tags={tags} setTags={setTags} />
+          set
         </div>
       </div>
     </div>
