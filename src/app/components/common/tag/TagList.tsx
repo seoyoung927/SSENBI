@@ -31,7 +31,7 @@ export default function TagList({
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLUListElement>(null);
   const isEmpty = tags.length === 0;
-  const [editedTag, setEditedTag] = useState("");
+  const [editedTag, setEditedTag] = useState<string>("");
 
   useEffect(() => {
     const fetchTags = async () => {
