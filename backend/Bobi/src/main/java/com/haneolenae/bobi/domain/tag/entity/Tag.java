@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.haneolenae.bobi.domain.custom.entity.TemplateTag;
 import com.haneolenae.bobi.domain.member.entity.Member;
+import com.haneolenae.bobi.domain.tag.dto.request.TagRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagUpdateRequest;
 
 import jakarta.persistence.Column;
@@ -47,7 +48,7 @@ public class Tag {
 		this.member = member;
 	}
 
-	public void update(TagUpdateRequest request) {
+	public void update(TagRequest request) {
 		this.name = request.getName();
 		this.color = request.getColor();
 	}

@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class TagResponse {
-	private Long id;
-	private String name;
-	private String color;
+	private Long tagId;
+	private String tagName;
+	private String tagColor;
 }
