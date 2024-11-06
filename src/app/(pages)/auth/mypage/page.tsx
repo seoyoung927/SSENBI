@@ -16,8 +16,7 @@ const DUMMY_DATA: TagType[] = [
 ];
 
 export default function MypagePage() {
-  // todo : useState로 tags, customer 관리하기
-  const [tags, setTags] = useState(DUMMY_DATA);
+  const [tags, setTags] = useState<TagType[]>(DUMMY_DATA);
 
   useEffect(() => {
     // 로그인 유무 확인해서 안되어 있으면 login 페이지로 보내기!
