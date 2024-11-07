@@ -15,13 +15,11 @@ export default function CustomerList() {
   const [customers, setCustomers] = useState<CustomerType[]>([]);
 
   useEffect(() => {
-    getCustomersAPI()
-      .then(({ result }) => {
-        setCustomers(result);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchData = async () => {
+      const { result } = await getCustomersAPI();
+      setCustomers(result);
+    };
+    fetchData();
   }, []);
 
   // TODO: 검색구현
