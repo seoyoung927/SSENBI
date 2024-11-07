@@ -329,8 +329,9 @@ a {
   background: linear-gradient(
     135deg,
     var(--primary-color) 0%,
-    rgba(105, 206, 249, 0.8) 50%,
-    rgba(153, 231, 235, 0.5) 100%
+    rgba(81, 250, 244, 0.8) 30%,
+    var(--primary-color) 70%,
+    rgba(25, 255, 240, 0.5) 100%
   );
   opacity: 0.9;
   color: var(--bg-default);

@@ -52,31 +52,23 @@ export const getCustomTemplateAPI = async ({
 
 // Put Custom Template API
 export const putCustomTemplateAPI = async ({
-  token,
+  // token,
   templateId,
   title,
   content,
-  beforeTags,
-  afterTags,
-  beforeCustomerIds,
-  afterCustomerIds,
+  beforeTags = [],
+  afterTags = [],
+  beforeCustomerIds = [],
+  afterCustomerIds = [],
 }: PutCustomTemplateParamsType) => {
-  const response = await axiosInstance.put(
-    `/customTemplate/${templateId}`,
-    {
-      templateTitle: title,
-      templateContent: content,
-      templateBeforeTagIds: beforeTags,
-      templateAfterTagIds: afterTags,
-      templateBeforeCustomerIds: beforeCustomerIds,
-      templateAfterCustomerIds: afterCustomerIds,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+  const response = await axiosInstance.put(`/customTemplate/${templateId}`, {
+    templateTitle: title,
+    templateContent: content,
+    templateBeforeTagIds: beforeTags,
+    templateAfterTagIds: afterTags,
+    templateBeforeCustomerIds: beforeCustomerIds,
+    templateAfterCustomerIds: afterCustomerIds,
+  });
   return response.data;
 };
 
