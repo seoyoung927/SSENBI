@@ -3,71 +3,26 @@
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
 import SearchBar from "@/app/components/common/input/SearchBar";
-import { TagType } from "@/types/tag/tagTypes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./CustomerList.css";
 import { CustomerType } from "@/types/customer/customerType";
-
-const DUMMY_DATA: CustomerType[] = [
-  {
-    customerId: 1,
-    customerName: "홍길동",
-    customerAge: 30,
-    customerGender: "MALE",
-    customerMemo: "메모",
-
-    customerPhoneNumber: "010-1234-5678",
-    customerColor: "SALMON",
-    customerTags: [
-      {
-        tagId: 1,
-        tagColor: "RED",
-        tagName: "VIP",
-      },
-    ],
-  },
-  {
-    customerId: 2,
-    customerName: "김철수",
-    customerAge: 30,
-    customerGender: "MALE",
-    customerMemo: "메모",
-    customerPhoneNumber: "010-5353-5353",
-    customerColor: "YELLOW",
-    customerTags: [
-      {
-        tagId: 1,
-        tagColor: "RED",
-        tagName: "VIP",
-      },
-    ],
-  },
-  {
-    customerId: 3,
-    customerName: "이영희",
-    customerAge: 30,
-    customerGender: "FEMALE",
-    customerMemo: "메모",
-    customerPhoneNumber: "010-1212-3434",
-    customerColor: "GREEN",
-    customerTags: [
-      {
-        tagId: 1,
-        tagColor: "RED",
-        tagName: "VIP",
-      },
-    ],
-  },
-];
+import { getCustomersAPI } from "@/app/api/customer/customerAPI";
 
 export default function CustomerList() {
-  const [tags, setTags] = useState<TagType[]>([]);
   const router = useRouter();
-  // TODO: fetch customers from server
-  const customers = DUMMY_DATA;
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { result } = await getCustomersAPI();
+      setCustomers(result);
+    };
+    fetchData();
+  }, []);
+
+  // TODO: 검색구현
   const handleSearch = (value: string) => {
     console.log(value);
   };
@@ -79,7 +34,7 @@ export default function CustomerList() {
     <>
       <div className="controller">
         {/* TODO: 태그 필터 */}
-        <div>TODO 태그 필터</div>
+        <div>TODO: 태그 필터</div>
         <SearchBar onChange={handleSearch} />
       </div>
       <ul className="customer-list">
