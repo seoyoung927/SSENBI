@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.haneolenae.bobi.domain.custom.mapper.CustomTemplateMapper;
 import com.haneolenae.bobi.domain.custom.repository.CustomTemplateRepository;
@@ -61,7 +62,8 @@ public class GeneralServiceImpl implements GeneralService {
 	public GeneralTemplateResponse getTemplate(long templateId) {
 		return generalMapper.toGeneralTemplateResponse(
 			generalTemplateRepository.findById(templateId)
-				.orElseThrow(() -> new RuntimeException("Template not found"))
+				.orElseThrow(() -> new ApiException(
+					ApiType.GENERAL_TEMPLATE_NOT_EXIST))
 		);
 	}
 
@@ -73,7 +75,7 @@ public class GeneralServiceImpl implements GeneralService {
 			.collect(Collectors.toList());
 	}
 
-	@Override
+	@Transactional
 	public void duplicateGeneralTemplate(long memberId, DuplicateGeneralTemplateRequest request) {
 		GeneralTemplate generalTemplate = generalTemplateRepository.findById(request.getTemplateId())
 			.orElseThrow(() -> new ApiException(

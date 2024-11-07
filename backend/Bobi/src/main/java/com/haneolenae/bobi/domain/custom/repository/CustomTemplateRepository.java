@@ -2,6 +2,7 @@ package com.haneolenae.bobi.domain.custom.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,4 +38,13 @@ public interface CustomTemplateRepository extends JpaRepository<CustomTemplate, 
 		@Param("memberId") long memberId);
 
 	Optional<CustomTemplate> findByIdAndMemberId(long id, long memberId);
+
+	@Query("SELECT DISTINCT tag.id FROM TemplateTag tt " +
+		"JOIN tt.tag tag " +
+		"JOIN tt.customTemplate t " +
+		"WHERE t.id = :templateId AND t.member.id = :memberId")
+	Set<Long> findTagIdsByTemplateIdAndMemberId(
+		@Param("templateId") Long templateId,
+		@Param("memberId") Long memberId);
+
 }

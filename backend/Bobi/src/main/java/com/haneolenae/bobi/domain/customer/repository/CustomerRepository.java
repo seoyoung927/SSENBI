@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-	List<Customer> findByIdIn(List<Long> customerIds);
+	List<Customer> findByMemberIdAndIdIn(long memberId, List<Long> customerIds);
 
 	Optional<Customer> findByIdAndMemberId(long customerId, long memberId);
 }

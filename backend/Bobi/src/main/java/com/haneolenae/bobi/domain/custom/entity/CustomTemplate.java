@@ -68,7 +68,7 @@ public class CustomTemplate {
 	@OneToMany(mappedBy = "customTemplate", fetch = FetchType.LAZY)
 	private List<TemplateTag> templateTags;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
 
@@ -78,6 +78,7 @@ public class CustomTemplate {
 		this.count = count;
 	}
 
+	@Builder
 	public CustomTemplate(String title, String content, Integer count, Member member) {
 		this.title = title;
 		this.content = content;
@@ -90,7 +91,6 @@ public class CustomTemplate {
 		this.content = request.getTemplateContent();
 	}
 
-	@Builder
 	public CustomTemplate(String title, String content) {
 		this.title = title;
 		this.content = content;
@@ -100,6 +100,8 @@ public class CustomTemplate {
 		return CustomTemplate.builder()
 			.title(this.title + " (복사)")
 			.content(this.content)
+			.member(this.member)
+			.count(0)
 			.build();
 	}
 }

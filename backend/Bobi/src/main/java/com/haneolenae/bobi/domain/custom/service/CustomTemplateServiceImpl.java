@@ -82,24 +82,35 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		customTemplateRepository.save(customTemplate);
 
 		//연관관계 맵핑
-		if (!request.getTemplateTagIds().isEmpty()) {
-			List<Tag> tags = tagRepository.findByIdIn(request.getTemplateTagIds());
-			tags.forEach(tag -> {
-				templateTagRepository.save(
-					new TemplateTag(customTemplate, tag)
-				);
-			});
-		}
+		addTags(memberId, request.getTemplateTagIds(), customTemplate);
 
 		//연관관계 맵핑
-		if (!request.getTemplateCustomerIds().isEmpty()) {
-			List<Customer> customers = customerRepository.findByIdIn(
-				request.getTemplateCustomerIds());
-			customers.forEach(customer -> {
-				templateCustomerRepository.save(
-					new TemplateCustomer(customTemplate, customer)
-				);
-			});
+		addCustomers(memberId, request.getTemplateCustomerIds(), customTemplate);
+	}
+
+	public void addTags(long memberId, List<Long> tagIds, CustomTemplate customTemplate) {
+		if (!tagIds.isEmpty()) {
+			List<Tag> tags = tagRepository.findByMemberIdAndIdIn(memberId, tagIds);
+
+			if (tags.size() != tagIds.size())
+				throw new ApiException(ApiType.TAG_NOT_FOUND);
+
+			tags.forEach(tag -> templateTagRepository.save(
+				new TemplateTag(customTemplate, tag)
+			));
+		}
+	}
+
+	public void addCustomers(long memberId, List<Long> customerIds, CustomTemplate customTemplate) {
+		if (!customerIds.isEmpty()) {
+			List<Customer> customers = customerRepository.findByMemberIdAndIdIn(memberId, customerIds);
+
+			if (customers.size() != customerIds.size())
+				throw new ApiException(ApiType.CUSTOMER_NOT_FOUND);
+
+			customers.forEach(customer -> templateCustomerRepository.save(
+				new TemplateCustomer(customTemplate, customer)
+			));
 		}
 	}
 
@@ -112,15 +123,19 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		customTemplate.editTitleAndContent(request);
 
 		//태그 수정
-		editTags(request, templateId);
+		editTags(memberId, request, templateId);
 
 		//커스토머 수정
-		editCustomer(request, templateId);
+		editCustomer(memberId, request, templateId);
 	}
 
-	private void editTags(EditCustomTemplateRequest request, long templateId) {
-		Set<Long> beforeTagSet = new HashSet<>(request.getTemplateBeforeTagIds());
-		Set<Long> afterTagSet = new HashSet<>(request.getTemplateAfterTagIds());
+	private void editTags(long memberId, EditCustomTemplateRequest request, long templateId) {
+		Set<Long> beforeTagSet = templateTagRepository.getTagIdsByTemplateId(templateId);
+
+		Set<Long> afterTagSet = tagRepository.findTagIdByMemberIdAndIdIn(memberId, request.getTemplateAfterTagIds());
+
+		if (afterTagSet.size() != request.getTemplateAfterTagIds().size())
+			throw new ApiException(ApiType.TAG_NOT_FOUND);
 
 		// 교집합
 		Set<Long> gongtongTagIdSet = new HashSet<>(beforeTagSet);
@@ -140,7 +155,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 
 	}
 
-	private void editCustomer(EditCustomTemplateRequest request, long templateId) {
+	private void editCustomer(long memberId, EditCustomTemplateRequest request, long templateId) {
 		Set<Long> beforeCustomerSet = new HashSet<>(request.getTemplateBeforeCustomerIds());
 		Set<Long> afterCustomerSet = new HashSet<>(request.getTemplateAfterCustomerIds());
 
@@ -164,7 +179,6 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	public void deleteCustomTemplate(long memberId, long templateId) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
-
 
 		//연관관계 해제
 		templateTagRepository.deleteByCustomTemplateId(templateId);
