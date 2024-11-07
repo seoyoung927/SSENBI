@@ -134,7 +134,7 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.update(request);
 
 		// 현재 태그 ID 목록
-		List<Long> curTags = request.getTags();
+		List<Long> curTags = request.getCustomerTags();
 
 		List<CustomerTag> customerTagsToRemove = customer.getCustomerTags().stream()
 			.filter(customerTag -> !curTags.contains(customerTag.getTag().getId()))
