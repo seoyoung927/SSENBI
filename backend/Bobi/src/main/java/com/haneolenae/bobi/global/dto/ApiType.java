@@ -29,6 +29,7 @@ public enum ApiType {
 	REFRESH_TOKEN_NOT_SAME(HttpStatus.FORBIDDEN, ApiCode.A40301, ApiCode.A40301.getMsg()),
 
 	// Customer
+	CUSTOMER_SEARCH_PARAM_INVALID(HttpStatus.BAD_REQUEST, ApiCode.C40001, ApiCode.C40001.getMsg()),
 	CUSTOMER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
 
 	// Tag

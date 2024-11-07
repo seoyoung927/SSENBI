@@ -1,6 +1,7 @@
 package com.haneolenae.bobi.domain.customer.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,7 @@ import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,11 +57,10 @@ public class Customer {
 	private String color;
 
 	@Column
-	private Integer tagCount;
+	private int tagCount;
 
-	@OneToMany
-	@JoinColumn(name = "tag_id")
-	private List<Tag> tags;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<CustomerTag> customerTags = new ArrayList<>();
 
 	@Column
 	@CreationTimestamp
@@ -71,7 +72,7 @@ public class Customer {
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updatedAt;
 
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<TemplateCustomer> templateCustomers;
 
 	@ManyToOne
@@ -98,5 +99,14 @@ public class Customer {
 		this.age = request.getAge();
 		this.phoneNumber = request.getPhoneNumber();
 		this.memo = request.getMemo();
+	}
+
+	public void addCustomerTag(CustomerTag customerTag) {
+		customerTags.add(customerTag);
+		customerTag.setCustomer(this);
+	}
+
+	public void setTagCount(int tagCount) {
+		this.tagCount = tagCount;
 	}
 }

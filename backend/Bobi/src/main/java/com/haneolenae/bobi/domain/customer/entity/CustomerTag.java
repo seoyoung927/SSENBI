@@ -8,12 +8,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class CustomerTag {
 
 	@Id
@@ -27,4 +29,17 @@ public class CustomerTag {
 	@ManyToOne
 	@JoinColumn(name = "tag_id")
 	private Tag tag;
+
+	public CustomerTag(Customer customer, Tag tag) {
+		this.customer = customer;
+		this.tag = tag;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
 }
