@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
-import com.haneolenae.bobi.domain.tag.entity.Tag;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,7 +17,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
@@ -94,11 +92,11 @@ public class Customer {
 	}
 
 	public void update(UpdateCustomerRequest request) {
-		this.name = request.getName();
-		this.gender = request.getGender();
-		this.age = request.getAge();
-		this.phoneNumber = request.getPhoneNumber();
-		this.memo = request.getMemo();
+		this.name = request.getCustomerName();
+		this.gender = request.getCustomerGender();
+		this.age = request.getCustomerAge();
+		this.phoneNumber = request.getCustomerPhoneNumber();
+		this.memo = request.getCustomerMemo();
 	}
 
 	public void addCustomerTag(CustomerTag customerTag) {
