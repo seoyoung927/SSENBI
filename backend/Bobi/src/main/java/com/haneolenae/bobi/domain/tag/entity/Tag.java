@@ -1,9 +1,11 @@
 package com.haneolenae.bobi.domain.tag.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import com.haneolenae.bobi.domain.custom.entity.TemplateTag;
+import com.haneolenae.bobi.domain.customer.entity.CustomerTag;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.tag.dto.request.TagRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagUpdateRequest;
@@ -39,7 +41,10 @@ public class Tag {
 	private Member member;
 
 	@OneToMany(mappedBy = "tag")
-	private List<TemplateTag> templateTags;
+	private List<TemplateTag> templateTags = new ArrayList<>();
+
+	@OneToMany(mappedBy = "tag")
+	private List<CustomerTag> customerTags = new ArrayList<>();
 
 	@Builder
 	public Tag(String name, String color, Member member) {
@@ -53,4 +58,8 @@ public class Tag {
 		this.color = request.getColor();
 	}
 
+	public void addCustomerTag(CustomerTag customerTag) {
+		customerTags.add(customerTag);
+		customerTag.setTag(this);
+	}
 }

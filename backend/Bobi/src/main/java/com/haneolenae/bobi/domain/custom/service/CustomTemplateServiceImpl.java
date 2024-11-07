@@ -195,6 +195,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
 
+
 		//연관관계 해제
 		templateTagRepository.deleteByCustomTemplateId(templateId);
 

@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageTag {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,18 +33,21 @@ public class MessageTag {
 	private String name;
 
 	private String color;
-
 	@ManyToOne
 	@JoinColumn(name = "message_id")
 	private Message message;
-
 	@Column
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime createdAt;
-
 	@Column
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updatedAt;
+
+	public MessageTag(String name, String color, Message message) {
+		this.name = name;
+		this.color = color;
+		this.message = message;
+	}
 }

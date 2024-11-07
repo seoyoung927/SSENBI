@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.haneolenae.bobi.domain.member.entity.Member;
@@ -24,4 +26,8 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
 	Optional<Tag> findByNameAndMemberId(String name, Long memberId);
 
+	@Query("SELECT t FROM Tag t " +
+		"WHERE t.member.id = :memberId AND t.id IN :tagIds")
+	List<Tag> findByMemberIdAndTagIds(@Param("memberId") Long memberId,
+		@Param("tagIds") List<Long> tagIds);
 }
