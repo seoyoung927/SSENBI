@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+"use client";
+
+import React from "react";
 import "./Header.css";
 import BackIcon from "@/app/assets/svg/ChevronLeft.svg";
 import { useRouter } from "next/navigation";
