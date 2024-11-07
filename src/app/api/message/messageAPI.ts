@@ -1,33 +1,38 @@
 import axiosInstance from "../axiosInstance";
 
-// Get Single Message
-export const getMessageAPI = async ({
-  token,
-  messageId,
-}: {
-  token: string;
-  messageId: string;
-}) => {
-  const response = await axiosInstance.get(`/message/${messageId}`, {
+// Get Every Messages
+export const getEveryMessagesAPI = async (keyword?: string) => {
+  const response = await axiosInstance.get(`/message`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      keyword: keyword || "",
     },
   });
   return response.data;
 };
 
+// Get Single Message
+export const getMessageAPI = async ({ messageId }: { messageId: string }) => {
+  const response = await axiosInstance.get(`/message/${messageId}`);
+  return response.data;
+};
+
 // Delete Single Message
 export const deleteMessageAPI = async ({
-  token,
   messageId,
 }: {
-  token: string;
   messageId: string;
 }) => {
-  const response = await axiosInstance.delete(`/message/${messageId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await axiosInstance.delete(`/message/${messageId}`);
+  return response.data;
+};
+
+// todo : fix it
+// Post Send Message
+export const postSendMessageAPI = async ({
+  messageId,
+}: {
+  messageId: string;
+}) => {
+  const response = await axiosInstance.delete(`/message/${messageId}`);
   return response.data;
 };
