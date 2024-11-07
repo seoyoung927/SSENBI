@@ -21,6 +21,7 @@ public interface MessageMapper {
 	@Mapping(source = "content", target = "messageContent")
 	@Mapping(source = "createdAt", target = "messageSendAt")
 	@Mapping(expression = "java(mapMessageTagDto(message.getMessageTags()))", target = "messageTags")
+	@Mapping(expression = "java(mapMessageCustomerDto(message.getMessageCustomers()))", target = "messageCustomers")
 	MessageResponse toMessageResponse(final Message message);
 
 	@Mapping(source = "id", target = "messageId")

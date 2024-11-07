@@ -82,7 +82,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		customTemplateRepository.save(customTemplate);
 
 		//연관관계 맵핑
-		if (!request.getTemplateTagIds().isEmpty()) {
+		if (request.getTemplateTagIds() != null) {
 			List<Tag> tags = tagRepository.findByIdIn(request.getTemplateTagIds());
 			tags.forEach(tag -> {
 				templateTagRepository.save(
@@ -92,7 +92,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		}
 
 		//연관관계 맵핑
-		if (!request.getTemplateCustomerIds().isEmpty()) {
+		if (request.getTemplateCustomerIds() != null) {
 			List<Customer> customers = customerRepository.findByIdIn(
 				request.getTemplateCustomerIds());
 			customers.forEach(customer -> {
@@ -164,7 +164,6 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	public void deleteCustomTemplate(long memberId, long templateId) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
-
 
 		//연관관계 해제
 		templateTagRepository.deleteByCustomTemplateId(templateId);

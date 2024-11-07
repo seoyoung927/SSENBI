@@ -17,4 +17,5 @@ public class MessageResponse {
 	private String messageContent;
 	private LocalDateTime messageSendAt;
 	private List<MessageTagDto> messageTags;
+	private List<MessageCustomerDto> messageCustomers;
 }
