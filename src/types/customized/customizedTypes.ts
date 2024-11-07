@@ -29,10 +29,9 @@ export type PutCustomTemplateParamsType = {
 
 // Post Custom Template API Params
 export type PostCustomTemplateParamsType = {
-  token: string;
   title: string;
   content: string;
-  tags: number[];
+  tagIds: number[];
   customers: number[];
 };
 
