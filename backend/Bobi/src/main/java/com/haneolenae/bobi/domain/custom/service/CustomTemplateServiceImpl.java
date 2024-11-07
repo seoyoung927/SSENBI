@@ -92,6 +92,8 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		if (!tagIds.isEmpty()) {
 			List<Tag> tags = tagRepository.findByMemberIdAndIdIn(memberId, tagIds);
 
+			System.out.println(tags.size());
+			System.out.println(tagIds.size());
 			if (tags.size() != tagIds.size())
 				throw new ApiException(ApiType.TAG_NOT_FOUND);
 
@@ -132,10 +134,15 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	private void editTags(long memberId, EditCustomTemplateRequest request, long templateId) {
 		Set<Long> beforeTagSet = templateTagRepository.getTagIdsByTemplateId(templateId);
 
-		Set<Long> afterTagSet = tagRepository.findTagIdByMemberIdAndIdIn(memberId, request.getTemplateAfterTagIds());
+		Set<Long> afterTagSet;
 
-		if (afterTagSet.size() != request.getTemplateAfterTagIds().size())
-			throw new ApiException(ApiType.TAG_NOT_FOUND);
+		if (request.getTemplateAfterTagIds() != null) {
+			afterTagSet = tagRepository.findTagIdByMemberIdAndIdIn(memberId, request.getTemplateAfterTagIds());
+
+			if (afterTagSet.size() != request.getTemplateAfterTagIds().size())
+				throw new ApiException(ApiType.TAG_NOT_FOUND);
+		} else
+			afterTagSet = new HashSet<>();
 
 		// 교집합
 		Set<Long> gongtongTagIdSet = new HashSet<>(beforeTagSet);
@@ -156,8 +163,16 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	}
 
 	private void editCustomer(long memberId, EditCustomTemplateRequest request, long templateId) {
-		Set<Long> beforeCustomerSet = new HashSet<>(request.getTemplateBeforeCustomerIds());
-		Set<Long> afterCustomerSet = new HashSet<>(request.getTemplateAfterCustomerIds());
+		Set<Long> beforeCustomerSet = templateCustomerRepository.getCustomerIdsByTemplateId(templateId);
+		Set<Long> afterCustomerSet;
+
+		if (request.getTemplateAfterCustomerIds() != null) {
+			afterCustomerSet = customerRepository.findCustomerIdByMemberIdAndIdIn(memberId,
+				request.getTemplateAfterCustomerIds());
+			if (afterCustomerSet.size() != request.getTemplateAfterCustomerIds().size())
+				throw new ApiException(ApiType.CUSTOMER_NOT_FOUND);
+		} else
+			afterCustomerSet = new HashSet<>();
 
 		Set<Long> gongtongCustomerIdSet = new HashSet<>(beforeCustomerSet);
 		gongtongCustomerIdSet.retainAll(afterCustomerSet);
