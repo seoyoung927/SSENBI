@@ -97,3 +97,7 @@ textarea {
 .textarea-content {
   height: 15vh;
 }
+
+.taglist-container {
+  width: calc(100vw - 120px);
+}
