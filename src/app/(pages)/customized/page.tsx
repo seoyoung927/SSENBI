@@ -6,12 +6,13 @@ import Link from "next/link";
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import { useRouter } from "next/navigation";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
 import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import "./page.css";
 import HashLoading from "@/app/components/common/loading/HashLoading";
+import { CustomerType } from "@/types/customer/customerType";
 
 // Custom Template 타입 정의
 interface CustomTemplate {

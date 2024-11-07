@@ -7,7 +7,7 @@ import TagList from "@/app/components/common/tag/TagList";
 import Header from "@/app/components/layout/Header";
 import { TagType } from "@/types/tag/tagTypes";
 import { useRef, useState } from "react";
-import { CustomerCreationType } from "@/types/customer/CustomerType";
+import { CustomerCreationType } from "@/types/customer/customerType";
 import getRandomTagColor from "@/utils/getRandomTagColor";
 
 export default function CustomerCreatePage() {

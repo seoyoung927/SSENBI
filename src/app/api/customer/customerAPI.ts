@@ -1,7 +1,7 @@
 import {
   CustomerCreationType,
   CustomerType,
-} from "@/types/customer/CustomerType";
+} from "@/types/customer/customerType";
 import axiosInstance from "../axiosInstance";
 
 export const getCustomersAPI = async () => {
