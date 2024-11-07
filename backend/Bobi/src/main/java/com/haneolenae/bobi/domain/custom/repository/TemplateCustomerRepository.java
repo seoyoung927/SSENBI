@@ -1,6 +1,7 @@
 package com.haneolenae.bobi.domain.custom.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,7 @@ public interface TemplateCustomerRepository extends CrudRepository<TemplateCusto
 	void deleteByCustomerId(Long customerId);
 
 	void deleteByCustomerIdAndCustomTemplateId(Long customerId, Long customTemplateId);
+
+	@Query("SELECT t.customer.id FROM TemplateCustomer t WHERE t.customTemplate.id = :templateId")
+	Set<Long> getCustomerIdsByTemplateId(Long templateId);
 }
