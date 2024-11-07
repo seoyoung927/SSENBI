@@ -23,7 +23,10 @@ import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.service.CustomerService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,6 +48,10 @@ public class CustomerController {
 	) {
 		log.info("Search customer");
 
+		if (keyword != null && keyword.trim().isEmpty()) {
+			throw new ApiException(ApiType.CUSTOMER_SEARCH_PARAM_INVALID);
+		}
+
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		return ResponseEntity.ok(new ApiResponse<>(
@@ -55,7 +62,7 @@ public class CustomerController {
 	@GetMapping("/{customerId}")
 	public ResponseEntity<ApiResponse<CustomerResponse>> getCustomerDetail(
 		@RequestHeader("Authorization") String token,
-		@PathVariable("customerId") long customerId
+		@PathVariable("customerId") Long customerId
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 		return ResponseEntity.ok(new ApiResponse<>(customerService.getCustomerDetail(memberId, customerId)));
@@ -64,7 +71,7 @@ public class CustomerController {
 	@PostMapping
 	public ResponseEntity<ApiResponse<String>> addCustomer(
 		@RequestHeader("Authorization") String token,
-		@RequestBody AddCustomerRequest request
+		@RequestBody @Valid AddCustomerRequest request
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
@@ -72,23 +79,24 @@ public class CustomerController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
-	@PutMapping
+	@PutMapping("/{customerId}")
 	public ResponseEntity<ApiResponse<CustomerResponse>> updateCustomer(
 		@RequestHeader("Authorization") String token,
-		@RequestBody UpdateCustomerRequest request
+		@PathVariable("customerId") Long customerId,
+		@RequestBody @Valid UpdateCustomerRequest request
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		return ResponseEntity.ok(new ApiResponse<>(customerService.updateCustomer(memberId, request)));
+		return ResponseEntity.ok(new ApiResponse<>(customerService.updateCustomer(memberId, customerId, request)));
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{customerId}")
 	public ResponseEntity<ApiResponse<String>> deleteCustomer(
 		@RequestHeader("Authorization") String token,
-		@RequestBody DeleteCustomerRequest request
+		@PathVariable("customerId") Long customerId
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
-		customerService.delete(memberId, request);
+		customerService.delete(memberId, customerId);
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}

@@ -34,4 +34,12 @@ public class CustomerTag {
 		this.customer = customer;
 		this.tag = tag;
 	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
 }

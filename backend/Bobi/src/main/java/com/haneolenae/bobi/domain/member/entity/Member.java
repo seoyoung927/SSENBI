@@ -1,6 +1,7 @@
 package com.haneolenae.bobi.domain.member.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,16 +75,16 @@ public class Member {
 	private boolean isDeleted = false;
 
 	@OneToMany(mappedBy = "member")
-	private List<Message> messages;
+	private List<Message> messages = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member")
-	private List<Tag> tags;
+	private List<Tag> tags = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member")
-	private List<Customer> customers;
+	private List<Customer> customers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member")
-	private List<CustomTemplate> customTemplates;
+	private List<CustomTemplate> customTemplates = new ArrayList<>();
 
 	@Builder
 	public Member(String memberId, String password, String name, String business, String personalPhoneNumber,
@@ -105,5 +106,13 @@ public class Member {
 
 	public void updatePassword(String password) {
 		this.password = password;
+	}
+
+	public void increaseCustomerCount() {
+		customerCount++;
+	}
+
+	public void decreaseCustomerCount() {
+		customerCount--;
 	}
 }
