@@ -67,50 +67,35 @@ public class MessageServiceImpl implements MessageService {
 			.member(sender)
 			.build();
 
-		Set<Customer> finalReceiverIdSet = new HashSet<>();
+		//TODO : 받는이 유효성 검사
+		Set<Customer> finalReceiverCustomers = customerRepository.findByMemberIdAndCustomerIdIn(memberId,
+			sendMessageRequest.getMessageCustomerIds());
 
-		if (sendMessageRequest.getMessageCustomerIds() != null) {
-			// TODO: 받는이 유효성 검사
-			for (long receiverId : sendMessageRequest.getMessageCustomerIds()) {
-				Customer customer = customerRepository.findById(receiverId)
-					.orElseThrow(() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND));
-
-				// 최종 발송 고객 리스트에 추가
-				finalReceiverIdSet.add(customer);
-			}
+		if (finalReceiverCustomers.size() != sendMessageRequest.getMessageCustomerIds().size()) {
+			throw new ApiException(ApiType.CUSTOMER_NOT_FOUND);
 		}
 
-		// TODO: 태그 유효성 검사
-		List<MessageTag> messageTagList = new ArrayList<>();
-		if (sendMessageRequest.getMessageTagIds() != null) {
-			for (long tagId : sendMessageRequest.getMessageTagIds()) {
-				Tag tag = tagRepository.findByIdAndMemberId(tagId, memberId)
-					.orElseThrow(() -> new ApiException(ApiType.TAG_NOT_FOUND));
+		//TODO: 태그 유효성 검사
+		List<Tag> tags = tagRepository.findByMemberIdAndTagIds(memberId, sendMessageRequest.getMessageTagIds());
 
-				messageTagList.add(MessageTag.builder()
-					.name(tag.getName())
-					.color(tag.getColor())
-					.message(originMessage)
-					.build());
-			}
-
-			// TODO: messageTag 저장
-
+		if (tags.size() != sendMessageRequest.getMessageTagIds().size()) {
+			throw new ApiException(ApiType.TAG_MEMBER_INVALID);
 		}
 
-		// 태그에 해당하는 고객 조회
-		List<Customer> customers = customerTagRepository.findCustomersByTagIds(sendMessageRequest.getMessageTagIds());
+		// TODO: 태그에 해당하는 Customer 가져오기
+		List<Customer> tagCustomers = customerRepository.findALlByMemberIdAndTags(memberId,
+			sendMessageRequest.getMessageTagIds());
 
-		// 최종 발송 고객 리스트에 추가
-		finalReceiverIdSet.addAll(customers);
+		finalReceiverCustomers.addAll(tagCustomers);
+
+		// TODO: customer에 메시지 전송
 
 		// 성공한 고객 리스트
 		List<MessageCustomer> successCustomers = new ArrayList<>();
 		// 실패한 고객 이름 리스트
 		List<String> failedCustomers = new ArrayList<>();
 
-		// for message 보내기
-		for (Customer customer : finalReceiverIdSet) {
+		for (Customer customer : finalReceiverCustomers) {
 
 			log.info("고객에게 메시지 전송 : " + customer.getId());
 
@@ -131,23 +116,28 @@ public class MessageServiceImpl implements MessageService {
 			} catch (ApiException e) {
 				failedCustomers.add(customer.getName());
 			}
+		}
 
-			// 메시지 전송에 성공한 고객 데이터 저장
+		if (failedCustomers.size() == finalReceiverCustomers.size()) {
+			throw new ApiException(ApiType.MESSAGE_SERVICE_ALL_FAIL);
+		}
 
-			// 하나라도 메시지가 전송 되었다면 message 저장
-			if (failedCustomers.size() != finalReceiverIdSet.size()) {
-				// TODO: 메시지 저장
-				messageRepository.save(originMessage);
-				sender.increaseMessageCount();
-			}
+		//TODO: message 저장
+		messageRepository.saveAndFlush(originMessage);
 
-			messageTagRepository.saveAll(messageTagList);
+		sender.increaseMessageCount();
 
-			messageCustomerRepository.saveAll(successCustomers);
-			// TODO: 메시지 전송에 실패한 고객 이름 리스트 반환
-			if (!failedCustomers.isEmpty()) {
-				throw new ApiException(ApiType.EXTERNAL_MESSAGE_SERVICE_ERROR, failedCustomers);
-			}
+		//TODO: messageTag 생성 및 저장
+		List<MessageTag> messageTags = tags.stream()
+			.map(tag -> new MessageTag(tag.getName(), tag.getColor(), originMessage))
+			.toList();
+		messageTagRepository.saveAllAndFlush(messageTags);
+
+		//TODO: messageCustomer 생성 및 저장
+		messageCustomerRepository.saveAllAndFlush(successCustomers);
+
+		if (!failedCustomers.isEmpty()) {
+			throw new ApiException(ApiType.EXTERNAL_MESSAGE_SERVICE_ERROR, failedCustomers);
 		}
 	}
 
@@ -167,8 +157,6 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 검색어로 검색
 		List<Message> messages = messageRepository.findMessagesByKeywordAndMemberId(keyword, memberId);
-
-		messages = messageRepository.findByMemberId(memberId);
 
 		return messages.stream()
 			.map(messageMapper::toMessageResponse)

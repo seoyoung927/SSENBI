@@ -10,11 +10,10 @@ import org.springframework.data.repository.query.Param;
 import com.haneolenae.bobi.domain.message.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
-
 	@Query("SELECT DISTINCT m FROM Message m " +
 		"LEFT JOIN m.messageCustomers mc " +
 		"LEFT JOIN m.messageTags mt " +
-		"WHERE (mc.name LIKE %:keyword% " +
+		"WHERE (:keyword IS NULL OR mc.name LIKE %:keyword% " +
 		"OR m.content LIKE %:keyword% " +
 		"OR mt.name LIKE %:keyword%) " +
 		"AND m.member.id = :memberId")

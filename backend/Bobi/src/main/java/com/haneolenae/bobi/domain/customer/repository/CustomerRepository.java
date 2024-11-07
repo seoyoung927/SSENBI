@@ -2,6 +2,7 @@ package com.haneolenae.bobi.domain.customer.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,22 @@ import org.springframework.data.repository.query.Param;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
+	@Query("SELECT c FROM Customer c WHERE c.member.id = :memberId AND c.id IN :customerIds")
+	Set<Customer> findByMemberIdAndCustomerIdIn(@Param("memberId") Long memberId,
+		@Param("customerIds") List<Long> customerIds);
+
 	List<Customer> findByIdIn(List<Long> customerIds);
+
+	@Query("SELECT DISTINCT c FROM Customer c " +
+		"LEFT JOIN FETCH c.customerTags ct " +
+		"WHERE c.member.id = :memberId " +
+		"AND (:tags IS NULL OR EXISTS (" +
+		"    SELECT 1 FROM CustomerTag ct2 " +
+		"    WHERE ct2.customer = c " +
+		"    AND ct2.tag.id IN :tags" +
+		"))")
+	List<Customer> findALlByMemberIdAndTags(@Param("memberId") Long memberId, @Param("tags") List<Long> tags);
 
 	Optional<Customer> findByIdAndMemberId(long customerId, long memberId);
 
