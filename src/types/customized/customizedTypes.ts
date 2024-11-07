@@ -31,7 +31,7 @@ export type PutCustomTemplateParamsType = {
 export type PostCustomTemplateParamsType = {
   title: string;
   content: string;
-  tags: number[];
+  tagIds: number[];
   customers: number[];
 };
 
