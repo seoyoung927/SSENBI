@@ -115,4 +115,12 @@ public class Member {
 	public void decreaseCustomerCount() {
 		customerCount--;
 	}
+
+	public void increaseMessageCount() {
+		messageCount++;
+	}
+
+	public void decreaseMessageCount() {
+		messageCount--;
+	}
 }

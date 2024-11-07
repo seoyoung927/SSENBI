@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,8 @@ import com.haneolenae.bobi.domain.message.dto.response.MessageDetailResponse;
 import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
 import com.haneolenae.bobi.domain.message.service.MessageService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
+import com.haneolenae.bobi.global.dto.ApiType;
+import com.haneolenae.bobi.global.exception.ApiException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +40,10 @@ public class MessageController {
 		@RequestHeader("Authorization") String token,
 		@RequestParam(required = false) String keyword
 	) {
+		if (keyword != null && keyword.trim().isEmpty()) {
+			throw new ApiException(ApiType.SEARCH_TERM_INVALID);
+		}
+
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageList(memberId, keyword)));
@@ -62,6 +69,18 @@ public class MessageController {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		messageService.sendMessage(memberId, sendMessageRequest);
+
+		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{messageId}")
+	public ResponseEntity<ApiResponse<String>> deleteMessage(
+		@RequestHeader("Authorization") String token,
+		@PathVariable("messageId") Long messageId
+	) {
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
+		messageService.deleteMessage(memberId, messageId);
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
