@@ -3,16 +3,21 @@
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
 import SearchBar from "@/app/components/common/input/SearchBar";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "./CustomerList.css";
+import { CustomerType } from "@/types/customer/customerType";
 
 const DUMMY_DATA: CustomerType[] = [
   {
     customerId: 1,
     customerName: "홍길동",
+    customerAge: 30,
+    customerGender: "MALE",
+    customerMemo: "메모",
+
     customerPhoneNumber: "010-1234-5678",
     customerColor: "SALMON",
     customerTags: [
@@ -26,6 +31,9 @@ const DUMMY_DATA: CustomerType[] = [
   {
     customerId: 2,
     customerName: "김철수",
+    customerAge: 30,
+    customerGender: "MALE",
+    customerMemo: "메모",
     customerPhoneNumber: "010-5353-5353",
     customerColor: "YELLOW",
     customerTags: [
@@ -39,6 +47,9 @@ const DUMMY_DATA: CustomerType[] = [
   {
     customerId: 3,
     customerName: "이영희",
+    customerAge: 30,
+    customerGender: "FEMALE",
+    customerMemo: "메모",
     customerPhoneNumber: "010-1212-3434",
     customerColor: "GREEN",
     customerTags: [

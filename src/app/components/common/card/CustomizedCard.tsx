@@ -1,8 +1,9 @@
 import React from "react";
 import "./CustomizedCard.css";
 import BorderTag from "../tag/BorderTag";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
 import FilledTag from "../tag/FilledTag";
+import { CustomerType } from "@/types/customer/customerType";
 
 interface MessageCardProps {
   title: string;
