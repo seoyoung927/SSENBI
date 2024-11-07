@@ -208,7 +208,7 @@ a {
   width: var(--divWidth);
   max-width: var(--divWidth);
   margin-left: 80px;
-  max-height: 100vh;
+  height: 100vh;
   overflow-y: auto;
 }
 
