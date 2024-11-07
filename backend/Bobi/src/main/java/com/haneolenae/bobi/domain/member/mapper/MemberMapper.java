@@ -40,6 +40,7 @@ public interface MemberMapper {
 
 	@Mapping(source = "member.customerCount", target = "customerCount")
 	@Mapping(source = "member.messageCount", target = "messageCount")
+	@Mapping(source = "member.name", target = "name")
 	MemberOverviewResponse toMemberOverview(Member member);
 }
 

@@ -8,6 +8,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class MemberOverviewResponse {
+	private String name;
 	private int customerCount;
 	private int messageCount;
 }
