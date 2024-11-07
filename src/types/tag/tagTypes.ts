@@ -4,14 +4,6 @@ export type TagType = {
   tagColor: TagColorType;
 };
 
-export type CustomerType = {
-  customerId: number;
-  customerName: string;
-  customerPhoneNumber?: string;
-  customerColor: TagColorType;
-  customerTags: TagType[];
-};
-
 export type TagColorType =
   | "RED"
   | "PINK"

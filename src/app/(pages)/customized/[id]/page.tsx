@@ -11,11 +11,12 @@ import {
   putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import "./page.css";
+import { CustomerType } from "@/types/customer/customerType";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
