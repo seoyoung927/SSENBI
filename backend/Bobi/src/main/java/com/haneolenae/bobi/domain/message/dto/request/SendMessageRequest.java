@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class SendMessageRequest {
-	List<Long> receiverIdList;
-	List<Long> tagIdList;
-	String message;
+	List<Long> messageCustomerIds;
+	List<Long> messageTagIds;
+	String messageContent;
 }

@@ -63,39 +63,43 @@ public class MessageServiceImpl implements MessageService {
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		Message originMessage = Message.builder()
-			.content(sendMessageRequest.getMessage())
+			.content(sendMessageRequest.getMessageContent())
 			.member(sender)
 			.build();
 
 		Set<Customer> finalReceiverIdSet = new HashSet<>();
 
-		// TODO: 받는이 유효성 검사
-		for (long receiverId : sendMessageRequest.getReceiverIdList()) {
-			Customer customer = customerRepository.findById(receiverId)
-				.orElseThrow(() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND));
+		if (sendMessageRequest.getMessageCustomerIds() != null) {
+			// TODO: 받는이 유효성 검사
+			for (long receiverId : sendMessageRequest.getMessageCustomerIds()) {
+				Customer customer = customerRepository.findById(receiverId)
+					.orElseThrow(() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND));
 
-			// 최종 발송 고객 리스트에 추가
-			finalReceiverIdSet.add(customer);
+				// 최종 발송 고객 리스트에 추가
+				finalReceiverIdSet.add(customer);
+			}
 		}
 
 		// TODO: 태그 유효성 검사
 		List<MessageTag> messageTagList = new ArrayList<>();
-		for (long tagId : sendMessageRequest.getTagIdList()) {
-			Tag tag = tagRepository.findByIdAndMemberId(tagId, memberId)
-				.orElseThrow(() -> new ApiException(ApiType.TAG_NOT_FOUND));
+		if (sendMessageRequest.getMessageTagIds() != null) {
+			for (long tagId : sendMessageRequest.getMessageTagIds()) {
+				Tag tag = tagRepository.findByIdAndMemberId(tagId, memberId)
+					.orElseThrow(() -> new ApiException(ApiType.TAG_NOT_FOUND));
 
-			messageTagList.add(MessageTag.builder()
-				.name(tag.getName())
-				.color(tag.getColor())
-				.message(originMessage)
-				.build());
+				messageTagList.add(MessageTag.builder()
+					.name(tag.getName())
+					.color(tag.getColor())
+					.message(originMessage)
+					.build());
+			}
+
+			// TODO: messageTag 저장
+
 		}
 
-		// TODO: messageTag 저장
-		messageTagRepository.saveAll(messageTagList);
-
 		// 태그에 해당하는 고객 조회
-		List<Customer> customers = customerTagRepository.findCustomersByTagIds(sendMessageRequest.getTagIdList());
+		List<Customer> customers = customerTagRepository.findCustomersByTagIds(sendMessageRequest.getMessageTagIds());
 
 		// 최종 발송 고객 리스트에 추가
 		finalReceiverIdSet.addAll(customers);
@@ -129,7 +133,6 @@ public class MessageServiceImpl implements MessageService {
 			}
 
 			// 메시지 전송에 성공한 고객 데이터 저장
-			messageCustomerRepository.saveAll(successCustomers);
 
 			// 하나라도 메시지가 전송 되었다면 message 저장
 			if (failedCustomers.size() != finalReceiverIdSet.size()) {
@@ -138,6 +141,9 @@ public class MessageServiceImpl implements MessageService {
 				sender.increaseMessageCount();
 			}
 
+			messageTagRepository.saveAll(messageTagList);
+
+			messageCustomerRepository.saveAll(successCustomers);
 			// TODO: 메시지 전송에 실패한 고객 이름 리스트 반환
 			if (!failedCustomers.isEmpty()) {
 				throw new ApiException(ApiType.EXTERNAL_MESSAGE_SERVICE_ERROR, failedCustomers);
@@ -161,6 +167,8 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: 검색어로 검색
 		List<Message> messages = messageRepository.findMessagesByKeywordAndMemberId(keyword, memberId);
+
+		messages = messageRepository.findByMemberId(memberId);
 
 		return messages.stream()
 			.map(messageMapper::toMessageResponse)

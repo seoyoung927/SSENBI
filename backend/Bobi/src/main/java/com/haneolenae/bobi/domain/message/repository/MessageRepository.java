@@ -23,4 +23,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	Optional<Message> findByIdAndMemberId(Long messageId, Long memberId);
 
+	List<Message> findByMemberId(Long memberId);
 }
