@@ -23,6 +23,7 @@ import com.haneolenae.bobi.global.dto.ApiResponse;
 import com.haneolenae.bobi.global.dto.ApiType;
 import com.haneolenae.bobi.global.exception.ApiException;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,7 +65,7 @@ public class MessageController {
 	@PostMapping()
 	public ResponseEntity<ApiResponse<String>> sendMessage(
 		@RequestHeader("Authorization") String token,
-		@RequestBody SendMessageRequest sendMessageRequest) {
+		@RequestBody @Valid SendMessageRequest sendMessageRequest) {
 
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
