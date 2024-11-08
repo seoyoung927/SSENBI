@@ -3,7 +3,6 @@ import { postAIChatAPI } from "@/app/api/chat/chatAPI";
 import Cookies from "js-cookie";
 import CheckIcon from "@/app/assets/svg/Check.svg";
 import "./ChatAIContainer.css";
-import Image from "next/image";
 import { TagType } from "@/types/tag/tagTypes";
 
 enum SenderType {

@@ -197,7 +197,7 @@ export default function CustomerTagList({
                       <DropdownMenu.Content className="tag-list-dropdown body-small">
                         <input
                           type="text"
-                          className="customer-edit-input body-small"
+                          className="tag-edit-input body-small"
                           value={editedCustomer}
                           onClick={(e) => e.stopPropagation()}
                           onChange={handleChangeEditingCustomer}
