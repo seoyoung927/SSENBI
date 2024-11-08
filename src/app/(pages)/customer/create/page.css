@@ -1,0 +1,28 @@
+.customer-create-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-group {
+  margin-top: auto;
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-default);
+  border-top: 1px solid var(--border-default);
+}
+
+.primary-button {
+  width: 100%;
+  border-radius: 16px;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  transition: scale 0.2s;
+
+  &:active {
+    scale: 0.99;
+  }
+}

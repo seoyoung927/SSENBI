@@ -14,12 +14,11 @@ import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
-  const [tags, setTags] = useState<TagType[]>([]);
+  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   // TODO: 수정 필요 - 추가 로직 및 API와 연결
   const [selectedCustomers] = useState<number[]>([]);
-  const [selectedTags] = useState<number[]>([]);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
 
@@ -35,8 +34,8 @@ export default function CustomizedNewPage() {
     router.back();
   };
 
-  const handleAI = () => {
-    router.push("/customized/create/ai");
+  const changeTag = (tags: TagType[]) => {
+    setSelectedTags(tags);
   };
 
   const handleSubmit = async () => {
@@ -44,13 +43,22 @@ export default function CustomizedNewPage() {
       const token = Cookies.get("accessToken");
       if (!token) return;
 
+      // console.log({
+      //   title,
+      //   content,
+      //   customers: selectedCustomers,
+      //   tags: selectedTags,
+      // });
+
       const response = await postCustomTemplateAPI({
-        token,
         title,
         content,
         customers: selectedCustomers,
-        tags: selectedTags,
+        tagIds: selectedTags.map((v) => v.tagId),
       });
+
+      console.log(response);
+
       if (response.code === "S10000") {
         router.push("/customized");
       }
@@ -85,7 +93,7 @@ export default function CustomizedNewPage() {
       <div className="customized-new_form-group">
         <label className="customized-new_form-group__label">태그 및 고객</label>
         <div className="customized-new_tag-container">
-          <TagList tags={tags} setTags={setTags} maxTagCount={5} />
+          <TagList tags={selectedTags} setTags={changeTag} maxTagCount={5} />
         </div>
       </div>
 

@@ -1,7 +1,8 @@
 import React from "react";
 import BorderTag from "../tag/BorderTag";
 import { MessageCardPropsType } from "@/types/message/messageTypes";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
+import { CustomerType } from "@/types/customer/customerType";
 import "./MessageCard.css";
 interface ApiResponse {
   code: string;

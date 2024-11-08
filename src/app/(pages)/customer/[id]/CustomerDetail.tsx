@@ -3,12 +3,16 @@
 import "../layout.css";
 import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { CustomerType } from "@/types/customer/customerType";
+import { TagType } from "@/types/tag/tagTypes";
 import { useState, ChangeEvent } from "react";
 
 const DUMMY_DATA: CustomerType = {
   customerId: 1,
   customerName: "홍길동",
+  customerAge: 20,
+  customerGender: "MALE",
+  customerMemo: "메모",
   customerPhoneNumber: "010-1234-5678",
   customerColor: "SALMON",
   customerTags: [

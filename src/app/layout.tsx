@@ -30,7 +30,6 @@ export default function RootLayout({
       </head>
       <body className={`${pretendard.variable}`}>
         <ResponsiveTabBar />
-        {/* TODO :  추후 로그인 기능 완성 후 주석 제거 */}
         <LoginStateChecker />
         {children}
       </body>

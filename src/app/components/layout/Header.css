@@ -2,8 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
   padding: 24px 12px;
   height: 65px;
+  background-color: var(--bg-default);
   border-bottom: 1px solid var(--border-default);
 }
 

@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import Header from "@/app/components/layout/Header";
-import { TagType, CustomerType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
 import { deleteMessageAPI, getMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
+import { CustomerType } from "@/types/customer/customerType";
 import Cookies from "js-cookie";
 import "./page.css";
 

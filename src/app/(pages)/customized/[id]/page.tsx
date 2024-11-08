@@ -11,13 +11,15 @@ import {
   putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
-import { CustomerType, TagType } from "@/types/tag/tagTypes";
+import { TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import "./page.css";
+import { CustomerType } from "@/types/customer/customerType";
+import TagList from "@/app/components/common/tag/TagList";
 
-// Custom Template 타입 정의
+// Custom Template type definition
 interface CustomTemplate {
   templateId: number;
   templateTitle: string;
@@ -28,15 +30,8 @@ interface CustomTemplate {
   templateCustomers: CustomerType[];
 }
 
-// ApiResponse 타입 정의
+// ApiResponse type definition
 type ApiResponse = CustomTemplate;
-
-interface ModifiedTemplate {
-  templateTitle: string;
-  templateContent: string;
-  templateAfterTagIds: number[];
-  templateAfterCustomerIds: number[];
-}
 
 interface CustomizedIdPageProps {
   params: {
@@ -48,8 +43,9 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const router = useRouter();
   const { id } = params;
   const [customMessageTemplate, setCustomMessageTemplate] =
-    useState<ApiResponse>();
-  const [modifiedTemplate, setModifiedTemplate] = useState<ApiResponse>();
+    useState<ApiResponse | null>(null);
+  const [modifiedTemplate, setModifiedTemplate] =
+    useState<CustomTemplate | null>(null);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -94,25 +90,23 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     }
   };
 
-  // Handle the save action for the template
   const handleSaveTemplate = async () => {
     if (!modifiedTemplate) return;
 
-    const PutCustomTemplateParamsType: PutCustomTemplateParamsType = {
+    const templateParams: PutCustomTemplateParamsType = {
       templateId: Number(id),
       title: modifiedTemplate.templateTitle,
       content: modifiedTemplate.templateContent,
-      // beforeTags,
-      // afterTags,
-      // beforeCustomerIds,
-      // afterCustomerIds,
     };
 
     try {
-      const response = await putCustomTemplateAPI(PutCustomTemplateParamsType);
+      const response = await putCustomTemplateAPI(templateParams);
       console.log("putCustomTemplateAPI response", response);
 
-      handleSaveMessage();
+      if (response.success) {
+        handleSaveMessage();
+        setIsEdit(false);
+      }
     } catch (error) {
       console.error("Error updating template:", error);
     }
@@ -122,12 +116,12 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     if (isEdit) {
       handleSaveTemplate();
     }
-
     setIsEdit(!isEdit);
   };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
-    field: "templateTitle" | "templateContent",
+    field: keyof CustomTemplate,
   ) => {
     setModifiedTemplate((prev) => {
       if (prev) {
@@ -156,6 +150,24 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
   const handleSaveAIContent = (content: string) => {
     handleInputChange({ target: { value: content } } as any, "templateContent");
+  };
+
+  const changeTags = (newTags: TagType[]) => {
+    setModifiedTemplate((prev) => {
+      if (prev) {
+        return { ...prev, templateTags: newTags };
+      } else {
+        return {
+          templateId: Number(id),
+          templateTitle: "",
+          templateContent: "",
+          templateUsageCount: 0,
+          templateCreatedAt: "",
+          templateTags: newTags,
+          templateCustomers: [],
+        };
+      }
+    });
   };
 
   return (
@@ -187,13 +199,22 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <div className="customized-info">
           <p className="subheading">태그</p>
           <div className="customized-info_tag-list">
-            {modifiedTemplate?.templateTags.map((tag) => (
-              <BorderTag
-                key={tag.tagId}
-                color={tag.tagColor}
-                tagName={tag.tagName}
-              />
-            ))}
+            {isEdit && modifiedTemplate ? (
+              <div className="taglist-container">
+                <TagList
+                  tags={modifiedTemplate?.templateTags}
+                  setTags={changeTags}
+                />
+              </div>
+            ) : (
+              modifiedTemplate?.templateTags.map((tag) => (
+                <BorderTag
+                  key={tag.tagId}
+                  color={tag.tagColor}
+                  tagName={tag.tagName}
+                />
+              ))
+            )}
           </div>
         </div>
         <div className="customized-info">
