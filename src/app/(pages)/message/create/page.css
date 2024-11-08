@@ -111,3 +111,7 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.modal-container {
+  width: 80%;
+}

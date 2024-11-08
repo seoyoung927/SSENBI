@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
 import UploadIcon from "@/app/assets/svg/Upload.svg";
-import CustomizedPage from "../../customized/page";
+import CustomizedList from "@/app/components/common/customized/CustomizedList";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 
 function MessageCreateContent() {
@@ -196,8 +196,12 @@ function MessageCreateContent() {
       )}
 
       {isCustomListModalOpen && (
-        <Modal isOpen={isCustomListModalOpen} onClose={closeCustomListModal}>
-          <CustomizedPage />
+        <Modal
+          isOpen={isCustomListModalOpen}
+          onClose={closeCustomListModal}
+          className="modal-container"
+        >
+          <CustomizedList />
         </Modal>
       )}
     </div>
