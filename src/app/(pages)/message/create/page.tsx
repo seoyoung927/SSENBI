@@ -16,6 +16,7 @@ import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
 import UploadIcon from "@/app/assets/svg/Upload.svg";
 import CustomizedPage from "../../customized/page";
+import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -26,6 +27,10 @@ function MessageCreateContent() {
   const [tags, setTags] = useState<TagType[]>([]);
   const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [content, setContent] = useState<string>("");
+  // State for batch editing
+  const [batchTextFrom, setBatchTextFrom] = useState<string>("");
+  const [batchTextTo, setBatchTextTo] = useState<string>("");
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -102,6 +107,16 @@ function MessageCreateContent() {
     setIsCustomListModalOpen(false);
   };
 
+  const handleBatchTextChange = () => {
+    if (batchTextFrom) {
+      const updatedContent = content.replace(
+        new RegExp(batchTextFrom, "g"),
+        batchTextTo,
+      );
+      setContent(updatedContent);
+    }
+  };
+
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
@@ -134,6 +149,14 @@ function MessageCreateContent() {
           />
         </div>
 
+        <BatchTextEditor
+          batchTextFrom={batchTextFrom}
+          batchTextTo={batchTextTo}
+          setBatchTextFrom={setBatchTextFrom}
+          setBatchTextTo={setBatchTextTo}
+          isEdit={true}
+          handleBatchTextChange={handleBatchTextChange}
+        />
         <div className="message-new_button-group">
           <button
             onClick={handleCancel}
