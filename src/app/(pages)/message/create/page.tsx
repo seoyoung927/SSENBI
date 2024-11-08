@@ -14,9 +14,13 @@ import { MessagePostPropsType } from "@/types/message/messageTypes";
 import Cookies from "js-cookie";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
+import UploadIcon from "@/app/assets/svg/Upload.svg";
+import CustomizedPage from "../../customized/page";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
+    useState<boolean>(false);
+  const [isCustomListModalOpen, setIsCustomListModalOpen] =
     useState<boolean>(false);
   const [id, setId] = useState<string>("");
   const [tags, setTags] = useState<TagType[]>([]);
@@ -90,16 +94,35 @@ function MessageCreateContent() {
     setTags(newTags);
   };
 
+  const openCustomListModal = () => {
+    setIsCustomListModalOpen(true);
+  };
+
+  const closeCustomListModal = () => {
+    setIsCustomListModalOpen(false);
+  };
+
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
 
       <div className="message-form">
-        <div className="form-group">
-          <label className="form-group_label body-small">받는 사람</label>
-          <div className="tag-container">
-            <TagList tags={tags} setTags={handleTags} />
+        <div className="space-between">
+          <div className="form-group">
+            <label className="form-group_label body-small">받는 사람</label>
+            <div className="tag-container">
+              <TagList tags={tags} setTags={handleTags} />
+            </div>
           </div>
+
+          <button
+            type="button"
+            className="message-get_button"
+            onClick={openCustomListModal}
+          >
+            템플릿에서 가져오기
+            <UploadIcon className="upload-icon" />
+          </button>
         </div>
 
         <div className="form-group">
@@ -146,6 +169,12 @@ function MessageCreateContent() {
             onSave={handleSaveMessage}
             initialContent={content}
           />
+        </Modal>
+      )}
+
+      {isCustomListModalOpen && (
+        <Modal isOpen={isCustomListModalOpen} onClose={closeCustomListModal}>
+          <CustomizedPage />
         </Modal>
       )}
     </div>

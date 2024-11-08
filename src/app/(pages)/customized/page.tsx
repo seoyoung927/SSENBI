@@ -13,6 +13,11 @@ import Image from "next/image";
 import "./page.css";
 import HashLoading from "@/app/components/common/loading/HashLoading";
 import { CustomerType } from "@/types/customer/customerType";
+import SortSelect from "@/app/components/common/select/SortSelect";
+import {
+  SORTOPTIONS,
+  SortOptionKeys,
+} from "@/types/customized/customizedTypes";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -29,9 +34,9 @@ interface CustomTemplate {
 type ApiResponse = CustomTemplate[];
 
 export default function CustomizedPage() {
+  const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
   const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
     useState<ApiResponse>([]);
-
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const router = useRouter();
@@ -42,7 +47,10 @@ export default function CustomizedPage() {
         const token = Cookies.get("accessToken");
         if (!token) return;
 
-        const data = await getCustomTemplatesAPI({ token });
+        const data = await getCustomTemplatesAPI({
+          token,
+          sort: SORTOPTIONS[curSortOption],
+        });
         console.log("customized data", data);
         setFilteredMessageTemplates(data.result);
       } catch (error) {
@@ -54,7 +62,7 @@ export default function CustomizedPage() {
     };
 
     fetchCustomTemplates();
-  }, []);
+  }, [curSortOption]);
 
   const handleNewTemplate = () => {
     router.push("/customized/create");
@@ -64,9 +72,23 @@ export default function CustomizedPage() {
     return <HashLoading />;
   }
 
+  const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
+    setCurSortOption(key);
+  };
+
   return (
     <div className="page-container">
       <Header title="커스텀" />
+
+      <div className="customized_sort-container">
+        <SortSelect
+          curOption={curSortOption}
+          options={Object.keys(SORTOPTIONS)}
+          onChange={(selectedLabel) =>
+            handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
+          }
+        />
+      </div>
 
       {filteredCustomMessageTemplates &&
       filteredCustomMessageTemplates.length > 0 ? (

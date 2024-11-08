@@ -3,7 +3,7 @@ export type GetCustomTemplatesParamsType = {
   token: string;
   page?: number;
   size?: number;
-  sort?: string;
+  sort?: SortOptionValues;
   templateTags?: number[];
   templateCustomers?: number[];
   templateSearch?: string;
@@ -69,3 +69,12 @@ export type DeleteCustomTemplateCustomerParamsType = {
   templateId: number;
   customerId: number;
 };
+
+export const SORTOPTIONS = {
+  생성순: "createdAt",
+  제목순: "title",
+  "많이 사용순": "count",
+};
+
+export type SortOptionKeys = keyof typeof SORTOPTIONS;
+export type SortOptionValues = (typeof SORTOPTIONS)[SortOptionKeys];
