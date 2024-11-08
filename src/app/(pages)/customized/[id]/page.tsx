@@ -15,7 +15,7 @@ import { TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
-import "./page.css";
+import "../page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import TagList from "@/app/components/common/tag/TagList";
 import SendIcon from "@/app/assets/svg/Send.svg";
@@ -121,6 +121,27 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   };
 
   const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: keyof CustomTemplate,
+  ) => {
+    setModifiedTemplate((prev) => {
+      if (prev) {
+        return { ...prev, [field]: e.target.value };
+      } else {
+        return {
+          templateId: Number(id),
+          templateTitle: "",
+          templateContent: "",
+          templateUsageCount: 0,
+          templateCreatedAt: "",
+          templateTags: [],
+          templateCustomers: [],
+        };
+      }
+    });
+  };
+
+  const handleTextAreaChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     field: keyof CustomTemplate,
   ) => {
@@ -141,11 +162,11 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     });
   };
 
-  const openAIEditModal = () => {
+  const handleOpenAIModal = () => {
     setIsAIEditModalModalOpen(true);
   };
 
-  const closeAIEditModal = () => {
+  const handleCloseAIModal = () => {
     setIsAIEditModalModalOpen(false);
   };
 
@@ -243,7 +264,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         </div>
       </div>
 
-      <div className="customized-detail_button-group">
+      <div className="customized-button-group">
         <button
           onClick={handleDelete}
           type="button"
@@ -252,7 +273,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           삭제
         </button>
         <button
-          onClick={openAIEditModal}
+          onClick={handleOpenAIModal}
           type="button"
           className="customized-detail_button gradient_button"
           style={{ borderRadius: 16 }}
@@ -272,15 +293,15 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       {isAIEditModalOpen && (
         <Modal
           isOpen={isAIEditModalOpen}
-          onClose={closeAIEditModal}
+          onClose={handleCloseAIModal}
           title={"AI 쎈비와 수정하기"}
           className="modal"
         >
           <div className="modal-content">
             <ChatAIContainer
-              onClose={closeAIEditModal}
+              onClose={handleCloseAIModal}
               onSave={handleSaveAIContent}
-              initialContent={customMessageTemplate?.templateContent}
+              initialContent={""}
             />
           </div>
         </Modal>
