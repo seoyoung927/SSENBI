@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import Image from "next/image";
 import "./CustomizedList.css";
@@ -30,7 +29,13 @@ interface CustomTemplate {
 // ApiResponse 타입 정의
 type ApiResponse = CustomTemplate[];
 
-export default function CustomizedList() {
+interface CustomizedListSelectorProps {
+  getCustomTemplate: (customId: number) => void;
+}
+
+export default function CustomizedListSelector({
+  getCustomTemplate,
+}: CustomizedListSelectorProps) {
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
   const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
     useState<ApiResponse>([]);
@@ -40,7 +45,6 @@ export default function CustomizedList() {
     const fetchCustomTemplates = async () => {
       try {
         const token = Cookies.get("accessToken");
-
         const data = await getCustomTemplatesAPI({
           token,
           sort: SORTOPTIONS[curSortOption],
@@ -85,17 +89,15 @@ export default function CustomizedList() {
       {filteredCustomMessageTemplates &&
       filteredCustomMessageTemplates.length > 0 ? (
         filteredCustomMessageTemplates.map((message) => (
-          <Link
-            key={message.templateId}
-            href={`/customized/${message.templateId}`}
-          >
+          <div onClick={() => getCustomTemplate(message.templateId)}>
             <CustomizedCard
               title={message?.templateTitle}
               content={message?.templateContent}
               tags={message?.templateTags}
+              key={message.templateId}
               customers={message?.templateCustomers}
             />
-          </Link>
+          </div>
         ))
       ) : (
         <div className="flex-container">

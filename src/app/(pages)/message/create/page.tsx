@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
 import UploadIcon from "@/app/assets/svg/Upload.svg";
-import CustomizedPage from "../../customized/page";
+import CustomizedListSelector from "@/app/components/common/customized/CustomizedListSelector";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 
 function MessageCreateContent() {
@@ -117,6 +117,11 @@ function MessageCreateContent() {
     }
   };
 
+  const getCustomTemplate = (customId: number) => {
+    setId(customId.toString());
+    closeCustomListModal();
+  };
+
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
@@ -196,8 +201,14 @@ function MessageCreateContent() {
       )}
 
       {isCustomListModalOpen && (
-        <Modal isOpen={isCustomListModalOpen} onClose={closeCustomListModal}>
-          <CustomizedPage />
+        <Modal
+          isOpen={isCustomListModalOpen}
+          onClose={closeCustomListModal}
+          className="modal-container"
+        >
+          <div style={{ height: "80vh", overflowY: "auto" }}>
+            <CustomizedListSelector getCustomTemplate={getCustomTemplate} />
+          </div>
         </Modal>
       )}
     </div>

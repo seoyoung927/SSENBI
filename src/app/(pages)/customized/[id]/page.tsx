@@ -20,7 +20,6 @@ import TagList from "@/app/components/common/tag/TagList";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import SendIcon from "@/app/assets/svg/Send.svg";
 import FilledTag from "@/app/components/common/tag/FilledTag";
-import RightArrowIcon from "@/app/assets/svg/RightArrow.svg";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 
 // Custom Template type definition
