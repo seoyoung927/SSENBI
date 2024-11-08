@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
 import UploadIcon from "@/app/assets/svg/Upload.svg";
+import CustomizedPage from "../../customized/page";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -98,7 +99,7 @@ function MessageCreateContent() {
   };
 
   const closeCustomListModal = () => {
-    setIsCustomListModalOpen(true);
+    setIsCustomListModalOpen(false);
   };
 
   return (
@@ -173,11 +174,7 @@ function MessageCreateContent() {
 
       {isCustomListModalOpen && (
         <Modal isOpen={isCustomListModalOpen} onClose={closeCustomListModal}>
-          <ChatAIContainer
-            onClose={closeAIEditModal}
-            onSave={handleSaveMessage}
-            initialContent={content}
-          />
+          <CustomizedPage />
         </Modal>
       )}
     </div>
