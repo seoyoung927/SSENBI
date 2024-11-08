@@ -65,3 +65,7 @@ button {
 .message-new_button-send:hover {
   background-color: var(--blue-700);
 }
+
+.tag-container {
+  width: 100%;
+}

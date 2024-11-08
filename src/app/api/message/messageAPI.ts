@@ -1,3 +1,4 @@
+import { MessagePostPropsType } from "@/types/message/messageTypes";
 import axiosInstance from "../axiosInstance";
 
 // Get Every Messages
@@ -22,13 +23,10 @@ export const deleteMessageAPI = async (messageId: string) => {
   return response.data;
 };
 
-// todo : fix it
 // Post Send Message
-export const postSendMessageAPI = async ({
-  messageId,
-}: {
-  messageId: string;
-}) => {
-  const response = await axiosInstance.delete(`/message/${messageId}`);
+export const postSendMessageAPI = async (
+  messagePostprops: MessagePostPropsType,
+) => {
+  const response = await axiosInstance.post(`message`, messagePostprops);
   return response.data;
 };

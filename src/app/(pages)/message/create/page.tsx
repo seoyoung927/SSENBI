@@ -6,16 +6,34 @@ import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
 import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
+import TagList from "@/app/components/common/tag/TagList";
+import { TagType } from "@/types/tag/tagTypes";
+import { CustomerType } from "@/types/customer/customerType";
+import { postSendMessageAPI } from "@/app/api/message/messageAPI";
+import { MessagePostPropsType } from "@/types/message/messageTypes";
 
 export default function MessageNew() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
-  const [customer, setCustomer] = useState<string>("");
+  const [tags, setTags] = useState<TagType[]>([]);
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [content, setContent] = useState<string>("");
   const router = useRouter();
 
-  const handleSend = () => {
-    console.log("전송");
+  const handleSend = async () => {
+    try {
+      const messageData: MessagePostPropsType = {
+        messageCustomerIds: customers.map((customer) => customer.customerId),
+        messageTagIds: tags.map((tag) => tag.tagId),
+        messageContent: content,
+      };
+
+      console.log("Sending message data:", messageData); // Debugging line
+      const response = await postSendMessageAPI(messageData);
+      console.log("Post response:", response);
+    } catch (err) {
+      console.error("Error sending message:", err);
+    }
   };
 
   const handleCancel = () => {
@@ -34,6 +52,10 @@ export default function MessageNew() {
     setIsAIEditModalModalOpen(true);
   };
 
+  const handleTags = (newTags: TagType[]) => {
+    setTags(newTags);
+  };
+
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
@@ -41,12 +63,9 @@ export default function MessageNew() {
       <div className="message-form">
         <div className="form-group">
           <label className="form-group_label body-small">받는 사람</label>
-          <input
-            type="text"
-            className="form-group_input body"
-            value={customer}
-            onChange={(e) => setCustomer(e.target.value)}
-          />
+          <div className="tag-container">
+            <TagList tags={tags} setTags={handleTags} />
+          </div>
         </div>
 
         <div className="form-group">

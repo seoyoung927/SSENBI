@@ -1,4 +1,5 @@
-import { TagType, CustomerType } from "../tag/tagTypes";
+import { TagType } from "../tag/tagTypes";
+import { CustomerType } from "../customer/customerType";
 
 export type MessageCardPropsType = {
   messageId: number;
@@ -6,4 +7,10 @@ export type MessageCardPropsType = {
   messageCustomers: CustomerType[];
   messageSendAt: string;
   messageTags: TagType[];
+};
+
+export type MessagePostPropsType = {
+  messageCustomerIds?: number[];
+  messageTagIds?: number[];
+  messageContent: string;
 };
