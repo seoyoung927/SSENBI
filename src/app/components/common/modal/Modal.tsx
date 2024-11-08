@@ -5,7 +5,7 @@ import XIcon from "@/app/assets/svg/X.svg";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
   children: ReactNode;
   className?: string;
 }
@@ -13,7 +13,7 @@ interface ModalProps {
 export default function Modal({
   isOpen,
   onClose,
-  title,
+  title = "",
   children,
   className,
 }: ModalProps) {
