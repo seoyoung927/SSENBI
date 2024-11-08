@@ -212,6 +212,11 @@ a {
   overflow-y: auto;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 @media (max-width: 480px) {
   .page-container {
     width: 100vw;

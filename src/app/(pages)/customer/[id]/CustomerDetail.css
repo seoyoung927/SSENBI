@@ -1,0 +1,65 @@
+.customer-detail-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 8px 12px;
+}
+
+.customer-detail-label {
+  color: var(--text-secondary);
+}
+
+.customer-detail-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.customer-detail-field {
+  width: 100%;
+  color: var(--text-primary);
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  padding: 10px;
+  min-height: 47.2px;
+}
+
+.button-group {
+  margin-top: auto;
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-default);
+  border-top: 1px solid var(--border-default);
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 16px;
+  padding: 10px;
+  background-color: var(--bg-default);
+  border: 1px solid var(--border-default);
+  color: var(--text-default);
+  transition: scale 0.2s;
+
+  &.primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-light);
+  }
+
+  &.delete {
+    background-color: var(--red-700);
+    border-color: var(--red-700);
+    color: var(--text-light);
+  }
+
+  &:active {
+    scale: 0.98;
+  }
+}
