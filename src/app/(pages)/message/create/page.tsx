@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import "./page.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/app/components/layout/Header";
@@ -13,17 +13,22 @@ import { postSendMessageAPI } from "@/app/api/message/messageAPI";
 import { MessagePostPropsType } from "@/types/message/messageTypes";
 import Cookies from "js-cookie";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
+import HashLoading from "@/app/components/common/loading/HashLoading";
 
-export default function MessageNew() {
+function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
+  const [id, setId] = useState<string>("");
   const [tags, setTags] = useState<TagType[]>([]);
   const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [content, setContent] = useState<string>("");
   const router = useRouter();
-
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+
+  useEffect(() => {
+    const templateId = searchParams.get("id") || "";
+    setId(templateId);
+  }, [searchParams]);
 
   useEffect(() => {
     if (id) {
@@ -57,7 +62,7 @@ export default function MessageNew() {
         messageContent: content,
       };
 
-      console.log("Sending message data:", messageData); // Debugging line
+      console.log("Sending message data:", messageData);
       const response = await postSendMessageAPI(messageData);
       console.log("Post response:", response);
     } catch (err) {
@@ -144,5 +149,12 @@ export default function MessageNew() {
         </Modal>
       )}
     </div>
+  );
+}
+export default function MessageCreatePage() {
+  return (
+    <Suspense fallback={<HashLoading />}>
+      <MessageCreateContent />
+    </Suspense>
   );
 }
