@@ -1,75 +1,117 @@
 "use client";
 
+import BorderTag from "@/app/components/common/tag/BorderTag";
 import "../layout.css";
-import InputField from "@/app/components/common/input/InputField";
-import TagList from "@/app/components/common/tag/TagList";
+import "./CustomerDetail.css";
+import {
+  deleteCustomerAPI,
+  getCustomerAPI,
+} from "@/app/api/customer/customerAPI";
 import { CustomerType } from "@/types/customer/customerType";
-import { TagType } from "@/types/tag/tagTypes";
-import { useState, ChangeEvent } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const DUMMY_DATA: CustomerType = {
-  customerId: 1,
-  customerName: "홍길동",
-  customerAge: 20,
+const EMPTY_CUSTOMER: CustomerType = {
+  customerId: 0,
+  customerName: "",
+  customerAge: 0,
+  customerColor: "GRAY",
   customerGender: "MALE",
-  customerMemo: "메모",
-  customerPhoneNumber: "010-1234-5678",
-  customerColor: "SALMON",
-  customerTags: [
-    {
-      tagId: 1,
-      tagColor: "RED",
-      tagName: "VIP",
-    },
-  ],
+  customerPhoneNumber: "",
+  customerMemo: "",
+  customerTags: [],
 };
 
-export default function CustomerDetail() {
-  // TODO: fetch customer from server
-  const [customer, setCustomer] = useState<CustomerType>(DUMMY_DATA);
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCustomer({
-      ...customer,
-      customerName: e.target.value,
-    });
-  };
-  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCustomer({
-      ...customer,
-      customerPhoneNumber: e.target.value,
-    });
-  };
-  const handleTagChange = (tags: TagType[]) => {
-    setCustomer({
-      ...customer,
-      customerTags: tags,
-    });
+export default function CustomerDetail({ id }: { id: number }) {
+  const router = useRouter();
+  const [customer, setCustomer] = useState<CustomerType>(EMPTY_CUSTOMER);
+
+  useEffect(() => {
+    const fetchCustomer = async () => {
+      const { result } = await getCustomerAPI(id);
+
+      setCustomer(result);
+    };
+
+    fetchCustomer();
+  }, [id]);
+
+  const handleDeleteCustomer = () => {
+    if (!confirm("정말로 삭제하시겠습니까?")) {
+      return;
+    }
+
+    const deleteCustomer = async () => {
+      try {
+        await deleteCustomerAPI(id);
+        alert("삭제되었습니다.");
+        router.push("/customer");
+      } catch {
+        alert("삭제에 실패했습니다.");
+      }
+    };
+
+    deleteCustomer();
   };
 
   return (
     <>
-      <InputField
-        type="text"
-        onChange={handleNameChange}
-        label="이름"
-        value={customer.customerName}
-        maxLength={20}
-      />
-      <InputField
-        type="text"
-        onChange={handlePhoneNumberChange}
-        label="전화번호"
-        value={customer.customerPhoneNumber || ""}
-        maxLength={13}
-      />
-      <div className="field-wrapper">
-        <label className="label">태그</label>
-        <TagList tags={customer.customerTags} setTags={handleTagChange} />
+      <div className="customer-detail-field-wrapper">
+        <div className="body customer-detail-label">이름</div>
+        <div className="body-medium customer-detail-field">
+          {customer.customerName}
+        </div>
       </div>
-      <div className="field-wrapper">
-        {/* TODO: 메모 추가 */}
-        <label className="label">메모</label>
-        <textarea className="body memo" />
+      <div className="customer-detail-field-wrapper">
+        <div className="body customer-detail-label">성별</div>
+        <div className="body-medium customer-detail-field">
+          {customer.customerGender}
+        </div>
+      </div>
+      <div className="customer-detail-field-wrapper">
+        <div className="body customer-detail-label">나이</div>
+        <div className="body-medium customer-detail-field">
+          {customer.customerAge}
+        </div>
+      </div>
+      <div className="customer-detail-field-wrapper">
+        <div className="body customer-detail-label">전화번호</div>
+        <div className="body-medium customer-detail-field">
+          {customer.customerPhoneNumber}
+        </div>
+      </div>
+      <div className="customer-detail-field-wrapper">
+        <div className="body customer-detail-label">태그</div>
+        <div className="customer-detail-tags">
+          {customer.customerTags.map((tag) => (
+            <BorderTag
+              key={tag.tagName}
+              color={tag.tagColor}
+              tagName={tag.tagName}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="customer-detail-field-wrapper">
+        <div className="body customer-detail-label">메모</div>
+        <div className="body-medium customer-detail-field">
+          {customer.customerMemo}
+        </div>
+      </div>
+      <div className="button-group">
+        <button
+          onClick={handleDeleteCustomer}
+          className="button delete body-strong"
+        >
+          삭제
+        </button>
+        <Link
+          href={`/customer/${id}/edit`}
+          className="button primary body-strong"
+        >
+          수정
+        </Link>
       </div>
     </>
   );
