@@ -1,6 +1,6 @@
 import "../layout.css";
 import Header from "@/app/components/layout/Header";
-import CustomerDetail from "./CustomerDetail";
+import CustomerDetail from "../../../components/common/customer/CustomerDetail";
 
 export default function CustomerDetailPage({
   params,

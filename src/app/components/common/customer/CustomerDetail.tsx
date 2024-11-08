@@ -1,7 +1,7 @@
 "use client";
 
 import BorderTag from "@/app/components/common/tag/BorderTag";
-import "../layout.css";
+// import "../layout.css";
 import "./CustomerDetail.css";
 import {
   deleteCustomerAPI,
