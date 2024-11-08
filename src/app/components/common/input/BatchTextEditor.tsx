@@ -19,7 +19,7 @@ export default function BatchTextEditor({
   handleBatchTextChange,
 }: BatchTextEditorProps) {
   return (
-    <div className="customized-text-collection">
+    <div className="text-collection">
       <p className="subheading">텍스트 일괄 수정</p>
       <div className="row">
         <input
