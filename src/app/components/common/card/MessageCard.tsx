@@ -1,8 +1,9 @@
 import React from "react";
-import "./MessageCard.css";
 import BorderTag from "../tag/BorderTag";
+import { MessageCardPropsType } from "@/types/message/messageTypes";
 import { TagType } from "@/types/tag/tagTypes";
 import { CustomerType } from "@/types/customer/customerType";
+import "./MessageCard.css";
 interface ApiResponse {
   code: string;
   message: string;
@@ -10,44 +11,35 @@ interface ApiResponse {
 }
 
 interface Message {
-  messageId: number;
   messageContent: string;
-  sendedAt: string;
-  tags: TagType[];
-  customers: CustomerType[];
-}
-
-interface MessageCardProps {
-  title?: string;
-  content: string;
-  created_at: string;
-  tags: TagType[];
-  customers: CustomerType[];
+  messageCustomers: CustomerType[];
+  messageSendAt: string;
+  messageTags: TagType[];
 }
 
 export default function MessageCard({
-  title = "",
-  content,
-  tags,
-  created_at,
-}: MessageCardProps) {
+  messageContent,
+  messageCustomers,
+  messageSendAt,
+  messageTags,
+}: MessageCardPropsType) {
   return (
     <div className="message-card">
-      <p className="message-card__content body">{content}</p>
+      <p className="message-card__content body">{messageContent}</p>
 
       <div className="message-card__details">
         {/* todo : tagList */}
         <div className="message-tag-container">
           {/* created_at width 제외하고 100% overflow hidden */}
-          {tags.map((tag, index) => (
+          {messageTags.map((tag, index) => (
             <BorderTag key={index} color={tag.tagColor} tagName={tag.tagName} />
           ))}
           {/*
-          {customers.map((customer) => (
+          {messageCustomers.map((customer) => (
             <Fileld>{customer.customerName}</Fileld>
             ))} */}
         </div>
-        <p className="message-card__description body-small">{created_at}</p>
+        <p className="message-card__description body-small">{messageSendAt}</p>
       </div>
     </div>
   );

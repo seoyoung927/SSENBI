@@ -2,19 +2,38 @@
 
 import SearchBar from "@/app/components/common/input/SearchBar";
 import MessageCard from "@/app/components/common/card/MessageCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./page.css";
 import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
 import Link from "next/link";
 import Header from "@/app/components/layout/Header";
+import { getEveryMessagesAPI } from "@/app/api/message/messageAPI";
+import { MessageCardPropsType } from "@/types/message/messageTypes";
+import { debounce } from "lodash"; // Optional, if you have lodash
 
 export default function MessagePage() {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [messageList, setMessageList] = useState<MessageCardPropsType[]>([]);
 
-  const handleSearchChange = (value: string) => {
-    setSearchValue(value);
-    if (searchValue != value) console.log("debounce Value", value);
+  useEffect(() => {
+    fetchMessageList();
+  }, []);
+
+  const fetchMessageList = async (keyword?: string) => {
+    try {
+      const response = await getEveryMessagesAPI(keyword);
+      console.log("Fetched Message List:", response);
+      setMessageList(response.result);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
   };
+
+  const handleSearchChange = debounce((value: string) => {
+    setSearchValue(value);
+    fetchMessageList(value);
+  }, 300); // Adjust debounce delay as needed
+
   return (
     <div className="page-container">
       <Header title="메시지" />
@@ -28,41 +47,22 @@ export default function MessagePage() {
         />
       </div>
 
-      {/* todo : tag List */}
-
       <div className="message-list">
-        <Link href="/message/1">
-          <MessageCard
-            title="TEST"
-            content="asdfghjkl"
-            tags={[]}
-            customers={[]}
-            created_at="8월 12일 8시 23분"
-          />
-        </Link>
-
-        <Link href="/message/2">
-          <MessageCard
-            title="TEST"
-            content="asdfghjkl"
-            tags={[
-              { tagId: 2, tagName: "test", tagColor: "RED" },
-              { tagId: 3, tagName: "test", tagColor: "RED" },
-            ]}
-            customers={[]}
-            created_at="8월 12일 8시 23분"
-          />
-        </Link>
-
-        <Link href="/message/3">
-          <MessageCard
-            title="TEST"
-            content="asdfghjkl"
-            tags={[]}
-            customers={[]}
-            created_at="8월 12일 8시 23분"
-          />
-        </Link>
+        {messageList &&
+          messageList.map((message) => (
+            <Link
+              href={`/message/${message.messageId}`}
+              key={message.messageId}
+            >
+              <MessageCard
+                messageId={message.messageId}
+                messageContent={message.messageContent}
+                messageTags={message.messageTags}
+                messageCustomers={message.messageCustomers}
+                messageSendAt={message.messageSendAt}
+              />
+            </Link>
+          ))}
 
         <FloatingMenuButton>
           <div>
