@@ -18,6 +18,7 @@ import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import "./page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import TagList from "@/app/components/common/tag/TagList";
+import SendIcon from "@/app/assets/svg/Send.svg";
 
 // Custom Template type definition
 interface CustomTemplate {
@@ -152,6 +153,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     handleInputChange({ target: { value: content } } as any, "templateContent");
   };
 
+  const sendMessage = () => {
+    router.push("/message/create");
+  };
+
   const changeTags = (newTags: TagType[]) => {
     setModifiedTemplate((prev) => {
       if (prev) {
@@ -176,7 +181,17 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
       <div className="customized-info-list">
         <div className="customized-info">
-          <p className="subheading">제목</p>
+          <div className="space-between">
+            <p className="subheading">제목</p>
+            <button
+              onClick={sendMessage}
+              type="button"
+              className="customized-send_button"
+            >
+              메세지 전송
+              <SendIcon className="send-icon" />
+            </button>
+          </div>
           <textarea
             className="body"
             value={modifiedTemplate?.templateTitle || ""}
