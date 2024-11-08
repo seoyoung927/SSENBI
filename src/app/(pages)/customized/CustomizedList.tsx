@@ -16,6 +16,7 @@ import { CustomerType } from "@/types/customer/customerType";
 import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";
 import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
+import { HashLoader } from "react-spinners";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -57,7 +58,11 @@ export default function CustomizedList() {
   }, [curSortOption]);
 
   if (isLoading) {
-    return <HashLoading />;
+    return (
+      <div className="loading_container">
+        <HashLoader color="#008fff" size={150} />
+      </div>
+    );
   }
 
   const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
