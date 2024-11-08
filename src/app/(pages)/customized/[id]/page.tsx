@@ -281,6 +281,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
             <input className="body text-input" disabled={!isEdit} />
             <RightArrowIcon />
             <input className="body text-input" disabled={!isEdit} />
+            <button className="white_button sub-button">변경하기</button>
           </div>
         </div>
       </div>
