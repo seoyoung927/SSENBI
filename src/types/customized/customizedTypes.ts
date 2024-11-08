@@ -1,6 +1,5 @@
 // Get Custom Templates API Params
 export type GetCustomTemplatesParamsType = {
-  token: string;
   page?: number;
   size?: number;
   sort?: SortOptionValues;
