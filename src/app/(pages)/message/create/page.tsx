@@ -108,10 +108,11 @@ function MessageCreateContent() {
   };
 
   const handleBatchTextChange = () => {
-    const from = batchTextFrom.trim();
-    const to = batchTextTo.trim();
-    if (from) {
-      const updatedContent = content.replace(new RegExp(from, "g"), to);
+    if (batchTextFrom) {
+      const updatedContent = content.replace(
+        new RegExp(batchTextFrom, "g"),
+        batchTextTo,
+      );
       setContent(updatedContent);
     }
   };
