@@ -121,7 +121,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>,
     field: keyof CustomTemplate,
   ) => {
     setModifiedTemplate((prev) => {
