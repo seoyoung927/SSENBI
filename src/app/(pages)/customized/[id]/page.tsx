@@ -18,6 +18,7 @@ import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import "../page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import TagList from "@/app/components/common/tag/TagList";
+import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 
 // Custom Template type definition
 interface CustomTemplate {
@@ -207,13 +208,17 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       <div className="customized_field-wrapper">
         <p className="body customized_label">고객</p>
         <div className="customized-info_tag-list">
-          {modifiedTemplate?.templateCustomers.map((tag) => (
+          {/* {modifiedTemplate?.templateCustomers.map((tag) => (
             <FilledTag
               key={tag.customerId}
               color={tag.customerColor}
               tagName={tag.customerName}
             />
-          ))}
+          ))} */}
+          <CustomerTagList
+            customers={modifiedTemplate?.templateCustomers || []}
+            setCustomers={() => {}}
+          />
         </div>
       </div>
       <div className="customized_field-wrapper">

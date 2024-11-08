@@ -1,4 +1,5 @@
 "use client";
+
 import "./TagList.css";
 import BorderTag from "./BorderTag";
 import { useEffect, useRef, useState } from "react";
@@ -19,7 +20,6 @@ interface TagListProps {
   tags: TagType[];
   setTags: (tags: TagType[]) => void;
   maxTagCount?: number;
-  canAddCustomer?: boolean;
 }
 
 export default function TagList({
