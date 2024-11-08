@@ -154,7 +154,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   };
 
   const sendMessage = () => {
-    router.push("/message/create");
+    router.push(`/message/create?id=${id}`);
   };
 
   const changeTags = (newTags: TagType[]) => {
