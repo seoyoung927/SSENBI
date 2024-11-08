@@ -1,61 +1,58 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BorderTag from "@/app/components/common/tag/BorderTag";
 import Header from "@/app/components/layout/Header";
 import { TagType, CustomerType } from "@/types/tag/tagTypes";
-import { deleteMessageAPI } from "@/app/api/message/messageAPI";
+import { deleteMessageAPI, getMessageAPI } from "@/app/api/message/messageAPI";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import "./page.css";
 
 interface ApiResponse {
-  messageId: number;
-  title: string;
   messageContent: string;
-  sendedAt: string;
-  tags: TagType[];
-  customers: CustomerType[];
+  messageCustomers: CustomerType[];
+  messageId: number;
+  messageSendAt: string;
+  messageTags: TagType[];
 }
 
 interface MessageIdPageProps {
   params: {
-    id: string;
+    messageId: string;
   };
 }
 
 export default function MessageIdPage({ params }: MessageIdPageProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
-  const { id } = params;
-  const [messageData] = useState<ApiResponse>();
-  // const [messageData, setMessageData] = useState<ApiResponse | null>(null);
+  const { messageId } = params;
+  const [messageData, setMessageData] = useState<ApiResponse | null>(null);
 
-  // useEffect(() => {
-  //   const fetchMessage = async () => {
-  //     try {
-  //       const token = Cookies.get("accessToken");
-  //       if (!token) return;
+  useEffect(() => {
+    const fetchMessage = async () => {
+      try {
+        const token = Cookies.get("accessToken");
+        if (!token) return;
 
-  //       const data = await getMessageAPI({ token, messageId: id });
-  //       setMessageData(data);
-  //     } catch (error) {
-  //       console.error("Error fetching message:", error);
-  //     }
-  //   };
+        const data = await getMessageAPI(messageId);
+        console.log(data);
 
-  //   fetchMessage();
-  // }, [id]);
+        setMessageData(data.result);
+      } catch (error) {
+        console.error("Error fetching message:", error);
+      }
+    };
+
+    fetchMessage();
+  }, [messageId]);
 
   const handleDelete = async () => {
     const token = Cookies.get("accessToken");
     if (!token) return;
 
     try {
-      const response = await deleteMessageAPI({
-        token,
-        messageId: id,
-      });
+      const response = await deleteMessageAPI(messageId);
+
       if (response.code === "S10000") {
         router.push("/message");
       }
@@ -70,13 +67,13 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
 
       <div className="message-info-list">
         <div className="message-info">
-          <p className="subheading">보낸 시작</p>
-          <p className="body">{messageData?.sendedAt}</p>
+          <p className="subheading">보낸 시간</p>
+          <p className="body">{messageData?.messageSendAt}</p>
         </div>
         <div className="message-info">
           <p className="subheading">보낸사람</p>
           <p className="body">
-            {messageData?.customers
+            {messageData?.messageCustomers
               .map((customer) => customer.customerName)
               .join(", ")}
           </p>
@@ -84,7 +81,7 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
         <div className="message-info">
           <p className="subheading">태그</p>
           <div className="message-info_tag-list">
-            {messageData?.tags.map((tag) => (
+            {messageData?.messageTags.map((tag) => (
               <BorderTag
                 key={tag.tagId}
                 color={tag.tagColor}
