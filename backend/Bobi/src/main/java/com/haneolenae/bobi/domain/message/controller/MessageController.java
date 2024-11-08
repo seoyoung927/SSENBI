@@ -2,6 +2,7 @@ package com.haneolenae.bobi.domain.message.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,8 +21,6 @@ import com.haneolenae.bobi.domain.message.dto.response.MessageDetailResponse;
 import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
 import com.haneolenae.bobi.domain.message.service.MessageService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
-import com.haneolenae.bobi.global.dto.ApiType;
-import com.haneolenae.bobi.global.exception.ApiException;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +38,16 @@ public class MessageController {
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<MessageResponse>>> searchMessageList(
 		@RequestHeader("Authorization") String token,
-		@RequestParam(required = false) String keyword
+		@RequestParam(required = false) String keyword,
+		Pageable pageable
 	) {
 		if (keyword != null && keyword.trim().isEmpty()) {
-			throw new ApiException(ApiType.SEARCH_TERM_INVALID);
+			keyword = null;
 		}
 
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
-		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageList(memberId, keyword)));
+		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageList(memberId, keyword, pageable)));
 	}
 
 	@GetMapping("/{messageId}")

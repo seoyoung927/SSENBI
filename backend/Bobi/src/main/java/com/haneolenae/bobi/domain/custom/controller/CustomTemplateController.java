@@ -42,15 +42,15 @@ public class CustomTemplateController {
 	public ResponseEntity<ApiResponse<List<CustomTemplateResponse>>> searchCustomTemplates(
 		@RequestHeader("Authorization") String token,
 		Pageable pageable,
-		@RequestParam(required = false) List<Integer> templateTags,
-		@RequestParam(required = false) List<Integer> templateCustomers,
-		@RequestParam(required = false) String templateSearch
+		@RequestParam(required = false) List<Long> templateTags,
+		@RequestParam(required = false) List<Long> templateCustomers,
+		@RequestParam(required = false) String keyword
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		return ResponseEntity.ok(new ApiResponse<>(
 			customTemplateService.getCustomTemplates(memberId, pageable, templateTags, templateCustomers,
-				templateSearch)));
+				keyword)));
 	}
 
 	@GetMapping("/{templateId}")

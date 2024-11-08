@@ -32,8 +32,8 @@ public interface CustomTemplateRepository extends JpaRepository<CustomTemplate, 
 		"AND (:templateSearch IS NULL OR " +
 		"     t.title LIKE CONCAT('%', :templateSearch, '%') OR t.content LIKE CONCAT('%', :templateSearch, '%'))")
 	Page<CustomTemplate> findTemplates(Pageable pageable,
-		@Param("templateTags") List<Integer> templateTags,
-		@Param("templateCustomer") List<Integer> templateCustomer,
+		@Param("templateTags") List<Long> templateTags,
+		@Param("templateCustomer") List<Long> templateCustomer,
 		@Param("templateSearch") String templateSearch,
 		@Param("memberId") long memberId);
 
