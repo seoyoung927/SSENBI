@@ -11,17 +11,13 @@ export const getEveryMessagesAPI = async (keyword?: string) => {
 };
 
 // Get Single Message
-export const getMessageAPI = async ({ messageId }: { messageId: string }) => {
+export const getMessageAPI = async (messageId: string) => {
   const response = await axiosInstance.get(`/message/${messageId}`);
   return response.data;
 };
 
 // Delete Single Message
-export const deleteMessageAPI = async ({
-  messageId,
-}: {
-  messageId: string;
-}) => {
+export const deleteMessageAPI = async (messageId: string) => {
   const response = await axiosInstance.delete(`/message/${messageId}`);
   return response.data;
 };

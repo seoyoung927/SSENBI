@@ -47,8 +47,6 @@ export default function MessagePage() {
         />
       </div>
 
-      {/* Tag List Placeholder */}
-
       <div className="message-list">
         {messageList &&
           messageList.map((message) => (
