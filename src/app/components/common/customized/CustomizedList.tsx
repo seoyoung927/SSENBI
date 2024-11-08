@@ -14,6 +14,7 @@ import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";
 import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
+import Cookies from "js-cookie";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -38,7 +39,10 @@ export default function CustomizedList() {
   useEffect(() => {
     const fetchCustomTemplates = async () => {
       try {
+        const token = Cookies.get("accessToken");
+
         const data = await getCustomTemplatesAPI({
+          token,
           sort: SORTOPTIONS[curSortOption],
         });
         console.log("customized data", data);
