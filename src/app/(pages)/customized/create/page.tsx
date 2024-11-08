@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import "./page.css";
+import { useRef, useState } from "react";
+import "../page.css";
 import Header from "@/app/components/layout/Header";
 import { useRouter } from "next/navigation";
-import InputField from "@/app/components/common/input/InputField";
 import TagList from "@/app/components/common/tag/TagList";
 import { postCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
@@ -14,28 +13,18 @@ import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
-  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  // TODO: 수정 필요 - 추가 로직 및 API와 연결
-  const [selectedCustomers] = useState<number[]>([]);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const selectedTagsRef = useRef<TagType[]>([]);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
-
-  const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value);
-  };
 
   const handleCancel = () => {
     router.back();
   };
 
-  const changeTag = (tags: TagType[]) => {
-    setSelectedTags(tags);
+  const handleTags = (tags: TagType[]) => {
+    selectedTagsRef.current = tags;
   };
 
   const handleSubmit = async () => {
@@ -43,21 +32,16 @@ export default function CustomizedNewPage() {
       const token = Cookies.get("accessToken");
       if (!token) return;
 
-      // console.log({
-      //   title,
-      //   content,
-      //   customers: selectedCustomers,
-      //   tags: selectedTags,
-      // });
+      const title = titleRef.current?.value.trim() || "";
+      const content = contentRef.current?.value.trim() || "";
+      const tagIds = selectedTagsRef.current.map((tag) => tag.tagId);
 
       const response = await postCustomTemplateAPI({
         title,
         content,
-        customers: selectedCustomers,
-        tagIds: selectedTags.map((v) => v.tagId),
+        customers: [],
+        tagIds,
       });
-
-      console.log(response);
 
       if (response.code === "S10000") {
         router.push("/customized");
@@ -67,46 +51,52 @@ export default function CustomizedNewPage() {
     }
   };
 
-  const closeAIEditModal = () => {
-    setIsAIEditModalModalOpen(false);
+  const handleSaveContent = (content: string) => {
+    if (contentRef.current) contentRef.current.value = content;
   };
 
-  const handleSaveMessage = (content: string) => {
-    setContent(content);
-  };
-  const openAIModal = () => {
+  const handleOpenAIModal = () => {
     setIsAIEditModalModalOpen(true);
+  };
+
+  const handleCloseAIModal = () => {
+    setIsAIEditModalModalOpen(false);
   };
 
   return (
     <div className="page-container">
       <Header title="새 커스텀" showBackIcon={true} />
 
-      <InputField
-        label="제목"
-        type="text"
-        value={title}
-        onChange={handleTitle}
-        maxLength={20}
-      />
-
-      <div className="customized-new_form-group">
-        <label className="customized-new_form-group__label">태그 및 고객</label>
-        <div className="customized-new_tag-container">
-          <TagList tags={selectedTags} setTags={changeTag} maxTagCount={5} />
-        </div>
-      </div>
-
-      <div className="customized-new_form-group">
-        <label className="customized-new_form-group_label">내용</label>
-        <textarea
-          className="customized-new_form-group_textarea body-medium"
-          value={content}
-          onChange={handleContent}
+      <div className="customized_field-wrapper">
+        <span className="body customized_label">제목</span>
+        <input
+          className="customized_form-input-field"
+          ref={titleRef}
+          type="text"
+          maxLength={20}
         />
       </div>
 
-      <div className="customized-new_button-group">
+      <div className="customized_field-wrapper">
+        <label className="body customized_label">태그 및 고객</label>
+        <div className="customized-new_tag-container">
+          <TagList
+            tags={selectedTagsRef.current}
+            setTags={handleTags}
+            maxTagCount={5}
+          />
+        </div>
+      </div>
+
+      <div className="customized_field-wrapper">
+        <label className="body customized_label">내용</label>
+        <textarea
+          className="body customized_text-area customized_form-input-field"
+          ref={contentRef}
+        />
+      </div>
+
+      <div className="customized-button-group">
         <button
           onClick={handleCancel}
           type="button"
@@ -115,7 +105,7 @@ export default function CustomizedNewPage() {
           취소
         </button>
         <button
-          onClick={openAIModal}
+          onClick={handleOpenAIModal}
           type="button"
           className="customized-new_button gradient_button"
         >
@@ -133,13 +123,13 @@ export default function CustomizedNewPage() {
       {isAIEditModalOpen && (
         <Modal
           isOpen={isAIEditModalOpen}
-          onClose={closeAIEditModal}
+          onClose={handleCloseAIModal}
           title={"AI 쎈비와 문자 작성하기"}
         >
           <ChatAIContainer
-            onClose={closeAIEditModal}
-            onSave={handleSaveMessage}
-            initialContent={content}
+            onClose={handleCloseAIModal}
+            onSave={handleSaveContent}
+            initialContent={""}
           />
         </Modal>
       )}
