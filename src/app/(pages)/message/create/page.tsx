@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./page.css";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/app/components/layout/Header";
 import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
@@ -11,6 +11,8 @@ import { TagType } from "@/types/tag/tagTypes";
 import { CustomerType } from "@/types/customer/customerType";
 import { postSendMessageAPI } from "@/app/api/message/messageAPI";
 import { MessagePostPropsType } from "@/types/message/messageTypes";
+import Cookies from "js-cookie";
+import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 
 export default function MessageNew() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -19,6 +21,33 @@ export default function MessageNew() {
   const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [content, setContent] = useState<string>("");
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    if (id) {
+      fetchCustomTemplate(id);
+    }
+  }, [id]);
+
+  const fetchCustomTemplate = async (templateId: string) => {
+    try {
+      const token = Cookies.get("accessToken");
+      if (!token) return;
+
+      const data = await getCustomTemplateAPI({ token, templateId });
+
+      console.log(data);
+
+      const { templateContent, templateCustomers, templateTags } = data.result;
+      setCustomers(templateCustomers);
+      setContent(templateContent);
+      setTags(templateTags);
+    } catch (error) {
+      console.error("Error fetching message:", error);
+    }
+  };
 
   const handleSend = async () => {
     try {
@@ -81,21 +110,21 @@ export default function MessageNew() {
           <button
             onClick={handleCancel}
             type="button"
-            className="message-new_button-cancel"
+            className="message_button message-new_button-cancel"
           >
             취소
           </button>
           <button
             onClick={openAIModal}
             type="button"
-            className="message-new_button-send gradient_button"
+            className="message_button message-new_button-send gradient_button"
           >
             쎈비 AI 도움 받기
           </button>
           <button
             onClick={handleSend}
             type="button"
-            className="message-new_button-send"
+            className="message_button message-new_button-send"
           >
             보내기
           </button>

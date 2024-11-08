@@ -15,9 +15,10 @@ import { TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
-import "../page.css";
+import "./page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import TagList from "@/app/components/common/tag/TagList";
+import SendIcon from "@/app/assets/svg/Send.svg";
 
 // Custom Template type definition
 interface CustomTemplate {
@@ -48,6 +49,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     useState<CustomTemplate | null>(null);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
+
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -120,7 +122,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>,
     field: keyof CustomTemplate,
   ) => {
     setModifiedTemplate((prev) => {
@@ -161,16 +163,20 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     });
   };
 
-  const handleSaveAIContent = (content: string) => {
-    handleInputChange({ target: { value: content } } as any, "templateContent");
-  };
-
   const handleOpenAIModal = () => {
     setIsAIEditModalModalOpen(true);
   };
 
   const handleCloseAIModal = () => {
     setIsAIEditModalModalOpen(false);
+  };
+
+  const handleSaveAIContent = (content: string) => {
+    handleInputChange({ target: { value: content } } as any, "templateContent");
+  };
+
+  const sendMessage = () => {
+    router.push(`/message/create?id=${id}`);
   };
 
   const changeTags = (newTags: TagType[]) => {
@@ -195,56 +201,68 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     <div className="page-container">
       <Header title="커스텀" showBackIcon={true} />
 
-      <div className="customized_field-wrapper">
-        <p className="body customized_label">제목</p>
-        <input
-          className="customized_form-input-field"
-          value={modifiedTemplate?.templateTitle || ""}
-          onChange={(e) => handleInputChange(e, "templateTitle")}
-          disabled={!isEdit}
-        />
-      </div>
-      <div className="customized_field-wrapper">
-        <p className="body customized_label">고객</p>
-        <div className="customized-info_tag-list">
-          {modifiedTemplate?.templateCustomers.map((tag) => (
-            <FilledTag
-              key={tag.customerId}
-              color={tag.customerColor}
-              tagName={tag.customerName}
-            />
-          ))}
+      <div className="customized-info-list">
+        <div className="customized-info">
+          <div className="space-between">
+            <p className="subheading">제목</p>
+            <button
+              onClick={sendMessage}
+              type="button"
+              className="customized-send_button"
+            >
+              메세지 전송
+              <SendIcon className="send-icon" />
+            </button>
+          </div>
+          <textarea
+            className="body"
+            value={modifiedTemplate?.templateTitle || ""}
+            onChange={(e) => handleInputChange(e, "templateTitle")}
+            disabled={!isEdit}
+          />
         </div>
-      </div>
-      <div className="customized_field-wrapper">
-        <p className="body customized_label">태그</p>
-        <div className="customized-info_tag-list">
-          {isEdit && modifiedTemplate ? (
-            <div className="taglist-container">
-              <TagList
-                tags={modifiedTemplate?.templateTags}
-                setTags={changeTags}
+        <div className="customized-info">
+          <p className="subheading">고객</p>
+          <div className="customized-info_tag-list">
+            {modifiedTemplate?.templateCustomers.map((tag) => (
+              <FilledTag
+                key={tag.customerId}
+                color={tag.customerColor}
+                tagName={tag.customerName}
               />
-            </div>
-          ) : (
-            modifiedTemplate?.templateTags.map((tag) => (
-              <BorderTag
-                key={tag.tagId}
-                color={tag.tagColor}
-                tagName={tag.tagName}
-              />
-            ))
-          )}
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="customized_field-wrapper">
-        <p className="body customized_label">내용</p>
-        <textarea
-          className="body customized_form-input-field customized_text-area"
-          value={modifiedTemplate?.templateContent || ""}
-          onChange={(e) => handleTextAreaChange(e, "templateContent")}
-          disabled={!isEdit}
-        />
+        <div className="customized-info">
+          <p className="subheading">태그</p>
+          <div className="customized-info_tag-list">
+            {isEdit && modifiedTemplate ? (
+              <div className="taglist-container">
+                <TagList
+                  tags={modifiedTemplate?.templateTags}
+                  setTags={changeTags}
+                />
+              </div>
+            ) : (
+              modifiedTemplate?.templateTags.map((tag) => (
+                <BorderTag
+                  key={tag.tagId}
+                  color={tag.tagColor}
+                  tagName={tag.tagName}
+                />
+              ))
+            )}
+          </div>
+        </div>
+        <div className="customized-info">
+          <p className="subheading">내용</p>
+          <textarea
+            className="textarea-content body"
+            value={modifiedTemplate?.templateContent || ""}
+            onChange={(e) => handleInputChange(e, "templateContent")}
+            disabled={!isEdit}
+          />
+        </div>
       </div>
 
       <div className="customized-button-group">
