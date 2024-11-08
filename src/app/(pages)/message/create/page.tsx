@@ -19,6 +19,8 @@ import UploadIcon from "@/app/assets/svg/Upload.svg";
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
+  const [isCustomListModalOpen, setIsCustomListModalOpen] =
+    useState<boolean>(false);
   const [id, setId] = useState<string>("");
   const [tags, setTags] = useState<TagType[]>([]);
   const [customers, setCustomers] = useState<CustomerType[]>([]);
@@ -91,6 +93,14 @@ function MessageCreateContent() {
     setTags(newTags);
   };
 
+  const openCustomListModal = () => {
+    setIsCustomListModalOpen(true);
+  };
+
+  const closeCustomListModal = () => {
+    setIsCustomListModalOpen(true);
+  };
+
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
@@ -104,7 +114,11 @@ function MessageCreateContent() {
             </div>
           </div>
 
-          <button type="button" className="message-get_button">
+          <button
+            type="button"
+            className="message-get_button"
+            onClick={openCustomListModal}
+          >
             템플릿에서 가져오기
             <UploadIcon className="upload-icon" />
           </button>
@@ -149,6 +163,16 @@ function MessageCreateContent() {
           onClose={closeAIEditModal}
           title={"AI 쎈비와 문자 작성하기"}
         >
+          <ChatAIContainer
+            onClose={closeAIEditModal}
+            onSave={handleSaveMessage}
+            initialContent={content}
+          />
+        </Modal>
+      )}
+
+      {isCustomListModalOpen && (
+        <Modal isOpen={isCustomListModalOpen} onClose={closeCustomListModal}>
           <ChatAIContainer
             onClose={closeAIEditModal}
             onSave={handleSaveMessage}
