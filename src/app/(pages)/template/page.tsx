@@ -78,7 +78,9 @@ export default function Template() {
     setFilteredMessageTemplates(allMessageTemplates[index] || []);
   };
 
-  if (isLoading) return <HashLoading />;
+  if (isLoading) {
+    return <HashLoading />;
+  }
 
   return (
     <div className="page-container">
