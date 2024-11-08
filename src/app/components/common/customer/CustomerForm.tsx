@@ -29,21 +29,19 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   const [tags, setTags] = useState<TagType[]>([]);
 
   useEffect(() => {
-    if (!customer) {
+    if (
+      !customer ||
+      !nameRef.current ||
+      !ageRef.current ||
+      !phoneNumberRef.current ||
+      !memoRef.current
+    ) {
       return;
     }
-    if (nameRef.current) {
-      nameRef.current.value = customer.customerName;
-    }
-    if (ageRef.current) {
-      ageRef.current.value = customer.customerAge.toString();
-    }
-    if (phoneNumberRef.current) {
-      phoneNumberRef.current.value = customer.customerPhoneNumber;
-    }
-    if (memoRef.current) {
-      memoRef.current.value = customer.customerMemo;
-    }
+    nameRef.current.value = customer.customerName;
+    ageRef.current.value = customer.customerAge.toString();
+    phoneNumberRef.current.value = customer.customerPhoneNumber;
+    memoRef.current.value = customer.customerMemo;
     setIsMale(customer.customerGender === "MALE");
     setTags(customer.customerTags);
   }, [customer]);
