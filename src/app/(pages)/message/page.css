@@ -6,3 +6,9 @@
 .message-list {
   margin-top: 16px;
 }
+
+.message_sort-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px;
+}

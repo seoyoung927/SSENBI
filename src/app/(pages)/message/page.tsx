@@ -8,20 +8,35 @@ import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButto
 import Link from "next/link";
 import Header from "@/app/components/layout/Header";
 import { getEveryMessagesAPI } from "@/app/api/message/messageAPI";
-import { MessageCardPropsType } from "@/types/message/messageTypes";
+import {
+  MessageCardPropsType,
+  SortOptionKeys,
+  SORTOPTIONS,
+} from "@/types/message/messageTypes";
 import { debounce } from "lodash"; // Optional, if you have lodash
+import SortSelect from "@/app/components/common/select/SortSelect";
 
 export default function MessagePage() {
+  const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("최신순");
   const [searchValue, setSearchValue] = useState<string>("");
   const [messageList, setMessageList] = useState<MessageCardPropsType[]>([]);
 
   useEffect(() => {
     fetchMessageList();
-  }, []);
+  }, [searchValue, curSortOption]);
 
-  const fetchMessageList = async (keyword?: string) => {
+  const fetchMessageList = async () => {
     try {
-      const response = await getEveryMessagesAPI(keyword);
+      const params: any = {
+        sort: SORTOPTIONS[curSortOption],
+      };
+
+      // searchValue가 비어 있지 않은 경우에만 keyword 추가
+      if (searchValue.trim()) {
+        params.keyword = searchValue;
+      }
+
+      const response = await getEveryMessagesAPI(params);
       console.log("Fetched Message List:", response);
       setMessageList(response.result);
     } catch (error) {
@@ -31,8 +46,11 @@ export default function MessagePage() {
 
   const handleSearchChange = debounce((value: string) => {
     setSearchValue(value);
-    fetchMessageList(value);
   }, 300);
+
+  const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
+    setCurSortOption(key);
+  };
 
   return (
     <div className="page-container">
@@ -44,6 +62,16 @@ export default function MessagePage() {
           value={searchValue}
           onChange={handleSearchChange}
           placeholder="검색어 (이름, 제목, 태그)"
+        />
+      </div>
+
+      <div className="message_sort-container">
+        <SortSelect
+          curOption={curSortOption}
+          options={Object.keys(SORTOPTIONS)}
+          onChange={(selectedLabel) =>
+            handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
+          }
         />
       </div>
 
