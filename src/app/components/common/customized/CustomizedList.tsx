@@ -3,15 +3,12 @@
 import Link from "next/link";
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import Image from "next/image";
-import "./page.css";
 import "./CustomizedList.css";
-import HashLoading from "@/app/components/common/loading/HashLoading";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
-import "./page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";

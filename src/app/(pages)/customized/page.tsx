@@ -4,7 +4,7 @@ import Header from "@/app/components/layout/Header";
 import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import { useRouter } from "next/navigation";
 import "./page.css";
-import CustomizedList from "./CustomizedList";
+import CustomizedList from "../../components/common/customized/CustomizedList";
 
 export default function CustomizedPage() {
   const router = useRouter();
