@@ -89,12 +89,14 @@ export default function CustomizedListSelector({
       {filteredCustomMessageTemplates &&
       filteredCustomMessageTemplates.length > 0 ? (
         filteredCustomMessageTemplates.map((message) => (
-          <div onClick={() => getCustomTemplate(message.templateId)}>
+          <div
+            onClick={() => getCustomTemplate(message.templateId)}
+            key={message.templateId}
+          >
             <CustomizedCard
               title={message?.templateTitle}
               content={message?.templateContent}
               tags={message?.templateTags}
-              key={message.templateId}
               customers={message?.templateCustomers}
             />
           </div>
