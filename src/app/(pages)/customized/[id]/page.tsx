@@ -281,7 +281,9 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
               onChange={(e) => setBatchTextFrom(e.target.value)}
               disabled={!isEdit}
             />
-            <RightArrowIcon />
+            <div style={{ width: 24, height: 24 }}>
+              <RightArrowIcon />
+            </div>
             <input
               className="body text-input"
               value={batchTextTo}
