@@ -15,7 +15,7 @@ import { TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
-import "../page.css";
+import "./page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import TagList from "@/app/components/common/tag/TagList";
 import SendIcon from "@/app/assets/svg/Send.svg";
@@ -49,6 +49,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     useState<CustomTemplate | null>(null);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
+
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
