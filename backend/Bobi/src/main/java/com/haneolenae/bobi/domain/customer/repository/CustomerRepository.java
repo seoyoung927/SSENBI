@@ -13,6 +13,14 @@ import com.haneolenae.bobi.domain.customer.entity.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	List<Customer> findByMemberIdAndIdIn(long memberId, List<Long> customerIds);
 
+	@Query("SELECT c FROM Customer c WHERE c.member.id = :memberId " +
+		"AND (c.name = :name OR c.phoneNumber = :phoneNumber)")
+	List<Customer> findExistCustomer(
+		@Param("memberId") Long memberId,
+		@Param("name") String name,
+		@Param("phoneNumber") String phoneNumber
+	);
+
 	@Query("SELECT c FROM Customer c WHERE c.member.id = :memberId AND c.id IN :customerIds")
 	Set<Customer> findByMemberIdAndCustomerIdIn(@Param("memberId") Long memberId,
 		@Param("customerIds") List<Long> customerIds);

@@ -10,7 +10,7 @@ import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 
 public interface CustomerService {
-	void addCustomer(Long memberId, AddCustomerRequest request);
+	CustomerResponse addCustomer(Long memberId, AddCustomerRequest request);
 
 	CustomerResponse getCustomerDetail(Long memberId, Long customerId);
 

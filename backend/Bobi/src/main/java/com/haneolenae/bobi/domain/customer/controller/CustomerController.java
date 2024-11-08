@@ -69,14 +69,13 @@ public class CustomerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<String>> addCustomer(
+	public ResponseEntity<ApiResponse<CustomerResponse>> addCustomer(
 		@RequestHeader("Authorization") String token,
 		@RequestBody @Valid AddCustomerRequest request
 	) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
-		customerService.addCustomer(memberId, request);
-		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
+		return ResponseEntity.ok(new ApiResponse<>(customerService.addCustomer(memberId, request)));
 	}
 
 	@PutMapping("/{customerId}")
