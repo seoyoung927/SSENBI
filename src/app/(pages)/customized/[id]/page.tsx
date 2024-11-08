@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Header from "@/app/components/layout/Header";
 import BorderTag from "@/app/components/common/tag/BorderTag";
-import FilledTag from "@/app/components/common/tag/FilledTag";
 import { useRouter } from "next/navigation";
 import {
   deleteCustomTemplateAPI,
@@ -18,7 +17,9 @@ import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import "./page.css";
 import { CustomerType } from "@/types/customer/customerType";
 import TagList from "@/app/components/common/tag/TagList";
+import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import SendIcon from "@/app/assets/svg/Send.svg";
+import FilledTag from "@/app/components/common/tag/FilledTag";
 
 // Custom Template type definition
 interface CustomTemplate {
@@ -224,13 +225,22 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <div className="customized-info">
           <p className="subheading">고객</p>
           <div className="customized-info_tag-list">
-            {modifiedTemplate?.templateCustomers.map((tag) => (
-              <FilledTag
-                key={tag.customerId}
-                color={tag.customerColor}
-                tagName={tag.customerName}
-              />
-            ))}
+            {isEdit && modifiedTemplate ? (
+              <div className="taglist-container">
+                <CustomerTagList
+                  customers={modifiedTemplate?.templateCustomers || []}
+                  setCustomers={() => {}}
+                />
+              </div>
+            ) : (
+              modifiedTemplate?.templateCustomers.map((tag) => (
+                <FilledTag
+                  key={tag.customerId}
+                  color={tag.customerColor}
+                  tagName={tag.customerName}
+                />
+              ))
+            )}
           </div>
         </div>
         <div className="customized-info">
