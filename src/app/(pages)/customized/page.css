@@ -47,6 +47,12 @@
   max-width: 60px;
 }
 
+.customized_sort-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px;
+}
+
 .customized_field-wrapper {
   display: flex;
   flex-direction: column;
