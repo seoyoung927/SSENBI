@@ -16,6 +16,7 @@ public class CustomerResponse {
 	private int customerAge;
 	private Gender customerGender;
 	private String customerPhoneNumber;
+	private String customerColor;
 	private List<TagResponse> customerTags;
 	private String customerMemo;
 }

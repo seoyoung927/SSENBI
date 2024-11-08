@@ -26,6 +26,7 @@ public interface CustomerMapper {
 	@Mapping(source = "phoneNumber", target = "customerPhoneNumber")
 	@Mapping(source = "customerTags", target = "customerTags", qualifiedByName = "tagsToTagResponses")
 	@Mapping(source = "memo", target = "customerMemo")
+	@Mapping(source = "color", target = "customerColor")
 	CustomerResponse toCustomerResponse(Customer customer);
 
 	@Named("tagsToTagResponses")
