@@ -81,21 +81,21 @@ export default function MessageNew() {
           <button
             onClick={handleCancel}
             type="button"
-            className="message-new_button-cancel"
+            className="message_button message-new_button-cancel"
           >
             취소
           </button>
           <button
             onClick={openAIModal}
             type="button"
-            className="message-new_button-send gradient_button"
+            className="message_button message-new_button-send gradient_button"
           >
             쎈비 AI 도움 받기
           </button>
           <button
             onClick={handleSend}
             type="button"
-            className="message-new_button-send"
+            className="message_button message-new_button-send"
           >
             보내기
           </button>
