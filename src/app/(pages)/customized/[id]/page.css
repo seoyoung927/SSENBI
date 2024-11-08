@@ -16,6 +16,28 @@
   margin: 12px 16px;
 }
 
+.customized-text-collection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  width: calc(100% - 32px);
+  margin: 12px 16px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+}
+
+.text-input {
+  flex-grow: 1;
+  min-width: 0;
+}
+
 .customized-info_tag-list {
   display: flex;
   gap: 8px;

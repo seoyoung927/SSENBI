@@ -20,6 +20,7 @@ import TagList from "@/app/components/common/tag/TagList";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import SendIcon from "@/app/assets/svg/Send.svg";
 import FilledTag from "@/app/components/common/tag/FilledTag";
+import RightArrowIcon from "@/app/assets/svg/RightArrow.svg";
 
 // Custom Template type definition
 interface CustomTemplate {
@@ -272,6 +273,15 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
             onChange={(e) => handleInputChange(e, "templateContent")}
             disabled={!isEdit}
           />
+        </div>
+
+        <div className="customized-text-collection">
+          <p className="subheading">텍스트 일괄 수정</p>
+          <div className="row">
+            <input className="body text-input" disabled={!isEdit} />
+            <RightArrowIcon />
+            <input className="body text-input" disabled={!isEdit} />
+          </div>
         </div>
       </div>
 
