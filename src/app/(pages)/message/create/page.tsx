@@ -14,6 +14,7 @@ import { MessagePostPropsType } from "@/types/message/messageTypes";
 import Cookies from "js-cookie";
 import { getCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
+import UploadIcon from "@/app/assets/svg/Upload.svg";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -95,11 +96,18 @@ function MessageCreateContent() {
       <Header title="새 메시지" showBackIcon={true} />
 
       <div className="message-form">
-        <div className="form-group">
-          <label className="form-group_label body-small">받는 사람</label>
-          <div className="tag-container">
-            <TagList tags={tags} setTags={handleTags} />
+        <div className="space-between">
+          <div className="form-group">
+            <label className="form-group_label body-small">받는 사람</label>
+            <div className="tag-container">
+              <TagList tags={tags} setTags={handleTags} />
+            </div>
           </div>
+
+          <button type="button" className="message-get_button">
+            템플릿에서 가져오기
+            <UploadIcon className="upload-icon" />
+          </button>
         </div>
 
         <div className="form-group">

@@ -69,3 +69,45 @@
 .tag-container {
   width: 100%;
 }
+
+.message-get_button {
+  border: 1px solid var(--primary-color);
+  background-color: white;
+  color: var(--primary-color);
+  padding: 10px 16px;
+  width: auto;
+  min-width: 46px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  height: 60px;
+  margin: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-get_button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.message-get_button:active {
+  transform: translateY(0);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.upload-icon {
+  fill: var(--blue-300);
+}
+.space-between {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
