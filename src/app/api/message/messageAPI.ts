@@ -1,11 +1,19 @@
-import { MessagePostPropsType } from "@/types/message/messageTypes";
+import {
+  GetEveryMessagesType,
+  MessagePostPropsType,
+} from "@/types/message/messageTypes";
 import axiosInstance from "../axiosInstance";
 
 // Get Every Messages
-export const getEveryMessagesAPI = async (keyword?: string) => {
+export const getEveryMessagesAPI = async ({
+  keyword,
+  sort,
+}: GetEveryMessagesType) => {
+  console.log(keyword, sort);
   const response = await axiosInstance.get(`/message`, {
-    headers: {
-      keyword: keyword || "",
+    params: {
+      keyword,
+      sort,
     },
   });
   return response.data;
