@@ -90,6 +90,10 @@ public class MessageServiceImpl implements MessageService {
 
 		// TODO: customer에 메시지 전송
 
+		if (finalReceiverCustomers.isEmpty()) {
+			throw new ApiException(ApiType.TARGET_NOT_FOUND);
+		}
+
 		// 성공한 고객 리스트
 		List<MessageCustomer> successCustomers = new ArrayList<>();
 		// 실패한 고객 이름 리스트
