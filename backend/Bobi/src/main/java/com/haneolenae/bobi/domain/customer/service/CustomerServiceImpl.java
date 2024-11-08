@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional
-	public void addCustomer(Long memberId, AddCustomerRequest request) {
+	public CustomerResponse addCustomer(Long memberId, AddCustomerRequest request) {
 		// TODO: memberId 유효성 검사
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
@@ -83,6 +83,12 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 
 		// TODO: 고객 추가
+		// 고객 이름,전화번호 중복 확인
+		if (!customerRepository.findExistCustomer(memberId, request.getCustomerName(), request.getCustomerPhoneNumber())
+			.isEmpty()) {
+			throw new ApiException(ApiType.CUSTOMER_ALREADY_EXIST);
+		}
+
 		Customer customer = mapper.toCustomer(request, member);
 		customerRepository.save(customer);
 
@@ -101,6 +107,8 @@ public class CustomerServiceImpl implements CustomerService {
 				customerTag.getCustomer().addCustomerTag(customerTag);
 				customerTag.getTag().addCustomerTag(customerTag);
 			});
+
+		return mapper.toCustomerResponse(customer);
 	}
 
 	@Override
@@ -130,6 +138,15 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findByIdAndMemberId(customerId, memberId).orElseThrow(
 			() -> new ApiException(ApiType.CUSTOMER_NOT_FOUND)
 		);
+
+		//수정 오류 확인
+		customerRepository.findExistCustomer(memberId, request.getCustomerName(), request.getCustomerPhoneNumber())
+			.stream()
+			.forEach(finder -> {
+				if (finder.getId() != customerId) {
+					throw new ApiException(ApiType.CUSTOMER_ALREADY_EXIST);
+				}
+			});
 
 		customer.update(request);
 

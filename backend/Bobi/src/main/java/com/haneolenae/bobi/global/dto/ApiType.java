@@ -30,6 +30,7 @@ public enum ApiType {
 
 	// Customer
 	CUSTOMER_SEARCH_PARAM_INVALID(HttpStatus.BAD_REQUEST, ApiCode.C40001, ApiCode.C40001.getMsg()),
+	CUSTOMER_ALREADY_EXIST(HttpStatus.BAD_REQUEST, ApiCode.C40002, ApiCode.C40002.getMsg()),
 	CUSTOMER_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
 
 	// Tag
@@ -43,6 +44,7 @@ public enum ApiType {
 	MESSAGE_SERVICE_ALL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, ApiCode.MS50002, ApiCode.MS50002.getMsg()),
 	MESSAGE_NOT_FOUND(HttpStatus.NOT_FOUND, ApiCode.MS40401, ApiCode.MS40401.getMsg()),
 	SEARCH_TERM_INVALID(HttpStatus.BAD_REQUEST, ApiCode.MS40001, ApiCode.MS40001.getMsg()),
+	TARGET_NOT_FOUND(HttpStatus.BAD_REQUEST, ApiCode.MS40002, ApiCode.MS40002.getMsg()),
 
 	CUSTOM_TEMPLATE_NOT_EXIST(HttpStatus.NOT_FOUND, ApiCode.C40401, ApiCode.C40401.getMsg()),
 
