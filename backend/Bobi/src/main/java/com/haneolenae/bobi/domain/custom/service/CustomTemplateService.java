@@ -12,8 +12,8 @@ import com.haneolenae.bobi.domain.custom.dto.request.ReplicateCustomTemplateRequ
 import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 
 public interface CustomTemplateService {
-	List<CustomTemplateResponse> getCustomTemplates(long memberId, Pageable pageable, List<Integer> templateTags,
-		List<Integer> templateCustomer, String templateSearch);
+	List<CustomTemplateResponse> getCustomTemplates(long memberId, Pageable pageable, List<Long> templateTags,
+		List<Long> templateCustomer, String templateSearch);
 
 	CustomTemplateResponse getCustomTemplate(long memberId, long templateId);
 

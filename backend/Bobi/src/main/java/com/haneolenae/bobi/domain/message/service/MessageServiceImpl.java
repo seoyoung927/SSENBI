@@ -1,11 +1,11 @@
 package com.haneolenae.bobi.domain.message.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -153,14 +153,15 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageResponse> getMessageList(long memberId, String keyword) {
+	public List<MessageResponse> getMessageList(long memberId, String keyword, Pageable pageable) {
 
 		// TODO: 멤버 유효성 검사
 		Member sender = memberRepository.findById(memberId)
 			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
 
 		// TODO: 검색어로 검색
-		List<Message> messages = messageRepository.findMessagesByKeywordAndMemberId(keyword, memberId);
+		List<Message> messages = messageRepository.findMessagesByKeywordAndMemberId(keyword, memberId, pageable)
+			.getContent();
 
 		return messages.stream()
 			.map(messageMapper::toMessageResponse)

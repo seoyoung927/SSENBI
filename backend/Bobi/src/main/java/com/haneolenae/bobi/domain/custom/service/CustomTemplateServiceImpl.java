@@ -55,8 +55,8 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	}
 
 	@Override
-	public List<CustomTemplateResponse> getCustomTemplates(long memberId, Pageable pageable, List<Integer> templateTags,
-		List<Integer> templateCustomer, String templateSearch) {
+	public List<CustomTemplateResponse> getCustomTemplates(long memberId, Pageable pageable, List<Long> templateTags,
+		List<Long> templateCustomer, String templateSearch) {
 		List<CustomTemplate> customTemplates = customTemplateRepository.findTemplates(pageable, templateTags,
 			templateCustomer, templateSearch, memberId).getContent();
 
@@ -194,7 +194,6 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	public void deleteCustomTemplate(long memberId, long templateId) {
 		CustomTemplate customTemplate = customTemplateRepository.findByIdAndMemberId(templateId, memberId)
 			.orElseThrow(() -> new ApiException(ApiType.CUSTOM_TEMPLATE_NOT_EXIST));
-
 
 		//연관관계 해제
 		templateTagRepository.deleteByCustomTemplateId(templateId);
