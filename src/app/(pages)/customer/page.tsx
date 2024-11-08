@@ -1,5 +1,5 @@
+import CustomerList from "@/app/components/common/customer/CustomerList";
 import Header from "@/app/components/layout/Header";
-import CustomerList from "./CustomerList";
 
 export default function CustomerPage() {
   return (
