@@ -51,8 +51,11 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     useState<CustomTemplate | null>(null);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
-
   const [isEdit, setIsEdit] = useState(false);
+
+  // State for batch editing
+  const [batchTextFrom, setBatchTextFrom] = useState("");
+  const [batchTextTo, setBatchTextTo] = useState("");
 
   useEffect(() => {
     fetchCustomTemplate(id);
@@ -144,27 +147,6 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     });
   };
 
-  const handleTextAreaChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-    field: keyof CustomTemplate,
-  ) => {
-    setModifiedTemplate((prev) => {
-      if (prev) {
-        return { ...prev, [field]: e.target.value };
-      } else {
-        return {
-          templateId: Number(id),
-          templateTitle: "",
-          templateContent: "",
-          templateUsageCount: 0,
-          templateCreatedAt: "",
-          templateTags: [],
-          templateCustomers: [],
-        };
-      }
-    });
-  };
-
   const handleOpenAIModal = () => {
     setIsAIEditModalModalOpen(true);
   };
@@ -197,6 +179,21 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         };
       }
     });
+  };
+
+  const handleBatchTextChange = () => {
+    if (modifiedTemplate) {
+      const updatedContent = modifiedTemplate.templateContent.replace(
+        new RegExp(batchTextFrom, "g"),
+        batchTextTo,
+      );
+      setModifiedTemplate((prev) => {
+        if (prev) {
+          return { ...prev, templateContent: updatedContent };
+        }
+        return prev;
+      });
+    }
   };
 
   return (
@@ -278,10 +275,26 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <div className="customized-text-collection">
           <p className="subheading">텍스트 일괄 수정</p>
           <div className="row">
-            <input className="body text-input" disabled={!isEdit} />
+            <input
+              className="body text-input"
+              value={batchTextFrom}
+              onChange={(e) => setBatchTextFrom(e.target.value)}
+              disabled={!isEdit}
+            />
             <RightArrowIcon />
-            <input className="body text-input" disabled={!isEdit} />
-            <button className="white_button sub-button">변경하기</button>
+            <input
+              className="body text-input"
+              value={batchTextTo}
+              onChange={(e) => setBatchTextTo(e.target.value)}
+              disabled={!isEdit}
+            />
+            <button
+              className="white_button sub-button"
+              onClick={handleBatchTextChange}
+              disabled={!isEdit}
+            >
+              변경하기
+            </button>
           </div>
         </div>
       </div>
@@ -311,23 +324,12 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         </button>
       </div>
 
-      {/* Modal */}
-      {isAIEditModalOpen && (
-        <Modal
-          isOpen={isAIEditModalOpen}
+      <Modal isOpen={isAIEditModalOpen} onClose={handleCloseAIModal}>
+        <ChatAIContainer
+          onSave={handleSaveAIContent}
           onClose={handleCloseAIModal}
-          title={"AI 쎈비와 수정하기"}
-          className="modal"
-        >
-          <div className="modal-content">
-            <ChatAIContainer
-              onClose={handleCloseAIModal}
-              onSave={handleSaveAIContent}
-              initialContent={""}
-            />
-          </div>
-        </Modal>
-      )}
+        />
+      </Modal>
     </div>
   );
 }
