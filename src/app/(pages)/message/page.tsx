@@ -32,7 +32,7 @@ export default function MessagePage() {
   const handleSearchChange = debounce((value: string) => {
     setSearchValue(value);
     fetchMessageList(value);
-  }, 300000000);
+  }, 300);
 
   return (
     <div className="page-container">
