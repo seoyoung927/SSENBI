@@ -49,9 +49,11 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     useState<ApiResponse | null>(null);
   const [modifiedTemplate, setModifiedTemplate] =
     useState<CustomTemplate | null>(null);
+  const [isSaveMessageVisible, setIsSaveMessageVisible] =
+    useState<boolean>(false);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   // State for batch editing
   const [batchTextFrom, setBatchTextFrom] = useState("");
@@ -97,6 +99,17 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     }
   };
 
+  const clearBatchText = () => {
+    setBatchTextFrom("");
+    setBatchTextTo("");
+  };
+
+  const displayEditWindow = () => {
+    setIsSaveMessageVisible(true);
+    setTimeout(() => {
+      setIsSaveMessageVisible(false);
+    }, 3000);
+  };
   const handleSaveTemplate = async () => {
     if (!modifiedTemplate) return;
 
@@ -110,11 +123,11 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       const response = await putCustomTemplateAPI(templateParams);
       console.log("putCustomTemplateAPI response", response);
 
-      if (response.success) {
+      if (response.code === "S10000" && response.message === "SUCCESS") {
         handleSaveMessage();
         setIsEdit(false);
-        setBatchTextFrom("");
-        setBatchTextTo("");
+        clearBatchText();
+        displayEditWindow();
       }
     } catch (error) {
       console.error("Error updating template:", error);
@@ -201,6 +214,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   return (
     <div className="page-container">
       <Header title="커스텀" showBackIcon={true} />
+
+      {isSaveMessageVisible && (
+        <div className="save-message">글이 수정되었습니다!</div>
+      )}
 
       <div className="customized-info-list">
         <div className="customized-info">
