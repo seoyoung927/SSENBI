@@ -3,15 +3,15 @@
   flex-direction: column;
   border: 1px solid #f5f5f5;
   border-radius: 12px;
-  padding: 16px;
+  padding: 16px 16px 12px;
   background-color: var(--gray-100);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition:
     box-shadow 0.2s ease,
     transform 0.2s ease;
   max-width: 100%;
-  gap: 12px;
-  margin: 12px 16px;
+  gap: 8px;
+  margin: 12px 16px 0px;
   cursor: pointer;
 }
 
@@ -54,7 +54,7 @@
   flex-wrap: wrap;
   gap: 8px;
   width: 100%;
-  margin-top: 12px;
+  min-height: 0px;
 }
 
 .customized-tag-container {
@@ -63,6 +63,7 @@
   overflow: hidden;
   white-space: nowrap;
   width: 80%;
+  min-height: 0px;
 }
 
 .customized-card__details .customized-tag-container > * {
