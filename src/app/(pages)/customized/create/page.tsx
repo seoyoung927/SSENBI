@@ -10,21 +10,22 @@ import Cookies from "js-cookie";
 import { TagType } from "@/types/tag/tagTypes";
 import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
+import { CustomerType } from "@/types/customer/customerType";
+import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
-  const selectedTagsRef = useRef<TagType[]>([]);
+  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
+  const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
+    [],
+  );
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
 
   const handleCancel = () => {
     router.back();
-  };
-
-  const handleTags = (tags: TagType[]) => {
-    selectedTagsRef.current = tags;
   };
 
   const handleSubmit = async () => {
@@ -34,13 +35,16 @@ export default function CustomizedNewPage() {
 
       const title = titleRef.current?.value.trim() || "";
       const content = contentRef.current?.value.trim() || "";
-      const tagIds = selectedTagsRef.current.map((tag) => tag.tagId);
+      const tagIds = selectedTags.map((tag) => tag.tagId);
+      const customerIds = selectedCustomers.map(
+        (customer) => customer.customerId,
+      );
 
       const response = await postCustomTemplateAPI({
         title,
         content,
-        customers: [],
         tagIds,
+        customerIds,
       });
 
       if (response.code === "S10000") {
@@ -81,9 +85,15 @@ export default function CustomizedNewPage() {
         <label className="body customized_label">태그 및 고객</label>
         <div className="customized-new_tag-container">
           <TagList
-            tags={selectedTagsRef.current}
-            setTags={handleTags}
+            tags={selectedTags}
+            setTags={setSelectedTags}
             maxTagCount={5}
+          />
+        </div>
+        <div className="customized-new_tag-container">
+          <CustomerTagList
+            customers={selectedCustomers}
+            setCustomers={setSelectedCustomers}
           />
         </div>
       </div>

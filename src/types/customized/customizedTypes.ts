@@ -35,7 +35,7 @@ export type PostCustomTemplateParamsType = {
   title: string;
   content: string;
   tagIds: number[];
-  customers: number[];
+  customerIds: number[];
 };
 
 // Delete Custom Template API Params

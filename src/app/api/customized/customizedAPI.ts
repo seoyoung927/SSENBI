@@ -14,7 +14,6 @@ import axiosInstance from "../axiosInstance";
 
 // Get Custom Templates API
 export const getCustomTemplatesAPI = async ({
-  token,
   page,
   size = 50,
   sort,
@@ -30,9 +29,6 @@ export const getCustomTemplatesAPI = async ({
       // templateTags,
       // templateCustomers,
       // templateSearch,
-    },
-    headers: {
-      Authorization: `Bearer ${token}`,
     },
   });
   return response.data;
@@ -78,13 +74,13 @@ export const postCustomTemplateAPI = async ({
   title,
   content,
   tagIds,
-  customers,
+  customerIds,
 }: PostCustomTemplateParamsType) => {
   const response = await axiosInstance.post("/customTemplate", {
     templateTitle: title,
     templateContent: content,
     templateTagIds: tagIds,
-    templateCustomerIds: customers,
+    templateCustomerIds: customerIds,
   });
   return response.data;
 };
