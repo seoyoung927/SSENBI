@@ -19,15 +19,23 @@ export default function CustomizedCard({ customMessage }: MessageCardProps) {
     templateCustomers,
   } = customMessage;
 
+  // Format date to YYYY-MM-DD
+  const formattedDate = new Date(templateCreatedAt).toISOString().split("T")[0];
+
   return (
-    <div className="customized-card">
-      <p className="customized-card__content subheading">{templateTitle}</p>
+    <div className="customized-card" key={templateId}>
+      <p className="customized-card__title subheading">{templateTitle}</p>
       <p className="customized-card__content body">{templateContent}</p>
 
+      <div className="customized-card__stats">
+        <p className="customized-card__usage">
+          사용 횟수: {templateUsageCount}
+        </p>
+        <p className="customized-card__date"> {formattedDate}</p>
+      </div>
+
       <div className="customized-card__details">
-        {/* todo : tagList */}
         <div className="customized-tag-container">
-          {/* created_at width 제외하고 100% overflow hidden */}
           {templateTags.map((tag) => (
             <BorderTag
               key={tag.tagId}
@@ -35,7 +43,6 @@ export default function CustomizedCard({ customMessage }: MessageCardProps) {
               tagName={tag.tagName}
             />
           ))}
-
           {templateCustomers.map((customer) => (
             <FilledTag
               key={customer.customerId}
