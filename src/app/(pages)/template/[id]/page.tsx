@@ -26,7 +26,7 @@ interface TemplateIdProps {
   };
 }
 
-export default function TemplateId({ params }: TemplateIdProps) {
+export default function TemplateIdPage({ params }: TemplateIdProps) {
   const router = useRouter();
   const { id } = params;
   const [templateData, setTemplateData] = useState<ApiResponse>({

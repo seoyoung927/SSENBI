@@ -38,6 +38,7 @@ export default function Example() {
         imgSrc={"https://via.placeholder.com/150"}
         title={"제목"}
         content={"설명"}
+        templateId={0}
       />
       <div style={{ paddingInline: 8 }}>
         <TagList tags={tags} setTags={setTags} maxTagCount={2} />
