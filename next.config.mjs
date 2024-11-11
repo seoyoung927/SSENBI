@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "via.placeholder.com",
-      "ssenbi-bucket.s3.ap-northeast-2.amazonaws.com", // 추가한 도메인
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "via.placeholder.com",
+      },
+      {
+        protocol: "https",
+        hostname: "ssenbi-bucket.s3.ap-northeast-2.amazonaws.com",
+      },
     ],
   },
   webpack(config) {
