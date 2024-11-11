@@ -1,7 +1,7 @@
 .controller {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
   background-color: var(--bg-default);
-  padding: 24px 12px;
+  padding: 12px;
 }
