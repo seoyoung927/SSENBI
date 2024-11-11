@@ -5,29 +5,17 @@ import Image from "next/image";
 import "./CustomizedList.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
+  CustomMessagesType,
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
-import { CustomerType } from "@/types/customer/customerType";
-import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";
-import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
+import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
 
-// Custom Template 타입 정의
-interface CustomTemplate {
-  templateId: number;
-  templateTitle: string;
-  templateContent: string;
-  templateUsageCount: number;
-  templateCreatedAt: string;
-  templateTags: TagType[];
-  templateCustomers: CustomerType[];
-}
-
 // ApiResponse 타입 정의
-type ApiResponse = CustomTemplate[];
+type ApiResponse = CustomMessagesType[];
 
 interface CustomizedListSelectorProps {
   getCustomTemplate: (customId: number) => void;
@@ -37,20 +25,20 @@ export default function CustomizedListSelector({
   getCustomTemplate,
 }: CustomizedListSelectorProps) {
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
-  const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
-    useState<ApiResponse>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [filteredMessages, setFilteredMessages] = useState<ApiResponse>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCustomTemplates = async () => {
       try {
         const token = Cookies.get("accessToken");
+
         const data = await getCustomTemplatesAPI({
           token,
           sort: SORTOPTIONS[curSortOption],
         });
         console.log("customized data", data);
-        setFilteredMessageTemplates(data.result);
+        setFilteredMessages(data.result);
       } catch (error) {
         console.error("Error fetching message:", error);
         alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
@@ -86,19 +74,13 @@ export default function CustomizedListSelector({
         />
       </div>
 
-      {filteredCustomMessageTemplates &&
-      filteredCustomMessageTemplates.length > 0 ? (
-        filteredCustomMessageTemplates.map((message) => (
+      {filteredMessages && filteredMessages.length > 0 ? (
+        filteredMessages.map((message) => (
           <div
             onClick={() => getCustomTemplate(message.templateId)}
             key={message.templateId}
           >
-            <CustomizedCard
-              title={message?.templateTitle}
-              content={message?.templateContent}
-              tags={message?.templateTags}
-              customers={message?.templateCustomers}
-            />
+            <CustomizedCard customMessage={message} />
           </div>
         ))
       ) : (
