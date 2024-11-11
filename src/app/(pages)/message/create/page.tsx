@@ -31,6 +31,8 @@ function MessageCreateContent() {
   // State for batch editing
   const [batchTextFrom, setBatchTextFrom] = useState<string>("");
   const [batchTextTo, setBatchTextTo] = useState<string>("");
+  const [isSaveMessageVisible, setIsSaveMessageVisible] =
+    useState<boolean>(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -76,6 +78,8 @@ function MessageCreateContent() {
       console.log("Sending message data:", messageData);
       const response = await postSendMessageAPI(messageData);
       console.log("Post response:", response);
+      setIsSaveMessageVisible(true);
+      setTimeout(() => setIsSaveMessageVisible(false), 3000);
     } catch (err) {
       console.error("Error sending message:", err);
     }
@@ -127,6 +131,10 @@ function MessageCreateContent() {
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
+
+      {isSaveMessageVisible && (
+        <div className="save-message">메세지를 성공적으로 보냈습니다!</div>
+      )}
 
       <div className="message-form">
         <div className="space-between">

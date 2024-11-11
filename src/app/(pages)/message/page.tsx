@@ -31,7 +31,6 @@ export default function MessagePage() {
         sort: SORTOPTIONS[curSortOption],
       };
 
-      // searchValue가 비어 있지 않은 경우에만 keyword 추가
       if (searchValue.trim()) {
         params.keyword = searchValue;
       }
