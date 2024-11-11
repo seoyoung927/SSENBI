@@ -11,7 +11,10 @@ import {
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
 import { useEffect, useState } from "react";
-import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
+import {
+  getCustomTemplatesAPI,
+  postCustomTemplateDuplicationAPI,
+} from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
 import Cookies from "js-cookie";
 
@@ -58,6 +61,23 @@ export default function CustomizedList() {
     setCurSortOption(key);
   };
 
+  const duplicateCustomized = async (
+    templateId: number,
+    event: React.MouseEvent,
+  ) => {
+    event.preventDefault();
+    try {
+      const respose = await postCustomTemplateDuplicationAPI({
+        templateId,
+        isReplicateTagAndCustomer: true,
+      });
+
+      console.log("dupicate", respose);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="customiedList-container">
       <div className="customized_sort-container">
@@ -77,7 +97,10 @@ export default function CustomizedList() {
             key={message.templateId}
             href={`/customized/${message.templateId}`}
           >
-            <CustomizedCard customMessage={message} />
+            <CustomizedCard
+              customMessage={message}
+              duplicateCustomized={duplicateCustomized}
+            />
           </Link>
         ))
       ) : (
