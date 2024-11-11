@@ -18,6 +18,7 @@ import UploadIcon from "@/app/assets/svg/Upload.svg";
 import CustomizedListSelector from "@/app/components/common/customized/CustomizedListSelector";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 import { debounce } from "lodash";
+import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -140,6 +141,12 @@ function MessageCreateContent() {
         <div className="space-between">
           <div className="form-group">
             <label className="form-group_label body-small">받는 사람</label>
+            <div className="tag-container">
+              <CustomerTagList
+                customers={customers}
+                setCustomers={setCustomers}
+              />
+            </div>
             <div className="tag-container">
               <TagList tags={tags} setTags={handleTags} />
             </div>
