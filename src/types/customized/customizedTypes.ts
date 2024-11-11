@@ -1,3 +1,6 @@
+import { CustomerType } from "../customer/customerType";
+import { TagType } from "../tag/tagTypes";
+
 // Get Custom Templates API Params
 export type GetCustomTemplatesParamsType = {
   token?: string;
@@ -78,3 +81,19 @@ export const SORTOPTIONS = {
 
 export type SortOptionKeys = keyof typeof SORTOPTIONS;
 export type SortOptionValues = (typeof SORTOPTIONS)[SortOptionKeys];
+
+// Custom Data 타입 정의
+export type CustomMessagesType = {
+  templateId: number;
+  templateTitle: string;
+  templateContent: string;
+  templateUsageCount: number;
+  templateCreatedAt: string;
+  templateTags: TagType[];
+  templateCustomers: CustomerType[];
+};
+
+export type PostCustomTemplateDuplicationType = {
+  templateId: number;
+  isReplicateTagAndCustomer: boolean;
+};

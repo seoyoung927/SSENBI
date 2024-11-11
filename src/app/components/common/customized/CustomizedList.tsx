@@ -6,58 +6,49 @@ import Image from "next/image";
 import "./CustomizedList.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
+  CustomMessagesType,
+  GetCustomTemplatesParamsType,
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
-import { CustomerType } from "@/types/customer/customerType";
-import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";
-import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
+import {
+  getCustomTemplatesAPI,
+  postCustomTemplateDuplicationAPI,
+} from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import TagList from "../tag/TagList";
 import CustomerTagList from "../tag/CustomerTagList";
-
-// Custom Template 타입 정의
-interface CustomTemplate {
-  templateId: number;
-  templateTitle: string;
-  templateContent: string;
-  templateUsageCount: number;
-  templateCreatedAt: string;
-  templateTags: TagType[];
-  templateCustomers: CustomerType[];
-}
+import { CustomerType } from "@/types/customer/customerType";
+import { TagType } from "@/types/tag/tagTypes";
 
 // ApiResponse 타입 정의
-type ApiResponse = CustomTemplate[];
+type ApiResponse = CustomMessagesType[];
+
+const fetchCustomTemplates = async ({
+  page,
+  size = 50,
+  sort,
+}: GetCustomTemplatesParamsType) => {
+  return await getCustomTemplatesAPI({
+    page,
+    size,
+    sort,
+  });
+};
 
 export default function CustomizedList() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
   const [templates, setTemplates] = useState<ApiResponse>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<ApiResponse>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
     [],
   );
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
 
   useEffect(() => {
-    const fetchCustomTemplates = async () => {
-      try {
-        const { result } = await getCustomTemplatesAPI({
-          sort: SORTOPTIONS[curSortOption],
-        });
-        console.log(result);
-        setTemplates(result);
-      } catch (error) {
-        console.error("Error fetching message:", error);
-        alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchCustomTemplates();
   }, [curSortOption]);
 
@@ -75,13 +66,52 @@ export default function CustomizedList() {
         ),
       );
 
-      return selectedCustomers.length === 0 && selectedTags.length === 0
-        ? true
-        : customerIncluded || tagIncluded;
+      return (
+        (selectedCustomers.length === 0 && selectedTags.length === 0) ||
+        customerIncluded ||
+        tagIncluded
+      );
     });
 
     setFilteredTemplates(filtered);
   }, [selectedCustomers, selectedTags, templates]);
+
+  const fetchCustomTemplates = async () => {
+    try {
+      const data = await getCustomTemplatesAPI({
+        sort: SORTOPTIONS[curSortOption],
+      });
+      console.log("customized data", data);
+      setTemplates(data.result);
+    } catch (error) {
+      console.error("Error fetching message:", error);
+      alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
+    setCurSortOption(key);
+  };
+
+  const duplicateCustomized = async (
+    templateId: number,
+    event: React.MouseEvent,
+  ) => {
+    event.preventDefault();
+    try {
+      const respose = await postCustomTemplateDuplicationAPI({
+        templateId,
+        isReplicateTagAndCustomer: true,
+      });
+
+      console.log("dupicate", respose);
+
+      fetchCustomTemplates();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -90,10 +120,6 @@ export default function CustomizedList() {
       </div>
     );
   }
-
-  const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
-    setCurSortOption(key);
-  };
 
   return (
     <div className="customiedList-container">
@@ -114,17 +140,15 @@ export default function CustomizedList() {
         />
       </div>
 
-      {filteredTemplates && filteredTemplates.length > 0 ? (
+      {filteredTemplates.length > 0 ? (
         filteredTemplates.map((message) => (
           <Link
             key={message.templateId}
             href={`/customized/${message.templateId}`}
           >
             <CustomizedCard
-              title={message?.templateTitle}
-              content={message?.templateContent}
-              tags={message?.templateTags}
-              customers={message?.templateCustomers}
+              customMessage={message}
+              duplicateCustomized={duplicateCustomized}
             />
           </Link>
         ))

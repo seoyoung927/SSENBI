@@ -12,8 +12,8 @@ export const getEveryMessagesAPI = async ({
   console.log(keyword, sort);
   const response = await axiosInstance.get(`/message`, {
     params: {
-      keyword,
       sort,
+      ...(keyword && { keyword }),
     },
   });
   return response.data;

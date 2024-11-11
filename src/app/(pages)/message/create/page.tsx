@@ -69,6 +69,7 @@ function MessageCreateContent() {
         messageCustomerIds: customers.map((customer) => customer.customerId),
         messageTagIds: tags.map((tag) => tag.tagId),
         messageContent: content,
+        ...(id ? { customTemplateId: id } : {}),
       };
 
       console.log("Sending message data:", messageData);

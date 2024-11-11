@@ -1,41 +1,61 @@
 import React from "react";
 import "./CustomizedCard.css";
 import BorderTag from "../tag/BorderTag";
-import { TagType } from "@/types/tag/tagTypes";
 import FilledTag from "../tag/FilledTag";
-import { CustomerType } from "@/types/customer/customerType";
+import { CustomMessagesType } from "@/types/customized/customizedTypes";
+import CopyIcon from "@/app/assets/svg/Copy.svg";
 
 interface MessageCardProps {
-  title: string;
-  content: string;
-  tags: TagType[];
-  customers: CustomerType[];
+  customMessage: CustomMessagesType;
+  duplicateCustomized: (templateId: number, event: React.MouseEvent) => void;
 }
 
 export default function CustomizedCard({
-  title = "",
-  content,
-  tags,
-  customers,
+  customMessage,
+  duplicateCustomized,
 }: MessageCardProps) {
+  const {
+    templateId,
+    templateTitle,
+    templateContent,
+    templateUsageCount,
+    templateCreatedAt,
+    templateTags,
+    templateCustomers,
+  } = customMessage;
+
+  // Format date to YYYY-MM-DD
+  const formattedDate = new Date(templateCreatedAt).toISOString().split("T")[0];
+
   return (
-    <div className="customized-card">
-      <p className="customized-card__content subheading">{title}</p>
-      <p className="customized-card__content body">{content}</p>
+    <div className="customized-card" key={templateId}>
+      <div className="customized-card-header">
+        <p className="customized-card__title subheading">{templateTitle}</p>
+
+        <div onClick={(e) => duplicateCustomized(templateId, e)}>
+          <CopyIcon className="copy-icon" />
+        </div>
+      </div>
+
+      <p className="customized-card__content body">{templateContent}</p>
+
+      <div className="customized-card__stats">
+        <p className="customized-card__usage">
+          사용 횟수: {templateUsageCount}
+        </p>
+        <p className="customized-card__date"> {formattedDate}</p>
+      </div>
 
       <div className="customized-card__details">
-        {/* todo : tagList */}
         <div className="customized-tag-container">
-          {/* created_at width 제외하고 100% overflow hidden */}
-          {tags.map((tag) => (
+          {templateTags.map((tag) => (
             <BorderTag
               key={tag.tagId}
               color={tag.tagColor}
               tagName={tag.tagName}
             />
           ))}
-
-          {customers.map((customer) => (
+          {templateCustomers.map((customer) => (
             <FilledTag
               key={customer.customerId}
               color={customer.customerColor}
