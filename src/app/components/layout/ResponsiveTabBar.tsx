@@ -7,55 +7,56 @@ import UsersIcon from "@/app/assets/svg/Users.svg";
 import SmileIcon from "@/app/assets/svg/Smile.svg";
 import MessageIcon from "@/app/assets/svg/Message.svg";
 
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function ResponsiveTabBar() {
-  const router = useRouter();
   const pathname = usePathname();
   const getClass = (path: string) =>
     pathname.includes(path) ? "svg-icon_selected" : "svg-icon_unselected";
 
   return (
     <div className="menu-bar">
-      <div
+      <Link
+        prefetch={true}
+        href="/template"
         className={`menu-bar__menu ${getClass("template")}`}
-        onClick={() => router.push("/template")}
       >
         <FileIcon />
         <p className="menu-bar_menu-text">템플릿</p>
-      </div>
-
-      <div
+      </Link>
+      <Link
+        prefetch={true}
+        href="/customized"
         className={`menu-bar__menu ${getClass("customized")}`}
-        onClick={() => router.push("/customized")}
       >
         <StarIcon />
         <p className="menu-bar_menu-text">커스텀</p>
-      </div>
-
-      <div
+      </Link>
+      <Link
+        prefetch={true}
+        href="/customer"
         className={`menu-bar__menu ${getClass("customer")}`}
-        onClick={() => router.push("/customer")}
       >
         <UsersIcon />
         <p className="menu-bar_menu-text">고객</p>
-      </div>
-
-      <div
+      </Link>
+      <Link
+        prefetch={true}
+        href="/message"
         className={`menu-bar__menu ${getClass("message")}`}
-        onClick={() => router.push("/message")}
       >
         <MessageIcon />
         <p className="menu-bar_menu-text">메시지</p>
-      </div>
-
-      <div
+      </Link>
+      <Link
+        prefetch={true}
+        href="/auth/mypage"
         className={`menu-bar__menu ${getClass("auth")}`}
-        onClick={() => router.push("/auth/mypage")}
       >
         <SmileIcon />
         <p className="menu-bar_menu-text">마이페이지</p>
-      </div>
+      </Link>
     </div>
   );
 }
