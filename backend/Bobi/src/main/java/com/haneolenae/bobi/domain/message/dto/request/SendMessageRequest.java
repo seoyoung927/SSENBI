@@ -14,4 +14,5 @@ public class SendMessageRequest {
 	@NotNull(message = "메시지 태그 배열이 null입니다.")
 	List<Long> messageTagIds;
 	String messageContent;
+	Long customTemplateId;
 }

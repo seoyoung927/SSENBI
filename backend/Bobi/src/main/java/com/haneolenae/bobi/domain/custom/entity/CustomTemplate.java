@@ -104,4 +104,8 @@ public class CustomTemplate {
 			.count(0)
 			.build();
 	}
+
+	public void countUp() {
+		count++;
+	}
 }

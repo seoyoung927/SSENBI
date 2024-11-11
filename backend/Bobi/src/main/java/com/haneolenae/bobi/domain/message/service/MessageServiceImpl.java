@@ -13,6 +13,8 @@ import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
+import com.haneolenae.bobi.domain.custom.entity.CustomTemplate;
+import com.haneolenae.bobi.domain.custom.repository.CustomTemplateRepository;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
 import com.haneolenae.bobi.domain.customer.repository.CustomerTagRepository;
@@ -45,6 +47,7 @@ public class MessageServiceImpl implements MessageService {
 	private static final String CUSTOMER_NAME_PLACEHOLDER = "[[고객명]]";
 	private final MemberRepository memberRepository;
 	private final CustomerRepository customerRepository;
+	private final CustomTemplateRepository customTemplateRepository;
 	private final CustomerTagRepository customerTagRepository;
 	private final TagRepository tagRepository;
 	private final MessageRepository messageRepository;
@@ -130,6 +133,14 @@ public class MessageServiceImpl implements MessageService {
 		messageRepository.saveAndFlush(originMessage);
 
 		sender.increaseMessageCount();
+
+		if (sendMessageRequest.getCustomTemplateId() != null) {
+			CustomTemplate customTemplate = customTemplateRepository.findById(sendMessageRequest.getCustomTemplateId())
+				.orElse(null);
+			if (customTemplate != null) {
+				customTemplate.countUp();
+			}
+		}
 
 		//TODO: messageTag 생성 및 저장
 		List<MessageTag> messageTags = tags.stream()
