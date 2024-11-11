@@ -46,7 +46,9 @@ export const postRefreshTokenAPI = async () => {
     },
   );
 
-  if (response.data.code === "S10000") {
+  const accessToken = response.headers["authorization"];
+
+  if (response.data.code === "S10000" && accessToken !== undefined) {
     Cookies.set("accessToken", response.data.accessToken, { expires: 1 });
     return true;
   }
