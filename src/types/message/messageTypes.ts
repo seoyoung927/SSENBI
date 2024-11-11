@@ -18,6 +18,7 @@ export type MessagePostPropsType = {
   messageCustomerIds?: number[];
   messageTagIds?: number[];
   messageContent: string;
+  customTemplateId?: string;
 };
 
 export const SORTOPTIONS = {
