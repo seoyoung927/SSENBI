@@ -16,7 +16,9 @@ export default function CustomizedPage() {
   return (
     <div className="page-container">
       <Header title="커스텀" />
+
       <CustomizedList />
+
       <FloatingActionButton onClick={handleNewTemplate} text={"커스텀 추가"} />
     </div>
   );
