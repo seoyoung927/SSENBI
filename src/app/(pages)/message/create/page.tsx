@@ -64,7 +64,7 @@ function MessageCreateContent() {
     }
   };
 
-  const handleSend = debounce(async () => {
+  const sendMessage = debounce(async () => {
     try {
       const messageData: MessagePostPropsType = {
         messageCustomerIds: customers.map((customer) => customer.customerId),
@@ -79,7 +79,7 @@ function MessageCreateContent() {
     } catch (err) {
       console.error("Error sending message:", err);
     }
-  }, 3000);
+  }, 1500);
 
   const handleCancel = () => {
     router.push("/message");
@@ -180,7 +180,7 @@ function MessageCreateContent() {
             쎈비 AI 도움 받기
           </button>
           <button
-            onClick={handleSend}
+            onClick={sendMessage}
             type="button"
             className="message_button message-new_button-send"
           >
