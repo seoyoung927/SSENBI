@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import {
   deleteCustomTemplateAPI,
   getCustomTemplateAPI,
+  postCustomTemplateAPI,
   putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
 import Modal from "@/app/components/common/modal/Modal";
@@ -50,6 +51,8 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const [modifiedTemplate, setModifiedTemplate] =
     useState<CustomTemplate | null>(null);
   const [isSaveMessageVisible, setIsSaveMessageVisible] =
+    useState<boolean>(false);
+  const [isSaveAsMessageVisible, setIsSaveAsMessageVisible] =
     useState<boolean>(false);
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
@@ -102,6 +105,14 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const clearBatchText = () => {
     setBatchTextFrom("");
     setBatchTextTo("");
+  };
+
+  const displaySaveAsWindow = async () => {
+    setIsSaveAsMessageVisible(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+
+    setIsSaveAsMessageVisible(false);
   };
 
   const displayEditWindow = () => {
@@ -212,12 +223,36 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     }
   };
 
+  const handleSaveAsTemplate = async () => {
+    const token = Cookies.get("acessToken");
+    if (modifiedTemplate) {
+      const response = await postCustomTemplateAPI({
+        title: modifiedTemplate?.templateTitle,
+        content: modifiedTemplate?.templateContent,
+        tagIds: modifiedTemplate?.templateTags.map((tag) => tag.tagId),
+        customers: modifiedTemplate?.templateCustomers.map(
+          (customer) => customer.customerId,
+        ),
+      });
+
+      console.log("handleSaveAsTemplate response", response);
+
+      displaySaveAsWindow();
+
+      router.push(`/customized/`);
+    }
+  };
+
   return (
     <div className="page-container">
       <Header title="커스텀" showBackIcon={true} />
 
       {isSaveMessageVisible && (
         <div className="save-message">글이 수정되었습니다!</div>
+      )}
+
+      {isSaveAsMessageVisible && (
+        <div className="save-message">글이 복제되었습니다!</div>
       )}
 
       <div className="customized-info-list">
@@ -303,13 +338,23 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       </div>
 
       <div className="customized-button-group">
-        <button
-          onClick={handleDelete}
-          type="button"
-          className="customized-detail_button red_button"
-        >
-          삭제
-        </button>
+        {isEdit ? (
+          <button
+            onClick={handleSaveAsTemplate}
+            type="button"
+            className="customized-detail_button blue_button"
+          >
+            {"다른 이름으로 저장하기"}
+          </button>
+        ) : (
+          <button
+            onClick={handleDelete}
+            type="button"
+            className="customized-detail_button red_button"
+          >
+            삭제
+          </button>
+        )}
         <button
           onClick={handleOpenAIModal}
           type="button"
