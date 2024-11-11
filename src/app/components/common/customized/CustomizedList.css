@@ -63,7 +63,11 @@
 .customized_sort-container {
   display: flex;
   justify-content: flex-end;
-  margin: 12px;
+  position: sticky;
+  top: 65px;
+  left: 0;
+  background-color: var(--bg-default);
+  padding: 12px;
 }
 
 .customized_field-wrapper {
