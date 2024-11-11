@@ -28,34 +28,26 @@ export default function CustomizedList() {
     useState<ApiResponse>([]);
 
   useEffect(() => {
-    const fetchCustomTemplates = async () => {
-      try {
-        const token = Cookies.get("accessToken");
-
-        const data = await getCustomTemplatesAPI({
-          token,
-          sort: SORTOPTIONS[curSortOption],
-        });
-        console.log("customized data", data);
-        setFilteredMessageTemplates(data.result);
-      } catch (error) {
-        console.error("Error fetching message:", error);
-        alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchCustomTemplates();
   }, [curSortOption]);
 
-  if (isLoading) {
-    return (
-      <div className="loading_container">
-        <HashLoader color="#008fff" size={150} />
-      </div>
-    );
-  }
+  const fetchCustomTemplates = async () => {
+    try {
+      const token = Cookies.get("accessToken");
+
+      const data = await getCustomTemplatesAPI({
+        token,
+        sort: SORTOPTIONS[curSortOption],
+      });
+      console.log("customized data", data);
+      setFilteredMessageTemplates(data.result);
+    } catch (error) {
+      console.error("Error fetching message:", error);
+      alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
     setCurSortOption(key);
@@ -73,10 +65,20 @@ export default function CustomizedList() {
       });
 
       console.log("dupicate", respose);
+
+      fetchCustomTemplates();
     } catch (err) {
       console.error(err);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="loading_container">
+        <HashLoader color="#008fff" size={150} />
+      </div>
+    );
+  }
 
   return (
     <div className="customiedList-container">

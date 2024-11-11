@@ -16,7 +16,7 @@ import axiosInstance from "../axiosInstance";
 export const getCustomTemplatesAPI = async ({
   token,
   page,
-  size,
+  size = 50,
   sort,
   // templateTags,
   // templateCustomers,
