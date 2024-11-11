@@ -73,13 +73,13 @@ export const postCustomTemplateAPI = async ({
   title,
   content,
   tagIds,
-  customers,
+  customerIds,
 }: PostCustomTemplateParamsType) => {
   const response = await axiosInstance.post("/customTemplate", {
     templateTitle: title,
     templateContent: content,
     templateTagIds: tagIds,
-    templateCustomerIds: customers,
+    templateCustomerIds: customerIds,
   });
   return response.data;
 };

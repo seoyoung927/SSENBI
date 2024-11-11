@@ -62,29 +62,25 @@ export default function CustomizedList() {
   }, [curSortOption]);
 
   useEffect(() => {
-    const filteredByCustomers =
-      selectedCustomers.length === 0
-        ? templates
-        : templates.filter((template) =>
-            selectedCustomers.every((customer) =>
-              template.templateCustomers.some(
-                (templateCustomer) =>
-                  templateCustomer.customerId === customer.customerId,
-              ),
-            ),
-          );
-    const filteredByTags =
-      selectedTags.length === 0
-        ? filteredByCustomers
-        : filteredByCustomers.filter((template) =>
-            selectedTags.every((tag) =>
-              template.templateTags.some(
-                (templateTag) => templateTag.tagId === tag.tagId,
-              ),
-            ),
-          );
+    const filtered = templates.filter((template) => {
+      const customerIncluded = selectedCustomers.some((customer) =>
+        template.templateCustomers.some(
+          (templateCustomer) =>
+            templateCustomer.customerId === customer.customerId,
+        ),
+      );
+      const tagIncluded = selectedTags.some((tag) =>
+        template.templateTags.some(
+          (templateTag) => templateTag.tagId === tag.tagId,
+        ),
+      );
 
-    setFilteredTemplates(filteredByTags);
+      return selectedCustomers.length === 0 && selectedTags.length === 0
+        ? true
+        : customerIncluded || tagIncluded;
+    });
+
+    setFilteredTemplates(filtered);
   }, [selectedCustomers, selectedTags, templates]);
 
   if (isLoading) {
