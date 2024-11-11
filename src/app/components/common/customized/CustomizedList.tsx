@@ -6,57 +6,71 @@ import Image from "next/image";
 import "./CustomizedList.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
+  CustomMessagesType,
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
-import { CustomerType } from "@/types/customer/customerType";
-import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";
-import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
+import {
+  getCustomTemplatesAPI,
+  postCustomTemplateDuplicationAPI,
+} from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
 import Cookies from "js-cookie";
 
-// Custom Template 타입 정의
-interface CustomTemplate {
-  templateId: number;
-  templateTitle: string;
-  templateContent: string;
-  templateUsageCount: number;
-  templateCreatedAt: string;
-  templateTags: TagType[];
-  templateCustomers: CustomerType[];
-}
-
 // ApiResponse 타입 정의
-type ApiResponse = CustomTemplate[];
+type ApiResponse = CustomMessagesType[];
 
 export default function CustomizedList() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
   const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
     useState<ApiResponse>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchCustomTemplates = async () => {
-      try {
-        const token = Cookies.get("accessToken");
-
-        const data = await getCustomTemplatesAPI({
-          token,
-          sort: SORTOPTIONS[curSortOption],
-        });
-        console.log("customized data", data);
-        setFilteredMessageTemplates(data.result);
-      } catch (error) {
-        console.error("Error fetching message:", error);
-        alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchCustomTemplates();
   }, [curSortOption]);
+
+  const fetchCustomTemplates = async () => {
+    try {
+      const token = Cookies.get("accessToken");
+
+      const data = await getCustomTemplatesAPI({
+        token,
+        sort: SORTOPTIONS[curSortOption],
+      });
+      console.log("customized data", data);
+      setFilteredMessageTemplates(data.result);
+    } catch (error) {
+      console.error("Error fetching message:", error);
+      alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
+    setCurSortOption(key);
+  };
+
+  const duplicateCustomized = async (
+    templateId: number,
+    event: React.MouseEvent,
+  ) => {
+    event.preventDefault();
+    try {
+      const respose = await postCustomTemplateDuplicationAPI({
+        templateId,
+        isReplicateTagAndCustomer: true,
+      });
+
+      console.log("dupicate", respose);
+
+      fetchCustomTemplates();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -65,10 +79,6 @@ export default function CustomizedList() {
       </div>
     );
   }
-
-  const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
-    setCurSortOption(key);
-  };
 
   return (
     <div className="customiedList-container">
@@ -90,10 +100,8 @@ export default function CustomizedList() {
             href={`/customized/${message.templateId}`}
           >
             <CustomizedCard
-              title={message?.templateTitle}
-              content={message?.templateContent}
-              tags={message?.templateTags}
-              customers={message?.templateCustomers}
+              customMessage={message}
+              duplicateCustomized={duplicateCustomized}
             />
           </Link>
         ))
