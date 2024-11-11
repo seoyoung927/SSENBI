@@ -7,7 +7,7 @@ import CopyIcon from "@/app/assets/svg/Copy.svg";
 
 interface MessageCardProps {
   customMessage: CustomMessagesType;
-  duplicateCustomized: (templateId: number, event: React.MouseEvent) => void;
+  duplicateCustomized?: (templateId: number, event: React.MouseEvent) => void;
 }
 
 export default function CustomizedCard({
@@ -32,9 +32,11 @@ export default function CustomizedCard({
       <div className="customized-card-header">
         <p className="customized-card__title subheading">{templateTitle}</p>
 
-        <div onClick={(e) => duplicateCustomized(templateId, e)}>
-          <CopyIcon className="copy-icon" />
-        </div>
+        {duplicateCustomized && (
+          <div onClick={(e) => duplicateCustomized(templateId, e)}>
+            <CopyIcon className="copy-icon" />
+          </div>
+        )}
       </div>
 
       <p className="customized-card__content body">{templateContent}</p>
