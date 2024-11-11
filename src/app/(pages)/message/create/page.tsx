@@ -17,6 +17,7 @@ import HashLoading from "@/app/components/common/loading/HashLoading";
 import UploadIcon from "@/app/assets/svg/Upload.svg";
 import CustomizedListSelector from "@/app/components/common/customized/CustomizedListSelector";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
+import { debounce } from "lodash";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -63,7 +64,7 @@ function MessageCreateContent() {
     }
   };
 
-  const handleSend = async () => {
+  const handleSend = debounce(async () => {
     try {
       const messageData: MessagePostPropsType = {
         messageCustomerIds: customers.map((customer) => customer.customerId),
@@ -78,7 +79,7 @@ function MessageCreateContent() {
     } catch (err) {
       console.error("Error sending message:", err);
     }
-  };
+  }, 3000);
 
   const handleCancel = () => {
     router.push("/message");
