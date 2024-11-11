@@ -3,12 +3,17 @@ import "./CustomizedCard.css";
 import BorderTag from "../tag/BorderTag";
 import FilledTag from "../tag/FilledTag";
 import { CustomMessagesType } from "@/types/customized/customizedTypes";
+import CopyIcon from "@/app/assets/svg/Copy.svg";
 
 interface MessageCardProps {
   customMessage: CustomMessagesType;
+  duplicateCustomized: (templateId: number, event: React.MouseEvent) => void;
 }
 
-export default function CustomizedCard({ customMessage }: MessageCardProps) {
+export default function CustomizedCard({
+  customMessage,
+  duplicateCustomized,
+}: MessageCardProps) {
   const {
     templateId,
     templateTitle,
@@ -24,7 +29,14 @@ export default function CustomizedCard({ customMessage }: MessageCardProps) {
 
   return (
     <div className="customized-card" key={templateId}>
-      <p className="customized-card__title subheading">{templateTitle}</p>
+      <div className="customized-card-header">
+        <p className="customized-card__title subheading">{templateTitle}</p>
+
+        <div onClick={(e) => duplicateCustomized(templateId, e)}>
+          <CopyIcon className="copy-icon" />
+        </div>
+      </div>
+
       <p className="customized-card__content body">{templateContent}</p>
 
       <div className="customized-card__stats">
