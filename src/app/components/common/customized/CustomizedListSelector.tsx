@@ -78,6 +78,7 @@ export default function CustomizedListSelector({
         filteredMessages.map((message) => (
           <div
             onClick={() => getCustomTemplate(message.templateId)}
+            className="customized-container"
             key={message.templateId}
           >
             <CustomizedCard customMessage={message} />
