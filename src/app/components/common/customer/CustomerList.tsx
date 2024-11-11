@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 import "./CustomerList.css";
 import { CustomerType } from "@/types/customer/customerType";
 import { getCustomersAPI } from "@/app/api/customer/customerAPI";
-import TagFilter from "../tag/TagFilter";
 import { TagType } from "@/types/tag/tagTypes";
+import TagList from "../tag/TagList";
 
 export default function CustomerList() {
   const router = useRouter();
@@ -45,10 +45,7 @@ export default function CustomerList() {
     <>
       <div className="controller">
         <SearchBar onChange={setSearchValue} />
-        <TagFilter
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
-        />
+        <TagList tags={selectedTags} setTags={setSelectedTags} />
       </div>
       <ul className="customer-list">
         {filteredCustomers.map((customer) => (

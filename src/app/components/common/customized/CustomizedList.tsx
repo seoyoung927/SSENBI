@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
 import Cookies from "js-cookie";
+import TagList from "../tag/TagList";
+import CustomerTagList from "../tag/CustomerTagList";
 
 // Custom Template 타입 정의
 interface CustomTemplate {
@@ -32,21 +34,22 @@ type ApiResponse = CustomTemplate[];
 
 export default function CustomizedList() {
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
-  const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
-    useState<ApiResponse>([]);
+  const [templates, setTemplates] = useState<ApiResponse>([]);
+  const [filteredTemplates, setFilteredTemplates] = useState<ApiResponse>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
+    [],
+  );
+  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
 
   useEffect(() => {
     const fetchCustomTemplates = async () => {
       try {
-        const token = Cookies.get("accessToken");
-
-        const data = await getCustomTemplatesAPI({
-          token,
+        const { result } = await getCustomTemplatesAPI({
           sort: SORTOPTIONS[curSortOption],
         });
-        console.log("customized data", data);
-        setFilteredMessageTemplates(data.result);
+        console.log(result);
+        setTemplates(result);
       } catch (error) {
         console.error("Error fetching message:", error);
         alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
@@ -57,6 +60,32 @@ export default function CustomizedList() {
 
     fetchCustomTemplates();
   }, [curSortOption]);
+
+  useEffect(() => {
+    const filteredByCustomers =
+      selectedCustomers.length === 0
+        ? templates
+        : templates.filter((template) =>
+            selectedCustomers.every((customer) =>
+              template.templateCustomers.some(
+                (templateCustomer) =>
+                  templateCustomer.customerId === customer.customerId,
+              ),
+            ),
+          );
+    const filteredByTags =
+      selectedTags.length === 0
+        ? filteredByCustomers
+        : filteredByCustomers.filter((template) =>
+            selectedTags.every((tag) =>
+              template.templateTags.some(
+                (templateTag) => templateTag.tagId === tag.tagId,
+              ),
+            ),
+          );
+
+    setFilteredTemplates(filteredByTags);
+  }, [selectedCustomers, selectedTags, templates]);
 
   if (isLoading) {
     return (
@@ -73,6 +102,13 @@ export default function CustomizedList() {
   return (
     <div className="customiedList-container">
       <div className="customized_sort-container">
+        <div className="customized-filters">
+          <TagList tags={selectedTags} setTags={setSelectedTags} />
+          <CustomerTagList
+            customers={selectedCustomers}
+            setCustomers={setSelectedCustomers}
+          />
+        </div>
         <SortSelect
           curOption={curSortOption}
           options={Object.keys(SORTOPTIONS)}
@@ -82,9 +118,8 @@ export default function CustomizedList() {
         />
       </div>
 
-      {filteredCustomMessageTemplates &&
-      filteredCustomMessageTemplates.length > 0 ? (
-        filteredCustomMessageTemplates.map((message) => (
+      {filteredTemplates && filteredTemplates.length > 0 ? (
+        filteredTemplates.map((message) => (
           <Link
             key={message.templateId}
             href={`/customized/${message.templateId}`}

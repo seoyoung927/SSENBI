@@ -62,12 +62,38 @@
 
 .customized_sort-container {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
   position: sticky;
   top: 65px;
   left: 0;
   background-color: var(--bg-default);
   padding: 12px;
+}
+
+@media (max-width: 480px) {
+  .customized_sort-container {
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+.customized-filters {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* width: 100%; */
+
+  & > * {
+    transition: background-color 0.2s;
+    border-radius: 12px;
+    padding: 4px 8px;
+
+    &:hover {
+      background-color: var(--bg-hover-default);
+    }
+  }
 }
 
 .customized_field-wrapper {
