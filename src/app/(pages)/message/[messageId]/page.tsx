@@ -74,9 +74,9 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
         <div className="message-info">
           <p className="subheading">보낸사람</p>
           <p className="body">
-            {/* {messageData?.messageCustomers
+            {messageData?.messageCustomers
               .map((customer) => customer.customerName)
-              .join(", ")} */}
+              .join(", ")}
           </p>
         </div>
         <div className="message-info">
