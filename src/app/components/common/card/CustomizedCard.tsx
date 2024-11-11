@@ -1,33 +1,34 @@
 import React from "react";
 import "./CustomizedCard.css";
 import BorderTag from "../tag/BorderTag";
-import { TagType } from "@/types/tag/tagTypes";
 import FilledTag from "../tag/FilledTag";
-import { CustomerType } from "@/types/customer/customerType";
+import { CustomMessagesType } from "@/types/customized/customizedTypes";
 
 interface MessageCardProps {
-  title: string;
-  content: string;
-  tags: TagType[];
-  customers: CustomerType[];
+  customMessage: CustomMessagesType;
 }
 
-export default function CustomizedCard({
-  title = "",
-  content,
-  tags,
-  customers,
-}: MessageCardProps) {
+export default function CustomizedCard({ customMessage }: MessageCardProps) {
+  const {
+    templateId,
+    templateTitle,
+    templateContent,
+    templateUsageCount,
+    templateCreatedAt,
+    templateTags,
+    templateCustomers,
+  } = customMessage;
+
   return (
     <div className="customized-card">
-      <p className="customized-card__content subheading">{title}</p>
-      <p className="customized-card__content body">{content}</p>
+      <p className="customized-card__content subheading">{templateTitle}</p>
+      <p className="customized-card__content body">{templateContent}</p>
 
       <div className="customized-card__details">
         {/* todo : tagList */}
         <div className="customized-tag-container">
           {/* created_at width 제외하고 100% overflow hidden */}
-          {tags.map((tag) => (
+          {templateTags.map((tag) => (
             <BorderTag
               key={tag.tagId}
               color={tag.tagColor}
@@ -35,7 +36,7 @@ export default function CustomizedCard({
             />
           ))}
 
-          {customers.map((customer) => (
+          {templateCustomers.map((customer) => (
             <FilledTag
               key={customer.customerId}
               color={customer.customerColor}

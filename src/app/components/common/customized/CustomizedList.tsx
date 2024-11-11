@@ -6,35 +6,23 @@ import Image from "next/image";
 import "./CustomizedList.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
+  CustomMessagesType,
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
-import { CustomerType } from "@/types/customer/customerType";
-import { TagType } from "@/types/tag/tagTypes";
 import { useEffect, useState } from "react";
 import { getCustomTemplatesAPI } from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
 import Cookies from "js-cookie";
 
-// Custom Template 타입 정의
-interface CustomTemplate {
-  templateId: number;
-  templateTitle: string;
-  templateContent: string;
-  templateUsageCount: number;
-  templateCreatedAt: string;
-  templateTags: TagType[];
-  templateCustomers: CustomerType[];
-}
-
 // ApiResponse 타입 정의
-type ApiResponse = CustomTemplate[];
+type ApiResponse = CustomMessagesType[];
 
 export default function CustomizedList() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
   const [filteredCustomMessageTemplates, setFilteredMessageTemplates] =
     useState<ApiResponse>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCustomTemplates = async () => {
@@ -89,12 +77,7 @@ export default function CustomizedList() {
             key={message.templateId}
             href={`/customized/${message.templateId}`}
           >
-            <CustomizedCard
-              title={message?.templateTitle}
-              content={message?.templateContent}
-              tags={message?.templateTags}
-              customers={message?.templateCustomers}
-            />
+            <CustomizedCard customMessage={message} />
           </Link>
         ))
       ) : (
