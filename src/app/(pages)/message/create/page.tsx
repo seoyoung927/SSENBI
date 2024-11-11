@@ -17,6 +17,7 @@ import HashLoading from "@/app/components/common/loading/HashLoading";
 import UploadIcon from "@/app/assets/svg/Upload.svg";
 import CustomizedListSelector from "@/app/components/common/customized/CustomizedListSelector";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
+import { debounce } from "lodash";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -30,6 +31,8 @@ function MessageCreateContent() {
   // State for batch editing
   const [batchTextFrom, setBatchTextFrom] = useState<string>("");
   const [batchTextTo, setBatchTextTo] = useState<string>("");
+  const [isSaveMessageVisible, setIsSaveMessageVisible] =
+    useState<boolean>(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -63,7 +66,7 @@ function MessageCreateContent() {
     }
   };
 
-  const handleSend = async () => {
+  const sendMessage = debounce(async () => {
     try {
       const messageData: MessagePostPropsType = {
         messageCustomerIds: customers.map((customer) => customer.customerId),
@@ -75,10 +78,12 @@ function MessageCreateContent() {
       console.log("Sending message data:", messageData);
       const response = await postSendMessageAPI(messageData);
       console.log("Post response:", response);
+      setIsSaveMessageVisible(true);
+      setTimeout(() => setIsSaveMessageVisible(false), 3000);
     } catch (err) {
       console.error("Error sending message:", err);
     }
-  };
+  }, 1500);
 
   const handleCancel = () => {
     router.push("/message");
@@ -126,6 +131,10 @@ function MessageCreateContent() {
   return (
     <div className="page-container">
       <Header title="새 메시지" showBackIcon={true} />
+
+      {isSaveMessageVisible && (
+        <div className="save-message">메세지를 성공적으로 보냈습니다!</div>
+      )}
 
       <div className="message-form">
         <div className="space-between">
@@ -179,7 +188,7 @@ function MessageCreateContent() {
             쎈비 AI 도움 받기
           </button>
           <button
-            onClick={handleSend}
+            onClick={sendMessage}
             type="button"
             className="message_button message-new_button-send"
           >

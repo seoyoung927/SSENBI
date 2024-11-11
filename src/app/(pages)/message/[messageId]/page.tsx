@@ -84,7 +84,7 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
           <div className="message-info_tag-list">
             {messageData?.messageTags.map((tag) => (
               <BorderTag
-                key={tag.tagId}
+                key={tag.tagName}
                 color={tag.tagColor}
                 tagName={tag.tagName}
               />
