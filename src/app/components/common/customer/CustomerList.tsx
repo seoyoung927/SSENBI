@@ -9,10 +9,25 @@ import { useEffect, useState } from "react";
 import "./CustomerList.css";
 import { CustomerType } from "@/types/customer/customerType";
 import { getCustomersAPI } from "@/app/api/customer/customerAPI";
+import TagFilter from "../tag/TagFilter";
+import { TagType } from "@/types/tag/tagTypes";
 
 export default function CustomerList() {
   const router = useRouter();
+  const [searchValue, setSearchValue] = useState<string>("");
   const [customers, setCustomers] = useState<CustomerType[]>([]);
+  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
+  const filteredCustomers = customers.filter((customer) => {
+    const searchIncluded = customer.customerName.includes(searchValue);
+
+    if (!searchIncluded) return false;
+    return (
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) =>
+        customer.customerTags.some((t) => t.tagId === tag.tagId),
+      )
+    );
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,10 +37,6 @@ export default function CustomerList() {
     fetchData();
   }, []);
 
-  // TODO: 검색구현
-  const handleSearch = (value: string) => {
-    console.log(value);
-  };
   const handleCreateCustomer = () => {
     router.push("/customer/create");
   };
@@ -33,12 +44,14 @@ export default function CustomerList() {
   return (
     <>
       <div className="controller">
-        {/* TODO: 태그 필터 */}
-        <div>TODO: 태그 필터</div>
-        <SearchBar onChange={handleSearch} />
+        <SearchBar onChange={setSearchValue} />
+        <TagFilter
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+        />
       </div>
       <ul className="customer-list">
-        {customers.map((customer) => (
+        {filteredCustomers.map((customer) => (
           <li key={customer.customerId} className="customer-item">
             <Link href={`/customer/${customer.customerId}`}>
               <CustomerCard
