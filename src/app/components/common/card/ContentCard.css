@@ -3,6 +3,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
+  flex-wrap: wrap;
   border: 1px solid #f5f5f5;
   border-radius: 12px;
   padding: 16px;
@@ -19,6 +20,11 @@
 
 .content-card:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+/* Apply color change on hover to title and description only */
+.content-card:hover .content-card__title,
+.content-card:hover .content-card__description {
+  color: var(--blue-500);
 }
 
 .content-card__image-container {
@@ -42,11 +48,22 @@
   justify-content: flex-start;
 }
 
+.content-card__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .content-card__title {
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 8px;
+}
+
+.content-card__button-copy {
+  background-color: inherit;
+  color: var(--text-secondary);
 }
 
 .content-card__description {
@@ -55,6 +72,11 @@
   line-height: 1.5;
 }
 
-.content-card {
-  flex-wrap: wrap;
+.copy-icon {
+  opacity: 0.1;
+  cursor: pointer;
+}
+
+.copy-icon:hover {
+  opacity: 1;
 }

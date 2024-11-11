@@ -21,6 +21,7 @@ const INITIALMEMBERDATA = {
   customerCount: 0,
   messageCount: 0,
 };
+
 export default function MypagePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tags, setTags] = useState<TagType[]>([]);
@@ -35,7 +36,6 @@ export default function MypagePage() {
   const fetchMemberData = async () => {
     try {
       const response = await getMemberOverViewAPI();
-      console.log("member response", response);
       setMemberData(response.result);
     } catch (err) {
       console.error(err);
@@ -53,9 +53,11 @@ export default function MypagePage() {
       setIsLoading(false);
     }
   };
+
   if (isLoading) {
     return <HashLoading />;
   }
+
   return (
     <div className="page-container">
       <Header title="마이페이지" />
