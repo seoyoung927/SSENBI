@@ -14,7 +14,7 @@ interface MessageTemplateType {
 export default async function TemplatePage() {
   const response = await getTemplateAPI();
 
-  const fetchedCategories: string[] = ["✨Top10"];
+  const fetchedCategories: string[] = ["인기"];
   const templatesByCategory: MessageTemplateType[][] = [];
   const allTemplates: MessageTemplateType[] = [];
 

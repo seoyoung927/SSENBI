@@ -55,9 +55,6 @@
 }
 
 .content-card__title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -67,7 +64,9 @@
 }
 
 .content-card__description {
-  font-size: 1rem;
+  max-height: 84px;
+  overflow: hidden;
+  font-size: 0.9em;
   color: var(--text-secondary);
   line-height: 1.5;
 }
