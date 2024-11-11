@@ -68,6 +68,7 @@
 
 .tag-container {
   width: 100%;
+  min-width: 200px;
 }
 
 .message-get_button {
