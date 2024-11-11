@@ -63,9 +63,6 @@ export default function MessagePage() {
           onChange={handleSearchChange}
           placeholder="검색어 (이름, 제목, 태그)"
         />
-      </div>
-
-      <div className="message_sort-container">
         <SortSelect
           curOption={curSortOption}
           options={Object.keys(SORTOPTIONS)}

@@ -85,11 +85,7 @@ export default function Template() {
   return (
     <div className="page-container">
       <Banner />
-
-      <div>
-        <NavigationBar tabs={categoryList} onTabChange={handleTabChange} />
-      </div>
-
+      <NavigationBar tabs={categoryList} onTabChange={handleTabChange} />
       {filteredMessageTemplates?.map((message, index) => (
         <Link key={index} href={`/template/${message.templateId}`}>
           <ContentCard

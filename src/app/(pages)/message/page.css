@@ -1,14 +1,15 @@
 .search-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 12px;
+  position: sticky;
+  top: 65px;
+  background-color: var(--bg-default);
   width: 100%;
-  padding: 24px 12px;
+  padding: 12px;
 }
 
 .message-list {
   margin-top: 16px;
-}
-
-.message_sort-container {
-  display: flex;
-  justify-content: flex-end;
-  margin: 12px;
 }

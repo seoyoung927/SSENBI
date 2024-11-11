@@ -1,4 +1,7 @@
 .navigation-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
   background-color: var(--bg-default);
   white-space: nowrap;
   overflow-x: auto;
