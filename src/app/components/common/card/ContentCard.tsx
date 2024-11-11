@@ -34,16 +34,18 @@ export default function ContentCard({
             className="content-card__image"
             width={150}
             height={150}
+            quality={50}
+            sizes="(max-width: 768px) 50vw, 150px"
           />
         </div>
         <div className="content-card__details">
           <div className="content-card__title-wrapper">
-            <h2 className="content-card__title">{title}</h2>
+            <h2 className="content-card__title subheading">{title}</h2>
             <button className="content-card__button-copy" onClick={handleCopy}>
               <CopyIcon className="copy-icon" />
             </button>
           </div>
-          <p className="content-card__description">{content}</p>
+          <p className="content-card__description body">{content}</p>
         </div>
       </div>
     </Link>

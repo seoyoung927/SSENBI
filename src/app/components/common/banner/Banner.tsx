@@ -8,7 +8,6 @@ export default function NavigationBar() {
       <Image
         src="/assets/images/ssenbi_banner.gif"
         alt="banner"
-        unoptimized
         fill
         priority
         sizes="100vw"
