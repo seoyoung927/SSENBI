@@ -11,7 +11,9 @@
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-popover": "^1.1.2",
+    "@types/d3": "^7.4.3",
     "axios": "^1.7.7",
+    "d3": "^7.9.0",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "next": "14.2.15",
