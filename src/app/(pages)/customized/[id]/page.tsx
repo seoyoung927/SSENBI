@@ -164,6 +164,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
   const handleOpenAIModal = () => {
     setIsAIEditModalModalOpen(true);
+    setIsEdit(true);
   };
 
   const handleCloseAIModal = () => {
