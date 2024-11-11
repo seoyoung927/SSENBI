@@ -5,6 +5,7 @@ import {
   GetCustomTemplateParamsType,
   GetCustomTemplatesParamsType,
   PostCustomTemplateCustomerParamsType,
+  PostCustomTemplateDuplicationType,
   PostCustomTemplateParamsType,
   PostCustomTemplateTagParamsType,
   PutCustomTemplateParamsType,
@@ -173,6 +174,19 @@ export const deleteCustomTemplateCustomerAPI = async ({
       headers: {
         Authorization: `Bearer ${token}`,
       },
+    },
+  );
+  return response.data;
+};
+
+export const postCustomTemplateDuplicationAPI = async ({
+  templateId,
+  isReplicateTagAndCustomer,
+}: PostCustomTemplateDuplicationType) => {
+  const response = await axiosInstance.post(
+    `/customTemplate/${templateId}/replicate`,
+    {
+      isReplicateTagAndCustomer,
     },
   );
   return response.data;

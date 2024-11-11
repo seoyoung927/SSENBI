@@ -92,3 +92,8 @@ export type CustomMessagesType = {
   templateTags: TagType[];
   templateCustomers: CustomerType[];
 };
+
+export type PostCustomTemplateDuplicationType = {
+  templateId: number;
+  isReplicateTagAndCustomer: boolean;
+};
