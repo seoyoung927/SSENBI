@@ -64,14 +64,15 @@ public class AuthController {
 
 	@PostMapping("/refresh")
 	public ResponseEntity<ApiResponse<String>> refresh(
-		@CookieValue(value = "refreshToken", defaultValue = "") String refreshToken, HttpServletRequest request) {
+		@CookieValue(value = "refreshToken", defaultValue = "") String refreshToken, HttpServletRequest request,
+		HttpServletResponse response) {
 		if (refreshToken.isEmpty()) {
 			throw new ApiException(ApiType.REFRESH_TOKEN_NOT_EXIST);
 		}
 
 		String sessionId = request.getSession().getId();
 
-		authService.refresh(refreshToken, sessionId);
+		response.addHeader("Authorization", authService.refresh(refreshToken, sessionId).getAccessToken());
 		return ResponseEntity.ok(ApiResponse.ok());
 	}
 
