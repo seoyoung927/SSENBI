@@ -9,6 +9,9 @@ import { TagType } from "@/types/tag/tagTypes";
 import { getMemberOverViewAPI } from "@/app/api/member/memberAPI";
 import HashLoading from "@/app/components/common/loading/HashLoading";
 import { getTagsAPI } from "@/app/api/tag/tagAPI";
+import TopTagsChart from "@/app/components/common/auth/TopTagsChart";
+import { CustomerType } from "@/types/customer/customerType";
+import { getCustomersAPI } from "@/app/api/customer/customerAPI";
 
 interface MemberOverViewType {
   name: string;
@@ -25,12 +28,14 @@ const INITIALMEMBERDATA = {
 export default function MypagePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tags, setTags] = useState<TagType[]>([]);
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [memberData, setMemberData] =
     useState<MemberOverViewType>(INITIALMEMBERDATA);
 
   useEffect(() => {
     fetchMemberData();
     fetchTagsData();
+    fetchCustomerData();
   }, []);
 
   const fetchMemberData = async () => {
@@ -45,13 +50,17 @@ export default function MypagePage() {
   const fetchTagsData = async () => {
     try {
       const response = await getTagsAPI();
-      console.log("tag response", response);
       setTags(response.result.tags);
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const fetchCustomerData = async () => {
+    const { result } = await getCustomersAPI();
+    setCustomers(result);
   };
 
   if (isLoading) {
@@ -68,8 +77,16 @@ export default function MypagePage() {
           sentMessageCount={memberData.messageCount}
         />
         <div className="mypage-content-container">
-          <p className="body-strong">태그</p>
-          <TagList tags={tags} setTags={setTags} />
+          <div className="mypage-content">
+            <p className="mypage-content_title body">태그</p>
+            <TagList tags={tags} setTags={setTags} />
+          </div>
+          <div className="mypage-content">
+            <p className="mypage-content_title body">태그 통계</p>
+            <div className="mypage-content_chart-container">
+              <TopTagsChart data={customers} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
