@@ -230,7 +230,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         title: modifiedTemplate?.templateTitle,
         content: modifiedTemplate?.templateContent,
         tagIds: modifiedTemplate?.templateTags.map((tag) => tag.tagId),
-        customers: modifiedTemplate?.templateCustomers.map(
+        customerIds: modifiedTemplate?.templateCustomers.map(
           (customer) => customer.customerId,
         ),
       });
