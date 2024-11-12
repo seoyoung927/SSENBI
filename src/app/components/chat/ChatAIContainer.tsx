@@ -39,8 +39,12 @@ export default function ChatAIContainer({
   const [messages, setMessages] = useState<MessageType[]>([
     {
       sender: SenderType.NOTICE,
-      description: `안녕하세요! 템플릿을 어떻게 수정할까요?\n현재 템플릿 내용은 다음과 같습니다.\n\n ======================\n\n`,
-      content: `${modifiedContent}\n\n======================\n\n수정 요구사항을 입력해주세요!`,
+      description: `안녕하세요 쎈비입니다!\n`,
+      content: `${
+        modifiedContent
+          ? `현재 템플릿 내용은 다음과 같습니다.\n\n ======================\n\n${modifiedContent}\n\n======================\n\n어떻게 수정을 도와드릴까요?`
+          : `요구사항을 입력해주세요!`
+      }`,
     },
   ]);
 
@@ -67,6 +71,7 @@ export default function ChatAIContainer({
 
     const userMessage: MessageType = {
       sender: SenderType.USER,
+      description: "",
       content: newMessage,
     };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
@@ -87,7 +92,7 @@ export default function ChatAIContainer({
 
       const aiResponse: MessageType = {
         sender: SenderType.AI,
-        description: `쎈비 AI 응답은 다음과 같습니다.\n\n-----------------------\n\n`,
+        description: `쎈비 AI 응답은 다음과 같습니다.\n\n-----------------------\n`,
         content: `${chatResponse.result}`,
       };
       setMessages((prevMessages) => [...prevMessages, aiResponse]);
@@ -116,7 +121,7 @@ export default function ChatAIContainer({
             key={index}
             className={`chat-message ${message.sender === SenderType.USER ? "user-message" : "ai-message"}`}
           >
-            <div className="chat-bubble">{`${message.description}\n${message.content}`}</div>
+            <div className="chat-bubble">{`${message.description}${message.content}`}</div>
             {message.sender === SenderType.AI && (
               <div
                 className="check-icon-container"
