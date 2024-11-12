@@ -168,6 +168,7 @@ function MessageCreateContent() {
             className="form-group_textarea"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            maxLength={300}
           />
         </div>
 

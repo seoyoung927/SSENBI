@@ -144,6 +144,7 @@ export default function ChatAIContainer({
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           className="chat-input"
+          maxLength={300}
         />
         <button onClick={handleSendMessage} className="send-button">
           전송

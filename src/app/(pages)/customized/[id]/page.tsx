@@ -293,6 +293,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
             className="body"
             value={modifiedTemplate?.templateTitle || ""}
             onChange={(e) => handleInputChange(e, "templateTitle")}
+            maxLength={25}
             disabled={!isEdit}
           />
         </div>
@@ -345,6 +346,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
             value={modifiedTemplate?.templateContent || ""}
             onChange={(e) => handleInputChange(e, "templateContent")}
             disabled={!isEdit}
+            maxLength={300}
           />
         </div>
 

@@ -103,6 +103,7 @@ export default function CustomizedNewPage() {
         <textarea
           className="body customized_text-area customized_form-input-field"
           ref={contentRef}
+          maxLength={300}
         />
       </div>
 

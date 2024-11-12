@@ -189,6 +189,7 @@ export default function TagList({
                   ref={inputRef}
                   placeholder="태그 추가"
                   onKeyDown={handleKeyDown}
+                  maxLength={25}
                 />
               </div>
             </div>
@@ -222,6 +223,7 @@ export default function TagList({
                           onChange={handleChangeEditingTag}
                           onBlur={handleEditTag(item, editedTag)}
                           onKeyDown={handleEditTagOnEnter(item, editedTag)}
+                          maxLength={25}
                           autoFocus
                         />
                         <DropdownMenu.Item

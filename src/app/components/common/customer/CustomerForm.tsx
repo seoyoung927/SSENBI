@@ -123,7 +123,11 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
       </div>
       <div className="field-wrapper">
         <label className="label">메모</label>
-        <textarea ref={memoRef} className="body memo form-input-field" />
+        <textarea
+          ref={memoRef}
+          className="body memo form-input-field"
+          maxLength={300}
+        />
       </div>
       <div className="button-group">
         <button onClick={router.back} className="button body-strong">
