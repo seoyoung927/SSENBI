@@ -32,14 +32,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Message {
 
-	@ManyToOne
-	@JoinColumn(name = "member_id")
-	Member member;
-	@Column
-	String content;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "member_id")
+	Member member;
+
+	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
+	String content;
+
 	@Builder.Default
 	@OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
 	private List<MessageCustomer> messageCustomers = new ArrayList<>();
