@@ -1,42 +1,29 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { CustomerType } from "@/types/customer/customerType";
+import { useEffect, useRef } from "react";
 
 interface TopTagsChartProps {
-  data: CustomerType[];
+  data: { tagName: string; count: number; color: string }[];
 }
 
 export default function TopTagsChart({ data }: TopTagsChartProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    // 태그 카운트를 저장할 객체 초기화 (count와 color 포함)
-    const tagCounts: Record<string, { count: number; color: string }> = {};
-    data.forEach((customer) => {
-      customer.customerTags.forEach((tag) => {
-        if (!tagCounts[tag.tagName]) {
-          tagCounts[tag.tagName] = { count: 0, color: tag.tagColor };
-        }
-        tagCounts[tag.tagName].count += 1;
-      });
-    });
+    if (!svgRef.current) return;
 
-    // 상위 5개의 태그 데이터를 처리
-    const sortedTags = Object.entries(tagCounts)
-      .map(([tagName, { count, color }]) => ({ tagName, count, color }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
+    const svg = svgRef.current;
+    const containerWidth = Math.min(svg.parentElement?.clientWidth || 500, 500);
+    const containerHeight = svg.parentElement?.clientHeight || 300;
+    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    const width = containerWidth - margin.right - margin.left;
+    const height = containerHeight - margin.top - margin.bottom;
 
-    // 차트의 크기와 여백 설정
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
-    const width = 500 - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
+    const d3Svg = d3.select(svg);
+    d3Svg.selectAll("*").remove();
 
-    // SVG 요소를 생성하고 이전 내용을 지움
-    const svg = d3
-      .select(svgRef.current)
+    d3Svg
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .attr(
@@ -45,40 +32,38 @@ export default function TopTagsChart({ data }: TopTagsChartProps) {
       )
       .attr("preserveAspectRatio", "xMidYMid meet");
 
-    svg.selectAll("*").remove(); // 이전 내용을 제거
-
-    const chartArea = svg
+    const chartArea = d3Svg
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // 스케일 설정
-    const barWidth =
-      sortedTags.length < 5 ? (width / 5) * sortedTags.length : width;
     const x = d3
       .scaleBand()
-      .domain(sortedTags.map((d) => d.tagName))
-      .range([0, barWidth])
+      .domain(data.map((d) => d.tagName))
+      .range([0, width])
       .padding(0.1);
-
+    const maxCount = d3.max(data, (d) => d.count) || 0;
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(sortedTags, (d) => d.count) || 0])
+      .domain([0, maxCount + 1])
       .nice()
       .range([height, 0]);
 
-    // x축 추가
     chartArea
       .append("g")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x));
+    chartArea.append("g").call(d3.axisLeft(y).ticks(1));
 
-    // y축 추가
-    chartArea.append("g").call(d3.axisLeft(y));
+    chartArea.append("g").call(
+      d3
+        .axisLeft(y)
+        .ticks(maxCount + 1)
+        .tickFormat(d3.format("d")),
+    );
 
-    // 태그 색상으로 막대 추가
     chartArea
       .selectAll(".bar")
-      .data(sortedTags)
+      .data(data)
       .enter()
       .append("rect")
       .attr("class", "bar")
@@ -86,12 +71,11 @@ export default function TopTagsChart({ data }: TopTagsChartProps) {
       .attr("y", (d) => y(d.count)!)
       .attr("width", x.bandwidth())
       .attr("height", (d) => height - y(d.count)!)
-      .attr("fill", (d) => `var(--${d.color.toLowerCase()}-100)`); // 태그의 배경색 사용
+      .attr("fill", (d) => `var(--${d.color.toLowerCase()}-100)`);
 
-    // 각 막대 위에 레이블 추가
     chartArea
       .selectAll(".label")
-      .data(sortedTags)
+      .data(data)
       .enter()
       .append("text")
       .attr("x", (d) => x(d.tagName)! + x.bandwidth() / 2)
@@ -99,12 +83,17 @@ export default function TopTagsChart({ data }: TopTagsChartProps) {
       .attr("text-anchor", "middle")
       .text((d) => d.count)
       .attr("class", "label");
-
-    // 컴포넌트가 언마운트될 때 차트 정리
-    return () => {
-      svg.selectAll("*").remove();
-    };
   }, [data]);
 
-  return <svg ref={svgRef} style={{ width: "100%", height: "auto" }} />;
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "auto",
+      }}
+    >
+      <svg ref={svgRef} style={{ width: "100%", height: "auto" }} />
+    </div>
+  );
 }

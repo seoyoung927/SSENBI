@@ -33,7 +33,7 @@ export default function UserInfoCard({
   return (
     <div className="user-info-card">
       <div className="user-info_name-container">
-        <span className="heading user-info_name">{name}</span>
+        <span className="user-info_name subheading">{name}</span>
         <div className="user-info_icon" onClick={handleSettingsClick}>
           <SettingIcon />
         </div>

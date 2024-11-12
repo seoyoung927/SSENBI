@@ -134,8 +134,6 @@ export default function TagList({
     try {
       const { result } = await deleteTagAPI({ tagId });
 
-      console.log(result);
-
       setTags(tags.filter((item) => item.tagId !== tagId));
       setAllTags(allTags.filter((item) => item.tagId !== tagId));
     } catch (error) {

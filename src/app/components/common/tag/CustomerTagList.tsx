@@ -38,7 +38,7 @@ export default function CustomerTagList({
     const fetchCustomers = async () => {
       try {
         const { result } = await getCustomersAPI();
-        console.log(result);
+
         setAllCustomers(result);
       } catch (error) {
         console.error("고객 데이터를 가져오는 중 오류가 발생했습니다: ", error);

@@ -6,24 +6,39 @@ interface MessageTemplateType {
   templateId: number;
   templateTitle: string;
   templateContent: string;
-  templateUsageCount: number;
   image: string;
   usageCount: number;
 }
 
-export default async function TemplatePage() {
-  const response = await getTemplateAPI();
+interface ApiResponseType {
+  categoryName: string;
+  generalTemplates: MessageTemplateType[];
+}
 
-  const fetchedCategories: string[] = ["인기"];
+export default async function TemplatePage() {
+  const fetchTemplates = async () => {
+    try {
+      const response = await getTemplateAPI();
+      return response.result;
+    } catch (error) {
+      if (error instanceof Error) {
+        return [];
+      }
+    }
+  };
+
+  const response = await fetchTemplates();
+
+  const allCategories: string[] = [];
   const templatesByCategory: MessageTemplateType[][] = [];
   const allTemplates: MessageTemplateType[] = [];
 
-  response.result.forEach((categoryData: any) => {
+  response.forEach((categoryData: ApiResponseType) => {
     const categoryName = categoryData.categoryName;
-    fetchedCategories.push(categoryName);
+    allCategories.push(categoryName);
 
     const categoryTemplates = categoryData.generalTemplates.map(
-      (template: any) => ({
+      (template: MessageTemplateType) => ({
         templateId: template.templateId,
         templateTitle: template.templateTitle,
         templateContent: template.templateContent,
@@ -36,6 +51,7 @@ export default async function TemplatePage() {
     allTemplates.push(...categoryTemplates);
   });
 
+  if (allCategories.length !== 0) allCategories.unshift("인기");
   const top10Templates = allTemplates
     .sort((a, b) => b.usageCount - a.usageCount)
     .slice(0, 10);
@@ -45,7 +61,7 @@ export default async function TemplatePage() {
     <div className="page-container">
       <Banner />
       <TemplateList
-        categoryList={fetchedCategories}
+        categoryList={allCategories}
         allMessageTemplates={templatesByCategory}
       />
     </div>

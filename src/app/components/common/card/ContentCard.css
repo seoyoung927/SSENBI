@@ -15,7 +15,6 @@
   margin: 12px;
   cursor: pointer;
   height: 150px;
-  overflow: hidden;
 }
 
 .content-card:hover {
@@ -59,8 +58,43 @@
 }
 
 .content-card__button-copy {
+  position: relative;
   background-color: inherit;
   color: var(--text-secondary);
+}
+.content-card__button-copy:hover {
+  color: var(--text-primary);
+}
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 140%;
+  left: 50%;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  background-color: var(--gray-400);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tooltip.visible {
+  display: block;
+  opacity: 1;
+}
+.tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--gray-400) transparent;
 }
 
 .content-card__description {
