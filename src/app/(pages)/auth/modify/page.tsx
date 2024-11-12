@@ -18,6 +18,8 @@ interface UpdateMemberFormData {
 }
 
 const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
+const PHONE_NUMBER_LENGTH_ERROR =
+  "전화번호는 7자 이상 15자 이하로 입력해주세요.";
 
 export default function ModifyPage() {
   const [memberId, setMemberId] = useState<string>("");
@@ -32,6 +34,7 @@ export default function ModifyPage() {
     useState<string>("");
   const [isSaveMessageVisible, setIsSaveMessageVisible] =
     useState<boolean>(false);
+  const [phoneNumberError, setPhoneNumberError] = useState("");
 
   const router = useRouter();
 
@@ -67,7 +70,37 @@ export default function ModifyPage() {
     const validationMessage = validatePassword(password);
     setPasswordValidationMessage(validationMessage);
   }, [password]);
+
+  useEffect(() => {
+    const isPersonalPhoneValid =
+      personalPhoneNumber.length >= 7 && personalPhoneNumber.length <= 15;
+    const isBusinessPhoneValid =
+      businessPhoneNumber.length >= 7 && businessPhoneNumber.length <= 15;
+
+    if (personalPhoneNumber || businessPhoneNumber) {
+      setPhoneNumberError(
+        isPersonalPhoneValid && isBusinessPhoneValid
+          ? ""
+          : PHONE_NUMBER_LENGTH_ERROR,
+      );
+    } else {
+      setPhoneNumberError("");
+    }
+  }, [personalPhoneNumber, businessPhoneNumber]);
+
+  const validateForm = () => {
+    const isPasswordValid = !passwordError && !passwordValidationMessage;
+    const isPhoneNumberValid = !phoneNumberError;
+
+    return isPasswordValid && isPhoneNumberValid;
+  };
+
   const handleModify = async () => {
+    if (!validateForm()) {
+      alert("입력값에 오류가 있습니다. 모든 필드를 채워주세요");
+      return;
+    }
+
     const token = Cookies.get("accessToken");
     if (!token) return;
 
@@ -109,7 +142,16 @@ export default function ModifyPage() {
     setter: React.Dispatch<React.SetStateAction<string>>,
   ) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter(e.target.value);
+      const { type, value } = e.target;
+
+      if (type === "number") {
+        const numericValue = value.replace(/\D/g, "");
+        if (numericValue.length <= 15) {
+          setter(numericValue);
+        }
+      } else {
+        setter(value);
+      }
     };
   };
 
@@ -180,7 +222,7 @@ export default function ModifyPage() {
         type="number"
         value={personalPhoneNumber}
         onChange={handleInputChange(setPersonalPhoneNumber)}
-        maxLength={25}
+        maxLength={15}
       />
 
       <InputField
@@ -188,8 +230,12 @@ export default function ModifyPage() {
         type="number"
         value={businessPhoneNumber}
         onChange={handleInputChange(setBusinessPhoneNumber)}
-        maxLength={25}
+        maxLength={15}
       />
+
+      {phoneNumberError && (
+        <div className="error-message">{phoneNumberError}</div>
+      )}
 
       <div className="mypage-modify_button-group">
         <button onClick={handleCancel} className="mypage-modify_button-cancel">
