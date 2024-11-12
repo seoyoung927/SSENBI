@@ -169,7 +169,7 @@ export default function ModifyPage() {
 
       <InputField
         label="개인 전화번호"
-        type="text"
+        type="number"
         value={personalPhoneNumber}
         onChange={handleInputChange(setPersonalPhoneNumber)}
         maxLength={25}
@@ -177,7 +177,7 @@ export default function ModifyPage() {
 
       <InputField
         label="사업체 전화번호"
-        type="text"
+        type="number"
         value={businessPhoneNumber}
         onChange={handleInputChange(setBusinessPhoneNumber)}
         maxLength={25}

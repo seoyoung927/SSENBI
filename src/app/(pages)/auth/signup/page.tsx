@@ -158,7 +158,7 @@ export default function Signup() {
 
       <InputField
         label="개인 전화번호"
-        type="text"
+        type="number"
         value={personalPhoneNumber}
         onChange={handlePersonalPhoneNumberChange}
         maxLength={25}
@@ -166,7 +166,7 @@ export default function Signup() {
 
       <InputField
         label="업체 전화번호"
-        type="text"
+        type="number"
         value={businessPhoneNumber}
         onChange={handleBusinessPhoneNumberChange}
         maxLength={25}
