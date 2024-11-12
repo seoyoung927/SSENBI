@@ -30,6 +30,8 @@ export default function ModifyPage() {
   const [passwordError, setPasswordError] = useState<string>("");
   const [passwordValidationMessage, setPasswordValidationMessage] =
     useState<string>("");
+  const [isSaveMessageVisible, setIsSaveMessageVisible] =
+    useState<boolean>(false);
 
   const router = useRouter();
 
@@ -65,7 +67,6 @@ export default function ModifyPage() {
     const validationMessage = validatePassword(password);
     setPasswordValidationMessage(validationMessage);
   }, [password]);
-
   const handleModify = async () => {
     const token = Cookies.get("accessToken");
     if (!token) return;
@@ -80,6 +81,11 @@ export default function ModifyPage() {
       const isSuccess = await putMemberAPI({ token, formData });
 
       if (isSuccess) {
+        setIsSaveMessageVisible(true);
+        setTimeout(() => {
+          setIsSaveMessageVisible(false);
+        }, 2500);
+
         router.push("/auth/mypage");
       }
     } catch (error) {
@@ -110,7 +116,9 @@ export default function ModifyPage() {
   return (
     <div className="page-container">
       <Header title="회원정보 수정" showBackIcon={true} />
-
+      {isSaveMessageVisible && (
+        <div className="save-message">글이 수정되었습니다!</div>
+      )}
       <div className="mypage-modify-image-container">
         <Image
           src="/assets/images/ssenbi_logo.png"
