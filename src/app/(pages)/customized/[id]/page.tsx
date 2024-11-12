@@ -395,7 +395,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
       <Modal isOpen={isAIEditModalOpen} onClose={handleCloseAIModal}>
         <ChatAIContainer
-          content={modifiedTemplate?.templateContent}
+          content={modifiedTemplate?.templateContent || ""}
           tags={modifiedTemplate?.templateTags}
           customers={modifiedTemplate?.templateCustomers}
           onSave={handleSaveAIContent}
