@@ -20,7 +20,7 @@ interface MessageType {
 interface ChatAIContainerPropsType {
   onClose: () => void;
   onSave: (content: string) => void;
-  content?: string;
+  content: string;
   tags?: TagType[];
   customers?: CustomerType[];
 }
@@ -29,17 +29,18 @@ export default function ChatAIContainer({
   onClose,
   onSave,
   content = "",
-  tags = [],
-  customers = [],
+  tags,
+  customers,
 }: ChatAIContainerPropsType) {
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [token, setToken] = useState<string>("");
+  const [modifiedContent, setModifiedContent] = useState<string>(content);
   const [messages, setMessages] = useState<MessageType[]>([
     {
       sender: SenderType.NOTICE,
-      content: "안녕하세요! 템플릿을 어떻게 수정할까요?",
+      content: `안녕하세요! 템플릿을 어떻게 수정할까요?\n현재 템플릿 내용은 다음과 같습니다.\n\n ======================\n\n${modifiedContent}\n\n======================\n\n수정 요구사항을 입력해주세요!`,
     },
   ]);
-  const [newMessage, setNewMessage] = useState<string>(content);
-  const [token, setToken] = useState<string>("");
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -72,9 +73,12 @@ export default function ChatAIContainer({
     try {
       const chatResponse = await postAIChatAPI({
         token,
-        content: newMessage,
-        requirements:
-          "비즈니스 상황에서 고객에게 보내는 메세지, 한글로 보내주세요 존댓말로 해주세요!!",
+        content: modifiedContent,
+        requirements: newMessage,
+        ...(tags ? { tagIds: tags.map((tag) => tag.tagId) } : {}),
+        ...(customers
+          ? { customerIds: customers.map((customer) => customer.customerId) }
+          : {}),
       });
 
       console.log("chatResponse", chatResponse);
@@ -82,8 +86,7 @@ export default function ChatAIContainer({
       const aiResponse: MessageType = {
         sender: SenderType.AI,
         content:
-          // todo : 나중에 수정
-          // `AI 응답은 다음과 같습니다.\n-----------------------\n` +
+          `쎈비 AI 응답은 다음과 같습니다.\n\n-----------------------\n\n` +
           `${chatResponse.result}`,
       };
       setMessages((prevMessages) => [...prevMessages, aiResponse]);
