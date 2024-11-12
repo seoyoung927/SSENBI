@@ -7,7 +7,6 @@ import "./CustomizedList.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
   CustomMessagesType,
-  GetCustomTemplatesParamsType,
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
@@ -21,6 +20,7 @@ import TagList from "../tag/TagList";
 import CustomerTagList from "../tag/CustomerTagList";
 import { CustomerType } from "@/types/customer/customerType";
 import { TagType } from "@/types/tag/tagTypes";
+import FilterIcon from "@/app/assets/svg/Filter.svg";
 import SearchBar from "../input/SearchBar";
 
 // ApiResponse 타입 정의
@@ -35,6 +35,7 @@ export default function CustomizedList() {
   const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
     [],
   );
+
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
 
   const fetchCustomTemplates = async () => {
@@ -131,11 +132,24 @@ export default function CustomizedList() {
           />
         </div>
         <div className="customized-filters">
-          <TagList tags={selectedTags} setTags={setSelectedTags} />
-          <CustomerTagList
-            customers={selectedCustomers}
-            setCustomers={setSelectedCustomers}
-          />
+          <div>
+            <FilterIcon
+              className={
+                selectedCustomers.length === 0 && selectedTags.length === 0
+                  ? "filterIcon"
+                  : "selected-filterIcon"
+              }
+            />
+          </div>
+          <div className="filter">
+            <TagList tags={selectedTags} setTags={setSelectedTags} />
+          </div>
+          <div className="filter">
+            <CustomerTagList
+              customers={selectedCustomers}
+              setCustomers={setSelectedCustomers}
+            />
+          </div>
         </div>
       </div>
 

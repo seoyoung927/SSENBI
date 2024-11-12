@@ -76,7 +76,7 @@ export type DeleteCustomTemplateCustomerParamsType = {
 export const SORTOPTIONS = {
   생성순: "createdAt",
   제목순: "title",
-  "많이 사용순": "count",
+  "많이 사용순": "count,DESC",
 };
 
 export type SortOptionKeys = keyof typeof SORTOPTIONS;
