@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import CheckIcon from "@/app/assets/svg/Check.svg";
 import "./ChatAIContainer.css";
 import { TagType } from "@/types/tag/tagTypes";
+import { CustomerType } from "@/types/customer/customerType";
 
 enum SenderType {
   NOTICE = "notice",
@@ -13,32 +14,39 @@ enum SenderType {
 
 interface MessageType {
   sender: SenderType;
+  description?: string;
   content: string;
 }
 
 interface ChatAIContainerPropsType {
   onClose: () => void;
   onSave: (content: string) => void;
-  initialContent?: string;
+  content: string;
   tags?: TagType[];
-  customers?: TagType[];
+  customers?: CustomerType[];
 }
 
 export default function ChatAIContainer({
   onClose,
   onSave,
-  initialContent = "",
-  tags = [],
-  customers = [],
+  content = "",
+  tags,
+  customers,
 }: ChatAIContainerPropsType) {
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [token, setToken] = useState<string>("");
+  const [modifiedContent, setModifiedContent] = useState<string>(content);
   const [messages, setMessages] = useState<MessageType[]>([
     {
       sender: SenderType.NOTICE,
-      content: "안녕하세요! 템플릿을 어떻게 수정할까요?",
+      description: `안녕하세요 쎈비입니다!\n`,
+      content: `${
+        modifiedContent
+          ? `현재 템플릿 내용은 다음과 같습니다.\n\n ======================\n\n${modifiedContent}\n\n======================\n\n어떻게 수정을 도와드릴까요?`
+          : `요구사항을 입력해주세요!`
+      }`,
     },
   ]);
-  const [newMessage, setNewMessage] = useState<string>(initialContent);
-  const [token, setToken] = useState<string>("");
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -63,6 +71,7 @@ export default function ChatAIContainer({
 
     const userMessage: MessageType = {
       sender: SenderType.USER,
+      description: "",
       content: newMessage,
     };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
@@ -71,20 +80,20 @@ export default function ChatAIContainer({
     try {
       const chatResponse = await postAIChatAPI({
         token,
-        // comments: newMessage,
-        comments: newMessage,
-        requirements:
-          "비즈니스 상황에서 고객에게 보내는 메세지, 한글로 보내주세요 존댓말로 해주세요!!",
+        content: modifiedContent,
+        requirements: newMessage,
+        ...(tags ? { tagIds: tags.map((tag) => tag.tagId) } : {}),
+        ...(customers
+          ? { customerIds: customers.map((customer) => customer.customerId) }
+          : {}),
       });
 
       console.log("chatResponse", chatResponse);
 
       const aiResponse: MessageType = {
         sender: SenderType.AI,
-        content:
-          // todo : 나중에 수정
-          // `AI 응답은 다음과 같습니다.\n-----------------------\n` +
-          `${chatResponse.result}`,
+        description: `쎈비 AI 응답은 다음과 같습니다.\n\n-----------------------\n`,
+        content: `${chatResponse.result}`,
       };
       setMessages((prevMessages) => [...prevMessages, aiResponse]);
     } catch (err) {
@@ -112,7 +121,7 @@ export default function ChatAIContainer({
             key={index}
             className={`chat-message ${message.sender === SenderType.USER ? "user-message" : "ai-message"}`}
           >
-            <div className="chat-bubble">{message.content}</div>
+            <div className="chat-bubble">{`${message.description}${message.content}`}</div>
             {message.sender === SenderType.AI && (
               <div
                 className="check-icon-container"

@@ -15,6 +15,7 @@
 
 .chat-message {
   display: flex;
+  white-space: pre-wrap;
 }
 
 .user-message {
