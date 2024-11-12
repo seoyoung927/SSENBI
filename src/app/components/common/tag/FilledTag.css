@@ -6,5 +6,5 @@
   color: var(--bg-default);
   font-weight: 600;
   background-color: var(--blue-700);
-  position: relative;
+  /* position: relative; */
 }
