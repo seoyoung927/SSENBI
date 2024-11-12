@@ -139,7 +139,9 @@ export default function CustomizedNewPage() {
           <ChatAIContainer
             onClose={handleCloseAIModal}
             onSave={handleSaveContent}
-            initialContent={""}
+            content={""}
+            tags={selectedTags}
+            customers={selectedCustomers}
           />
         </Modal>
       )}
