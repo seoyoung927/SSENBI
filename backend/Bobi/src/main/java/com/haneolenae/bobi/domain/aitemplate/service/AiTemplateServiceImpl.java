@@ -51,7 +51,7 @@ public class AiTemplateServiceImpl implements AiTemplateService {
 	private MessageRequest makeUserMessage(UserRequest request) {
 		return MessageRequest.builder()
 			.role("user")
-			.content(request.getComment() + "를 " + request.getRequirements() + "하게 바꿔줘")
+			.content(request.getContent() + "를 " + request.getRequirements() + "하게 바꿔줘")
 			.build();
 	}
 }
