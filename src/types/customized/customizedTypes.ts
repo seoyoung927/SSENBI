@@ -74,6 +74,7 @@ export type DeleteCustomTemplateCustomerParamsType = {
 };
 
 export const SORTOPTIONS = {
+  최근순: "createdAt,DESC",
   생성순: "createdAt",
   제목순: "title",
   "많이 사용순": "count,DESC",

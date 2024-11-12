@@ -24,7 +24,7 @@ interface CustomizedListSelectorProps {
 export default function CustomizedListSelector({
   getCustomTemplate,
 }: CustomizedListSelectorProps) {
-  const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
+  const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("최근순");
   const [filteredMessages, setFilteredMessages] = useState<ApiResponse>([]);
   const [isLoading, setIsLoading] = useState(true);
 
