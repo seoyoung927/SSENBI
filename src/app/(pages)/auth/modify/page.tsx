@@ -136,6 +136,7 @@ export default function ModifyPage() {
     } else {
       console.error("회원정보 수정 실패: 알 수 없는 오류 발생");
     }
+    alert("회원정보 수정 과정 중 에러가 발생하였습니다!");
   };
 
   const handleInputChange = (
