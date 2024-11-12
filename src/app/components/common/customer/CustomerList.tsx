@@ -11,6 +11,7 @@ import { CustomerType } from "@/types/customer/customerType";
 import { getCustomersAPI } from "@/app/api/customer/customerAPI";
 import { TagType } from "@/types/tag/tagTypes";
 import TagList from "../tag/TagList";
+import FilterIcon from "@/app/assets/svg/Filter.svg";
 
 export default function CustomerList() {
   const router = useRouter();
@@ -45,7 +46,17 @@ export default function CustomerList() {
     <>
       <div className="controller">
         <SearchBar onChange={setSearchValue} />
-        <TagList tags={selectedTags} setTags={setSelectedTags} />
+
+        <div className="customer-filters">
+          <FilterIcon
+            className={
+              selectedTags.length === 0 ? "filterIcon" : "selected-filterIcon"
+            }
+          />
+          <div className="filter">
+            <TagList tags={selectedTags} setTags={setSelectedTags} />
+          </div>
+        </div>
       </div>
       <ul className="customer-list">
         {filteredCustomers.map((customer) => (
