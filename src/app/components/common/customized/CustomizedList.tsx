@@ -21,6 +21,7 @@ import TagList from "../tag/TagList";
 import CustomerTagList from "../tag/CustomerTagList";
 import { CustomerType } from "@/types/customer/customerType";
 import { TagType } from "@/types/tag/tagTypes";
+import FilterIcon from "@/app/assets/svg/Filter.svg";
 
 // ApiResponse 타입 정의
 type ApiResponse = CustomMessagesType[];
@@ -127,11 +128,16 @@ export default function CustomizedList() {
     <div className="customiedList-container">
       <div className="customized_sort-container">
         <div className="customized-filters">
-          <TagList tags={selectedTags} setTags={setSelectedTags} />
-          <CustomerTagList
-            customers={selectedCustomers}
-            setCustomers={setSelectedCustomers}
-          />
+          <FilterIcon />
+          <div className="filter">
+            <TagList tags={selectedTags} setTags={setSelectedTags} />
+          </div>
+          <div className="filter">
+            <CustomerTagList
+              customers={selectedCustomers}
+              setCustomers={setSelectedCustomers}
+            />
+          </div>
         </div>
         <SortSelect
           curOption={curSortOption}
