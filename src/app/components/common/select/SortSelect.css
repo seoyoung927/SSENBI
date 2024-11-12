@@ -3,6 +3,7 @@
   display: inline-block;
   cursor: pointer;
   outline: none;
+  z-index: 999;
 }
 
 .sort-dropdown-trigger {
@@ -16,6 +17,7 @@
   border: 1px solid var(--gray-200);
   border-radius: 10px;
   outline: none;
+  z-index: 999;
 }
 
 .sort-dropdown-content {
@@ -24,6 +26,7 @@
   border-radius: 10px;
   outline: none;
   overflow: hidden;
+  z-index: 999;
 }
 
 .sort-dropdown-item {
@@ -36,6 +39,7 @@
   outline: none;
   border-bottom: 1px solid var(--gray-200);
   background-color: var(--bg-default);
+  z-index: 999;
 }
 
 .sort-dropdown-item:hover {

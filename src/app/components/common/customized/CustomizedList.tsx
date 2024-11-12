@@ -17,7 +17,6 @@ import {
   postCustomTemplateDuplicationAPI,
 } from "@/app/api/customized/customizedAPI";
 import { HashLoader } from "react-spinners";
-import Cookies from "js-cookie";
 import TagList from "../tag/TagList";
 import CustomerTagList from "../tag/CustomerTagList";
 import { CustomerType } from "@/types/customer/customerType";
