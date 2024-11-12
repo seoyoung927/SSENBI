@@ -1,8 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "./ContentCard.css";
-import CopyIcon from "@/app/assets/svg/Copy.svg";
 
 interface ContentCardProps {
   templateId: number;
@@ -17,10 +18,16 @@ export default function ContentCard({
   title,
   content,
 }: ContentCardProps) {
+  const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
+
   const handleCopy = (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
     navigator.clipboard.writeText(content);
+    setIsTooltipVisible(true);
+    setTimeout(() => {
+      setIsTooltipVisible(false);
+    }, 1500);
   };
 
   return (
@@ -41,8 +48,15 @@ export default function ContentCard({
         <div className="content-card__details">
           <div className="content-card__title-wrapper">
             <h2 className="content-card__title subheading">{title}</h2>
-            <button className="content-card__button-copy" onClick={handleCopy}>
-              <CopyIcon className="copy-icon" />
+            <button
+              type="button"
+              className="content-card__button-copy"
+              onClick={handleCopy}
+            >
+              복사하기
+              <div className={`tooltip ${isTooltipVisible ? "visible" : ""}`}>
+                복사되었습니다!
+              </div>
             </button>
           </div>
           <p className="content-card__description body">{content}</p>

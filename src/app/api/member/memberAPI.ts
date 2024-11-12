@@ -12,8 +12,12 @@ export const getMemberAPI = async ({ token }: { token: string }) => {
 };
 
 // Get Member OverView API
-export const getMemberOverViewAPI = async () => {
-  const response = await axiosInstance.get("/member/overview");
+export const getMemberOverViewAPI = async (token?: string) => {
+  const response = await axiosInstance.get("/member/overview", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 

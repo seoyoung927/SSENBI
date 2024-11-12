@@ -1,7 +1,22 @@
-import { TagType } from "../tag/tagTypes";
 import { CustomerType } from "../customer/customerType";
+import { TagType } from "../tag/tagTypes";
+
+type MessageCustomer = {
+  customerName: string;
+  customerColor: string;
+};
+
+export type MessageType = {
+  messageId: number;
+  messageContent: string;
+  messageSendAt: string;
+  messageTags: TagType[];
+  customerMemo: string;
+  customerColor: MessageCustomer[];
+};
 
 export type GetEveryMessagesType = {
+  token?: string;
   keyword?: string;
   sort?: SortOptionValues;
 };

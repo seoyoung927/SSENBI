@@ -1,8 +1,13 @@
 import { TagColorType, TagType } from "@/types/tag/tagTypes";
 import axiosInstance from "../axiosInstance";
 
-export const getTagsAPI = async () => {
-  const response = await axiosInstance.get("/tag");
+export const getTagsAPI = async (token?: string) => {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+  const response = await axiosInstance.get("/tag", {
+    headers,
+  });
+
   return response.data;
 };
 
