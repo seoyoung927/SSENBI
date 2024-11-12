@@ -27,6 +27,7 @@ export default function BatchTextEditor({
           value={batchTextFrom}
           onChange={(e) => setBatchTextFrom(e.target.value)}
           disabled={!isEdit}
+          maxLength={15}
         />
         <div style={{ width: 24, height: 24 }}>
           <RightArrowIcon />
@@ -36,6 +37,7 @@ export default function BatchTextEditor({
           value={batchTextTo}
           onChange={(e) => setBatchTextTo(e.target.value)}
           disabled={!isEdit}
+          maxLength={15}
         />
         <button
           className="white_button sub-button"

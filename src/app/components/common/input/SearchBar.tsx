@@ -50,6 +50,7 @@ export default function SearchBar({
         value={inputValue}
         onChange={handleChange}
         className="search-input"
+        maxLength={25}
       />
       <span
         onClick={removeValue}

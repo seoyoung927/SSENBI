@@ -170,6 +170,7 @@ export default function CustomerTagList({
                   placeholder="고객 검색"
                   value={search}
                   onChange={handleSearch}
+                  maxLength={25}
                 />
               </div>
             </div>
@@ -206,6 +207,7 @@ export default function CustomerTagList({
                             item,
                             editedCustomer,
                           )}
+                          maxLength={25}
                           autoFocus
                         />
                         <DropdownMenu.Item
