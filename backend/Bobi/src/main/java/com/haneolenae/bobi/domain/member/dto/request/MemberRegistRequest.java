@@ -29,13 +29,13 @@ public class MemberRegistRequest {
 	private String business;
 
 	@Pattern(
-		regexp = "^[0-9]{11}$",
+		regexp = "^[0-9]{7,15}$",
 		message = "개인 전화번호는 숫자로만 이루어진 11자리여야 합니다."
 	)
 	private String personalPhoneNumber;
 
 	@Pattern(
-		regexp = "^[0-9]{11,12}$",
+		regexp = "^[0-9]{7,15}$",
 		message = "회사 전화번호는 숫자로만 이루어진 12자리여야 합니다."
 	)
 	private String businessPhoneNumber;
