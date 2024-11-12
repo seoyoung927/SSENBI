@@ -212,7 +212,9 @@ function MessageCreateContent() {
           <ChatAIContainer
             onClose={closeAIEditModal}
             onSave={handleSaveMessage}
-            initialContent={content}
+            content={content}
+            customers={customers}
+            tags={tags}
           />
         </Modal>
       )}
