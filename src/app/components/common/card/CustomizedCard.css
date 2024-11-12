@@ -17,7 +17,6 @@
 
 .customized-card:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
 }
 
 .customized-card-header {
@@ -28,13 +27,15 @@
 }
 
 .copy-icon {
-  opacity: 0.1;
   cursor: pointer;
+  color: var(--gray-400);
+  transition: color 0.1s;
+
+  &:hover {
+    color: var(--gray-700);
+  }
 }
 
-.copy-icon:hover {
-  opacity: 1;
-}
 .customized-card__title {
   font-weight: bold;
   font-size: 1.1em;

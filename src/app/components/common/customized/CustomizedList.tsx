@@ -22,21 +22,10 @@ import CustomerTagList from "../tag/CustomerTagList";
 import { CustomerType } from "@/types/customer/customerType";
 import { TagType } from "@/types/tag/tagTypes";
 import FilterIcon from "@/app/assets/svg/Filter.svg";
+import SearchBar from "../input/SearchBar";
 
 // ApiResponse 타입 정의
 type ApiResponse = CustomMessagesType[];
-
-const fetchCustomTemplates = async ({
-  page,
-  size = 50,
-  sort,
-}: GetCustomTemplatesParamsType) => {
-  return await getCustomTemplatesAPI({
-    page,
-    size,
-    sort,
-  });
-};
 
 export default function CustomizedList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -71,6 +60,9 @@ export default function CustomizedList() {
 
   useEffect(() => {
     const filtered = templates.filter((template) => {
+      const searchIncluded =
+        template.templateTitle.includes(searchValue) ||
+        template.templateContent.includes(searchValue);
       const customerIncluded = selectedCustomers.some((customer) =>
         template.templateCustomers.some(
           (templateCustomer) =>
@@ -83,6 +75,8 @@ export default function CustomizedList() {
         ),
       );
 
+      if (!searchIncluded) return false;
+
       return (
         (selectedCustomers.length === 0 && selectedTags.length === 0) ||
         customerIncluded ||
@@ -91,7 +85,7 @@ export default function CustomizedList() {
     });
 
     setFilteredTemplates(filtered);
-  }, [selectedCustomers, selectedTags, templates]);
+  }, [searchValue, selectedCustomers, selectedTags, templates]);
 
   const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
     setCurSortOption(key);
@@ -127,6 +121,16 @@ export default function CustomizedList() {
   return (
     <div className="customiedList-container">
       <div className="customized_sort-container">
+        <div className="customized-search-bar">
+          <SearchBar onChange={setSearchValue} />
+          <SortSelect
+            curOption={curSortOption}
+            options={Object.keys(SORTOPTIONS)}
+            onChange={(selectedLabel) =>
+              handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
+            }
+          />
+        </div>
         <div className="customized-filters">
           <FilterIcon />
           <div className="filter">
@@ -139,13 +143,6 @@ export default function CustomizedList() {
             />
           </div>
         </div>
-        <SortSelect
-          curOption={curSortOption}
-          options={Object.keys(SORTOPTIONS)}
-          onChange={(selectedLabel) =>
-            handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
-          }
-        />
       </div>
 
       {filteredTemplates.length > 0 ? (
