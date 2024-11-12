@@ -12,6 +12,7 @@ import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import { CustomerType } from "@/types/customer/customerType";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
+import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
@@ -21,11 +22,26 @@ export default function CustomizedNewPage() {
   const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
     [],
   );
+  const [batchTextFrom, setBatchTextFrom] = useState("");
+  const [batchTextTo, setBatchTextTo] = useState("");
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
 
   const handleCancel = () => {
     router.back();
+  };
+
+  const handleBatchTextChange = () => {
+    if (batchTextFrom) {
+      const updatedContent = contentRef.current?.value.replace(
+        new RegExp(batchTextFrom, "g"),
+        batchTextTo,
+      );
+
+      if (updatedContent && contentRef.current) {
+        contentRef.current.value = updatedContent;
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -106,6 +122,15 @@ export default function CustomizedNewPage() {
           maxLength={300}
         />
       </div>
+
+      <BatchTextEditor
+        batchTextFrom={batchTextFrom}
+        batchTextTo={batchTextTo}
+        setBatchTextFrom={setBatchTextFrom}
+        setBatchTextTo={setBatchTextTo}
+        isEdit={true}
+        handleBatchTextChange={handleBatchTextChange}
+      />
 
       <div className="customized-button-group">
         <button
