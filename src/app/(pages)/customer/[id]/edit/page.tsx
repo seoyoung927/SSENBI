@@ -8,7 +8,7 @@ import { CustomerType } from "@/types/customer/customerType";
 import { useEffect, useState } from "react";
 
 export default function CustomerEdit({ params }: { params: { id: string } }) {
-  const [customer, setCustomer] = useState<CustomerType | undefined>(undefined);
+  const [customer, setCustomer] = useState<CustomerType>();
 
   useEffect(() => {
     const fetchCustomer = async () => {

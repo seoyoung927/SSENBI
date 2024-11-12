@@ -2,17 +2,17 @@ import axiosInstance from "../axiosInstance";
 
 export const postAIChatAPI = async ({
   token,
-  comments,
+  content,
   requirements,
 }: {
   token: string;
-  comments?: string;
+  content?: string;
   requirements?: string;
 }) => {
   const response = await axiosInstance.post(
     `/ai/ask`,
     {
-      comments,
+      content,
       requirements,
     },
     {

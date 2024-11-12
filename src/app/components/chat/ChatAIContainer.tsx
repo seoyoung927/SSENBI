@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import CheckIcon from "@/app/assets/svg/Check.svg";
 import "./ChatAIContainer.css";
 import { TagType } from "@/types/tag/tagTypes";
+import { CustomerType } from "@/types/customer/customerType";
 
 enum SenderType {
   NOTICE = "notice",
@@ -19,15 +20,15 @@ interface MessageType {
 interface ChatAIContainerPropsType {
   onClose: () => void;
   onSave: (content: string) => void;
-  initialContent?: string;
+  content?: string;
   tags?: TagType[];
-  customers?: TagType[];
+  customers?: CustomerType[];
 }
 
 export default function ChatAIContainer({
   onClose,
   onSave,
-  initialContent = "",
+  content = "",
   tags = [],
   customers = [],
 }: ChatAIContainerPropsType) {
@@ -37,7 +38,7 @@ export default function ChatAIContainer({
       content: "안녕하세요! 템플릿을 어떻게 수정할까요?",
     },
   ]);
-  const [newMessage, setNewMessage] = useState<string>(initialContent);
+  const [newMessage, setNewMessage] = useState<string>(content);
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
@@ -71,8 +72,7 @@ export default function ChatAIContainer({
     try {
       const chatResponse = await postAIChatAPI({
         token,
-        // comments: newMessage,
-        comments: newMessage,
+        content: newMessage,
         requirements:
           "비즈니스 상황에서 고객에게 보내는 메세지, 한글로 보내주세요 존댓말로 해주세요!!",
       });
