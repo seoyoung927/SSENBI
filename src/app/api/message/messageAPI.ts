@@ -6,11 +6,15 @@ import axiosInstance from "../axiosInstance";
 
 // Get Every Messages
 export const getEveryMessagesAPI = async ({
+  token,
   keyword,
   sort,
 }: GetEveryMessagesType) => {
   console.log(keyword, sort);
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
   const response = await axiosInstance.get(`/message`, {
+    headers,
     params: {
       sort,
       ...(keyword && { keyword }),

@@ -4,8 +4,13 @@ import {
 } from "@/types/customer/customerType";
 import axiosInstance from "../axiosInstance";
 
-export const getCustomersAPI = async () => {
-  const response = await axiosInstance.get("/customer");
+export const getCustomersAPI = async (token?: string) => {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+  const response = await axiosInstance.get("/customer", {
+    headers,
+  });
+
   return response.data;
 };
 

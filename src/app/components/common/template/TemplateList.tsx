@@ -8,7 +8,6 @@ interface MessageTemplateType {
   templateId: number;
   templateTitle: string;
   templateContent: string;
-  templateUsageCount: number;
   image: string;
   usageCount: number;
 }
