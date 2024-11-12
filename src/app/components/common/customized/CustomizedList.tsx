@@ -28,7 +28,7 @@ type ApiResponse = CustomMessagesType[];
 
 export default function CustomizedList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
+  const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("최근순");
   const [searchValue, setSearchValue] = useState<string>("");
   const [templates, setTemplates] = useState<ApiResponse>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<ApiResponse>([]);
