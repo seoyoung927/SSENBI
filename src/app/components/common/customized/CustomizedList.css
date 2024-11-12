@@ -192,3 +192,13 @@
 .customized-container {
   margin-top: 65px;
 }
+
+.filterIcon {
+  stroke: var(--gray-400);
+  fill: var(--gray-200);
+}
+
+.selected-filterIcon {
+  stroke: var(--blue-400);
+  fill: var(--primary-color);
+}

@@ -7,7 +7,6 @@ import "./CustomizedList.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
   CustomMessagesType,
-  GetCustomTemplatesParamsType,
   SortOptionKeys,
   SORTOPTIONS,
 } from "@/types/customized/customizedTypes";
@@ -36,6 +35,7 @@ export default function CustomizedList() {
   const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
     [],
   );
+
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
 
   const fetchCustomTemplates = async () => {
@@ -132,7 +132,15 @@ export default function CustomizedList() {
           />
         </div>
         <div className="customized-filters">
-          <FilterIcon />
+          <div>
+            <FilterIcon
+              className={
+                selectedCustomers.length === 0 && selectedTags.length === 0
+                  ? "filterIcon"
+                  : "selected-filterIcon"
+              }
+            />
+          </div>
           <div className="filter">
             <TagList tags={selectedTags} setTags={setSelectedTags} />
           </div>
