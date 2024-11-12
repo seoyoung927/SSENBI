@@ -41,6 +41,7 @@ const fetchCustomTemplates = async ({
 export default function CustomizedList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("생성순");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [templates, setTemplates] = useState<ApiResponse>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<ApiResponse>([]);
   const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
@@ -48,8 +49,24 @@ export default function CustomizedList() {
   );
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
 
+  const fetchCustomTemplates = async () => {
+    try {
+      const data = await getCustomTemplatesAPI({
+        sort: SORTOPTIONS[curSortOption],
+      });
+      console.log("customized data", data);
+      setTemplates(data.result);
+    } catch (error) {
+      console.error("Error fetching message:", error);
+      alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchCustomTemplates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [curSortOption]);
 
   useEffect(() => {
@@ -76,20 +93,6 @@ export default function CustomizedList() {
     setFilteredTemplates(filtered);
   }, [selectedCustomers, selectedTags, templates]);
 
-  const fetchCustomTemplates = async () => {
-    try {
-      const data = await getCustomTemplatesAPI({
-        sort: SORTOPTIONS[curSortOption],
-      });
-      console.log("customized data", data);
-      setTemplates(data.result);
-    } catch (error) {
-      console.error("Error fetching message:", error);
-      alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
   const handleSortChange = (key: keyof typeof SORTOPTIONS) => {
     setCurSortOption(key);
   };

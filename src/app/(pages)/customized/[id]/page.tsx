@@ -128,6 +128,10 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
       templateId: Number(id),
       title: modifiedTemplate.templateTitle,
       content: modifiedTemplate.templateContent,
+      afterCustomerIds: modifiedTemplate.templateCustomers.map(
+        (customer) => customer.customerId,
+      ),
+      afterTags: modifiedTemplate.templateTags.map((tag) => tag.tagId),
     };
 
     try {
@@ -190,6 +194,24 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
     router.push(`/message/create?id=${id}`);
   };
 
+  const changeCustomers = (newCustomers: CustomerType[]) => {
+    setModifiedTemplate((prev) => {
+      if (prev) {
+        return { ...prev, templateCustomers: newCustomers };
+      } else {
+        return {
+          templateId: Number(id),
+          templateTitle: "",
+          templateContent: "",
+          templateUsageCount: 0,
+          templateCreatedAt: "",
+          templateTags: [],
+          templateCustomers: newCustomers,
+        };
+      }
+    });
+  };
+
   const changeTags = (newTags: TagType[]) => {
     setModifiedTemplate((prev) => {
       if (prev) {
@@ -224,7 +246,6 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   };
 
   const handleSaveAsTemplate = async () => {
-    const token = Cookies.get("acessToken");
     if (modifiedTemplate) {
       const response = await postCustomTemplateAPI({
         title: modifiedTemplate?.templateTitle,
@@ -282,7 +303,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
               <div className="taglist-container">
                 <CustomerTagList
                   customers={modifiedTemplate?.templateCustomers || []}
-                  setCustomers={() => {}}
+                  setCustomers={changeCustomers}
                 />
               </div>
             ) : (
