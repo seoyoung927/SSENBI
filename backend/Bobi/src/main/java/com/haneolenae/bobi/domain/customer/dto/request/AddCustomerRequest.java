@@ -23,7 +23,7 @@ public class AddCustomerRequest {
 	private int customerAge;
 	private Gender customerGender;
 	@Pattern(
-		regexp = "^[0-9]{11}$",
+		regexp = "^[0-9]{7,15}$",
 		message = "전화번호는 숫자로만 이루어진 11자리여야 합니다."
 	)
 	private String customerPhoneNumber;
