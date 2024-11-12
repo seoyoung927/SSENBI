@@ -46,7 +46,7 @@ public class CustomTemplate {
 	@Column(nullable = false)
 	private String title;
 
-	@Column
+	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String content;
 
 	@Column
