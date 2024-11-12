@@ -101,6 +101,7 @@ export default function CustomizedModifyForm({
           className="customized-modify_form-group_textarea body-medium"
           value={content}
           onChange={handleContent}
+          maxLength={300}
         />
       </div>
 
