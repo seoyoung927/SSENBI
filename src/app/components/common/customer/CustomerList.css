@@ -33,11 +33,13 @@
 .filterIcon {
   stroke: var(--gray-400);
   fill: var(--gray-200);
+  padding: 0px;
 }
 
 .selected-filterIcon {
   stroke: var(--blue-400);
   fill: var(--primary-color);
+  padding: 0px;
 }
 
 .filter {
