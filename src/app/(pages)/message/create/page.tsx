@@ -29,7 +29,6 @@ function MessageCreateContent() {
   const [tags, setTags] = useState<TagType[]>([]);
   const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [content, setContent] = useState<string>("");
-  // State for batch editing
   const [batchTextFrom, setBatchTextFrom] = useState<string>("");
   const [batchTextTo, setBatchTextTo] = useState<string>("");
   const [isSaveMessageVisible, setIsSaveMessageVisible] =

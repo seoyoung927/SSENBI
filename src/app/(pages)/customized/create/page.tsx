@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import "../page.css";
 import Header from "@/app/components/layout/Header";
 import { useRouter } from "next/navigation";
 import TagList from "@/app/components/common/tag/TagList";
@@ -13,6 +12,7 @@ import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import { CustomerType } from "@/types/customer/customerType";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
+import "../page.css";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
@@ -22,8 +22,8 @@ export default function CustomizedNewPage() {
   const [selectedCustomers, setSelectedCustomers] = useState<CustomerType[]>(
     [],
   );
-  const [batchTextFrom, setBatchTextFrom] = useState("");
-  const [batchTextTo, setBatchTextTo] = useState("");
+  const [batchTextFrom, setBatchTextFrom] = useState<string>("");
+  const [batchTextTo, setBatchTextTo] = useState<string>("");
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
     useState<boolean>(false);
 

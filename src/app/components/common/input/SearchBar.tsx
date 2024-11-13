@@ -19,7 +19,7 @@ export default function SearchBar({
   placeholder,
   onChange,
 }: SearchBarProps) {
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState<string>(value);
 
   const debouncedOnChange = useMemo(() => debounce(onChange, 500), [onChange]);
 

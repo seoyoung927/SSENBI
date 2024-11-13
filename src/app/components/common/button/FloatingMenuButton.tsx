@@ -15,7 +15,7 @@ export default function FloatingMenuButton({
   showIcon = true,
   text = "",
 }: FloatingMenuButtonProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const expandedClassName = isExpanded ? "fmb-expanded" : "";
   const handleClick = () => {
     setIsExpanded((prev) => !prev);
