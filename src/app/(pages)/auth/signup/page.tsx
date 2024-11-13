@@ -15,14 +15,24 @@ const PHONE_NUMBER_LENGTH_ERROR =
   "전화번호는 7자 이상 15자 이하로 입력해주세요.";
 const REQUIRED_FIELD_ERROR = "이 필드는 필수 입력 항목입니다.";
 
+interface RequiredFieldErrorsType {
+  memberId: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  business: string;
+  personalPhoneNumber: string;
+  businessPhoneNumber: string;
+}
+
 export default function SignupPage() {
-  const [memberId, setMemberId] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [business, setBusiness] = useState("");
-  const [personalPhoneNumber, setPersonalPhoneNumber] = useState("");
-  const [businessPhoneNumber, setBusinessPhoneNumber] = useState("");
+  const [memberId, setMemberId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [business, setBusiness] = useState<string>("");
+  const [personalPhoneNumber, setPersonalPhoneNumber] = useState<string>("");
+  const [businessPhoneNumber, setBusinessPhoneNumber] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [passwordValidationMessage, setPasswordValidationMessage] =
     useState<string>("");
@@ -30,15 +40,16 @@ export default function SignupPage() {
     useState<string>("");
   const [businessPhoneNumberError, setBusinessPhoneNumberError] =
     useState<string>("");
-  const [requiredFieldErrors, setRequiredFieldErrors] = useState({
-    memberId: "",
-    password: "",
-    confirmPassword: "",
-    name: "",
-    business: "",
-    personalPhoneNumber: "",
-    businessPhoneNumber: "",
-  });
+  const [requiredFieldErrors, setRequiredFieldErrors] =
+    useState<RequiredFieldErrorsType>({
+      memberId: "",
+      password: "",
+      confirmPassword: "",
+      name: "",
+      business: "",
+      personalPhoneNumber: "",
+      businessPhoneNumber: "",
+    });
 
   const router = useRouter();
 

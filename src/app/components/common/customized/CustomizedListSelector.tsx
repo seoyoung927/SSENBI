@@ -26,7 +26,7 @@ export default function CustomizedListSelector({
 }: CustomizedListSelectorProps) {
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("최근순");
   const [filteredMessages, setFilteredMessages] = useState<ApiResponse>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCustomTemplates = async () => {

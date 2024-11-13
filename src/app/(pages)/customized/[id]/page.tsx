@@ -59,8 +59,8 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   // State for batch editing
-  const [batchTextFrom, setBatchTextFrom] = useState("");
-  const [batchTextTo, setBatchTextTo] = useState("");
+  const [batchTextFrom, setBatchTextFrom] = useState<string>("");
+  const [batchTextTo, setBatchTextTo] = useState<string>("");
 
   useEffect(() => {
     fetchCustomTemplate(id);

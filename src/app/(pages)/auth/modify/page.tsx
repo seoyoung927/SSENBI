@@ -34,7 +34,7 @@ export default function ModifyPage() {
     useState<string>("");
   const [isSaveMessageVisible, setIsSaveMessageVisible] =
     useState<boolean>(false);
-  const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState<string>("");
 
   const router = useRouter();
 
