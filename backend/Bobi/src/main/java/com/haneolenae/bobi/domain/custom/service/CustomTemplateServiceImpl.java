@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,7 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 	private final CustomerRepository customerRepository;
 	private final MemberRepository memberRepository;
 
+	@Autowired
 	public CustomTemplateServiceImpl(CustomTemplateMapper customTemplateMapper,
 		CustomTemplateRepository customTemplateRepository,
 		TemplateTagRepository templateTagRepository, TemplateCustomerRepository templateCustomerRepository,
@@ -92,8 +94,6 @@ public class CustomTemplateServiceImpl implements CustomTemplateService {
 		if (!tagIds.isEmpty()) {
 			List<Tag> tags = tagRepository.findByMemberIdAndIdIn(memberId, tagIds);
 
-			System.out.println(tags.size());
-			System.out.println(tagIds.size());
 			if (tags.size() != tagIds.size())
 				throw new ApiException(ApiType.TAG_NOT_FOUND);
 
