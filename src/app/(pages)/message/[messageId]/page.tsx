@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { CustomerType } from "@/types/customer/customerType";
 import Cookies from "js-cookie";
 import "./page.css";
+import formatDateTime from "@/utils/formatDateTime";
 
 interface ApiResponse {
   messageContent: string;
@@ -32,9 +33,6 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
   useEffect(() => {
     const fetchMessage = async () => {
       try {
-        const token = Cookies.get("accessToken");
-        if (!token) return;
-
         const data = await getMessageAPI(messageId);
         console.log(data);
 
@@ -69,7 +67,7 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
       <div className="message-info-list">
         <div className="message-info">
           <p className="subheading">보낸 시간</p>
-          <p className="body">{messageData?.messageSendAt}</p>
+          <p className="body">{formatDateTime(messageData?.messageSendAt)}</p>
         </div>
         <div className="message-info">
           <p className="subheading">보낸사람</p>
