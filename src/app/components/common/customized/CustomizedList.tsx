@@ -52,7 +52,6 @@ export default function CustomizedList() {
 
   useEffect(() => {
     fetchCustomTemplates();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [curSortOption]);
 
   useEffect(() => {
@@ -168,17 +167,17 @@ export default function CustomizedList() {
           </Link>
         ))
       ) : (
-        <div className="flex-container">
-          <div className="empty-message">
-            <p className="body-medium">새로운 메세지를 추가해주세요</p>
-            <Image
-              src="/assets/images/messageIcon.png"
-              fill
-              loading="lazy"
-              alt="메세지 icon"
-            />
-          </div>
+        // <div className="flex-container">
+        <div className="empty-message">
+          <p className="body-small">{"새로운 메세지를 \n추가해주세요"}</p>
+          <Image
+            src="/assets/images/messageIcon.png"
+            fill
+            loading="lazy"
+            alt="메세지 icon"
+          />
         </div>
+        // </div>
       )}
     </div>
   );

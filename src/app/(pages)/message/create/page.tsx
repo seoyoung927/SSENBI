@@ -115,10 +115,17 @@ function MessageCreateContent() {
 
   const handleBatchTextChange = () => {
     if (batchTextFrom) {
+      // batchTextFrom의 특수 문자를 이스케이프 처리
+      const escapedBatchTextFrom = batchTextFrom.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&",
+      );
+
       const updatedContent = content.replace(
-        new RegExp(batchTextFrom, "g"),
+        new RegExp(escapedBatchTextFrom, "g"),
         batchTextTo,
       );
+
       setContent(updatedContent);
     }
   };
@@ -139,7 +146,7 @@ function MessageCreateContent() {
       <div className="message-form">
         <div className="space-between">
           <div className="form-group">
-            <label className="form-group_label body-small">받는 사람</label>
+            <label className="form-group_label subheading">받는 사람</label>
             <div className="tag-container">
               <CustomerTagList
                 customers={customers}
@@ -156,13 +163,13 @@ function MessageCreateContent() {
             className="message-get_button"
             onClick={openCustomListModal}
           >
-            템플릿에서 가져오기
+            커스텀에서 가져오기
             <UploadIcon className="upload-icon" />
           </button>
         </div>
 
         <div className="form-group">
-          <label className="label body-small">내용</label>
+          <label className="label subheading">내용</label>
           <textarea
             className="form-group_textarea"
             value={content}

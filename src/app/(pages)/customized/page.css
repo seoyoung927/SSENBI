@@ -7,6 +7,7 @@
   width: calc(100vw - 150px);
   height: calc(100vw - 150px);
   text-align: center;
+  white-space: pre-wrap;
 }
 
 .flex-container {
@@ -116,5 +117,11 @@
 .customized-button-group {
   display: flex;
   margin: 12px;
+  gap: 8px;
+}
+
+.custom-layout {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }

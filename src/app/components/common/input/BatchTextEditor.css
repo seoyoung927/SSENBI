@@ -24,4 +24,14 @@
 .text-input {
   flex-grow: 1;
   min-width: 0;
+  padding: 10px;
+  outline: none;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  background-color: var(--gray-100);
+}
+
+.text-input:focus {
+  border: 1px solid var(--blue-200);
+  background-color: var(--blue-100);
 }
