@@ -255,6 +255,12 @@ a {
   line-height: 1.4;
 }
 
+.message {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
 .body {
   font-size: 1rem;
   font-weight: 400;
