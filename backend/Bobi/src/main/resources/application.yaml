@@ -4,7 +4,7 @@ server:
 
 spring:
   profiles:
-    active: prod
+    active: dev
   config:
     import: optional:file:.env[.properties]
 
@@ -33,5 +33,6 @@ openai:
     role: ${OPENAI_PROMPT_ROLE}
     role2: ${OPENAI_PROMPT_ROLE2}
     role3: ${OPENAI_PROMPT_ROLE3}
+    role4: ${OPENAI_PROMPT_ROLE4}
 
 
