@@ -1,7 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { getSingleTemplateAPI } from "@/app/api/template/templateAPI";
 import Header from "@/app/components/layout/Header";
 import TemplateClientButtons from "@/app/components/common/template/TemplateClientButtons";
 import "./page.css";
+import HashLoading from "@/app/components/common/loading/HashLoading";
 
 interface MessageTemplateType {
   templateId: number;
@@ -21,23 +25,30 @@ const DEFAULT_TEMPLATE_DATA: MessageTemplateType = {
   createdAt: "",
 };
 
-async function fetchTemplateData(id: number) {
-  try {
-    const response = await getSingleTemplateAPI({ templateId: id });
-    return response.result || { ...DEFAULT_TEMPLATE_DATA, templateId: id };
-  } catch (error) {
-    if (error instanceof Error) {
-      return { ...DEFAULT_TEMPLATE_DATA, templateId: id };
-    }
-  }
-}
+export default function TemplateIdPage({ params }: { params: { id: number } }) {
+  const [templateData, setTemplateData] = useState<MessageTemplateType>(
+    DEFAULT_TEMPLATE_DATA,
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-export default async function TemplateIdPage({
-  params,
-}: {
-  params: { id: number };
-}) {
-  const templateData: MessageTemplateType = await fetchTemplateData(params.id);
+  useEffect(() => {
+    const fetchTemplateData = async () => {
+      try {
+        const response = await getSingleTemplateAPI({ templateId: params.id });
+        setTemplateData(response.result);
+      } catch (error) {
+        if (error instanceof Error) {
+          setTemplateData(DEFAULT_TEMPLATE_DATA);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTemplateData();
+  }, [params.id]);
+
+  if (isLoading) return <HashLoading />;
 
   return (
     <div className="page-container">

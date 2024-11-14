@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import UserInfoCard from "@/app/components/common/card/UserInfoCard";
 import Header from "@/app/components/layout/Header";
 import "./page.css";
@@ -6,11 +9,12 @@ import { getMemberOverViewAPI } from "@/app/api/member/memberAPI";
 import { getTagsAPI } from "@/app/api/tag/tagAPI";
 import { getCustomersAPI } from "@/app/api/customer/customerAPI";
 import MypageTagList from "@/app/components/common/auth/MypageTagList";
-import { cookies } from "next/headers";
 import { CustomerType } from "@/types/customer/customerType";
 import { TagColorType, TagType } from "@/types/tag/tagTypes";
 import { getEveryMessagesAPI } from "@/app/api/message/messageAPI";
 import { MessageType } from "@/types/message/messageTypes";
+import HashLoading from "@/app/components/common/loading/HashLoading";
+import Cookies from "js-cookie";
 
 const INITIALMEMBERDATA = {
   name: "",
@@ -18,66 +22,47 @@ const INITIALMEMBERDATA = {
   messageCount: 0,
 };
 
-export default async function MypagePage() {
-  const cookieStore = cookies();
-  const token = cookieStore.get("accessToken")?.value;
+export default function MypagePage() {
+  const [members, setMembers] = useState(INITIALMEMBERDATA);
+  const [tags, setTags] = useState<TagType[]>([]);
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const token = Cookies.get("accessToken");
 
-  const fetchMemberData = async () => {
-    try {
-      const response = await getMemberOverViewAPI(token);
-      return response.result;
-    } catch (error) {
-      if (error instanceof Error) {
-        return INITIALMEMBERDATA;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const memberResponse = await getMemberOverViewAPI(token);
+        setMembers(memberResponse.result || INITIALMEMBERDATA);
+
+        const tagsResponse = await getTagsAPI(token);
+        setTags(tagsResponse.result.tags || []);
+
+        const customersResponse = await getCustomersAPI(token);
+        setCustomers(customersResponse.result || []);
+
+        const messagesResponse = await getEveryMessagesAPI({
+          token: token,
+          sort: "createdAt",
+        });
+        setMessages(messagesResponse.result.slice(0, 100) || []);
+      } catch (error) {
+        setMembers(INITIALMEMBERDATA);
+        setTags([]);
+        setCustomers([]);
+        setMessages([]);
+      } finally {
+        setIsLoading(false);
       }
-    }
-  };
+    };
 
-  const fetchTagsData = async () => {
-    try {
-      const response = await getTagsAPI(token);
-      return response.result.tags;
-    } catch (error) {
-      if (error instanceof Error) {
-        return [];
-      }
-    }
-  };
+    fetchData();
+  }, []);
 
-  const fetchCustomerData = async () => {
-    try {
-      const { result } = await getCustomersAPI(token);
-      return result;
-    } catch (error) {
-      if (error instanceof Error) {
-        return [];
-      }
-    }
-  };
-
-  const fetchMessageData = async () => {
-    try {
-      const { result } = await getEveryMessagesAPI({
-        token: token,
-        sort: "createdAt",
-      });
-      return result.slice(0, 100);
-    } catch (error) {
-      if (error instanceof Error) {
-        return [];
-      }
-    }
-  };
-
-  const members = await fetchMemberData();
-  const tags = await fetchTagsData();
-  const customers = await fetchCustomerData();
-  const messages = await fetchMessageData();
-
-  // 태그 카운트를 저장할 객체 초기화 (count와 color 포함)
   const tagCounts: Record<string, { count: number; color: string }> = {};
-  customers.forEach((customer: CustomerType) => {
-    customer.customerTags.forEach((tag: TagType) => {
+  customers.forEach((customer) => {
+    customer.customerTags.forEach((tag) => {
       if (!tagCounts[tag.tagName]) {
         tagCounts[tag.tagName] = { count: 0, color: tag.tagColor };
       }
@@ -98,10 +83,9 @@ export default async function MypagePage() {
     )
     .slice(0, 5);
 
-  // Process tags in messages to get top tags with color and count
   const messageTagCounts: Record<string, { count: number; color: string }> = {};
-  messages.forEach((message: MessageType) => {
-    message.messageTags.forEach((tag: TagType) => {
+  messages.forEach((message) => {
+    message.messageTags.forEach((tag) => {
       if (!messageTagCounts[tag.tagName]) {
         messageTagCounts[tag.tagName] = { count: 0, color: tag.tagColor };
       }
@@ -121,6 +105,8 @@ export default async function MypagePage() {
       })),
     )
     .slice(0, 5);
+
+  if (isLoading) return <HashLoading />;
 
   return (
     <div className="page-container">
