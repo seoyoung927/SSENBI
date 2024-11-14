@@ -1,17 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import {
-  getSingleTemplateAPI,
-  postDuplicateTemplateAPI,
-} from "@/app/api/template/templateAPI";
+import { getSingleTemplateAPI } from "@/app/api/template/templateAPI";
 import Header from "@/app/components/layout/Header";
-import HashLoading from "@/app/components/common/loading/HashLoading";
+import TemplateClientButtons from "@/app/components/common/template/TemplateClientButtons";
 import "./page.css";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
-interface ApiResponse {
+interface MessageTemplateType {
   templateId: number;
   templateTitle: string;
   templateContent: string;
@@ -20,105 +12,42 @@ interface ApiResponse {
   createdAt: string;
 }
 
-interface TemplateIdProps {
-  params: {
-    id: string;
-  };
+const DEFAULT_TEMPLATE_DATA: MessageTemplateType = {
+  templateId: 0,
+  templateTitle: "",
+  templateContent: "",
+  image: "",
+  usageCount: 0,
+  createdAt: "",
+};
+
+async function fetchTemplateData(id: number) {
+  try {
+    const response = await getSingleTemplateAPI({ templateId: id });
+    return response.result || { ...DEFAULT_TEMPLATE_DATA, templateId: id };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { ...DEFAULT_TEMPLATE_DATA, templateId: id };
+    }
+  }
 }
 
-export default function TemplateIdPage({ params }: TemplateIdProps) {
-  const router = useRouter();
-  const { id } = params;
-  const [templateData, setTemplateData] = useState<ApiResponse>({
-    templateId: Number(id),
-    templateTitle: "",
-    templateContent: "",
-    image: "",
-    usageCount: 0,
-    createdAt: "",
-  });
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getSingleTemplate = async () => {
-      try {
-        const response = await getSingleTemplateAPI({ templateId: Number(id) });
-        setTemplateData(response?.result);
-      } catch (error) {
-        console.error("단일 템플릿 데이터 가져오는 중에 오류 발생: ", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (id) {
-      getSingleTemplate();
-    }
-  }, [id]);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(templateData.templateContent);
-      setIsTooltipVisible(true);
-      setTimeout(() => {
-        setIsTooltipVisible(false);
-      }, 1500);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleMyCustom = async () => {
-    const token = Cookies.get("accessToken");
-    if (!token) return;
-    try {
-      const response = await postDuplicateTemplateAPI({
-        token,
-        templateId: Number(id),
-      });
-
-      if (response?.code === "S10000") router.push("/customized");
-    } catch (error) {
-      console.error("post duplicate API 실패", error);
-    }
-  };
-
-  if (isLoading) {
-    return <HashLoading />;
-  }
+export default async function TemplateIdPage({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const templateData: MessageTemplateType = await fetchTemplateData(params.id);
 
   return (
     <div className="page-container">
       <Header title={templateData.templateTitle} showBackIcon={true} />
-      <div className="template-id_button-group">
-        <div className="copy-button">
-          <button
-            onClick={handleCopy}
-            type="button"
-            className="template-id_button blue_button"
-          >
-            복사하기
-          </button>
-          <div className={`tooltip ${isTooltipVisible ? "visible" : ""}`}>
-            텍스트가 복사되었습니다!
-          </div>
-        </div>
-        <button
-          onClick={handleMyCustom}
-          type="button"
-          className="template-id_button blue_button"
-        >
-          내 커스텀으로 가져오기
-        </button>
-      </div>
-
-      <div className="template-id_count-group body-small">
-        인용수: {templateData?.usageCount}
-      </div>
-
-      <div className="message template-id_content-body">
-        {templateData?.templateContent}
+      <TemplateClientButtons id={params.id} templateData={templateData} />
+      <p className="template-id_count body-small">
+        커스텀 사용횟수: {templateData.usageCount}
+      </p>
+      <div className="template-id_content body">
+        {templateData.templateContent}
       </div>
     </div>
   );
