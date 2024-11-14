@@ -3,6 +3,7 @@
 import NavigationBar from "@/app/components/layout/NavigationBar";
 import ContentCard from "@/app/components/common/card/ContentCard";
 import { useEffect, useState } from "react";
+import "./TemplateList.css";
 
 interface MessageTemplateType {
   templateId: number;

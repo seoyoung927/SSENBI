@@ -36,6 +36,7 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
         const data = await getMessageAPI(messageId);
         console.log(data);
 
+        // setMessageData(data.result);
         setMessageData(data.result);
       } catch (error) {
         console.error("Error fetching message:", error);
@@ -61,24 +62,17 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container flex-column">
       <Header title={`보낸 메시지`} showBackIcon={true} />
 
-      <div className="message-info-list">
-        <div className="message-info">
-          <p className="subheading">보낸 시간</p>
-          <p className="body">{formatDateTime(messageData?.messageSendAt)}</p>
-        </div>
-        <div className="message-info">
-          <p className="subheading">보낸사람</p>
-          <p className="body">
-            {messageData?.messageCustomers
-              .map((customer) => customer.customerName)
-              .join(", ")}
-          </p>
-        </div>
-        <div className="message-info">
-          <p className="subheading">태그</p>
+      <div className="message-info">
+        <p className="message-info-detail body-medium">
+          {messageData?.messageContent}
+        </p>
+      </div>
+      <div className="message-info">
+        <div className="message-info-label">
+          <span>태그</span>
           <div className="message-info_tag-list">
             {messageData?.messageTags.map((tag) => (
               <BorderTag
@@ -89,14 +83,28 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
             ))}
           </div>
         </div>
-        <div className="message-info">
-          <p className="subheading">내용</p>
-          <p className="body">{messageData?.messageContent}</p>
+      </div>
+      <div className="message-info">
+        <div className="message-info-label">
+          <span>보낸 시간</span>
+          <span>{formatDateTime(messageData?.messageSendAt)}</span>
         </div>
+      </div>
+      <div className="message-info">
+        <div className="message-info-label">
+          <span>받는 사람</span>
+          <span>
+            {messageData?.messageCustomers
+              .map((customer) => customer.customerName)
+              .join(", ")}
+          </span>
+        </div>
+      </div>
 
+      <div className="button-group">
         <button
           type="button"
-          className="message-info_delete-button"
+          className="button delete body-strong"
           onClick={handleDelete}
         >
           삭제

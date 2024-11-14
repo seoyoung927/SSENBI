@@ -33,6 +33,7 @@ export default function MessagePage() {
   useEffect(() => {
     const fetchMessageList = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const params: any = {
           sort: SORTOPTIONS[curSortOption],
         };
@@ -60,16 +61,16 @@ export default function MessagePage() {
   };
 
   return (
-    <div className="page-container">
-      <div className="pc-layout">
-        <Header title="메시지" />
+    <div className="page-container ">
+      <Header title="메시지" />
 
-        <div className="search-bar-container">
+      <div className="search-bar-container">
+        <div className="search-bar-contents">
           <SearchBar
             type="text"
             value={searchValue}
             onChange={handleSearchChange}
-            placeholder="검색어 (이름, 제목, 태그)"
+            placeholder="검색어 (이름, 내용, 태그)"
           />
           <SortSelect
             curOption={curSortOption}
@@ -79,30 +80,26 @@ export default function MessagePage() {
             }
           />
         </div>
-
-        <div className="message-list">
-          {messageList &&
-            messageList.map((message) => (
-              <Link
-                href={`/message/${message.messageId}`}
-                key={message.messageId}
-              >
-                <MessageCard
-                  messageId={message.messageId}
-                  messageContent={message.messageContent}
-                  messageTags={message.messageTags}
-                  messageCustomers={message.messageCustomers}
-                  messageSendAt={message.messageSendAt}
-                />
-              </Link>
-            ))}
-
-          <FloatingActionButton
-            onClick={handleNewMessage}
-            text="메시지 작성하기"
-          />
-        </div>
       </div>
+
+      <div className="message-list">
+        {messageList &&
+          messageList.map((message) => (
+            <Link
+              href={`/message/${message.messageId}`}
+              key={message.messageId}
+            >
+              <MessageCard
+                messageId={message.messageId}
+                messageContent={message.messageContent}
+                messageTags={message.messageTags}
+                messageCustomers={message.messageCustomers}
+                messageSendAt={message.messageSendAt}
+              />
+            </Link>
+          ))}
+      </div>
+      <FloatingActionButton onClick={handleNewMessage} text="메시지 작성하기" />
     </div>
   );
 }

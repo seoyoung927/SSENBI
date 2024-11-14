@@ -115,70 +115,72 @@ export default function CustomizedList() {
   }
 
   return (
-    <div className="customiedList-container">
+    <>
       <div className="customized_sort-container">
-        <div className="customized-search-bar">
-          <SearchBar onChange={setSearchValue} />
-          <SortSelect
-            curOption={curSortOption}
-            options={Object.keys(SORTOPTIONS)}
-            onChange={(selectedLabel) =>
-              handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
-            }
-          />
-        </div>
-        <div className="customized-filters">
-          <div>
-            <FilterIcon
-              className={
-                selectedCustomers.length === 0 && selectedTags.length === 0
-                  ? "filterIcon"
-                  : "selected-filterIcon"
+        <div className="customized_sort-contents">
+          <div className="customized-search-bar">
+            <SearchBar onChange={setSearchValue} />
+            <SortSelect
+              curOption={curSortOption}
+              options={Object.keys(SORTOPTIONS)}
+              onChange={(selectedLabel) =>
+                handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
               }
             />
           </div>
-          <div className="filter">
-            <TagList
-              tags={selectedTags}
-              setTags={setSelectedTags}
-              isFilter={true}
-            />
-          </div>
-          <div className="filter">
-            <CustomerTagList
-              customers={selectedCustomers}
-              setCustomers={setSelectedCustomers}
-              isFilter={true}
-            />
+          <div className="customized-filters">
+            <div>
+              <FilterIcon
+                className={
+                  selectedCustomers.length === 0 && selectedTags.length === 0
+                    ? "filterIcon"
+                    : "selected-filterIcon"
+                }
+              />
+            </div>
+            <div className="filter">
+              <TagList
+                tags={selectedTags}
+                setTags={setSelectedTags}
+                isFilter={true}
+              />
+            </div>
+            <div className="filter">
+              <CustomerTagList
+                customers={selectedCustomers}
+                setCustomers={setSelectedCustomers}
+                isFilter={true}
+              />
+            </div>
           </div>
         </div>
       </div>
-
-      {filteredTemplates.length > 0 ? (
-        filteredTemplates.map((message) => (
-          <Link
-            key={message.templateId}
-            href={`/customized/${message.templateId}`}
-          >
-            <CustomizedCard
-              customMessage={message}
-              duplicateCustomized={duplicateCustomized}
+      <div className="customizedList-contents">
+        {filteredTemplates.length > 0 ? (
+          filteredTemplates.map((message) => (
+            <Link
+              key={message.templateId}
+              href={`/customized/${message.templateId}`}
+            >
+              <CustomizedCard
+                customMessage={message}
+                duplicateCustomized={duplicateCustomized}
+              />
+            </Link>
+          ))
+        ) : (
+          <div className="empty-message">
+            <p className="body-small">{"새로운 메세지를 \n추가해주세요"}</p>
+            <Image
+              src="/assets/images/messageIcon.png"
+              fill
+              loading="lazy"
+              alt="메세지 icon"
             />
-          </Link>
-        ))
-      ) : (
-        // <div className="flex-container">
-        <div className="empty-message">
-          <p className="body-small">{"새로운 메세지를 \n추가해주세요"}</p>
-          <Image
-            src="/assets/images/messageIcon.png"
-            fill
-            loading="lazy"
-            alt="메세지 icon"
-          />
-        </div>
-        // </div>
-      )}
-    </div>
+          </div>
+          // </div>
+        )}
+      </div>
+    </>
   );
 }
