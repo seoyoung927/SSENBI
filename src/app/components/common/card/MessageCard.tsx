@@ -4,6 +4,8 @@ import { MessageCardPropsType } from "@/types/message/messageTypes";
 import { TagType } from "@/types/tag/tagTypes";
 import { CustomerType } from "@/types/customer/customerType";
 import "./MessageCard.css";
+import FilledTag from "../tag/FilledTag";
+import formatDateTime from "@/utils/formatDateTime";
 interface ApiResponse {
   code: string;
   message: string;
@@ -30,16 +32,20 @@ export default function MessageCard({
       <div className="message-card__details">
         {/* todo : tagList */}
         <div className="message-tag-container">
-          {/* created_at width 제외하고 100% overflow hidden */}
           {messageTags.map((tag, index) => (
             <BorderTag key={index} color={tag.tagColor} tagName={tag.tagName} />
           ))}
-          {/*
           {messageCustomers.map((customer) => (
-            <Fileld>{customer.customerName}</Fileld>
-            ))} */}
+            <FilledTag
+              key={customer.customerId}
+              color={customer.customerColor}
+              tagName={customer.customerName}
+            />
+          ))}
         </div>
-        <p className="message-card__description body-small">{messageSendAt}</p>
+        <p className="message-card__description body-small">
+          {formatDateTime(messageSendAt)}
+        </p>
       </div>
     </div>
   );
