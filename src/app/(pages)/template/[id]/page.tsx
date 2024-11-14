@@ -117,7 +117,7 @@ export default function TemplateIdPage({ params }: TemplateIdProps) {
         인용수: {templateData?.usageCount}
       </div>
 
-      <div className="template-id_content-body">
+      <div className="message template-id_content-body">
         {templateData?.templateContent}
       </div>
     </div>
