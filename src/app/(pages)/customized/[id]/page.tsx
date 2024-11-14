@@ -232,8 +232,12 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
 
   const handleBatchTextChange = () => {
     if (modifiedTemplate) {
+      const escapedBatchTextFrom = batchTextFrom.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&",
+      ); // 특수 문자를 이스케이프 처리
       const updatedContent = modifiedTemplate.templateContent.replace(
-        new RegExp(batchTextFrom, "g"),
+        new RegExp(escapedBatchTextFrom, "g"),
         batchTextTo,
       );
       setModifiedTemplate((prev) => {

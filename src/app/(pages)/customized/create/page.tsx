@@ -33,8 +33,14 @@ export default function CustomizedNewPage() {
 
   const handleBatchTextChange = () => {
     if (batchTextFrom) {
+      // batchTextFrom의 특수 문자를 이스케이프 처리
+      const escapedBatchTextFrom = batchTextFrom.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&",
+      );
+
       const updatedContent = contentRef.current?.value.replace(
-        new RegExp(batchTextFrom, "g"),
+        new RegExp(escapedBatchTextFrom, "g"),
         batchTextTo,
       );
 
