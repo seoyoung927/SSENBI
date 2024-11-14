@@ -60,11 +60,12 @@ export default async function TemplatePage() {
   return (
     <div className="page-container">
       <Banner />
-
-      <TemplateList
-        categoryList={allCategories}
-        allMessageTemplates={templatesByCategory}
-      />
+      <div className="pc-layout">
+        <TemplateList
+          categoryList={allCategories}
+          allMessageTemplates={templatesByCategory}
+        />
+      </div>
     </div>
   );
 }

@@ -15,11 +15,16 @@ export default function CustomizedPage() {
 
   return (
     <div className="page-container">
-      <Header title="커스텀" />
+      <div className="pc-layout">
+        <Header title="커스텀" />
 
-      <CustomizedList />
+        <CustomizedList />
 
-      <FloatingActionButton onClick={handleNewTemplate} text={"커스텀 추가"} />
+        <FloatingActionButton
+          onClick={handleNewTemplate}
+          text={"커스텀 추가"}
+        />
+      </div>
     </div>
   );
 }

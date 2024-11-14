@@ -61,45 +61,47 @@ export default function MessagePage() {
 
   return (
     <div className="page-container">
-      <Header title="메시지" />
+      <div className="pc-layout">
+        <Header title="메시지" />
 
-      <div className="search-bar-container">
-        <SearchBar
-          type="text"
-          value={searchValue}
-          onChange={handleSearchChange}
-          placeholder="검색어 (이름, 제목, 태그)"
-        />
-        <SortSelect
-          curOption={curSortOption}
-          options={Object.keys(SORTOPTIONS)}
-          onChange={(selectedLabel) =>
-            handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
-          }
-        />
-      </div>
+        <div className="search-bar-container">
+          <SearchBar
+            type="text"
+            value={searchValue}
+            onChange={handleSearchChange}
+            placeholder="검색어 (이름, 제목, 태그)"
+          />
+          <SortSelect
+            curOption={curSortOption}
+            options={Object.keys(SORTOPTIONS)}
+            onChange={(selectedLabel) =>
+              handleSortChange(selectedLabel as keyof typeof SORTOPTIONS)
+            }
+          />
+        </div>
 
-      <div className="message-list">
-        {messageList &&
-          messageList.map((message) => (
-            <Link
-              href={`/message/${message.messageId}`}
-              key={message.messageId}
-            >
-              <MessageCard
-                messageId={message.messageId}
-                messageContent={message.messageContent}
-                messageTags={message.messageTags}
-                messageCustomers={message.messageCustomers}
-                messageSendAt={message.messageSendAt}
-              />
-            </Link>
-          ))}
+        <div className="message-list">
+          {messageList &&
+            messageList.map((message) => (
+              <Link
+                href={`/message/${message.messageId}`}
+                key={message.messageId}
+              >
+                <MessageCard
+                  messageId={message.messageId}
+                  messageContent={message.messageContent}
+                  messageTags={message.messageTags}
+                  messageCustomers={message.messageCustomers}
+                  messageSendAt={message.messageSendAt}
+                />
+              </Link>
+            ))}
 
-        <FloatingActionButton
-          onClick={handleNewMessage}
-          text="메시지 작성하기"
-        />
+          <FloatingActionButton
+            onClick={handleNewMessage}
+            text="메시지 작성하기"
+          />
+        </div>
       </div>
     </div>
   );

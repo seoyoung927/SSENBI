@@ -37,19 +37,18 @@ export default function TemplateList({
   return (
     <div>
       <NavigationBar tabs={categoryList} onTabChange={handleTabChange} />
-      <div className="pc-layout">
-        <div className="template-list">
-          {filteredMessageTemplates?.map((message) => (
-            <ContentCard
-              key={message.templateId}
-              templateId={message.templateId}
-              imgSrc={message.image}
-              title={message.templateTitle}
-              content={message.templateContent}
-              usageCount={message.usageCount}
-            />
-          ))}
-        </div>
+
+      <div className="template-list">
+        {filteredMessageTemplates?.map((message) => (
+          <ContentCard
+            key={message.templateId}
+            templateId={message.templateId}
+            imgSrc={message.image}
+            title={message.templateTitle}
+            content={message.templateContent}
+            usageCount={message.usageCount}
+          />
+        ))}
       </div>
     </div>
   );
