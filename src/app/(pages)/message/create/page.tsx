@@ -163,7 +163,7 @@ function MessageCreateContent() {
             className="message-get_button"
             onClick={openCustomListModal}
           >
-            커스텀에서 가져오기
+            {"커스텀에서 \n가져오기"}
             <UploadIcon className="upload-icon" />
           </button>
         </div>
