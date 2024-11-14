@@ -83,7 +83,7 @@ export default function CustomizedListSelector({
         ))
       ) : (
         <div className="empty-message">
-          <p className="body-medium">새로운 메세지를 추가해주세요</p>
+          <p className="body-small">{"새로운 메세지를 \n추가해주세요"}</p>
           <Image
             src="/assets/images/messageIcon.png"
             fill
