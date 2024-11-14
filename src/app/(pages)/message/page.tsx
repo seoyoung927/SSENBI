@@ -4,7 +4,6 @@ import SearchBar from "@/app/components/common/input/SearchBar";
 import MessageCard from "@/app/components/common/card/MessageCard";
 import { useEffect, useState } from "react";
 import "./page.css";
-import FloatingMenuButton from "@/app/components/common/button/FloatingMenuButton";
 import Link from "next/link";
 import Header from "@/app/components/layout/Header";
 import { getEveryMessagesAPI } from "@/app/api/message/messageAPI";
@@ -15,33 +14,42 @@ import {
 } from "@/types/message/messageTypes";
 import { debounce } from "lodash";
 import SortSelect from "@/app/components/common/select/SortSelect";
+import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
+import { useRouter } from "next/navigation";
 
 export default function MessagePage() {
+  const router = useRouter();
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("최신순");
   const [searchValue, setSearchValue] = useState<string>("");
   const [messageList, setMessageList] = useState<MessageCardPropsType[]>([]);
+  const handleNewMessage = () => {
+    router.push("/message/create");
+  };
 
   useEffect(() => {
+    router.prefetch("/message/create");
+  }, [router]);
+
+  useEffect(() => {
+    const fetchMessageList = async () => {
+      try {
+        const params: any = {
+          sort: SORTOPTIONS[curSortOption],
+        };
+
+        if (searchValue.trim()) {
+          params.keyword = searchValue;
+        }
+
+        const response = await getEveryMessagesAPI(params);
+        console.log("Fetched Message List:", response);
+        setMessageList(response.result);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
     fetchMessageList();
   }, [searchValue, curSortOption]);
-
-  const fetchMessageList = async () => {
-    try {
-      const params: any = {
-        sort: SORTOPTIONS[curSortOption],
-      };
-
-      if (searchValue.trim()) {
-        params.keyword = searchValue;
-      }
-
-      const response = await getEveryMessagesAPI(params);
-      console.log("Fetched Message List:", response);
-      setMessageList(response.result);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-    }
-  };
 
   const handleSearchChange = debounce((value: string) => {
     setSearchValue(value);
@@ -88,15 +96,10 @@ export default function MessagePage() {
             </Link>
           ))}
 
-        <FloatingMenuButton>
-          <div>
-            <ul>
-              <Link href="/message/create">
-                <li>메세지 작성하기</li>
-              </Link>
-            </ul>
-          </div>
-        </FloatingMenuButton>
+        <FloatingActionButton
+          onClick={handleNewMessage}
+          text="메시지 작성하기"
+        />
       </div>
     </div>
   );
