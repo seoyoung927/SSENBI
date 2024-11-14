@@ -44,6 +44,8 @@
 }
 
 .message-tag-container {
+  display: flex;
+  gap: 8px;
   overflow: hidden;
   white-space: nowrap;
   width: 80%;
