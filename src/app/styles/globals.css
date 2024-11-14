@@ -443,3 +443,19 @@ a {
     transform: translateX(-50%) translateY(-10px);
   }
 }
+
+.pc-layout {
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 481px) {
+  .pc-layout {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+    gap: 16px;
+    padding: 12px;
+    justify-self: center;
+    max-width: 800px;
+  }
+}
