@@ -119,3 +119,9 @@
   margin: 12px;
   gap: 8px;
 }
+
+.custom-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -86,74 +86,75 @@ export default function CustomizedNewPage() {
   return (
     <div className="page-container">
       <Header title="새 커스텀" showBackIcon={true} />
-
-      <div className="customized_field-wrapper">
-        <span className="body customized_label">제목</span>
-        <input
-          className="customized_form-input-field"
-          ref={titleRef}
-          type="text"
-          maxLength={20}
-        />
-      </div>
-
-      <div className="customized_field-wrapper">
-        <label className="body customized_label">태그 및 고객</label>
-        <div className="customized-new_tag-container">
-          <TagList
-            tags={selectedTags}
-            setTags={setSelectedTags}
-            maxTagCount={5}
+      <div className="custom-layout">
+        <div className="customized_field-wrapper">
+          <span className="subheading">제목</span>
+          <input
+            className="customized_form-input-field"
+            ref={titleRef}
+            type="text"
+            maxLength={20}
           />
         </div>
-        <div className="customized-new_tag-container">
-          <CustomerTagList
-            customers={selectedCustomers}
-            setCustomers={setSelectedCustomers}
+
+        <div className="customized_field-wrapper">
+          <label className="subheading">태그 및 고객</label>
+          <div className="customized-new_tag-container">
+            <TagList
+              tags={selectedTags}
+              setTags={setSelectedTags}
+              maxTagCount={5}
+            />
+          </div>
+          <div className="customized-new_tag-container">
+            <CustomerTagList
+              customers={selectedCustomers}
+              setCustomers={setSelectedCustomers}
+            />
+          </div>
+        </div>
+
+        <div className="customized_field-wrapper">
+          <label className="subheading">내용</label>
+          <textarea
+            className="body customized_text-area customized_form-input-field"
+            ref={contentRef}
+            maxLength={300}
           />
         </div>
-      </div>
 
-      <div className="customized_field-wrapper">
-        <label className="body customized_label">내용</label>
-        <textarea
-          className="body customized_text-area customized_form-input-field"
-          ref={contentRef}
-          maxLength={300}
+        <BatchTextEditor
+          batchTextFrom={batchTextFrom}
+          batchTextTo={batchTextTo}
+          setBatchTextFrom={setBatchTextFrom}
+          setBatchTextTo={setBatchTextTo}
+          isEdit={true}
+          handleBatchTextChange={handleBatchTextChange}
         />
-      </div>
 
-      <BatchTextEditor
-        batchTextFrom={batchTextFrom}
-        batchTextTo={batchTextTo}
-        setBatchTextFrom={setBatchTextFrom}
-        setBatchTextTo={setBatchTextTo}
-        isEdit={true}
-        handleBatchTextChange={handleBatchTextChange}
-      />
-
-      <div className="customized-button-group">
-        <button
-          onClick={handleCancel}
-          type="button"
-          className="customized-new_button white_button"
-        >
-          취소
-        </button>
-        <button
-          onClick={handleOpenAIModal}
-          type="button"
-          className="customized-new_button gradient_button"
-        >
-          쎈비 AI 도움 받기
-        </button>
-        <button
-          onClick={handleSubmit}
-          type="button"
-          className="customized-new_button blue_button"
-        >
-          작성
-        </button>
+        <div className="customized-button-group">
+          <button
+            onClick={handleCancel}
+            type="button"
+            className="customized-new_button white_button"
+          >
+            취소
+          </button>
+          <button
+            onClick={handleOpenAIModal}
+            type="button"
+            className="customized-new_button gradient_button"
+          >
+            쎈비 AI 도움 받기
+          </button>
+          <button
+            onClick={handleSubmit}
+            type="button"
+            className="customized-new_button blue_button"
+          >
+            작성
+          </button>
+        </div>
       </div>
 
       {isAIEditModalOpen && (
