@@ -1,7 +1,6 @@
 "use client";
 
 import "./TagList.css";
-import BorderTag from "./BorderTag";
 import { useEffect, useRef, useState } from "react";
 import XIcon from "@/app/assets/svg/X.svg";
 import MoreIcon from "@/app/assets/svg/More.svg";
@@ -13,17 +12,20 @@ import {
   putCustomerAPI,
   deleteCustomerAPI,
 } from "@/app/api/customer/customerAPI";
+import FilledTag from "./FilledTag";
 
 interface CustomerTagListProps {
   customers: CustomerType[];
   setCustomers: (customers: CustomerType[]) => void;
   maxCustomerCount?: number;
+  isFilter?: boolean;
 }
 
 export default function CustomerTagList({
   customers = [],
   setCustomers,
   maxCustomerCount = Infinity,
+  isFilter = false,
 }: CustomerTagListProps) {
   const [allCustomers, setAllCustomers] = useState<CustomerType[]>([]);
   const [search, setSearch] = useState<string>("");
@@ -123,10 +125,14 @@ export default function CustomerTagList({
       <Popover.Root>
         <Popover.Trigger asChild>
           <ul ref={triggerRef} className="tag-list pointer">
-            {isEmpty && <li className="body-small empty-tags">고객 추가</li>}
+            {isEmpty && (
+              <li className="body-small empty-tags">
+                고객 {isFilter ? "필터" : "추가"}
+              </li>
+            )}
             {customers.slice(0, maxCustomerCount).map((customer) => (
               <li key={customer.customerId}>
-                <BorderTag
+                <FilledTag
                   color={customer.customerColor}
                   tagName={customer.customerName}
                 />

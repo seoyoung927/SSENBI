@@ -139,12 +139,17 @@ export default function CustomizedList() {
             />
           </div>
           <div className="filter">
-            <TagList tags={selectedTags} setTags={setSelectedTags} />
+            <TagList
+              tags={selectedTags}
+              setTags={setSelectedTags}
+              isFilter={true}
+            />
           </div>
           <div className="filter">
             <CustomerTagList
               customers={selectedCustomers}
               setCustomers={setSelectedCustomers}
+              isFilter={true}
             />
           </div>
         </div>

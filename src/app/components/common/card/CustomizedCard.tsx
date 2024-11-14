@@ -3,7 +3,7 @@ import "./CustomizedCard.css";
 import BorderTag from "../tag/BorderTag";
 import FilledTag from "../tag/FilledTag";
 import { CustomMessagesType } from "@/types/customized/customizedTypes";
-import CopyIcon from "@/app/assets/svg/Copy.svg";
+import SaveAsIcon from "@/app/assets/svg/Save_as.svg";
 
 interface MessageCardProps {
   customMessage: CustomMessagesType;
@@ -34,7 +34,7 @@ export default function CustomizedCard({
 
         {duplicateCustomized && (
           <div onClick={(e) => duplicateCustomized(templateId, e)}>
-            <CopyIcon className="copy-icon" />
+            <SaveAsIcon className="copy-icon" />
           </div>
         )}
       </div>

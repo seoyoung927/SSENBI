@@ -54,7 +54,11 @@ export default function CustomerList() {
             }
           />
           <div className="filter">
-            <TagList tags={selectedTags} setTags={setSelectedTags} />
+            <TagList
+              tags={selectedTags}
+              setTags={setSelectedTags}
+              isFilter={true}
+            />
           </div>
         </div>
       </div>

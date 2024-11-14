@@ -20,12 +20,14 @@ interface TagListProps {
   tags: TagType[];
   setTags: (tags: TagType[]) => void;
   maxTagCount?: number;
+  isFilter?: boolean;
 }
 
 export default function TagList({
   tags = [],
   setTags,
   maxTagCount = Infinity,
+  isFilter = false,
 }: TagListProps) {
   const [allTags, setAllTags] = useState<TagType[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -146,7 +148,12 @@ export default function TagList({
       <Popover.Root>
         <Popover.Trigger asChild>
           <ul ref={triggerRef} className="tag-list pointer">
-            {isEmpty && <li className="body-small empty-tags"> 태그 추가</li>}
+            {isEmpty && (
+              <li className="body-small empty-tags">
+                {" "}
+                태그 {isFilter ? "필터" : "추가"}
+              </li>
+            )}
             {tags.slice(0, maxTagCount).map((tag) => (
               <li key={tag.tagName}>
                 <BorderTag color={tag.tagColor} tagName={tag.tagName} />
