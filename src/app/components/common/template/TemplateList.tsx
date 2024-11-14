@@ -45,6 +45,7 @@ export default function TemplateList({
             imgSrc={message.image}
             title={message.templateTitle}
             content={message.templateContent}
+            usageCount={message.usageCount}
           />
         ))}
       </div>

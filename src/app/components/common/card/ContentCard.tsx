@@ -1,15 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import "./ContentCard.css";
+import { postDuplicateTemplateAPI } from "@/app/api/template/templateAPI";
+import { useRouter } from "next/navigation";
 
 interface ContentCardProps {
   templateId: number;
   imgSrc: string;
   title: string;
   content: string;
+  usageCount: number;
 }
 
 export default function ContentCard({
@@ -17,17 +21,26 @@ export default function ContentCard({
   imgSrc,
   title,
   content,
+  usageCount,
 }: ContentCardProps) {
-  const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
+  const router = useRouter();
 
-  const handleCopy = (event: React.MouseEvent) => {
+  const handleMyCustom = async (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    navigator.clipboard.writeText(content);
-    setIsTooltipVisible(true);
-    setTimeout(() => {
-      setIsTooltipVisible(false);
-    }, 1500);
+
+    const token = Cookies.get("accessToken");
+    if (!token) return;
+    try {
+      const response = await postDuplicateTemplateAPI({
+        token,
+        templateId: Number(templateId),
+      });
+
+      if (response?.code === "S10000") router.push("/customized");
+    } catch (error) {
+      console.error("post duplicate API 실패", error);
+    }
   };
 
   return (
@@ -46,20 +59,20 @@ export default function ContentCard({
           />
         </div>
         <div className="content-card__details">
-          <div className="content-card__title-wrapper">
+          <div className="content-card__title-container">
             <h2 className="content-card__title subheading">{title}</h2>
             <button
               type="button"
               className="content-card__button-copy"
-              onClick={handleCopy}
+              onClick={handleMyCustom}
             >
-              복사하기
-              <div className={`tooltip ${isTooltipVisible ? "visible" : ""}`}>
-                복사되었습니다!
-              </div>
+              커스텀으로 만들기
             </button>
           </div>
-          <p className="content-card__description body">{content}</p>
+          <div className="content-card__desccription-container">
+            <p className="content-card__description body">{content}</p>
+            <p className="content-card__count">사용 횟수: {usageCount}</p>
+          </div>
         </div>
       </div>
     </Link>
