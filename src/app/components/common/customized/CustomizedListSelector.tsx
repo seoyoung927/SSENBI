@@ -82,16 +82,14 @@ export default function CustomizedListSelector({
           </div>
         ))
       ) : (
-        <div className="flex-container">
-          <div className="empty-message">
-            <p className="body-medium">새로운 메세지를 추가해주세요</p>
-            <Image
-              src="/assets/images/messageIcon.png"
-              fill
-              loading="lazy"
-              alt="메세지 icon"
-            />
-          </div>
+        <div className="empty-message">
+          <p className="body-medium">새로운 메세지를 추가해주세요</p>
+          <Image
+            src="/assets/images/messageIcon.png"
+            fill
+            loading="lazy"
+            alt="메세지 icon"
+          />
         </div>
       )}
     </div>

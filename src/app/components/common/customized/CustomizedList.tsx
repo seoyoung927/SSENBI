@@ -27,7 +27,7 @@ import SearchBar from "../input/SearchBar";
 type ApiResponse = CustomMessagesType[];
 
 export default function CustomizedList() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [curSortOption, setCurSortOption] = useState<SortOptionKeys>("최근순");
   const [searchValue, setSearchValue] = useState<string>("");
   const [templates, setTemplates] = useState<ApiResponse>([]);
@@ -51,8 +51,7 @@ export default function CustomizedList() {
   };
 
   useEffect(() => {
-    fetchCustomTemplates();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //fetchCustomTemplates();
   }, [curSortOption]);
 
   useEffect(() => {
@@ -168,17 +167,17 @@ export default function CustomizedList() {
           </Link>
         ))
       ) : (
-        <div className="flex-container">
-          <div className="empty-message">
-            <p className="body-medium">새로운 메세지를 추가해주세요</p>
-            <Image
-              src="/assets/images/messageIcon.png"
-              fill
-              loading="lazy"
-              alt="메세지 icon"
-            />
-          </div>
+        // <div className="flex-container">
+        <div className="empty-message">
+          <p className="body-medium">새로운 메세지를 추가해주세요</p>
+          <Image
+            src="/assets/images/messageIcon.png"
+            fill
+            loading="lazy"
+            alt="메세지 icon"
+          />
         </div>
+        // </div>
       )}
     </div>
   );
