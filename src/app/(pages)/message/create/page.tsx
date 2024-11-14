@@ -139,7 +139,7 @@ function MessageCreateContent() {
       <div className="message-form">
         <div className="space-between">
           <div className="form-group">
-            <label className="form-group_label body-small">받는 사람</label>
+            <label className="form-group_label subheading">받는 사람</label>
             <div className="tag-container">
               <CustomerTagList
                 customers={customers}
@@ -162,7 +162,7 @@ function MessageCreateContent() {
         </div>
 
         <div className="form-group">
-          <label className="label body-small">내용</label>
+          <label className="label subheading">내용</label>
           <textarea
             className="form-group_textarea"
             value={content}
