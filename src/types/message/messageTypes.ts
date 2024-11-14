@@ -38,7 +38,7 @@ export type MessagePostPropsType = {
 
 export const SORTOPTIONS = {
   최신순: "createdAt,DESC",
-  생성순: "createdAt",
+  "오래된 순": "createdAt",
   내용순: "content",
 };
 
