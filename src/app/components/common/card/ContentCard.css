@@ -14,7 +14,7 @@
   gap: 12px;
   margin: 12px;
   cursor: pointer;
-  height: 184px;
+  height: 150px;
   transition:
     box-shadow 0.3s ease,
     transform 0.2s ease;
@@ -56,14 +56,32 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  height: 2rem;
+  height: 2.2rem;
   overflow: hidden;
 }
 
 .content-card__title {
   margin-bottom: 8px;
+  line-height: 2.2rem;
 }
 
+.content-card__button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+.content-card__count {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  font-size: 0.85em;
+}
+.content-card_eye-icon {
+  font-size: 0.85em;
+}
 .content-card__button-copy {
   white-space: nowrap;
   position: relative;
@@ -88,10 +106,4 @@
   font-size: 0.9em;
   color: var(--text-secondary);
   line-height: 1.5;
-}
-
-.content-card__count {
-  color: var(--text-tertiary);
-  font-size: 0.85em;
-  font-weight: bold;
 }

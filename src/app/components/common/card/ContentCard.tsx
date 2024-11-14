@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import "./ContentCard.css";
 import { postDuplicateTemplateAPI } from "@/app/api/template/templateAPI";
 import { useRouter } from "next/navigation";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 interface ContentCardProps {
   templateId: number;
@@ -61,18 +62,21 @@ export default function ContentCard({
         <div className="content-card__details">
           <div className="content-card__title-container">
             <h2 className="content-card__title subheading">{title}</h2>
-            <button
-              type="button"
-              className="content-card__button-copy"
-              onClick={handleMyCustom}
-            >
-              커스텀으로 만들기
-            </button>
+            <div className="content-card__button-container">
+              <p className="content-card__count">
+                <MdOutlineRemoveRedEye className="content-card_eye-icon" />
+                {usageCount}
+              </p>
+              <button
+                type="button"
+                className="content-card__button-copy"
+                onClick={handleMyCustom}
+              >
+                커스텀으로 만들기
+              </button>
+            </div>
           </div>
-          <div className="content-card__desccription-container">
-            <p className="content-card__description body">{content}</p>
-            <p className="content-card__count">사용 횟수: {usageCount}</p>
-          </div>
+          <p className="content-card__description body">{content}</p>
         </div>
       </div>
     </Link>
