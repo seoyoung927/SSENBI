@@ -63,7 +63,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
   const [batchTextTo, setBatchTextTo] = useState<string>("");
 
   useEffect(() => {
-    fetchCustomTemplate(id);
+    //fetchCustomTemplate(id);
   }, [id]);
 
   const fetchCustomTemplate = async (templateId: string) => {
