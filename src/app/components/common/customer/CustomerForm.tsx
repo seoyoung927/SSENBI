@@ -79,7 +79,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   return (
     <>
       <div className="field-wrapper ">
-        <span className="body label">이름</span>
+        <span className="subheading">이름</span>
         <input
           className="form-input-field"
           ref={nameRef}
@@ -88,11 +88,11 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
         />
       </div>
       <div className="field-wrapper">
-        <span className="body label">나이</span>
+        <span className="subheading">나이</span>
         <input className="form-input-field" ref={ageRef} type="number" />
       </div>
       <div className="field-wrapper">
-        <span className="body label">성별</span>
+        <span className="subheading">성별</span>
         <div className="toggle-wrapper">
           <button
             className={`gender-selector body-medium ${isMale ? "selected" : ""}`}
@@ -109,7 +109,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
         </div>
       </div>
       <div className="field-wrapper">
-        <span className="body label">전화번호</span>
+        <span className="subheading">전화번호</span>
         <input
           className="form-input-field"
           ref={phoneNumberRef}
@@ -118,11 +118,11 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
         />
       </div>
       <div className="field-wrapper">
-        <label className="label">태그</label>
+        <label className="subheading">태그</label>
         <TagList tags={tags} setTags={setTags} />
       </div>
       <div className="field-wrapper">
-        <label className="label">메모</label>
+        <label className="subheading">메모</label>
         <textarea
           ref={memoRef}
           className="body memo form-input-field"
