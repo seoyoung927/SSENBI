@@ -149,6 +149,7 @@ export default function CustomizedList() {
             <CustomerTagList
               customers={selectedCustomers}
               setCustomers={setSelectedCustomers}
+              isFilter={true}
             />
           </div>
         </div>
