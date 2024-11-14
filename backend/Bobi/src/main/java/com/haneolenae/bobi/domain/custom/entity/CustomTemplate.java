@@ -98,7 +98,7 @@ public class CustomTemplate {
 
 	public CustomTemplate replicateMe() {
 		return CustomTemplate.builder()
-			.title(this.title + " (복사)")
+			.title(this.title)
 			.content(this.content)
 			.member(this.member)
 			.count(0)
