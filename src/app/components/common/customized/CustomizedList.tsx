@@ -51,7 +51,7 @@ export default function CustomizedList() {
   };
 
   useEffect(() => {
-    //fetchCustomTemplates();
+    fetchCustomTemplates();
   }, [curSortOption]);
 
   useEffect(() => {
