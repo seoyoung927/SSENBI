@@ -45,9 +45,6 @@ export default function CustomizedList() {
       });
       console.log("customized data", data);
       setTemplates(data.result);
-    } catch (error) {
-      console.error("Error fetching message:", error);
-      alert("커스텀 메세지 요청에서 오류가 발생하였습니다.");
     } finally {
       setIsLoading(false);
     }
