@@ -1,6 +1,10 @@
 package com.haneolenae.bobi.domain.customer.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +22,7 @@ import com.haneolenae.bobi.domain.customer.repository.CustomerRepository;
 import com.haneolenae.bobi.domain.customer.repository.CustomerTagRepository;
 import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.member.repository.MemberRepository;
+import com.haneolenae.bobi.domain.tag.dto.response.TagStatisticsResponse;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 import com.haneolenae.bobi.domain.tag.repository.TagRepository;
 import com.haneolenae.bobi.domain.tag.util.TagColor;
@@ -206,4 +211,36 @@ public class CustomerServiceImpl implements CustomerService {
 		member.decreaseCustomerCount();
 	}
 
+	@Transactional
+	public List<TagStatisticsResponse> getCustomerTagStatistics(Long memberId) {
+		List<Customer> customers = customerRepository.findAllByMemberId(memberId);
+
+		Map<String, Integer> tagCount = new HashMap<>();
+		Map<String, String> tagColor = new HashMap<>();
+
+		for (Customer customer : customers) {
+			List<Tag> tags = customer.getTags();
+			for (Tag tag : tags) {
+				if (tagCount.containsKey(tag.getName())) {
+					tagCount.put(tag.getName(), tagCount.get(tag.getName()) + 1);
+				} else {
+					tagCount.put(tag.getName(), 1);
+					tagColor.put(tag.getName(), tag.getColor());
+				}
+			}
+		}
+
+		List<TagStatisticsResponse> responses = new ArrayList<>();
+		for (Map.Entry<String, Integer> entry : tagCount.entrySet()) {
+			responses.add(
+				new TagStatisticsResponse(
+					entry.getKey(),
+					entry.getValue(),
+					tagColor.get(entry.getKey())
+				)
+			);
+		}
+		Collections.sort(responses);
+		return responses;
+	}
 }
