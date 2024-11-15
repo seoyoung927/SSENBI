@@ -13,6 +13,12 @@ export type CustomerType = {
   customerColor: TagColorType;
 };
 
+export type CustomerStatisticsType = {
+  tagName: string;
+  tagCount: number;
+  tagColor: string;
+};
+
 export type CustomerCreationType = Omit<
   CustomerType,
   "customerId" | "customerTags"

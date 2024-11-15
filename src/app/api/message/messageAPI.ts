@@ -42,3 +42,14 @@ export const postSendMessageAPI = async (
   const response = await axiosInstance.post(`message`, messagePostprops);
   return response.data;
 };
+
+// 고객 통계
+export const getMessageStatisticsAPI = async (token?: string) => {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+  const response = await axiosInstance.get("/message/statistics", {
+    headers,
+  });
+
+  return response.data;
+};
