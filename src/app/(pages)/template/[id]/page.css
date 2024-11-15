@@ -1,3 +1,8 @@
+.template-id-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .template-id_count {
   display: flex;
   justify-content: flex-end;
