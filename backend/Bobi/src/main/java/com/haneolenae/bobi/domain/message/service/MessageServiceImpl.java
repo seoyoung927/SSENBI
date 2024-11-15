@@ -1,7 +1,10 @@
 package com.haneolenae.bobi.domain.message.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +33,7 @@ import com.haneolenae.bobi.domain.message.mapper.MessageMapper;
 import com.haneolenae.bobi.domain.message.repository.MessageCustomerRepository;
 import com.haneolenae.bobi.domain.message.repository.MessageRepository;
 import com.haneolenae.bobi.domain.message.repository.MessageTagRepository;
+import com.haneolenae.bobi.domain.tag.dto.response.TagStatisticsResponse;
 import com.haneolenae.bobi.domain.tag.entity.Tag;
 import com.haneolenae.bobi.domain.tag.repository.TagRepository;
 import com.haneolenae.bobi.global.dto.ApiType;
@@ -220,5 +224,39 @@ public class MessageServiceImpl implements MessageService {
 			log.info("third party message api fail");
 			throw new ApiException(ApiType.EXTERNAL_MESSAGE_SERVICE_ERROR);
 		}
+	}
+
+	@Transactional
+	public List<TagStatisticsResponse> getMessageTagStatistics(long memberId) {
+		List<Message> messages = messageRepository.findByMemberIdWithTag(memberId);
+
+		Map<String, Integer> tagCount = new HashMap<>();
+		Map<String, String> tagColor = new HashMap<>();
+
+		for (Message message : messages) {
+			List<MessageTag> messageTags = message.getMessageTags();
+			for (MessageTag tag : messageTags) {
+				if (tagCount.containsKey(tag.getName())) {
+					tagCount.put(tag.getName(), tagCount.get(tag.getName()) + 1);
+				} else {
+					tagCount.put(tag.getName(), 1);
+					tagColor.put(tag.getName(), tag.getColor());
+				}
+			}
+		}
+
+		List<TagStatisticsResponse> responses = new ArrayList<>();
+
+		for (Map.Entry<String, Integer> entry : tagCount.entrySet()) {
+			responses.add(
+				new TagStatisticsResponse(
+					entry.getKey(),
+					entry.getValue(),
+					tagColor.get(entry.getKey())
+				)
+			);
+		}
+		Collections.sort(responses);
+		return responses;
 	}
 }

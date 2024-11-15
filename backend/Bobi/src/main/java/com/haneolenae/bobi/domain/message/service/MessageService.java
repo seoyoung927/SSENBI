@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import com.haneolenae.bobi.domain.message.dto.request.SendMessageRequest;
 import com.haneolenae.bobi.domain.message.dto.response.MessageDetailResponse;
 import com.haneolenae.bobi.domain.message.dto.response.MessageResponse;
+import com.haneolenae.bobi.domain.tag.dto.response.TagStatisticsResponse;
 
 public interface MessageService {
 
@@ -19,4 +20,6 @@ public interface MessageService {
 	void deleteMessage(long memberId, long messageId);
 
 	void sendCoolSms(String receiverPhone, String msg);
+
+	List<TagStatisticsResponse> getMessageTagStatistics(long memberId);
 }

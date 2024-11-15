@@ -95,4 +95,11 @@ public class MessageController {
 
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
+
+	@GetMapping("/statistics")
+	public ResponseEntity<?> getMessageTagStatistics(@RequestHeader("Authorization") String token) {
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
+		return ResponseEntity.ok(new ApiResponse<>(messageService.getMessageTagStatistics(memberId)));
+	}
 }

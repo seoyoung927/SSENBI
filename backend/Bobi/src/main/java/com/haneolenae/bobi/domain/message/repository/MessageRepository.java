@@ -25,4 +25,10 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 	Optional<Message> findByIdAndMemberId(Long messageId, Long memberId);
 
 	List<Message> findByMemberId(Long memberId);
+
+	@Query("SELECT DISTINCT m FROM Message m " +
+		"LEFT JOIN FETCH m.messageTags mt " +
+		"WHERE m.member.id = :memberId")
+	List<Message> findByMemberIdWithTag(long memberId);
+
 }

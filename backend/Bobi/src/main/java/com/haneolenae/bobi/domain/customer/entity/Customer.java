@@ -3,6 +3,7 @@ package com.haneolenae.bobi.domain.customer.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.haneolenae.bobi.domain.custom.entity.TemplateCustomer;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.member.entity.Member;
+import com.haneolenae.bobi.domain.tag.entity.Tag;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -106,5 +108,10 @@ public class Customer {
 
 	public void setTagCount(int tagCount) {
 		this.tagCount = tagCount;
+	}
+
+	public List<Tag> getTags() {
+		return customerTags.stream().map(CustomerTag::getTag)
+			.collect(Collectors.toList());
 	}
 }

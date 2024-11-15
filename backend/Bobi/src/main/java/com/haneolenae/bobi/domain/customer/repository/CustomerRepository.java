@@ -44,6 +44,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	@Query("SELECT DISTINCT c FROM Customer c " +
 		"LEFT JOIN FETCH c.customerTags ct " +
+		"LEFT JOIN FETCH ct.tag t " +
 		"WHERE c.member.id = :memberId " +
 		"AND (:keyword IS NULL OR c.name LIKE CONCAT('%', :keyword, '%')"
 		+ "OR c.phoneNumber LIKE CONCAT('%', :keyword, '%')"
@@ -57,33 +58,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 		@Param("keyword") String keyword,
 		@Param("tags") List<Long> tags);
 
-	//
-	// // @Query("SELECT c FROM Customer c " +
-	// // 	"JOIN c.tags t " +
-	// // 	"WHERE c.member.id = :memberId " +
-	// // 	"AND (:keyword IS NULL OR c.name LIKE CONCAT('%', :keyword, '%')) " +
-	// // 	"AND (:tags IS NULL OR t.id IN :tags)")
-	// @Query("SELECT c FROM Customer c " +
-	// 	"JOIN c.tags t " +
-	// 	"WHERE c.member.id = :memberId ")
-	// // "AND (:keyword IS NULL OR c.name LIKE '%a%' )")
-	// // "AND (:keyword IS NULL OR c.name LIKE CONCAT('%', :keyword, '%')) ")
-	// // "AND (:tags IS NULL OR t.id IN :tags)")
-	// List<Customer> findCustomers(Long memberId);
-	//
-	// List<Customer> findAllByMemberId(Long memberId);
-	//
-	// @Query("SELECT c FROM Customer c WHERE c.member.id = :memberId AND (:keyword IS NULL OR c.name LIKE %:keyword%)")
-	// List<Customer> findAllByMemberIdAndNameContaining(@Param("memberId") Long memberId,
-	// 	@Param("keyword") String keyword);
-	//
-	// @Query("SELECT DISTINCT c FROM Customer c " +
-	// 	"JOIN c.tags t " +
-	// 	"WHERE c.member.id = :memberId " +
-	// 	"AND (:keyword IS NULL OR c.name LIKE %:keyword%) " +
-	// 	"AND (t.id IN :tags)")
-	// List<Customer> findAllByMemberIdAndNameContainingAndTagsIn(
-	// 	@Param("memberId") Long memberId,
-	// 	@Param("keyword") String keyword,
-	// 	@Param("tags") List<Long> tags);
+	@Query("SELECT DISTINCT c FROM Customer c " +
+		"LEFT JOIN FETCH c.customerTags ct " +
+		"LEFT JOIN FETCH ct.tag t " +
+		"WHERE c.member.id = :memberId ")
+	List<Customer> findAllByMemberId(long memberId);
 }

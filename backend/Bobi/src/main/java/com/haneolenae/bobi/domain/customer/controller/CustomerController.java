@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
-import com.haneolenae.bobi.domain.customer.dto.request.DeleteCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.service.CustomerService;
@@ -100,4 +99,10 @@ public class CustomerController {
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
 	}
 
+	@GetMapping("/statistics")
+	public ResponseEntity<?> getCustomerTagStatistics(@RequestHeader("Authorization") String token) {
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+		
+		return ResponseEntity.ok(new ApiResponse<>(customerService.getCustomerTagStatistics(memberId)));
+	}
 }
