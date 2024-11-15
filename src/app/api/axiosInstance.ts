@@ -40,7 +40,9 @@ axiosInstance.interceptors.response.use(
       return;
     }
 
-    if (error.response !== undefined && error.response?.status !== 401) return;
+    if (error.response !== undefined && error.response?.status !== 401) {
+      throw error;
+    }
 
     if (!originalRequest._retry) {
       originalRequest._retry = true;
