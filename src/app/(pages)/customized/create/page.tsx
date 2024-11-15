@@ -164,11 +164,7 @@ export default function CustomizedNewPage() {
       </div>
 
       {isAIEditModalOpen && (
-        <AiModal
-          isOpen={isAIEditModalOpen}
-          onClose={handleCloseAIModal}
-          title={"AI 쎈비와 문자 작성하기"}
-        >
+        <AiModal isOpen={isAIEditModalOpen} onClose={handleCloseAIModal}>
           <ChatAIContainer
             onClose={handleCloseAIModal}
             onSave={handleSaveContent}
