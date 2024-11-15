@@ -50,7 +50,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		log.info("Validation error: {}", defaultMessage);  // 로깅 개선
 
-		String errorMessage = String.format("%s\\n[%s]",
+		String errorMessage = String.format("%s\n[%s]",
 			ApiType.REQUEST_DATA_ERROR.getMessage(),
 			defaultMessage
 		);
