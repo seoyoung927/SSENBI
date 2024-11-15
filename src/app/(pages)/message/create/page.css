@@ -50,6 +50,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 480px) {
+  .message_button {
+    white-space: pre-wrap;
+  }
+}
+
 .message-new_button-cancel {
   border: 1px solid var(--border-default);
   background-color: var(--bg-default);
