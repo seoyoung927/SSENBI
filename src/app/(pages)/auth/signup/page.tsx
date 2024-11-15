@@ -8,6 +8,7 @@ import { postSignupAPI } from "@/app/api/member/memberAPI";
 import { validatePassword } from "@/utils/validatePassword";
 import Header from "@/app/components/layout/Header";
 import Image from "next/image";
+import axios from "axios";
 import "./page.css";
 
 const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
@@ -134,9 +135,11 @@ export default function SignupPage() {
         router.push("/auth/login");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error("회원가입 실패:", error.message);
-        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+      if (axios.isAxiosError(error)) {
+        console.error(error);
+        alert(
+          `${error.response?.data?.result || "회원가입 실패: 알 수 없는 오류 발생"}`,
+        );
       } else {
         console.error("회원가입 실패: 알 수 없는 오류 발생");
       }
