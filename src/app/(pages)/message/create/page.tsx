@@ -19,6 +19,7 @@ import CustomizedListSelector from "@/app/components/common/customized/Customize
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 import { debounce } from "lodash";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
+import AiModal from "@/app/components/common/modal/AiModal";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -211,7 +212,7 @@ function MessageCreateContent() {
         </div>
       </div>
       {isAIEditModalOpen && (
-        <Modal
+        <AiModal
           isOpen={isAIEditModalOpen}
           onClose={closeAIEditModal}
           title={"AI 쎈비와 문자 작성하기"}
@@ -223,7 +224,7 @@ function MessageCreateContent() {
             customers={customers}
             tags={tags}
           />
-        </Modal>
+        </AiModal>
       )}
 
       {isCustomListModalOpen && (

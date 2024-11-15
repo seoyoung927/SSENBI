@@ -10,7 +10,6 @@ import {
   postCustomTemplateAPI,
   putCustomTemplateAPI,
 } from "@/app/api/customized/customizedAPI";
-import Modal from "@/app/components/common/modal/Modal";
 import { TagType } from "@/types/tag/tagTypes";
 import Cookies from "js-cookie";
 import { PutCustomTemplateParamsType } from "@/types/customized/customizedTypes";
@@ -22,6 +21,7 @@ import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import SendIcon from "@/app/assets/svg/Send.svg";
 import FilledTag from "@/app/components/common/tag/FilledTag";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
+import AiModal from "@/app/components/common/modal/AiModal";
 
 // Custom Template type definition
 interface CustomTemplate {
@@ -399,7 +399,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         </button>
       </div>
 
-      <Modal isOpen={isAIEditModalOpen} onClose={handleCloseAIModal}>
+      <AiModal isOpen={isAIEditModalOpen} onClose={handleCloseAIModal}>
         <ChatAIContainer
           content={modifiedTemplate?.templateContent || ""}
           tags={modifiedTemplate?.templateTags}
@@ -407,7 +407,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           onSave={handleSaveAIContent}
           onClose={handleCloseAIModal}
         />
-      </Modal>
+      </AiModal>
     </div>
   );
 }
