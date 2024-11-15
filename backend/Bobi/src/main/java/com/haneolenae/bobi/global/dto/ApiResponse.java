@@ -24,6 +24,12 @@ public class ApiResponse<T> {
 		this.result = result;
 	}
 
+	public ApiResponse(ApiType apiType, String message) {
+		this.code = apiType.getCode().toString();
+		this.message = message;
+		this.result = null;
+	}
+
 	public static ApiResponse<String> ok() {
 		return new ApiResponse<>(ApiType.SUCCESS, "");
 	}
