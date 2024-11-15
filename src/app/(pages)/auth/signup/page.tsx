@@ -100,7 +100,7 @@ export default function SignupPage() {
     setRequiredFieldErrors(newRequiredFieldErrors);
 
     if (Object.values(newRequiredFieldErrors).some((error) => error)) {
-      console.warn("Required fields missing");
+      alert("모든 필드를 작성해주세요!");
       return;
     }
 
@@ -138,7 +138,7 @@ export default function SignupPage() {
       if (axios.isAxiosError(error)) {
         console.error(error);
         alert(
-          `${error.response?.data?.result || "회원가입 실패: 알 수 없는 오류 발생"}`,
+          `${error.response?.data?.message || "회원가입 실패: 알 수 없는 오류 발생"}`,
         );
       } else {
         console.error("회원가입 실패: 알 수 없는 오류 발생");
@@ -283,11 +283,7 @@ export default function SignupPage() {
         <button onClick={handleCancel} className="white_button">
           취소
         </button>
-        <button
-          onClick={handleSignup}
-          className="blue_button"
-          disabled={isSignupDisabled}
-        >
+        <button onClick={handleSignup} className="blue_button">
           회원가입
         </button>
       </div>
