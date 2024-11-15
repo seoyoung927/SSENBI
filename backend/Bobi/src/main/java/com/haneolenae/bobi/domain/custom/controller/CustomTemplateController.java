@@ -26,6 +26,8 @@ import com.haneolenae.bobi.domain.custom.dto.response.CustomTemplateResponse;
 import com.haneolenae.bobi.domain.custom.service.CustomTemplateService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/customTemplate")
 public class CustomTemplateController {
@@ -64,7 +66,7 @@ public class CustomTemplateController {
 
 	@PostMapping
 	public ResponseEntity<ApiResponse<String>> addCustomTemplate(@RequestHeader("Authorization") String token,
-		@RequestBody AddCustomTemplateRequest request) {
+		@Valid @RequestBody AddCustomTemplateRequest request) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 
 		customTemplateService.addCustomTemplate(memberId, request);
@@ -76,7 +78,7 @@ public class CustomTemplateController {
 	public ResponseEntity<ApiResponse<String>> editCustomTemplate(
 		@RequestHeader("Authorization") String token,
 		@PathVariable("templateId") long templateId,
-		@RequestBody EditCustomTemplateRequest request) {
+		@Valid @RequestBody EditCustomTemplateRequest request) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
 		customTemplateService.editCustomTemplate(memberId, templateId, request);
 		return new ResponseEntity<>(ApiResponse.ok(), HttpStatus.OK);
