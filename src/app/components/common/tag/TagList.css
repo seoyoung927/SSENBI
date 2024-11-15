@@ -46,7 +46,7 @@
   border: 1px solid var(--border-default);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 0 0 16px;
-  min-width: 0;
+  min-width: 150px;
   width: var(--radix-popover-trigger-width);
   max-height: 400px;
   overflow-y: auto;

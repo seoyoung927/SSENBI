@@ -43,22 +43,24 @@ export default function CustomerList() {
   };
 
   return (
-    <>
+    <div className="customerList-container">
       <div className="controller">
-        <SearchBar onChange={setSearchValue} />
+        <div className="controller-contents">
+          <SearchBar onChange={setSearchValue} />
 
-        <div className="customer-filters">
-          <FilterIcon
-            className={
-              selectedTags.length === 0 ? "filterIcon" : "selected-filterIcon"
-            }
-          />
-          <div className="filter">
-            <TagList
-              tags={selectedTags}
-              setTags={setSelectedTags}
-              isFilter={true}
+          <div className="customer-filters">
+            <FilterIcon
+              className={
+                selectedTags.length === 0 ? "filterIcon" : "selected-filterIcon"
+              }
             />
+            <div className="filter">
+              <TagList
+                tags={selectedTags}
+                setTags={setSelectedTags}
+                isFilter={true}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -77,6 +79,6 @@ export default function CustomerList() {
       </ul>
 
       <FloatingActionButton onClick={handleCreateCustomer} text={"고객 추가"} />
-    </>
+    </div>
   );
 }

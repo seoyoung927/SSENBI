@@ -60,7 +60,7 @@ export default function CustomizedListSelector({
   };
 
   return (
-    <div className="customiedList-container">
+    <div className="customizedList-container">
       <div className="customized_sort-container">
         <SortSelect
           curOption={curSortOption}

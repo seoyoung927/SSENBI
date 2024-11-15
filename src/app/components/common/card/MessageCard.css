@@ -1,6 +1,7 @@
 .message-card {
   display: flex;
   flex-direction: column;
+  position: relative;
   border: 1px solid var(--blue-200);
   border-radius: 16px;
   padding: 20px;
@@ -11,8 +12,8 @@
     transform 0.2s ease;
   max-width: 100%;
   gap: 10px;
-  margin: 16px 20px;
   cursor: pointer;
+  z-index: 0;
 }
 
 .message-card:hover {

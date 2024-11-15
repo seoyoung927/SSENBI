@@ -3,6 +3,7 @@
 import NavigationBar from "@/app/components/layout/NavigationBar";
 import ContentCard from "@/app/components/common/card/ContentCard";
 import { useEffect, useState } from "react";
+import "./TemplateList.css";
 
 interface MessageTemplateType {
   templateId: number;
@@ -37,6 +38,7 @@ export default function TemplateList({
   return (
     <div>
       <NavigationBar tabs={categoryList} onTabChange={handleTabChange} />
+
       <div className="template-list">
         {filteredMessageTemplates?.map((message) => (
           <ContentCard

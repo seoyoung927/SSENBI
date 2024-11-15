@@ -1,4 +1,6 @@
 .navigation-bar {
+  display: flex;
+  justify-content: center;
   position: sticky;
   top: 0;
   left: 0;
@@ -6,6 +8,12 @@
   white-space: nowrap;
   overflow-x: auto;
   border-bottom: 1px solid var(--gray-300);
+  z-index: 1;
+}
+
+.tab-menu horizontal-scroll {
+  width: 100%;
+  max-width: 800px;
 }
 
 .tab-menu {
