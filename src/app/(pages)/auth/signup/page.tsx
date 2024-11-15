@@ -12,8 +12,7 @@ import axios from "axios";
 import "./page.css";
 
 const PASSWORD_MISMATCH_ERROR = "비밀번호가 일치하지 않습니다.";
-const PHONE_NUMBER_LENGTH_ERROR =
-  "전화번호는 7자 이상 15자 이하로 입력해주세요.";
+const PHONE_NUMBER_LENGTH_ERROR = "전화번호는 7자~ 15자 숫자로 입력해주세요.";
 const REQUIRED_FIELD_ERROR = "이 필드는 필수 입력 항목입니다.";
 
 interface RequiredFieldErrorsType {
