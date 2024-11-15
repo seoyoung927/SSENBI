@@ -5,7 +5,6 @@ import XIcon from "@/app/assets/svg/X.svg";
 interface AiModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
   children: ReactNode;
   className?: string;
 }
@@ -13,7 +12,6 @@ interface AiModalProps {
 export default function AiModal({
   isOpen,
   onClose,
-  title = "",
   children,
   className,
 }: AiModalProps) {
@@ -23,7 +21,6 @@ export default function AiModal({
     <div className={`modal-overlay ${className || ""}`}>
       <div className="modal-container">
         <div className="modal-header">
-          <h2>{title}</h2>
           <button className="modal-close" onClick={onClose}>
             <XIcon />
           </button>

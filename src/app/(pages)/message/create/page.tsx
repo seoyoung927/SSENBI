@@ -212,11 +212,7 @@ function MessageCreateContent() {
         </div>
       </div>
       {isAIEditModalOpen && (
-        <AiModal
-          isOpen={isAIEditModalOpen}
-          onClose={closeAIEditModal}
-          title={"AI 쎈비와 문자 작성하기"}
-        >
+        <AiModal isOpen={isAIEditModalOpen} onClose={closeAIEditModal}>
           <ChatAIContainer
             onClose={closeAIEditModal}
             onSave={handleSaveMessage}
