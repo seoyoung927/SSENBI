@@ -53,12 +53,14 @@ export default function TemplateIdPage({ params }: { params: { id: number } }) {
   return (
     <div className="page-container">
       <Header title={templateData.templateTitle} showBackIcon={true} />
-      <TemplateClientButtons id={params.id} templateData={templateData} />
-      <p className="template-id_count body-small">
-        커스텀 사용횟수: {templateData.usageCount}
-      </p>
-      <div className="template-id_content body">
-        {templateData.templateContent}
+      <div className="template-id-container">
+        <TemplateClientButtons id={params.id} templateData={templateData} />
+        <p className="template-id_count body-small">
+          커스텀 사용횟수: {templateData.usageCount}
+        </p>
+        <div className="template-id_content body">
+          {templateData.templateContent}
+        </div>
       </div>
     </div>
   );
