@@ -4,11 +4,23 @@ import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 
 interface TopTagsChartProps {
-  data: { tagName: string; count: number; color: string }[];
+  data: { tagName: string; tagCount: number; tagColor: string }[];
 }
 
 export default function TopTagsChart({ data }: TopTagsChartProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
+
+  const defaultDataLength = 5;
+  const processedData = data.slice(0, defaultDataLength).concat(
+    Array.from(
+      { length: Math.max(defaultDataLength - data.length, 0) },
+      (_, index) => ({
+        tagName: (data.length + index + 1).toString(),
+        tagCount: 0,
+        tagColor: "GRAY",
+      }),
+    ),
+  );
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -38,10 +50,10 @@ export default function TopTagsChart({ data }: TopTagsChartProps) {
 
     const x = d3
       .scaleBand()
-      .domain(data.map((d) => d.tagName))
+      .domain(processedData.map((d) => d.tagName))
       .range([0, width])
       .padding(0.1);
-    const maxCount = d3.max(data, (d) => d.count) || 0;
+    const maxCount = d3.max(processedData, (d) => d.tagCount) || 0;
     const y = d3
       .scaleLinear()
       .domain([0, maxCount + 1])
@@ -63,27 +75,27 @@ export default function TopTagsChart({ data }: TopTagsChartProps) {
 
     chartArea
       .selectAll(".bar")
-      .data(data)
+      .data(processedData)
       .enter()
       .append("rect")
       .attr("class", "bar")
       .attr("x", (d) => x(d.tagName)!)
-      .attr("y", (d) => y(d.count)!)
+      .attr("y", (d) => y(d.tagCount)!)
       .attr("width", x.bandwidth())
-      .attr("height", (d) => height - y(d.count)!)
-      .attr("fill", (d) => `var(--${d.color.toLowerCase()}-100)`);
+      .attr("height", (d) => height - y(d.tagCount)!)
+      .attr("fill", (d) => `var(--${d.tagColor.toLowerCase()}-100)`);
 
     chartArea
       .selectAll(".label")
-      .data(data)
+      .data(processedData)
       .enter()
       .append("text")
       .attr("x", (d) => x(d.tagName)! + x.bandwidth() / 2)
-      .attr("y", (d) => y(d.count)! - 5)
+      .attr("y", (d) => y(d.tagCount)! - 5)
       .attr("text-anchor", "middle")
-      .text((d) => d.count)
+      .text((d) => d.tagCount)
       .attr("class", "label");
-  }, [data]);
+  }, [processedData]);
 
   return (
     <div
