@@ -92,7 +92,7 @@ export default function ChatAIContainer({
 
       const aiResponse: MessageType = {
         sender: SenderType.AI,
-        description: `쎈비 AI 응답은 다음과 같습니다.\n\n-----------------------\n`,
+        description: ``,
         content: `${chatResponse.result}`,
       };
       setMessages((prevMessages) => [...prevMessages, aiResponse]);
