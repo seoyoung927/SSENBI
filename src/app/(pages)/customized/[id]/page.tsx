@@ -388,7 +388,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           className="customized-detail_button gradient_button"
           style={{ borderRadius: 16 }}
         >
-          쎈비 AI 도움 받기
+          {"쎈비 AI \n도움 받기"}
         </button>
         <button
           onClick={toggleEditMode}

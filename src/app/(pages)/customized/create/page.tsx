@@ -151,7 +151,7 @@ export default function CustomizedNewPage() {
             type="button"
             className="customized-new_button gradient_button"
           >
-            쎈비 AI 도움 받기
+            {"쎈비 AI \n도움 받기"}
           </button>
           <button
             onClick={handleSubmit}

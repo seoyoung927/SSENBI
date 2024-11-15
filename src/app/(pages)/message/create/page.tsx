@@ -199,7 +199,7 @@ function MessageCreateContent() {
             type="button"
             className="message_button message-new_button-send gradient_button"
           >
-            쎈비 AI 도움 받기
+            {"쎈비 AI \n도움 받기"}
           </button>
           <button
             onClick={sendMessage}
