@@ -65,39 +65,41 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
     <div className="page-container flex-column">
       <Header title={`보낸 메시지`} showBackIcon={true} />
 
-      <div className="message-info">
+      <div className="message-body">
         <p className="message-info-detail body-medium">
           {messageData?.messageContent}
         </p>
       </div>
-      <div className="message-info">
-        <div className="message-info-label">
-          <span>태그</span>
-          <div className="message-info_tag-list">
-            {messageData?.messageTags.map((tag) => (
-              <BorderTag
-                key={tag.tagName}
-                color={tag.tagColor}
-                tagName={tag.tagName}
-              />
-            ))}
+      <div className="message-info-wrapper">
+        <div className="message-info">
+          <div className="message-info-label">
+            <span className="message-info-title body-medium">태그</span>
+            <div className="message-info_tag-list">
+              {messageData?.messageTags.map((tag) => (
+                <BorderTag
+                  key={tag.tagName}
+                  color={tag.tagColor}
+                  tagName={tag.tagName}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="message-info">
-        <div className="message-info-label">
-          <span>보낸 시간</span>
-          <span>{formatDateTime(messageData?.messageSendAt)}</span>
+        <div className="message-info">
+          <div className="message-info-label">
+            <span className="message-info-title body-medium">보낸 시간</span>
+            <span>{formatDateTime(messageData?.messageSendAt)}</span>
+          </div>
         </div>
-      </div>
-      <div className="message-info">
-        <div className="message-info-label">
-          <span>받는 사람</span>
-          <span>
-            {messageData?.messageCustomers
-              .map((customer) => customer.customerName)
-              .join(", ")}
-          </span>
+        <div className="message-info">
+          <div className="message-info-label">
+            <span className="message-info-title body-medium">받는 사람</span>
+            <span>
+              {messageData?.messageCustomers
+                .map((customer) => customer.customerName)
+                .join(", ")}
+            </span>
+          </div>
         </div>
       </div>
 
