@@ -92,6 +92,13 @@
   flex-direction: column;
   align-items: start;
   max-width: 800px;
+  padding: 0 20px;
+}
+
+@media (max-width: 800px) {
+  .customized_sort-contents {
+    padding: 8px;
+  }
 }
 
 @media (max-width: 480px) {
