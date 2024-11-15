@@ -353,15 +353,6 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
             maxLength={300}
           />
         </div>
-
-        <BatchTextEditor
-          batchTextFrom={batchTextFrom}
-          batchTextTo={batchTextTo}
-          setBatchTextFrom={setBatchTextFrom}
-          setBatchTextTo={setBatchTextTo}
-          isEdit={isEdit}
-          handleBatchTextChange={handleBatchTextChange}
-        />
       </div>
 
       <div className="customized-button-group">
@@ -369,7 +360,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           <button
             onClick={handleSaveAsTemplate}
             type="button"
-            className="customized-detail_button blue_button"
+            className="customized-detail_button body blue_button"
           >
             {"다른 이름으로 저장하기"}
           </button>
@@ -377,7 +368,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           <button
             onClick={handleDelete}
             type="button"
-            className="customized-detail_button red_button"
+            className="customized-detail_button body red_button"
           >
             삭제
           </button>
@@ -385,7 +376,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <button
           onClick={handleOpenAIModal}
           type="button"
-          className="customized-detail_button gradient_button"
+          className="customized-detail_button body gradient_button"
           style={{ borderRadius: 16 }}
         >
           {"쎈비 AI \n도움 받기"}
@@ -393,7 +384,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
         <button
           onClick={toggleEditMode}
           type="button"
-          className="customized-detail_button blue_button"
+          className="customized-detail_button body blue_button"
         >
           {isEdit ? "수정 완료" : "수정하기"}
         </button>
