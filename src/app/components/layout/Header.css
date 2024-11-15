@@ -9,7 +9,7 @@
   height: 65px;
   background-color: var(--bg-default);
   border-bottom: 1px solid var(--border-default);
-  z-index: 99;
+  z-index: 20;
 }
 
 .header_title-container {
