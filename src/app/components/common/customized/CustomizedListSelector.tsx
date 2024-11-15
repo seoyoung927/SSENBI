@@ -2,7 +2,7 @@
 
 import CustomizedCard from "@/app/components/common/card/CustomizedCard";
 import Image from "next/image";
-import "./CustomizedList.css";
+import "./CustomizedListSelector.css";
 import SortSelect from "@/app/components/common/select/SortSelect";
 import {
   CustomMessagesType,
@@ -72,15 +72,17 @@ export default function CustomizedListSelector({
       </div>
 
       {filteredMessages && filteredMessages.length > 0 ? (
-        filteredMessages.map((message) => (
-          <div
-            onClick={() => getCustomTemplate(message.templateId)}
-            className="customized-container"
-            key={message.templateId}
-          >
-            <CustomizedCard customMessage={message} />
-          </div>
-        ))
+        <div className="custom-list">
+          {filteredMessages.map((message) => (
+            <div
+              onClick={() => getCustomTemplate(message.templateId)}
+              className="customized-container"
+              key={message.templateId}
+            >
+              <CustomizedCard customMessage={message} />
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="empty-message">
           <p className="body-small">{"새로운 메세지를 \n추가해주세요"}</p>

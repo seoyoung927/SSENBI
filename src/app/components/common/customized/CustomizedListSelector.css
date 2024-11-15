@@ -23,7 +23,7 @@
 }
 
 .flex-container {
-  height: calc(100vh - 80px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,24 +62,22 @@
 
 .customizedList-container {
   width: 100%;
-  overflow-y: auto;
+  box-sizing: border-box;
 }
 .customizedList-contents {
   display: flex;
   flex-direction: column;
   gap: 16px;
   max-width: 800px;
-  padding: 16px 20px;
+  padding: 0px 20px;
   margin: 0 auto;
 }
 
 .customized_sort-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: flex-end;
   gap: 12px;
-  position: sticky;
-  top: 65px;
-  left: 0;
   background-color: var(--bg-default);
   border-bottom: 1px solid var(--border-default);
   padding: 12px;
@@ -138,7 +136,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 12px;
+  margin: 0px;
 }
 
 .filter {
@@ -223,4 +221,9 @@
 .selected-filterIcon {
   stroke: var(--blue-400);
   fill: var(--primary-color);
+}
+
+.custom-list {
+  max-height: calc(80vh - 120px);
+  overflow-y: auto;
 }

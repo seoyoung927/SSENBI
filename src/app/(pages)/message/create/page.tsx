@@ -4,7 +4,6 @@ import React, { useState, useEffect, Suspense } from "react";
 import "./page.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/app/components/layout/Header";
-import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import TagList from "@/app/components/common/tag/TagList";
 import { TagType } from "@/types/tag/tagTypes";
@@ -224,15 +223,9 @@ function MessageCreateContent() {
       )}
 
       {isCustomListModalOpen && (
-        <Modal
-          isOpen={isCustomListModalOpen}
-          onClose={closeCustomListModal}
-          className="modal-container"
-        >
-          <div style={{ height: "80vh", overflowY: "auto" }}>
-            <CustomizedListSelector getCustomTemplate={getCustomTemplate} />
-          </div>
-        </Modal>
+        <AiModal isOpen={isCustomListModalOpen} onClose={closeCustomListModal}>
+          <CustomizedListSelector getCustomTemplate={getCustomTemplate} />
+        </AiModal>
       )}
     </div>
   );
