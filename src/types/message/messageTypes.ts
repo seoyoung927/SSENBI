@@ -36,6 +36,12 @@ export type MessagePostPropsType = {
   customTemplateId?: string;
 };
 
+export type MessageStatisticsType = {
+  tagName: string;
+  tagCount: number;
+  tagColor: string;
+};
+
 export const SORTOPTIONS = {
   최신순: "createdAt,DESC",
   "오래된 순": "createdAt",

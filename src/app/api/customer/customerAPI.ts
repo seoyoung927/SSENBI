@@ -39,3 +39,13 @@ export const deleteCustomerAPI = async (customerId: number) => {
   const response = await axiosInstance.delete(`/customer/${customerId}`);
   return response.data;
 };
+
+export const getCustomerStatisticsAPI = async (token?: string) => {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+  const response = await axiosInstance.get("/customer/statistics", {
+    headers,
+  });
+
+  return response.data;
+};
