@@ -13,7 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
 				"https://localhost:3000", "http://localhost:3001", "https://localhost:3001", "http://localhost:8080",
 				"https://localhost:8080",
 				"http://k11a109.p.ssafy.io:8080", "https://k11a109.p.ssafy.io:8080",
-				"http://ssenbi.co.kr", "https://ssenbi.co.kr") // 허용할 출처 : 특정 도메인만 받을 수 있음
+				"http://ssenbi.co.kr", "https://ssenbi.co.kr",
+				"http://ssenbi.netlify.app", "https://ssenbi.netlify.app") // 허용할 출처 : 특정 도메인만 받을 수 있음
 			.allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS") // 허용할 HTTP method
 			.allowedHeaders("*")
 			.exposedHeaders("Authorization", "Access-Token", "Uid") //프론트가 헤더 접근 가능하도록 설정
