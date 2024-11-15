@@ -19,6 +19,7 @@ import CustomizedListSelector from "@/app/components/common/customized/Customize
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 import { debounce } from "lodash";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
+import AiModal from "@/app/components/common/modal/AiModal";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -199,7 +200,7 @@ function MessageCreateContent() {
             type="button"
             className="message_button message-new_button-send gradient_button"
           >
-            쎈비 AI 도움 받기
+            {"쎈비 AI \n도움 받기"}
           </button>
           <button
             onClick={sendMessage}
@@ -211,11 +212,7 @@ function MessageCreateContent() {
         </div>
       </div>
       {isAIEditModalOpen && (
-        <Modal
-          isOpen={isAIEditModalOpen}
-          onClose={closeAIEditModal}
-          title={"AI 쎈비와 문자 작성하기"}
-        >
+        <AiModal isOpen={isAIEditModalOpen} onClose={closeAIEditModal}>
           <ChatAIContainer
             onClose={closeAIEditModal}
             onSave={handleSaveMessage}
@@ -223,7 +220,7 @@ function MessageCreateContent() {
             customers={customers}
             tags={tags}
           />
-        </Modal>
+        </AiModal>
       )}
 
       {isCustomListModalOpen && (

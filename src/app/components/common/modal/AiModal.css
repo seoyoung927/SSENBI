@@ -1,0 +1,77 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 21;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--bg-default);
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  margin: 12px;
+  max-width: 600px;
+  height: 80vh;
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: 0;
+  align-items: center;
+}
+
+.modal-close {
+  background-color: inherit;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 0px;
+  padding: 0;
+  width: auto;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  flex-grow: 1; /* 남은 공간을 모두 차지하도록 추가 */
+}
+
+.modal-footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.modal-cancel {
+  background: var(--gray-100);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-confirm {
+  background: var(--blue-500);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}

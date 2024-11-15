@@ -7,12 +7,12 @@ import TagList from "@/app/components/common/tag/TagList";
 import { postCustomTemplateAPI } from "@/app/api/customized/customizedAPI";
 import Cookies from "js-cookie";
 import { TagType } from "@/types/tag/tagTypes";
-import Modal from "@/app/components/common/modal/Modal";
 import ChatAIContainer from "@/app/components/chat/ChatAIContainer";
 import { CustomerType } from "@/types/customer/customerType";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 import "../page.css";
+import AiModal from "@/app/components/common/modal/AiModal";
 
 export default function CustomizedNewPage() {
   const router = useRouter();
@@ -151,7 +151,7 @@ export default function CustomizedNewPage() {
             type="button"
             className="customized-new_button gradient_button"
           >
-            쎈비 AI 도움 받기
+            {"쎈비 AI \n도움 받기"}
           </button>
           <button
             onClick={handleSubmit}
@@ -164,11 +164,7 @@ export default function CustomizedNewPage() {
       </div>
 
       {isAIEditModalOpen && (
-        <Modal
-          isOpen={isAIEditModalOpen}
-          onClose={handleCloseAIModal}
-          title={"AI 쎈비와 문자 작성하기"}
-        >
+        <AiModal isOpen={isAIEditModalOpen} onClose={handleCloseAIModal}>
           <ChatAIContainer
             onClose={handleCloseAIModal}
             onSave={handleSaveContent}
@@ -176,7 +172,7 @@ export default function CustomizedNewPage() {
             tags={selectedTags}
             customers={selectedCustomers}
           />
-        </Modal>
+        </AiModal>
       )}
     </div>
   );

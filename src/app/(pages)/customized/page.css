@@ -26,6 +26,9 @@
   .flex-container {
     height: calc(100vh - 136px);
   }
+  .customized-new_button {
+    white-space: pre-wrap;
+  }
 }
 
 .empty-message p {

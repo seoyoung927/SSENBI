@@ -1,6 +1,7 @@
 .customized-modify-ai {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .chat-container {
@@ -9,7 +10,9 @@
   overflow-y: auto;
   gap: 8px;
   padding: 8px;
-  height: 40vh;
+  height: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
   margin-bottom: 16px;
 }
 
@@ -29,7 +32,7 @@
 }
 
 .chat-bubble {
-  max-width: 60%;
+  max-width: 90%;
   padding: 8px 12px;
   border-radius: 16px;
 }
@@ -48,6 +51,7 @@
 
 .chat-input-container {
   display: flex;
+  justify-content: flex-end;
   gap: 8px;
 }
 
