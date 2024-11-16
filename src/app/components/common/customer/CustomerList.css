@@ -71,3 +71,9 @@
   max-width: 800px;
   padding: 16px 20px;
 }
+
+.customer-button-add {
+  background-color: inherit;
+  border: none;
+  color: inherit;
+}
