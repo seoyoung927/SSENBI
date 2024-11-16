@@ -19,6 +19,7 @@ import BatchTextEditor from "@/app/components/common/input/BatchTextEditor";
 import { debounce } from "lodash";
 import CustomerTagList from "@/app/components/common/tag/CustomerTagList";
 import AiModal from "@/app/components/common/modal/AiModal";
+import { AxiosError } from "axios";
 
 function MessageCreateContent() {
   const [isAIEditModalOpen, setIsAIEditModalModalOpen] =
@@ -33,6 +34,8 @@ function MessageCreateContent() {
   const [batchTextTo, setBatchTextTo] = useState<string>("");
   const [isSaveMessageVisible, setIsSaveMessageVisible] =
     useState<boolean>(false);
+  const [customerError, setCustomerError] = useState<boolean>(false);
+  const [msgError, setMsgError] = useState<boolean>(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -67,6 +70,16 @@ function MessageCreateContent() {
   };
 
   const sendMessage = debounce(async () => {
+    if (!customers.length && !tags.length) {
+      setCustomerError(true);
+      return;
+    }
+    setCustomerError(false);
+    if (!content) {
+      setMsgError(true);
+      return;
+    }
+    setMsgError(false);
     try {
       const messageData: MessagePostPropsType = {
         messageCustomerIds: customers.map((customer) => customer.customerId),
@@ -75,15 +88,19 @@ function MessageCreateContent() {
         ...(id ? { customTemplateId: id } : {}),
       };
 
-      console.log("Sending message data:", messageData);
-      const response = await postSendMessageAPI(messageData);
-      console.log("Post response:", response);
+      await postSendMessageAPI(messageData);
       setIsSaveMessageVisible(true);
       setTimeout(() => setIsSaveMessageVisible(false), 3000);
     } catch (err) {
-      console.error("Error sending message:", err);
+      const error = (err as AxiosError<{ code: string }>)?.response?.data;
+
+      if (error?.code === "MS40002") {
+        setCustomerError(true);
+      } else {
+        alert("메시지 전송에 실패했습니다. 다시 시도해주세요.");
+      }
     }
-  }, 1500);
+  }, 500);
 
   const handleCancel = () => {
     router.push("/message");
@@ -147,6 +164,11 @@ function MessageCreateContent() {
         <div className="space-between">
           <div className="form-group">
             <label className="form-group_label subheading">받는 사람</label>
+            {customerError && (
+              <span className="form-error body-small">
+                메시지를 받을 사람이 없습니다. 추가해 주세요.
+              </span>
+            )}
             <div className="tag-container">
               <CustomerTagList
                 customers={customers}
@@ -175,7 +197,13 @@ function MessageCreateContent() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             maxLength={300}
+            placeholder="내용을 입력하세요."
           />
+          {msgError && (
+            <span className="form-error body-small">
+              메시지 내용을 입력해주세요
+            </span>
+          )}
         </div>
 
         <BatchTextEditor
