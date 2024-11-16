@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import "./ContentCard.css";
 import { postDuplicateTemplateAPI } from "@/app/api/template/templateAPI";
 import { useRouter } from "next/navigation";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 
 interface ContentCardProps {
   templateId: number;
@@ -64,7 +64,7 @@ export default function ContentCard({
             <h2 className="content-card__title subheading">{title}</h2>
             <div className="content-card__button-container">
               <p className="content-card__count">
-                <MdOutlineRemoveRedEye className="content-card_eye-icon" />
+                <FaPencilAlt className="content-card_pencil-icon" />
                 {usageCount}
               </p>
               <button
