@@ -236,7 +236,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
         )}
       </div>
       <div className="field-wrapper">
-        <label className="subheading">태그</label>
+        <label className="subheading">그룹</label>
         <TagList tags={tags} setTags={setTags} />
       </div>
       <div className="field-wrapper">

@@ -104,7 +104,7 @@ export default function CustomizedNewPage() {
         </div>
 
         <div className="customized_field-wrapper">
-          <label className="subheading">태그 및 고객</label>
+          <label className="subheading">그룹 및 고객</label>
           <div className="customized-new_tag-container">
             <TagList
               tags={selectedTags}

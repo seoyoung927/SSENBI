@@ -323,7 +323,7 @@ export default function CustomizedIdPage({ params }: CustomizedIdPageProps) {
           </div>
         </div>
         <div className="customized-info">
-          <p className="subheading">태그</p>
+          <p className="subheading">그룹</p>
           <div className="customized-info_tag-list">
             {isEdit && modifiedTemplate ? (
               <div className="taglist-container">

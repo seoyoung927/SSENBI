@@ -73,7 +73,7 @@ export default function MessageIdPage({ params }: MessageIdPageProps) {
       <div className="message-info-wrapper">
         <div className="message-info">
           <div className="message-info-label">
-            <span className="message-info-title body-medium">태그</span>
+            <span className="message-info-title body-medium">그룹</span>
             <div className="message-info_tag-list">
               {messageData?.messageTags.map((tag) => (
                 <BorderTag

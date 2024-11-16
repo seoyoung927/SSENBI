@@ -42,7 +42,7 @@ export default function TagList({
 
         setAllTags(result.tags);
       } catch (error) {
-        console.error("태그 데이터 가져오는 중에 오류 발생: ", error);
+        console.error("그룹 데이터 가져오는 중에 오류 발생: ", error);
       }
     };
 
@@ -101,7 +101,7 @@ export default function TagList({
       setAllTags?.((prev) => [...prev, newTag]);
       setTags([...tags, newTag]);
     } catch {
-      console.error("태그 생성 중 오류 발생");
+      console.error("그룹 생성 중 오류 발생");
     }
   };
   const handleEditTag = (tag: TagType, name: string) => async () => {
@@ -119,7 +119,7 @@ export default function TagList({
         allTags.map((item) => (item.tagId === newTag.tagId ? newTag : item)),
       );
     } catch (error) {
-      console.error("태그 수정 중 오류 발생: ", error);
+      console.error("그룹 수정 중 오류 발생: ", error);
     }
   };
   const handleEditTagOnEnter =
@@ -139,7 +139,7 @@ export default function TagList({
       setTags(tags.filter((item) => item.tagId !== tagId));
       setAllTags(allTags.filter((item) => item.tagId !== tagId));
     } catch (error) {
-      console.error("태그 삭제 중 오류 발생: ", error);
+      console.error("그룹 삭제 중 오류 발생: ", error);
     }
   };
 
@@ -151,7 +151,7 @@ export default function TagList({
             {isEmpty && (
               <li className="body-small empty-tags">
                 {" "}
-                태그 {isFilter ? "필터" : "추가"}
+                그룹 {isFilter ? "필터" : "추가"}
               </li>
             )}
             {tags.slice(0, maxTagCount).map((tag) => (
@@ -194,7 +194,7 @@ export default function TagList({
                 <input
                   type="text"
                   ref={inputRef}
-                  placeholder="태그 추가"
+                  placeholder="그룹 추가"
                   onKeyDown={handleKeyDown}
                   maxLength={25}
                 />
