@@ -12,8 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerExcelRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerExcelResponse;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.entity.Customer;
 import com.haneolenae.bobi.domain.customer.entity.CustomerTag;
@@ -242,5 +244,30 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		Collections.sort(responses);
 		return responses;
+	}
+
+	@Transactional
+	public CustomerExcelResponse addCustomerExcel(Long memberId, AddCustomerExcelRequest request) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new ApiException(ApiType.MEMBER_NOT_EXIST));
+
+		List<AddCustomerRequest> errorCustomer = request.getCustomers().stream()
+			.filter(addCustomer -> !customerRepository.findExistCustomer(memberId, addCustomer.getCustomerName(),
+				addCustomer.getCustomerPhoneNumber()).isEmpty())
+			.toList();
+
+		if (!errorCustomer.isEmpty()) {
+			throw new ApiException(ApiType.CUSTOMER_ALREADY_EXIST, errorCustomer);
+		}
+
+		List<Customer> customers = request.getCustomers().stream()
+			.map(addCustomer -> mapper.toCustomer(addCustomer, member))
+			.toList();
+
+		customerRepository.saveAll(customers);
+
+		return CustomerExcelResponse.builder()
+			.customers(mapper.toCustomerListResponse(customers))
+			.build();
 	}
 }

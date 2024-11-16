@@ -10,6 +10,7 @@ import com.haneolenae.bobi.domain.member.entity.Member;
 import com.haneolenae.bobi.domain.tag.dto.request.TagRequest;
 import com.haneolenae.bobi.domain.tag.dto.request.TagUpdateRequest;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,10 +41,10 @@ public class Tag {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@OneToMany(mappedBy = "tag")
+	@OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
 	private List<TemplateTag> templateTags = new ArrayList<>();
 
-	@OneToMany(mappedBy = "tag")
+	@OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
 	private List<CustomerTag> customerTags = new ArrayList<>();
 
 	@Builder

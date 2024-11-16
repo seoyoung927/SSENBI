@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
+import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerExcelRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerExcelResponse;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.tag.dto.response.TagStatisticsResponse;
 
@@ -21,4 +23,6 @@ public interface CustomerService {
 	List<CustomerResponse> getCustomerList(Long memberId, Pageable pageable, List<Long> customerTags, String keyword);
 
 	List<TagStatisticsResponse> getCustomerTagStatistics(Long memberId);
+
+	CustomerExcelResponse addCustomerExcel(Long memberId, AddCustomerExcelRequest request);
 }
