@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/layout/Header";
 import Image from "next/image";
+import { AxiosError } from "axios";
 import "./page.css";
 
 export default function LoginPage() {
@@ -24,11 +25,17 @@ export default function LoginPage() {
         router.push("/"); // 로그인 성공 후 홈으로 리다이렉션
       }
     } catch (error) {
-      alert("로그인 과정 중 문제가 발생했습니다. 관리자에게 문의해주세요");
-      if (error instanceof Error) {
+      if (error instanceof AxiosError && error.response) {
+        // Axios-specific error handling
+        alert(error.response.data?.message || "로그인 중 문제가 발생했습니다.");
+        console.error("로그인 실패: ", error.response.data);
+      } else if (error instanceof Error) {
+        // Generic error handling
+        alert(error.message);
         console.error("로그인 실패: ", error.message);
       } else {
-        console.error("로그인 실패: 알 수 없는 오류 발생");
+        // Handle unexpected error types
+        console.error("로그인 실패: 알 수 없는 오류 발생", error);
       }
     }
   };
