@@ -70,7 +70,7 @@ export default function MessagePage() {
             type="text"
             value={searchValue}
             onChange={handleSearchChange}
-            placeholder="검색어 (이름, 내용, 태그)"
+            placeholder="검색어 (이름, 내용, 그룹)"
           />
           <SortSelect
             curOption={curSortOption}

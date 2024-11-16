@@ -79,14 +79,14 @@ export default async function MypagePage() {
         />
         <div className="mypage-content-container">
           <div className="mypage-content">
-            <p className="mypage-content_title body">태그</p>
+            <p className="mypage-content_title body">그룹</p>
             <MypageTagList tags={tags} />
           </div>
           <div className="mypage-charts">
             <div className="mypage-content">
               <p className="mypage-content_title body">고객 통계</p>
               <p className="mypage-content_caption caption">
-                전체 고객에 대한 태그별 통계입니다.
+                전체 고객에 대한 그룹별 통계입니다.
               </p>
               <div className="mypage-content_chart-container">
                 <TopTagsChart data={customerStatistics} />
@@ -95,7 +95,7 @@ export default async function MypagePage() {
             <div className="mypage-content">
               <p className="mypage-content_title body">메시지 통계</p>
               <p className="mypage-content_caption caption">
-                최근 100건의 메세지에 대한 태그별 통계입니다.
+                최근 100건의 메세지에 대한 그룹별 통계입니다.
               </p>
               <div className="mypage-content_chart-container">
                 <TopTagsChart data={messageStatistics} />

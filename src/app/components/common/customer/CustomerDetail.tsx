@@ -82,7 +82,7 @@ export default function CustomerDetail({ id }: { id: number }) {
         </div>
       </div>
       <div className="customer-detail-field-wrapper">
-        <div className="body customer-detail-label">태그</div>
+        <div className="body customer-detail-label">그룹</div>
         <div className="customer-detail-tags">
           {customer.customerTags.map((tag) => (
             <BorderTag
