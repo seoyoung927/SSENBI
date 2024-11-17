@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haneolenae.bobi.domain.auth.util.JwtTokenProvider;
+import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerExcelRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.AddCustomerRequest;
 import com.haneolenae.bobi.domain.customer.dto.request.UpdateCustomerRequest;
+import com.haneolenae.bobi.domain.customer.dto.response.CustomerExcelResponse;
 import com.haneolenae.bobi.domain.customer.dto.response.CustomerResponse;
 import com.haneolenae.bobi.domain.customer.service.CustomerService;
 import com.haneolenae.bobi.global.dto.ApiResponse;
@@ -102,7 +104,17 @@ public class CustomerController {
 	@GetMapping("/statistics")
 	public ResponseEntity<?> getCustomerTagStatistics(@RequestHeader("Authorization") String token) {
 		long memberId = jwtTokenProvider.getIdFromToken(token);
-		
+
 		return ResponseEntity.ok(new ApiResponse<>(customerService.getCustomerTagStatistics(memberId)));
+	}
+
+	@PostMapping("/excel")
+	public ResponseEntity<ApiResponse<CustomerExcelResponse>> addCustomers(
+		@RequestHeader("Authorization") String token,
+		@RequestBody @Valid AddCustomerExcelRequest request
+	) {
+		long memberId = jwtTokenProvider.getIdFromToken(token);
+
+		return ResponseEntity.ok(new ApiResponse<>(customerService.addCustomerExcel(memberId, request)));
 	}
 }
