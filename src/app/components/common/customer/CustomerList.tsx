@@ -38,14 +38,6 @@ export default function CustomerList() {
     fetchData();
   }, []);
 
-  const handleCreateCustomer = () => {
-    router.push("/customer/create");
-  };
-
-  const handleCreateCustomerExcel = () => {
-    router.push("/customer/create/excel");
-  };
-
   return (
     <div className="customerList-container">
       <div className="controller">
