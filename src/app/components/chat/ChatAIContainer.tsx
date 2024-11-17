@@ -43,7 +43,7 @@ export default function ChatAIContainer({
       content: `${
         modifiedContent
           ? `현재 템플릿 내용은 다음과 같습니다.\n\n ======================\n\n${modifiedContent}\n\n======================\n\n어떻게 수정을 도와드릴까요?`
-          : `요구사항을 입력해주세요!`
+          : `어떤 도움이 필요하신가요?`
       }`,
     },
   ]);
