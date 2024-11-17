@@ -49,3 +49,10 @@ export const getCustomerStatisticsAPI = async (token?: string) => {
 
   return response.data;
 };
+
+export const postCustomersFromExcel = async (customers: {
+  customers: CustomerCreationType[];
+}) => {
+  const response = await axiosInstance.post("/customer/excel", customers);
+  return response.data;
+};

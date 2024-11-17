@@ -1,6 +1,5 @@
 "use client";
 
-import FloatingActionButton from "@/app/components/common/button/FloatingActionButton";
 import CustomerCard from "@/app/components/common/card/CustomerCard";
 import SearchBar from "@/app/components/common/input/SearchBar";
 import Link from "next/link";
@@ -84,20 +83,8 @@ export default function CustomerList() {
       </ul>
 
       <FloatingMenuButton showIcon={true}>
-        <button
-          className="customer-button-add"
-          type="button"
-          onClick={handleCreateCustomer}
-        >
-          새 고객 등록
-        </button>
-        <button
-          className="customer-button-add"
-          type="button"
-          onClick={handleCreateCustomerExcel}
-        >
-          엑셀 파일 업로드
-        </button>
+        <Link href="/customer/create">새 고객 등록</Link>
+        <Link href="/customer/create/excel">엑셀 파일 업로드</Link>
       </FloatingMenuButton>
     </div>
   );
