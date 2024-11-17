@@ -12,6 +12,7 @@ import { getCustomersAPI } from "@/app/api/customer/customerAPI";
 import { TagType } from "@/types/tag/tagTypes";
 import TagList from "../tag/TagList";
 import FilterIcon from "@/app/assets/svg/Filter.svg";
+import FloatingMenuButton from "../button/FloatingMenuButton";
 
 export default function CustomerList() {
   const router = useRouter();
@@ -40,6 +41,10 @@ export default function CustomerList() {
 
   const handleCreateCustomer = () => {
     router.push("/customer/create");
+  };
+
+  const handleCreateCustomerExcel = () => {
+    router.push("/customer/create/excel");
   };
 
   return (
@@ -78,7 +83,22 @@ export default function CustomerList() {
         ))}
       </ul>
 
-      <FloatingActionButton onClick={handleCreateCustomer} text={"고객 추가"} />
+      <FloatingMenuButton showIcon={true}>
+        <button
+          className="customer-button-add"
+          type="button"
+          onClick={handleCreateCustomer}
+        >
+          새 고객 등록
+        </button>
+        <button
+          className="customer-button-add"
+          type="button"
+          onClick={handleCreateCustomerExcel}
+        >
+          엑셀 파일 업로드
+        </button>
+      </FloatingMenuButton>
     </div>
   );
 }
