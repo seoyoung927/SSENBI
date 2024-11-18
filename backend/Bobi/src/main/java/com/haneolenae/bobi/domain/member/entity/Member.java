@@ -123,4 +123,8 @@ public class Member {
 	public void decreaseMessageCount() {
 		messageCount--;
 	}
+
+	public void setCustomerCount(int customerCount) {
+		this.customerCount = customerCount;
+	}
 }

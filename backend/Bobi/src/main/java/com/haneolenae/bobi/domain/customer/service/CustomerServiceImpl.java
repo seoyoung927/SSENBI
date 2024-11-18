@@ -266,6 +266,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		customerRepository.saveAll(customers);
 
+		member.setCustomerCount(member.getCustomerCount() + customers.size());
+
 		return CustomerExcelResponse.builder()
 			.customers(mapper.toCustomerListResponse(customers))
 			.build();
