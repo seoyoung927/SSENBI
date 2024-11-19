@@ -147,13 +147,13 @@ public class CustomerServiceImpl implements CustomerService {
 		);
 
 		//수정 오류 확인
-		customerRepository.findExistCustomer(memberId, request.getCustomerName(), request.getCustomerPhoneNumber())
-			.stream()
-			.forEach(finder -> {
-				if (finder.getId() != customerId) {
-					throw new ApiException(ApiType.CUSTOMER_ALREADY_EXIST);
-				}
-			});
+		// customerRepository.findExistCustomer(memberId, request.getCustomerName(), request.getCustomerPhoneNumber())
+		// 	.stream()
+		// 	.forEach(finder -> {
+		// 		if (finder.getId() != customerId) {
+		// 			throw new ApiException(ApiType.CUSTOMER_ALREADY_EXIST);
+		// 		}
+		// 	});
 
 		customer.update(request);
 
