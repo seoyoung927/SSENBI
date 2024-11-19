@@ -1,11 +1,10 @@
-import React from "react";
-import BorderTag from "../tag/BorderTag";
+import { CustomerType } from "@/types/customer/customerType";
 import { MessageCardPropsType } from "@/types/message/messageTypes";
 import { TagType } from "@/types/tag/tagTypes";
-import { CustomerType } from "@/types/customer/customerType";
-import "./MessageCard.css";
-import FilledTag from "../tag/FilledTag";
 import formatDateTime from "@/utils/formatDateTime";
+import BorderTag from "../tag/BorderTag";
+import FilledTag from "../tag/FilledTag";
+import "./MessageCard.css";
 interface ApiResponse {
   code: string;
   message: string;
