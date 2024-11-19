@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: Ssenbi
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${local.host}:3306/${local.database}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: ${local.username}
+    password: ${local.pwd}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        show_sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+

@@ -1,0 +1,38 @@
+server:
+  servlet:
+    context-path: /api/v1/ssenbi
+
+spring:
+  profiles:
+    active: prod
+  config:
+    import: optional:file:.env[.properties]
+
+
+springdoc:
+  packages-to-scan: com.haneolenae.bobi
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
+
+coolsms:
+  senderPhoneNumber: ${COOLSMS_SENDER}
+  api:
+    key: ${COOLSMS_API_KEY}
+    secret: ${COOLSMS_API_SECRET}
+
+openai:
+  api:
+    key: ${OPENAI_API_KEY}
+    url: ${OPENAI_API_URL}
+  prompts:
+    role: ${OPENAI_PROMPT_ROLE}
+    role2: ${OPENAI_PROMPT_ROLE2}
+    role3: ${OPENAI_PROMPT_ROLE3}
+    role4: ${OPENAI_PROMPT_ROLE4}
+
+
