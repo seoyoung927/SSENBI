@@ -1,0 +1,43 @@
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  position: sticky;
+  top: 65px;
+  background-color: var(--bg-default);
+  border-bottom: 1px solid var(--border-default);
+  width: 100%;
+  padding: 12px;
+  z-index: 1;
+}
+
+.search-bar-contents {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+@media (max-width: 600px) {
+  .search-bar-contents {
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+@media (max-width: 800px) {
+  .search-bar-contents {
+    padding: 0 8px;
+  }
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 800px;
+  padding: 16px 20px;
+  margin: 0 auto;
+}

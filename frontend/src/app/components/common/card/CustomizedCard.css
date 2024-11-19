@@ -1,0 +1,89 @@
+.customized-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--blue-200);
+  border-radius: 16px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  max-width: 100%;
+  gap: 10px;
+  /* margin: 16px 20px; */
+  cursor: pointer;
+}
+
+.customized-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강조 */
+  transform: translateY(-4px); /* 약간의 떠오르는 효과 */
+  background-color: #fbfeff;
+}
+
+.customized-card-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.copy-icon {
+  cursor: pointer;
+  color: var(--gray-400);
+  transition: color 0.1s;
+
+  &:hover {
+    color: var(--gray-700);
+  }
+}
+
+.customized-card__title {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.customized-card__content {
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+.customized-card__stats {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--text-tertiary);
+  font-size: 0.85em;
+}
+
+.customized-card__usage {
+  font-weight: bold;
+}
+
+.customized-card__date {
+  color: var(--gray-500);
+}
+
+.customized-card__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  min-height: 0px;
+}
+
+.customized-tag-container {
+  display: flex;
+  gap: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 80%;
+  min-height: 0px;
+}
+
+.customized-card__details .customized-tag-container > * {
+  flex-shrink: 0;
+}

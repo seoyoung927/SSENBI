@@ -1,0 +1,10 @@
+.filled-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  color: var(--bg-default);
+  font-weight: 600;
+  background-color: var(--blue-700);
+  /* position: relative; */
+}

@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 12px 24px;
+  height: 65px;
+  background-color: var(--bg-default);
+  border-bottom: 1px solid var(--border-default);
+  z-index: 20;
+}
+
+.header_title-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header_button-back {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  width: auto;
+}
+
+.header_button-auth {
+  background-color: var(--blue-500);
+  opacity: 0.8;
+  border-radius: 20px;
+  color: var(--bg-default);
+  width: auto;
+  padding: 8px 12px;
+}
+.header_button-auth:hover {
+  opacity: 1;
+}

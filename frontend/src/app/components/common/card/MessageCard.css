@@ -1,0 +1,53 @@
+.message-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid var(--blue-200);
+  border-radius: 16px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  max-width: 100%;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.message-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강조 */
+  transform: translateY(-4px); /* 약간의 떠오르는 효과 */
+  background-color: #fbfeff;
+}
+
+.message-card__details {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.message-card__text {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.message-card__description {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.message-card {
+  flex-wrap: wrap;
+}
+
+.message-tag-container {
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 80%;
+}

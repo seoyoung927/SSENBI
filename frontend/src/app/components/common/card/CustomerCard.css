@@ -1,0 +1,40 @@
+.customer-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--blue-200);
+  border-radius: 16px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  max-width: 100%;
+  gap: 10px;
+  /* margin: 16px 20px; */
+  cursor: pointer;
+}
+
+.customer-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강조 */
+  transform: translateY(-4px); /* 약간의 떠오르는 효과 */
+  background-color: #fbfeff;
+}
+
+.customer-card__name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.customer-card_phone-number {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.customer-card__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
